@@ -1,0 +1,30 @@
+
+
+*{
+    font-family: "Cairo", sans-serif;
+}
+
+.signindiv form .form-control{
+
+    height: 45px;
+    background-color: #edf2f5;
+}
+
+.signindiv form button{
+
+    height: 45px;
+    font-weight: bold;
+}
+.logo{
+    width: 50px;
+    margin: 10px;
+    transition: all 0.4s;
+    border-radius: 50%;
+    background-color: #32A04C;
+
+
+}
+
+.logo:hover{
+    padding: 3px;
+}
