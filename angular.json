@@ -26,12 +26,14 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+             
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
+
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
-            
           },
           "configurations": {
             "production": {
@@ -92,14 +94,18 @@
             ],
             "styles": [
               "src/styles.css"
+              
+
             ],
-            "scripts": []
+            "scripts": [
+              
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "aee10c31-f917-4c7e-bf21-fbe0989b09ba"
+    "analytics": "facb727d-78c7-4e49-b855-c5a0b5fa519b"
   }
 }
