@@ -9,6 +9,8 @@ import { SigninFormComponent } from './Component/signin-form/signin-form.compone
 import { SignUpFormComponent } from './Component/sign-up-form/sign-up-form.component';
 import { SignImgComponent } from './Component/sign-img/sign-img.component';
 import { ForgetPasswordComponent } from './Component/forget-password/forget-password.component';
+import { MainPageComponent } from './Component/core/main-page/main-page.component';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,10 @@ import { ForgetPasswordComponent } from './Component/forget-password/forget-pass
     SigninFormComponent,
     SignUpFormComponent,
     SignImgComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+
+    MainPageComponent
+
   ],
   imports: [
     BrowserModule,
