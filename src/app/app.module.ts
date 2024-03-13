@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FutureComponentComponent } from './Component/core/future-component/future-component.component';
@@ -15,9 +14,11 @@ import { ForgetPasswordComponent } from './Component/forget-password/forget-pass
 import { MainPageComponent } from './Component/core/main-page/main-page.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    FutureComponentComponent,
     FutureComponentComponent,
     NavbarComponent,
     FooterComponent,
