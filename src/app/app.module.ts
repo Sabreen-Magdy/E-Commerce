@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FutureComponentComponent } from './Component/core/future-component/future-component.component';
 import { NavbarComponent } from './Component/shared/navbar/navbar.component';
 import { FooterComponent } from './Component/shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,19 +14,19 @@ import { ForgetPasswordComponent } from './Component/forget-password/forget-pass
 import { MainPageComponent } from './Component/core/main-page/main-page.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    FutureComponentComponent,
+    FutureComponentComponent,
     NavbarComponent,
     FooterComponent,
     SigninFormComponent,
     SignUpFormComponent,
     SignImgComponent,
     ForgetPasswordComponent,
-
     MainPageComponent
-
-
   ],
   imports: [
     BrowserModule,
