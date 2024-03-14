@@ -19,6 +19,9 @@ import { NewProductComponent } from './Component/core/HomePage/new-product/new-p
 import { ReviewsComponent } from './Component/core/reviews/reviews.component';
 import { AdminComponent } from './Component/core/admin/admin.component';
 import { AsideComponent } from './Component/core/aside/aside.component';
+// import { ChartsModule } from 'ng2-charts';
+//import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { AsideComponent } from './Component/core/aside/aside.component';
     CategoriesComponent,
     NewProductComponent,
     AdminComponent,
-    AsideComponent
+    AsideComponent,
+    SalesChartComponent
+
   ],
   imports: [
     BrowserModule,
@@ -45,6 +50,9 @@ import { AsideComponent } from './Component/core/aside/aside.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    // ChartsModule
+    //BrowserModule,
+   // NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
