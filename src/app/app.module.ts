@@ -18,6 +18,7 @@ import { NewProductComponent } from './Component/core/HomePage/new-product/new-p
 
 import { ReviewsComponent } from './Component/core/reviews/reviews.component';
 import { AdminComponent } from './Component/core/admin/admin.component';
+import { AsideComponent } from './Component/core/aside/aside.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AdminComponent } from './Component/core/admin/admin.component';
     SliderHomeComponent,
     CategoriesComponent,
     NewProductComponent,
-    AdminComponent
+    AdminComponent,
+    AsideComponent
   ],
   imports: [
     BrowserModule,
