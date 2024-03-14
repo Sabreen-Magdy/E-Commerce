@@ -1,0 +1,46 @@
+body{
+    height: 1000vh;
+}
+
+.contai{
+    padding-right: 5%;
+    padding-top: 10%;
+    width: 100%;
+    max-height: 500px;
+    background-repeat:no-repeat;
+    background-position-y:10% ;
+    background-size:contain;
+    background-image: url("src/assets/images/slider2.jpg");
+    background-attachment:fixed;
+    color: black;
+   
+}
+
+.contai h1 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.contai p {
+    color: gray;
+    height: 100px;
+    font-weight: 600;
+    max-width:400px;
+    margin-bottom: 50px;
+}
+
+.contai button{
+    border-radius: 2px;
+    height: 45px;
+    margin-bottom: 45px;
+    
+}
+
+@media screen and (max-width: 768px) {
+
+    .contai{
+        background-position-y:150px ;
+        
+    }
+    
+}
