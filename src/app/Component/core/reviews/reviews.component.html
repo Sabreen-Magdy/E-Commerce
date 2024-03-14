@@ -1,4 +1,4 @@
-<div class="d-flex flex-column p-2">
+<div class="d-flex flex-column mt-5 mb-5 p-2">
   <div style="text-align: center">
     <h3>ارآء العملاء</h3>
     <span>دع عملائنا يخبروك عن تجربتهم معنا. </span>
@@ -14,59 +14,63 @@
           class="mt-4 carousel-item pe-4 ps-4"
           data-bs-interval="1500"
         >
-          <div class="d-flex flex-row justify-content-around mt-4">
-            <div
-              class="col col-12 col-sm-4 me-2"
-              *ngFor="let review of iterateSlider()"
-            >
-              <div class="card">
-                <div class="card-body card-color">
-                  <svg
-                    class="card-title"
-                    *ngFor="let i of range(0, review.rate)"
-                    width="25px"
-                    height="25px"
-                    viewBox="0 0 1024.00 1024.00"
-                    class="icon"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="#fffafa"
-                    stroke="#fffafa"
-                    transform="rotate(0)"
-                    stroke-width="0.01024"
-                  >
-                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+          <div class="d-flex flex-row justify-content-between ms-5 mt-4">
+            <ng-container *ngFor="let review of iterateSlider(); index as j">
+              <div
+                [ngClass]="{
+                  'me-4': !isFirst(j)
+                }"
+                class="col-12 col-sm-4"
+              >
+                <div class="card">
+                  <div class="card-body card-color">
+                    <svg
+                      class="card-title"
+                      *ngFor="let i of range(0, review.rate)"
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 1024.00 1024.00"
+                      class="icon"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="#fffafa"
+                      stroke="#fffafa"
+                      transform="rotate(0)"
+                      stroke-width="0.01024"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
-                    <g
-                      id="SVGRepo_tracerCarrier"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke="#CCCCCC"
-                      stroke-width="2.048"
-                    />
-
-                    <g id="SVGRepo_iconCarrier">
-                      <path
-                        d="M923.2 429.6H608l-97.6-304-97.6 304H97.6l256 185.6L256 917.6l256-187.2 256 187.2-100.8-302.4z"
-                        fill="#FAD97F"
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke="#CCCCCC"
+                        stroke-width="2.048"
                       />
 
-                      <path
-                        d="M1024 396H633.6L512 21.6 390.4 396H0l315.2 230.4-121.6 374.4L512 770.4l316.8 232L707.2 628 1024 396zM512 730.4l-256 187.2 97.6-302.4-256-185.6h315.2l97.6-304 97.6 304h315.2l-256 185.6L768 917.6l-256-187.2z"
-                        fill=""
-                      />
-                    </g>
-                  </svg>
-                  <p class="card-text">
-                    {{ review.content }}
-                  </p>
-                </div>
-                <div class="card-body">
-                  <div class="card-text">{{ review.name }}</div>
-                  <div class="card-text">{{ review.region }}</div>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M923.2 429.6H608l-97.6-304-97.6 304H97.6l256 185.6L256 917.6l256-187.2 256 187.2-100.8-302.4z"
+                          fill="#FAD97F"
+                        />
+
+                        <path
+                          d="M1024 396H633.6L512 21.6 390.4 396H0l315.2 230.4-121.6 374.4L512 770.4l316.8 232L707.2 628 1024 396zM512 730.4l-256 187.2 97.6-302.4-256-185.6h315.2l97.6-304 97.6 304h315.2l-256 185.6L768 917.6l-256-187.2z"
+                          fill=""
+                        />
+                      </g>
+                    </svg>
+                    <p class="card-text">
+                      {{ review.content }}
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <div class="card-text">{{ review.name }}</div>
+                    <div class="card-text">{{ review.region }}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ng-container>
           </div>
         </div>
       </ng-container>

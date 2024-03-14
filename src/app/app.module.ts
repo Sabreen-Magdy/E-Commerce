@@ -6,19 +6,19 @@ import { FutureComponentComponent } from './Component/core/future-component/futu
 import { NavbarComponent } from './Component/shared/navbar/navbar.component';
 import { FooterComponent } from './Component/shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SigninFormComponent } from './Component/core/SignComp/signin-form/signin-form.component';
 import { SignUpFormComponent } from './Component/core/SignComp/sign-up-form/sign-up-form.component';
 import { SignImgComponent } from './Component/core/SignComp/sign-img/sign-img.component';
 import { ForgetPasswordComponent } from './Component/core/SignComp/forget-password/forget-password.component';
 import { MainPageComponent } from './Component/core/main-page/main-page.component';
 
-
 import { ReviewsComponent } from './Component/core/reviews/reviews.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ReviewsComponent,
     FutureComponentComponent,
     FutureComponentComponent,
     NavbarComponent,
@@ -27,14 +27,14 @@ import { ReviewsComponent } from './Component/core/reviews/reviews.component';
     SignUpFormComponent,
     SignImgComponent,
     ForgetPasswordComponent,
-    MainPageComponent
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
