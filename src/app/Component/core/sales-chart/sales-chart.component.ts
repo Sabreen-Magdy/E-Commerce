@@ -33,7 +33,7 @@ export class SalesChartComponent  implements OnInit {
       data: {
         labels: ['SaturDay', 'SunDay', 'MonDay','Tuesday ','Wednesday ','Thursday ','Friday'],
         datasets: [{
-          label: 'Sales Rate',
+          label: 'Sales ',
           data: salesData,
           backgroundColor: '#675548',
           borderColor:'#675548', 
