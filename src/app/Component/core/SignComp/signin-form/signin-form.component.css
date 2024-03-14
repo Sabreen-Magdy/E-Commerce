@@ -28,3 +28,13 @@
 .logo:hover{
     padding: 3px;
 }
+
+a.forgetmsg{
+    text-decoration: none;
+    color: gray;
+}
+
+a.forgetmsg:hover{
+    text-decoration: none;
+    color:#32A04C ;
+}

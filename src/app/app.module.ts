@@ -7,10 +7,10 @@ import { NavbarComponent } from './Component/shared/navbar/navbar.component';
 import { FooterComponent } from './Component/shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { SigninFormComponent } from './Component/signin-form/signin-form.component';
-import { SignUpFormComponent } from './Component/sign-up-form/sign-up-form.component';
-import { SignImgComponent } from './Component/sign-img/sign-img.component';
-import { ForgetPasswordComponent } from './Component/forget-password/forget-password.component';
+import { SigninFormComponent } from './Component/core/SignComp/signin-form/signin-form.component';
+import { SignUpFormComponent } from './Component/core/SignComp/sign-up-form/sign-up-form.component';
+import { SignImgComponent } from './Component/core/SignComp/sign-img/sign-img.component';
+import { ForgetPasswordComponent } from './Component/core/SignComp/forget-password/forget-password.component';
 import { MainPageComponent } from './Component/core/main-page/main-page.component';
 
 
