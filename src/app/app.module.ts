@@ -17,6 +17,7 @@ import { CategoriesComponent } from './Component/core/HomePage/categories/catego
 import { NewProductComponent } from './Component/core/HomePage/new-product/new-product.component';
 
 import { ReviewsComponent } from './Component/core/reviews/reviews.component';
+import { AdminComponent } from './Component/core/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ReviewsComponent } from './Component/core/reviews/reviews.component';
     MainPageComponent,
     SliderHomeComponent,
     CategoriesComponent,
-    NewProductComponent
+    NewProductComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
