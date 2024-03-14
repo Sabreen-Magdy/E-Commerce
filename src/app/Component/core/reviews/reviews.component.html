@@ -1,4 +1,4 @@
-<div class="d-flex flex-column mt-5 mb-5 p-2">
+<div class="d-flex flex-column mt-5 mb-5  fontColor" style="padding-left: 150px; padding-right: 150px;">
   <div style="text-align: center">
     <h3>ارآء العملاء</h3>
     <span>دع عملائنا يخبروك عن تجربتهم معنا. </span>
@@ -22,19 +22,19 @@
                 }"
                 class="col-12 col-sm-4"
               >
-                <div class="card">
+                <div class="card border-light" style="width: 350px;">
                   <div class="card-body card-color">
                     <svg
                       class="card-title"
                       *ngFor="let i of range(0, review.rate)"
-                      width="25px"
-                      height="25px"
+                      width="22px"
+                      height="22px"
                       viewBox="0 0 1024.00 1024.00"
                       class="icon"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="#fffafa"
-                      stroke="#fffafa"
+                      fill="#ffa500"
+                      stroke="#ffa500"
                       transform="rotate(0)"
                       stroke-width="0.01024"
                     >
@@ -51,7 +51,7 @@
                       <g id="SVGRepo_iconCarrier">
                         <path
                           d="M923.2 429.6H608l-97.6-304-97.6 304H97.6l256 185.6L256 917.6l256-187.2 256 187.2-100.8-302.4z"
-                          fill="#FAD97F"
+                          fill="#ffa500"
                         />
 
                         <path
@@ -60,13 +60,13 @@
                         />
                       </g>
                     </svg>
-                    <p class="card-text">
+                    <p class="card-text my-3 fontColor">
                       {{ review.content }}
                     </p>
                   </div>
-                  <div class="card-body">
-                    <div class="card-text">{{ review.name }}</div>
-                    <div class="card-text">{{ review.region }}</div>
+                  <div class="card-body fontColor">
+                    <div class="card-text my-1">{{ review.name }}</div>
+                    <div class="card-text my-1">{{ review.region }}</div>
                   </div>
                 </div>
               </div>
