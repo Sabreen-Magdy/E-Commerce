@@ -22,6 +22,7 @@ import { AsideComponent } from './Component/core/aside/aside.component';
 // import { ChartsModule } from 'ng2-charts';
 //import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
+import { CartComponent } from './Component/core/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.co
     NewProductComponent,
     AdminComponent,
     AsideComponent,
-    SalesChartComponent
+    SalesChartComponent,
+    CartComponent
 
   ],
   imports: [
