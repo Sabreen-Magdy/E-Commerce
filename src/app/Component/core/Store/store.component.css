@@ -1,0 +1,322 @@
+.contain{
+    margin-top:50px;
+}
+
+#blur.active{
+    display: block;
+}
+
+#blur{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 2; /* Ensure the overlay is above other content */
+    display: none; 
+}
+/* title part*/
+.contain .title{
+
+    color: gray;    
+}
+
+.contain .title span a{
+
+    text-decoration: none;
+    cursor: pointer;
+    color: gray;    
+}
+.contain .title h1{
+    margin:20px 0;
+    font-weight: bold;
+}
+
+/*Filter part*/
+
+
+.contain .filterpart{
+    margin:20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contain .filter{
+    padding: 6px;
+    border-radius: 6px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.contain .filter:hover{
+    cursor: pointer;
+    background-color: rgba(0, 196, 0, 0.04);  
+}
+
+.contain .filterpart .sortselect{
+    border: 0px;
+    width: 240px;
+}
+
+.contain .filterpart .sortselect:focus{
+    border: 1px dotted gray;
+}
+
+/*Products*/
+.contain .items{
+    margin:0px 0px;
+    
+}
+
+.contain .items .element{
+    margin-bottom: 10px;
+    
+}
+.element-img{
+    position: relative;
+}
+
+.element-img img{
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    
+   
+}
+.element-img:hover  span.material-symbols-outlined{
+    visibility:visible;
+    
+}
+
+.element-img span.material-symbols-outlined:hover{
+    color: black;
+}
+.element-img span.material-symbols-outlined{
+    position:absolute;
+    visibility: hidden;
+    color: gray;
+    top: 10px;
+    right: 20px;
+    padding: 7px;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.662);
+}
+
+.element-img span.material-symbols-outlined.cart{
+    top: 10px;
+    right: 10px;
+}
+.element-img span.material-symbols-outlined.fav{
+    top: 55px;
+    right: 10px;
+}
+
+.element-img span.material-symbols-outlined.show{
+    top: 100px;
+    right: 10px;
+}
+
+.element-img span.msg{
+    position: absolute;
+    border-radius: 5px;
+    right: 55px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-weight: bold;
+    visibility: hidden;
+    padding: 5px;
+}
+
+.element-img span.material-symbols-outlined.cart:hover ~span.msg.cart{
+    visibility: visible;
+}
+span.msg.cart {
+    top:10px;
+}
+
+.element-img span.material-symbols-outlined.fav:hover ~span.msg.fav{
+    visibility: visible;
+}
+span.msg.fav {
+    top:55px;
+}
+
+.element-img span.material-symbols-outlined.show:hover ~span.msg.show{
+    visibility: visible;
+}
+span.msg.show {
+    top:100px;
+}
+
+.element-detials{
+    margin-right: 5px;
+    margin-top: 20px;
+    text-align: right;
+}
+
+.element-detials p{
+    color: gray;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.element-detials p span{
+    color: black;
+    font-size: 12px;
+}
+
+
+
+
+/*filterlist*/
+
+.filterlist{
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    height: 100%;
+    visibility: hidden;
+    background-color: whitesmoke;
+}
+.filterlist#popup.active{
+    
+    visibility: visible;
+    z-index: 2;
+}
+
+.filterlist .close{
+    text-align: end;
+}
+.filterlist .close button{
+    font-size: 20px;
+    font-weight: bold;
+}
+.nameSearch form {
+
+   display: flex;
+   flex-wrap: wrap;
+   margin-top: 50px;
+}
+.nameSearch input{
+    border: 1px solid rgb(70, 167, 70);
+    height: 45px;
+    padding: 5px;
+    width: 250px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+    color:rgb(70, 167, 70);
+}
+
+
+.nameSearch button{
+
+    background-color: rgb(70, 167, 70);
+    color: white;
+    border: 0;
+    border-radius: 2px;
+    height: 45px;
+    padding: 5px;
+}
+.nameSearch button span{
+
+    margin-top:5px;
+    font-size: 26px;
+}
+.nameSearch button:hover{
+    border: 1px solid rgb(70, 167, 70);
+    background-color: white;
+    color: rgb(70, 167, 70);
+    
+}
+
+.priceSearch{
+    margin-top: 40px;
+    
+
+}
+
+.priceSearch .EGP{
+    color: gray;
+    font-size: 18px;
+    margin-right: 10px;
+}
+.priceSearch form{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+
+.priceSearch form span.txt{
+   margin-left: 10px;
+
+}
+
+.priceSearch input{
+    width: 90px;
+    height: 40px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    border: 1px solid rgb(70, 167, 70);
+}
+
+.priceSearch button{
+   margin-right: 5px;
+    background-color: rgb(70, 167, 70);
+    color: white;
+    border: 0;
+    border-radius: 2px;
+    height: 40px;
+    padding: 5px;
+}
+.priceSearch button:hover{
+   
+    background-color: white ;
+    color: rgb(70, 167, 70);
+    border: 1px solid rgb(70, 167, 70);
+}
+.priceSearch button span{
+
+    margin-top:2px;
+    font-size: 26px;
+}
+
+
+.categSearch{
+    margin-top: 50px;
+}
+
+.categSearch .catList{
+    list-style-type: none;
+    padding: 0;
+    color: gray;
+    font-size: 18px;
+}
+.categSearch .catList .catItem {
+    
+    margin-bottom: 8px;
+}
+
+
+.categSearch .catList .catItem a{
+    
+    text-decoration: none;
+    color: gray;
+    margin-left: 5px;
+}
+
+.categSearch .catList .catItem a:hover{
+    
+    color: rgb(70, 167, 70);
+    
+}

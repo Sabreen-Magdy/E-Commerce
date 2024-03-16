@@ -23,6 +23,8 @@ import { AsideComponent } from './Component/core/aside/aside.component';
 //import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
 import { CartComponent } from './Component/core/cart/cart.component';
+import { FavoriteComponent } from './Component/core/favorite/favorite.component';
+import { StoreComponent } from './Component/core/store/store.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { CartComponent } from './Component/core/cart/cart.component';
     AdminComponent,
     AsideComponent,
     SalesChartComponent,
-    CartComponent
+    CartComponent,
+    FavoriteComponent,
+    StoreComponent
 
   ],
   imports: [
