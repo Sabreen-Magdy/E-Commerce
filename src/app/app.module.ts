@@ -24,13 +24,16 @@ import { ReviewsComponent } from './Component/core/reviews/reviews.component';
 //import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
 import { CartComponent } from './Component/core/cart/cart.component';
 import { FavoriteComponent } from './Component/core/favorite/favorite.component';
-//import { StoreComponent } from './Component/core/store/store.component';
+
+import { CheckoutComponent } from './Component/core/checkout/checkout.component';
+
 import { AdminComponent } from './Component/core/AdminSide/admin/admin.component';
 import { AsideComponent } from './Component/core/AdminSide/aside/aside.component';
 import { SalesChartComponent } from './Component/core/AdminSide/sales-chart/sales-chart.component';
 import { StoreComponent } from './Component/core/Store/store.component';
 import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/admin-nav.component';
 import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.component';
+
 
 @NgModule({
   declarations: [
@@ -54,8 +57,14 @@ import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.compon
     CartComponent,
     FavoriteComponent,
     StoreComponent,
+<<<<<<< HEAD
     AdminNavComponent,
     SidbarComponent
+=======
+    CheckoutComponent,
+    AdminNavComponent
+>>>>>>> ae345e247f8ddfbcad7c7b357cf0c15bd02e453b
+
 
   ],
   imports: [
