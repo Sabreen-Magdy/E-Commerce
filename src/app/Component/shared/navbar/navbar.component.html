@@ -1,36 +1,41 @@
-<!-- <nav
-  id="navbar"
-  class="w-100 navbar bg-light nav-fixed"
->
-  <ul>
-    <li><a class="nav-link scrollto active" href="#hero">الرئيسية</a></li>
-    <li><a class="nav-link scrollto" href="#about">المميزات</a></li>
-    <li><a class="nav-link scrollto" href="#services">كيف تبدا معانا</a></li>
-    <li><a class="nav-link scrollto" href="#team">اراء التجار</a></li>
-    <li><a class="nav-link scrollto" href="#team"> الشحن والتوصيل</a></li>
-
-    <li></li>
-  </ul>
-  <i class="bi bi-list mobile-nav-toggle"></i>
-</nav> -->
-
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary nav-fixed">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">موقعنا</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">الرئيسية</a>
-        <a class="nav-link" href="#">المميزات</a>
-        <a class="nav-link" href="#">كيف تبدا معانا</a>
-        <a class="nav-link" href="#">اراء التجار</a>
-        <a class="nav-link" href="#">الشحن والتوصيل</a>
-        
-        
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <title>Shopping Cart Example</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary nav-fixed">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">موقعنا</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">الرئيسية</a>
+          <a class="nav-link" href="#">المميزات</a>
+          <a class="nav-link" href="#">كيف تبدا معانا</a>
+          <a class="nav-link" href="#">اراء التجار</a>
+          <a class="nav-link" href="#"><i class="bi bi-heart-fill"></i></a>
+          <a class="nav-link" href="#" onclick="playCartSound()">
+            <i class="bi bi-cart"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+
+  <audio id="cart-sound" src="cart-sound.mp3"></audio>
+
+  <script>
+    function playCartSound() {
+      var audio = document.getElementById('cart-sound');
+      audio.play();
+    }
+  </script>
+</body>
+</html>
