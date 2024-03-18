@@ -7,13 +7,11 @@ import { NavbarComponent } from './Component/shared/navbar/navbar.component';
 import { FooterComponent } from './Component/shared/footer/footer.component';
 
 const routes: Routes = [
-  {path:'cart',component:CartComponent},
-  {path:'mainpage',component:MainPageComponent},
-  {path:'store',component:StoreComponent},
-{
-  path:'navbar',component:NavbarComponent
-},
-{path:'footer',component:FooterComponent},
+  { path: 'cart', component: CartComponent },
+  { path: 'mainpage', component: MainPageComponent },
+  { path: 'store', component: StoreComponent },
+  { path: 'navbar', component: NavbarComponent },
+  { path: 'footer', component: FooterComponent },
 
 ];
 
@@ -21,5 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { 
+export class AppRoutingModule {
 }

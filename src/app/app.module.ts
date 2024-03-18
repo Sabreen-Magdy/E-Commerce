@@ -57,13 +57,13 @@ import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.compon
     CartComponent,
     FavoriteComponent,
     StoreComponent,
-<<<<<<< HEAD
+
     AdminNavComponent,
-    SidbarComponent
-=======
+    SidbarComponent,
+
     CheckoutComponent,
     AdminNavComponent
->>>>>>> ae345e247f8ddfbcad7c7b357cf0c15bd02e453b
+
 
 
   ],
