@@ -30,6 +30,7 @@ import { AsideComponent } from './Component/core/AdminSide/aside/aside.component
 import { SalesChartComponent } from './Component/core/AdminSide/sales-chart/sales-chart.component';
 import { StoreComponent } from './Component/core/Store/store.component';
 import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/admin-nav.component';
+import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/admin-na
     CartComponent,
     FavoriteComponent,
     StoreComponent,
-    AdminNavComponent
+    AdminNavComponent,
+    SidbarComponent
 
   ],
   imports: [
