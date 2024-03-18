@@ -24,7 +24,8 @@ import { AsideComponent } from './Component/core/aside/aside.component';
 import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
 import { CartComponent } from './Component/core/cart/cart.component';
 import { FavoriteComponent } from './Component/core/favorite/favorite.component';
-import { StoreComponent } from './Component/core/store/store.component';
+import { CheckoutComponent } from './Component/core/checkout/checkout.component';
+import { StoreComponent } from './Component/core/Store/store.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { StoreComponent } from './Component/core/store/store.component';
     SalesChartComponent,
     CartComponent,
     FavoriteComponent,
-    StoreComponent
+    StoreComponent,
+    CheckoutComponent
 
   ],
   imports: [
