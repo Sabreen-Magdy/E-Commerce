@@ -37,7 +37,7 @@ import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.compon
 import { DashboardComponent } from './Component/core/AdminSide/dashboard/dashboard.component';
 import { AddproductComponent } from './Component/core/AdminSide/addproduct/addproduct.component';
 import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
-import { AboutComponent } from './Component/about/about.component';
+import { AboutComponent } from './Component/core/about/about.component';
 
 
 @NgModule({
