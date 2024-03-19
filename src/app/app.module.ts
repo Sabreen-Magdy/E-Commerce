@@ -34,6 +34,8 @@ import { StoreComponent } from './Component/core/Store/store.component';
 import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/AdminNavComponent';
 import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.component';
 import { DashboardComponent } from './Component/core/AdminSide/dashboard/dashboard.component';
+import { AddproductComponent } from './Component/core/AdminSide/addproduct/addproduct.component';
+import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
 
 
 @NgModule({
@@ -64,7 +66,9 @@ import { DashboardComponent } from './Component/core/AdminSide/dashboard/dashboa
 
     CheckoutComponent,
     AdminNavComponent,
-    DashboardComponent
+    DashboardComponent,
+    AddproductComponent,
+    ProductDetailsComponent
 
 
 
