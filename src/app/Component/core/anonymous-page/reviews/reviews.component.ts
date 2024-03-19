@@ -1,5 +1,7 @@
 import { Component, HostListener } from '@angular/core';
-import { Review } from 'src/app/models/review';
+import { Router, ActivatedRoute } from '@angular/router';
+import { range } from 'rxjs';
+import { IReview } from 'src/app/models/ireview';
 @Component({
   selector: 'app-reviews',
   templateUrl: './reviews.component.html',
@@ -9,7 +11,7 @@ export class ReviewsComponent {
   counter = 0;
   lenSlider = 1;
 
-  reviews: Review[] = [];
+  reviews: IReview[] = [];
 
   constructor() {
     this.reviews = [

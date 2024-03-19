@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { ComponentUrl } from 'src/app/models/unit';
 
 @Component({
   selector: 'app-navbar',
@@ -6,6 +7,7 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
+  ComponentUrl = ComponentUrl;
   // @HostListener('window:scroll', ['$event'])
   // onScroll(event: Event) {
   //   var nav = document.getElementById('navbar');

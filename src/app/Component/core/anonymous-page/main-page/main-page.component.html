@@ -34,11 +34,17 @@
       <div class="banner-actions mb-4">
         <a
           class="btn btn-success ms-3 rounded-5 px-4 py-2 btn-outline-light border border-success"
-          href="signin"
+          [routerLink]="['/', ComponentUrl.SignIn]"
+          routerLinkActive="active"
         >
           تسجيل الدخول
         </a>
-        <a class="btn btn-outline-success rounded-5 px-4 py-2" href="signup">
+        <a
+          class="btn btn-outline-success rounded-5 px-4 py-2"
+          [routerLink]="['/', ComponentUrl.SignUp]"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
           انشاء حساب
         </a>
       </div>
@@ -50,7 +56,7 @@
     </div>
     <div class="col-md-6 banner-image">
       <img
-        src="assets/images/home6.png"
+        src="assets/Images/home6.png"
         alt=""
         width="100%"
         style="object-fit: cover"
