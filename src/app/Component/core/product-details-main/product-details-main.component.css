@@ -465,7 +465,10 @@ span.msg.show {
 
 @media screen and (max-width: 768px) {
 
-    
+    .imgs {
+        height: 250px;
+        
+      }
     .container .review .Comments .coment .user {
         display: flex;
     }

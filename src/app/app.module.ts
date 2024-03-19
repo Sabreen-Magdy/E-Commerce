@@ -40,7 +40,7 @@ import { AddproductComponent } from './Component/core/AdminSide/addproduct/addpr
 import { AboutComponent } from './Component/core/about/about.component';
 import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/AdminNavComponent';
 import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
-import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
+import { ProductDetailsmainComponent } from './Component/core/product-details-Main/product-details-main.component';
 
 
 
