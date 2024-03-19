@@ -32,16 +32,18 @@ import { AdminComponent } from './Component/core/AdminSide/admin/admin.component
 import { AsideComponent } from './Component/core/AdminSide/aside/aside.component';
 import { SalesChartComponent } from './Component/core/AdminSide/sales-chart/sales-chart.component';
 import { StoreComponent } from './Component/core/Store/store.component';
-import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/AdminNavComponent';
+
 import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.component';
 import { DashboardComponent } from './Component/core/AdminSide/dashboard/dashboard.component';
 import { AddproductComponent } from './Component/core/AdminSide/addproduct/addproduct.component';
-import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
 import { AboutComponent } from './Component/core/about/about.component';
+import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/AdminNavComponent';
+import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
+import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
+
 import { RouterModule } from '@angular/router';
 import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
 import { ComponentUrl } from './models/unit';
-const componentUrl = ComponentUrl;
 
 @NgModule({
   declarations: [
@@ -66,7 +68,6 @@ const componentUrl = ComponentUrl;
     FavoriteComponent,
     AboutUsComponent,
     StoreComponent,
-    AdminNavComponent,
     SidbarComponent,
     CheckoutComponent,
     AdminNavComponent,
@@ -74,6 +75,7 @@ const componentUrl = ComponentUrl;
     AddproductComponent,
     ProductDetailsComponent,
     AboutComponent,
+    ProductDetailsmainComponent,
     AnonymousPageComponent,
   ],
   imports: [
