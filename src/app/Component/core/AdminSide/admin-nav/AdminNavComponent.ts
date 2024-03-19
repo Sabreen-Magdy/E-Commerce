@@ -1,14 +1,15 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { ROUTES } from '@angular/router';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ComponentUrl } from 'src/app/models/unit';
 
 @Component({
   selector: 'app-admin-nav',
   templateUrl: './admin-nav.component.html',
-  styleUrls: ['./admin-nav.component.css']
+  styleUrls: ['./admin-nav.component.css'],
 })
 export class AdminNavComponent {
+  ComponentUrl = ComponentUrl;
   private listTitles: any[] = [];
   location: Location;
   private nativeElement: Node;
@@ -16,9 +17,14 @@ export class AdminNavComponent {
   private sidebarVisible: boolean;
 
   public isCollapsed = true;
-  @ViewChild("navbar-cmp", { static: false }) button: any;
+  @ViewChild('navbar-cmp', { static: false }) button: any;
 
-  constructor(location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router) {
+  constructor(
+    location: Location,
+    private renderer: Renderer2,
+    private element: ElementRef,
+    private router: Router
+  ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
@@ -54,7 +60,9 @@ export class AdminNavComponent {
   sidebarOpen() {
     const toggleButton = this.toggleButton;
     const html = document.getElementsByTagName('html')[0];
-    const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
+    const mainPanel = <HTMLElement>(
+      document.getElementsByClassName('main-panel')[0]
+    );
     setTimeout(function () {
       toggleButton.classList.add('toggled');
     }, 500);
@@ -64,10 +72,12 @@ export class AdminNavComponent {
       mainPanel.style.position = 'fixed';
     }
     this.sidebarVisible = true;
-  };
+  }
   sidebarClose() {
     const html = document.getElementsByTagName('html')[0];
-    const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
+    const mainPanel = <HTMLElement>(
+      document.getElementsByClassName('main-panel')[0]
+    );
     if (window.innerWidth < 991) {
       setTimeout(function () {
         mainPanel.style.position = '';
@@ -76,7 +86,7 @@ export class AdminNavComponent {
     this.toggleButton.classList.remove('toggled');
     this.sidebarVisible = false;
     html.classList.remove('nav-open');
-  };
+  }
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
@@ -88,8 +98,5 @@ export class AdminNavComponent {
       navbar.classList.add('navbar-transparent');
       navbar.classList.remove('bg-white');
     }
-
   }
-
-
 }

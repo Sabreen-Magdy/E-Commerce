@@ -1,7 +1,12 @@
 <div id="blur"></div>
 <div class="contain container">
   <div class="title">
-    <span><a href="">الرئيسية</a> / الكل</span>
+    <span
+      ><a [routerLink]="[ComponentUrl.Default]" routerLinkActive="active"
+        >الرئيسية</a
+      >
+      / الكل</span
+    >
     <h1>جميع المنتجات</h1>
   </div>
   <div class="filterpart">
@@ -109,9 +114,9 @@
   </div>
 </div>
 <div class="filterlist col-md-3" id="popup">
-    <div class="close">
-        <button class="btn" (click)="toggle()">x</button>
-    </div>
+  <div class="close">
+    <button class="btn" (click)="toggle()">x</button>
+  </div>
   <div class="nameSearch">
     <form>
       <input type="text" placeholder="البحث باسم المنتج ..." />

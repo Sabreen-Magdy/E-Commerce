@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Iproduct } from 'src/app/Component/Models/iproduct';
-import { ProductService } from 'src/app/Component/services/product.service';
+import { Iproduct } from 'src/app/models/iproduct';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
-export class     ProductDetailsComponent
-{
+export class ProductDetailsComponent {
   ProductList: any;
-delete(arg0: any) {
-throw new Error('Method not implemented.');
-}
+  delete(arg0: any) {
+    throw new Error('Method not implemented.');
+  }
   product: Iproduct | undefined = {
     id: 3,
     name: 'test',
@@ -38,5 +37,4 @@ throw new Error('Method not implemented.');
     //   this.myRouter.navigate(['/tt']);
     // }
   }
-
 }

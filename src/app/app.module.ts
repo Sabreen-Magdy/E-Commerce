@@ -11,12 +11,12 @@ import { SigninFormComponent } from './Component/core/SignComp/signin-form/signi
 import { SignUpFormComponent } from './Component/core/SignComp/sign-up-form/sign-up-form.component';
 import { SignImgComponent } from './Component/core/SignComp/sign-img/sign-img.component';
 import { ForgetPasswordComponent } from './Component/core/SignComp/forget-password/forget-password.component';
-import { MainPageComponent } from './Component/core/main-page/main-page.component';
+import { MainPageComponent } from './Component/core/anonymous-page/main-page/main-page.component';
 import { SliderHomeComponent } from './Component/core/HomePage/slider-home/slider-home.component';
 import { CategoriesComponent } from './Component/core/HomePage/categories/categories.component';
 import { NewProductComponent } from './Component/core/HomePage/new-product/new-product.component';
 
-import { ReviewsComponent } from './Component/core/reviews/reviews.component';
+import { ReviewsComponent } from './Component/core/anonymous-page/reviews/reviews.component';
 //import { AdminComponent } from './Component/core/admin/admin.component';
 //import { AsideComponent } from './Component/core/aside/aside.component';
 // import { ChartsModule } from 'ng2-charts';
@@ -38,7 +38,10 @@ import { DashboardComponent } from './Component/core/AdminSide/dashboard/dashboa
 import { AddproductComponent } from './Component/core/AdminSide/addproduct/addproduct.component';
 import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
 import { AboutComponent } from './Component/core/about/about.component';
-
+import { RouterModule } from '@angular/router';
+import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
+import { ComponentUrl } from './models/unit';
+const componentUrl = ComponentUrl;
 
 @NgModule({
   declarations: [
@@ -70,21 +73,20 @@ import { AboutComponent } from './Component/core/about/about.component';
     DashboardComponent,
     AddproductComponent,
     ProductDetailsComponent,
-    AboutComponent
-
-
-
-
+    AboutComponent,
+    AnonymousPageComponent,
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+
     // ChartsModule
     //BrowserModule,
-   // NgxChartsModule
+    // NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
