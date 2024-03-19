@@ -1,0 +1,74 @@
+
+.profile-nav, .profile-info{
+  margin-top:30px;
+
+}
+
+.profile-nav .user-heading {
+  background: #009860;
+  border-radius: 4px 4px 4px 4px;
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+}
+
+.profile-nav .user-heading.round a  {
+  border-radius: 50%;
+  border: 10px solid rgba(255,255,255,0.3);
+  display: inline-block;
+}
+
+.profile-nav .user-heading a img {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+}
+
+.profile-nav .user-heading h1 {
+  font-size: 22px;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+.profile-nav .user-heading p {
+  font-size: 12px;
+}
+.card ul{
+  padding-right: 0px;
+}
+.card li a{
+  text-decoration: none;
+  color: #009860;
+}
+.card ul > li:hover, .card ul > li:focus, .card ul li.active{
+  background: #f8f7f5 !important;
+  color: #89817f !important;
+  border-color: #cdc8c7 !important;
+  border-right: 5px solid #009860 !important ;
+  cursor: pointer;
+}
+.bio-graph-heading {
+  background: #009860;
+  color: #fff;
+  text-align: center;
+  padding: 40px 110px;
+  border-radius: 4px 4px 0 0;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.bio-graph-info {
+  color: #89817e;
+}
+
+.bio-graph-info h1 {
+  font-size: 22px;
+  font-weight: 300;
+  margin: 0 0 20px;
+}
+
+
+
+
+
+

@@ -24,7 +24,6 @@ import { ReviewsComponent } from './Component/core/reviews/reviews.component';
 //import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
 import { CartComponent } from './Component/core/cart/cart.component';
 import { FavoriteComponent } from './Component/core/favorite/favorite.component';
-import { AboutUsComponent } from './Component/core/about-us/about-us.component';
 
 import { CheckoutComponent } from './Component/core/checkout/checkout.component';
 
@@ -37,7 +36,12 @@ import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.compon
 import { DashboardComponent } from './Component/core/AdminSide/dashboard/dashboard.component';
 import { AddproductComponent } from './Component/core/AdminSide/addproduct/addproduct.component';
 import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
-import { AboutComponent } from './Component/about/about.component';
+import { AboutComponent } from './Component/core/about/about.component';
+import { HomePageComponent } from './Component/core/HomePage/home-page/home-page.component';
+import { ProfileComponent } from './Component/core/profilePage/profile/profile.component';
+import { ProfiledetaileComponent } from './Component/core/profilePage/profiledetaile/profiledetaile.component';
+import { ActivityComponent } from './Component/core/profilePage/activity/activity.component';
+import { EditprofileComponent } from './Component/core/profilePage/editprofile/editprofile.component';
 
 
 @NgModule({
@@ -61,7 +65,6 @@ import { AboutComponent } from './Component/about/about.component';
     SalesChartComponent,
     CartComponent,
     FavoriteComponent,
-    AboutUsComponent,
     StoreComponent,
     AdminNavComponent,
     SidbarComponent,
@@ -70,7 +73,12 @@ import { AboutComponent } from './Component/about/about.component';
     DashboardComponent,
     AddproductComponent,
     ProductDetailsComponent,
-    AboutComponent
+    AboutComponent,
+    HomePageComponent,
+    ProfileComponent,
+    ProfiledetaileComponent,
+    ActivityComponent,
+    EditprofileComponent
 
 
 

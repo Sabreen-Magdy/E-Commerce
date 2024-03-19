@@ -1,0 +1,53 @@
+<div class="container bootstrap snippets bootdey">
+  <div class="row">
+    <div class="profile-nav col-md-3">
+      <div class="panel">
+        <div class="user-heading round">
+          <a href="#">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar3.png"
+              alt=""
+            />
+          </a>
+          <h1>صابرين مجدي</h1>
+          <p>sabreenmagdy@gmail.com</p>
+        </div>
+        <div class="card" style="width: 19rem">
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item"
+              routerLink="/profiledetails"
+              routerLinkActive="active"
+            >
+              <a> <i class="fa fa-user"></i> الملف الشخصي</a>
+            </li>
+            <li
+              class="list-group-item"
+              routerLink="/activity"
+              routerLinkActive="active"
+            >
+              <a> <i class="fa fa-calendar"></i> الأنشطة الحديثة </a>
+            </li>
+            <li
+              class="list-group-item"
+              routerLink="/editprofile"
+              routerLinkActive="active"
+            >
+              <a> <i class="fa fa-edit"></i> تعديل الملف</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="profile-info col-md-9">
+      <div class="panel">
+        <div class="bio-graph-heading">
+          اهلا بك عميلنا العزيز فى هذه الصفحة يمكنك الإطلاع على معلوماتك الشخصية
+          وتعديلها
+        </div>
+        <router-outlet></router-outlet>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
