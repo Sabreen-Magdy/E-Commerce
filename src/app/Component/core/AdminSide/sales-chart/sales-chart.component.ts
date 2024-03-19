@@ -52,6 +52,62 @@ export class SalesChartComponent  implements OnInit {
       }
     });
   }
+  weekselected : boolean = true
+  yearselected : boolean = false
+  weekcheck(){
+    this.weekselected = true;
+    this.yearselected = false
+  }
+  yaercheck(){
+    this.weekselected = false;
+    this.yearselected = true
+  }
+
+  // chart: any;
+  // weekselected: boolean = true;
+
+  // constructor() { }
+
+  // ngOnInit(): void {
+  //   this.initChart();
+  // }
+
+  // initChart(): void {
+  //   const salesData: number[] = [15500,21500,18500,24000,23900,24000,12000];
+  //   this.chart = new Chart('canvas', {
+  //     type: 'line',
+  //     data: {
+  //       labels: ['Saturday', 'Sunday', 'Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+  //       datasets: [{
+  //         label: 'Sales',
+  //         data: salesData,
+  //         backgroundColor: '#675548',
+  //         borderColor: '#675548',
+  //         borderWidth: 3
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+  //         y: {
+  //           beginAtZero: false 
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
+  onSelectionChange(event: any): void {
+    // Update chart based on the selection here
+    if (event.target.value === "This Week") {
+      // Call a method to update the chart for "This Week"
+      this.weekselected = true;
+      // Update the chart as necessary
+    } else if (event.target.value === "This Year") {
+      // Call a method to update the chart for "This Year"
+      this.weekselected = false;
+      // Update the chart as necessary
+    }
+  } 
   // public lineChartData: ChartDataSets[] = [
   //   { data: [65, 59, 80, 81, 56, 55, 40], label: 'Sales' },
   // ];

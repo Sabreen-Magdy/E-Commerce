@@ -17,14 +17,24 @@ import { CategoriesComponent } from './Component/core/HomePage/categories/catego
 import { NewProductComponent } from './Component/core/HomePage/new-product/new-product.component';
 
 import { ReviewsComponent } from './Component/core/reviews/reviews.component';
-import { AdminComponent } from './Component/core/admin/admin.component';
-import { AsideComponent } from './Component/core/aside/aside.component';
+//import { AdminComponent } from './Component/core/admin/admin.component';
+//import { AsideComponent } from './Component/core/aside/aside.component';
 // import { ChartsModule } from 'ng2-charts';
 //import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
+//import { SalesChartComponent } from './Component/core/sales-chart/sales-chart.component';
 import { CartComponent } from './Component/core/cart/cart.component';
 import { FavoriteComponent } from './Component/core/favorite/favorite.component';
 import { AboutUsComponent } from './Component/core/about-us/about-us.component';
+
+import { CheckoutComponent } from './Component/core/checkout/checkout.component';
+
+import { AdminComponent } from './Component/core/AdminSide/admin/admin.component';
+import { AsideComponent } from './Component/core/AdminSide/aside/aside.component';
+import { SalesChartComponent } from './Component/core/AdminSide/sales-chart/sales-chart.component';
+import { StoreComponent } from './Component/core/Store/store.component';
+import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/admin-nav.component';
+import { SidbarComponent } from './Component/core/AdminSide/sidbar/sidbar.component';
+
 
 @NgModule({
   declarations: [
@@ -47,8 +57,12 @@ import { AboutUsComponent } from './Component/core/about-us/about-us.component';
     SalesChartComponent,
     CartComponent,
     FavoriteComponent,
-    AboutUsComponent
-
+    AboutUsComponent,
+    StoreComponent,
+    AdminNavComponent,
+    SidbarComponent,
+    CheckoutComponent,
+    AdminNavComponent
   ],
   imports: [
     BrowserModule,
