@@ -1,11 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-product-details',
-  templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  selector: 'app-product-details-main',
+  templateUrl: './product-details-main.component.html',
+  styleUrls: ['./product-details-main.component.css']
 })
-export class ProductDetailsComponent {
+export class ProductDetailsmainComponent {
   list: string[] = [
     "https://media.istockphoto.com/id/955641488/photo/clothes-shop-costume-dress-fashion-store-style-concept.jpg?s=612x612&w=0&k=20&c=ZouECh5-XOCuBzvKBQfxgyw0RIGEUg9u5F0sJiZV86s=",
     "https://st3.depositphotos.com/9747634/32010/i/450/depositphotos_320104748-stock-photo-hangers-with-different-clothes-in.jpg",
