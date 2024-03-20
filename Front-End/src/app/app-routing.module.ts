@@ -15,44 +15,20 @@ import { ReviewsComponent } from './Component/core/anonymous-page/reviews/review
 import { SignUpFormComponent } from './Component/core/SignComp/sign-up-form/sign-up-form.component';
 import { SigninFormComponent } from './Component/core/SignComp/signin-form/signin-form.component';
 import { ForgetPasswordComponent } from './Component/core/SignComp/forget-password/forget-password.component';
-<<<<<<< HEAD:src/app/app-routing.module.ts
-import { HomePageComponent } from './Component/core/HomePage/home-page/home-page.component';
+// import { HomePageComponent } from './Component/core/HomePage/home-page/home-page.component';
 import { AboutComponent } from './Component/core/about/about.component';
-import { ProfileComponent } from './Component/core/profilePage/profile/profile.component';
-import { EditprofileComponent } from './Component/core/profilePage/editprofile/editprofile.component';
-import { ProfiledetaileComponent } from './Component/core/profilePage/profiledetaile/profiledetaile.component';
-import { ActivityComponent } from './Component/core/profilePage/activity/activity.component';
+import { ProfileComponent } from './Component/core/ProfilePage/profile/profile.component';
+import { EditprofileComponent } from './Component/core/ProfilePage/editprofile/editprofile.component';
+import { ProfiledetaileComponent } from './Component/core/ProfilePage/profiledetaile/profiledetaile.component';
+import { ActivityComponent } from './Component/core/ProfilePage/activity/activity.component';
 
-const routes: Routes = [
-  { path: 'cart', component: CartComponent},
-  { path: 'mainpage', component: MainPageComponent},
-  { path: 'homepage', component: HomePageComponent},
-  { path: 'aboutus', component: AboutComponent},
-  { path: 'checkout', component:CheckoutComponent},
-  { path: 'favorite', component:FavoriteComponent},
-  { path: 'future', component:FutureComponentComponent},
-  { path: 'categories', component:CategoriesComponent},
-  { path: 'newproduct', component:NewProductComponent},
-  { path: 'sliderhome', component:SliderHomeComponent},
-  { path: 'reviews', component:ReviewsComponent},
-  { path: 'profile', component:ProfileComponent},
-  { path: 'editprofile', component:EditprofileComponent},
-  { path: 'profiledetails', component:ProfiledetaileComponent},
-  { path: 'activity', component:ActivityComponent},
-  { path: 'signup', component:SignUpFormComponent},
-  { path: 'signin', component:SigninFormComponent},
-  { path: 'forgetpassword', component:ForgetPasswordComponent},
-  { path: 'store', component: StoreComponent},
-  { path: 'navbar', component: NavbarComponent},
-  { path: 'footer', component: FooterComponent}
-=======
 import { ComponentUrl } from './models/unit';
 
 const routes: Routes = [
   { path: ComponentUrl.Cart, component: CartComponent },
   { path: ComponentUrl.AnonymousPage, component: AnonymousPageComponent },
-  { path: ComponentUrl.AboutUs, component: AboutUsComponent },
-  { path: ComponentUrl.Default, component: AboutUsComponent },
+  { path: ComponentUrl.AboutUs, component: AboutComponent },
+  { path: ComponentUrl.Default, component: AboutComponent },
   { path: ComponentUrl.Checkout, component: CheckoutComponent },
   { path: ComponentUrl.Favorite, component: FavoriteComponent },
   { path: ComponentUrl.Future, component: FutureComponentComponent },
@@ -66,7 +42,11 @@ const routes: Routes = [
   { path: ComponentUrl.Store, component: StoreComponent },
   { path: ComponentUrl.Navbar, component: NavbarComponent },
   { path: ComponentUrl.Footer, component: FooterComponent },
->>>>>>> 9ddbeec8fca41f3659be6533889408d2b25facc5:Front-End/src/app/app-routing.module.ts
+
+  { path: ComponentUrl.Profile, component: ProfileComponent },
+  { path: ComponentUrl.EditProfile, component: EditprofileComponent },
+  { path: ComponentUrl.ProfileDetails, component: ProfiledetaileComponent },
+  { path: ComponentUrl.ProfileActivity, component: ActivityComponent },
 ];
 
 @NgModule({

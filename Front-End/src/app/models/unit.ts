@@ -47,7 +47,22 @@ export class ComponentUrl {
   static get Navbar() {
     return 'navbar';
   }
+
   static get Footer() {
     return 'footer';
+  }
+
+  static get Profile() {
+    return 'profile';
+  }
+
+  static get EditProfile() {
+    return 'editprofile';
+  }
+  static get ProfileDetails() {
+    return 'profiledetials';
+  }
+  static get ProfileActivity() {
+    return 'profileactivity';
   }
 }

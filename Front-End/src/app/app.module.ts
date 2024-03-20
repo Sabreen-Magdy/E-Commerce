@@ -38,20 +38,14 @@ import { AddproductComponent } from './Component/core/AdminSide/addproduct/addpr
 import { AboutComponent } from './Component/core/about/about.component';
 import { AdminNavComponent } from './Component/core/AdminSide/admin-nav/AdminNavComponent';
 import { ProductDetailsComponent } from './Component/core/AdminSide/product-details/product-details.component';
-<<<<<<< HEAD:src/app/app.module.ts
-import { AboutComponent } from './Component/core/about/about.component';
-import { HomePageComponent } from './Component/core/HomePage/home-page/home-page.component';
-import { ProfileComponent } from './Component/core/profilePage/profile/profile.component';
-import { ProfiledetaileComponent } from './Component/core/profilePage/profiledetaile/profiledetaile.component';
-import { ActivityComponent } from './Component/core/profilePage/activity/activity.component';
-import { EditprofileComponent } from './Component/core/profilePage/editprofile/editprofile.component';
-=======
-import { ProductDetailsmainComponent } from './Component/core/product-details-Main/product-details-main.component';
->>>>>>> 9ddbeec8fca41f3659be6533889408d2b25facc5:Front-End/src/app/app.module.ts
 
+import { ProfileComponent } from './Component/core/ProfilePage/profile/profile.component';
+import { ProfiledetaileComponent } from './Component/core/ProfilePage/profiledetaile/profiledetaile.component';
+import { ActivityComponent } from './Component/core/ProfilePage/activity/activity.component';
+import { EditprofileComponent } from './Component/core/ProfilePage/editprofile/editprofile.component';
+import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
 import { RouterModule } from '@angular/router';
 import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
-import { ComponentUrl } from './models/unit';
 
 @NgModule({
   declarations: [
@@ -82,20 +76,12 @@ import { ComponentUrl } from './models/unit';
     AddproductComponent,
     ProductDetailsComponent,
     AboutComponent,
-<<<<<<< HEAD:src/app/app.module.ts
-    HomePageComponent,
     ProfileComponent,
     ProfiledetaileComponent,
     ActivityComponent,
-    EditprofileComponent
-
-
-
-
-=======
+    EditprofileComponent,
     ProductDetailsmainComponent,
     AnonymousPageComponent,
->>>>>>> 9ddbeec8fca41f3659be6533889408d2b25facc5:Front-End/src/app/app.module.ts
   ],
   imports: [
     RouterModule,
