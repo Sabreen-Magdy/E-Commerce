@@ -46,6 +46,7 @@ import { EditprofileComponent } from './Component/core/ProfilePage/editprofile/e
 import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
 import { RouterModule } from '@angular/router';
 import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
+import { OrdersComponent } from './Component/core/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymou
     EditprofileComponent,
     ProductDetailsmainComponent,
     AnonymousPageComponent,
+    OrdersComponent,
   ],
   imports: [
     RouterModule,
