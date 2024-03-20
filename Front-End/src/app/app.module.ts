@@ -47,6 +47,7 @@ import { ProductDetailsmainComponent } from './Component/core/product-details-ma
 import { RouterModule } from '@angular/router';
 import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
 import { OrdersComponent } from './Component/core/orders/orders.component';
+import { CardsComponent } from './Component/core/AdminSide/cards/cards.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,8 @@ import { OrdersComponent } from './Component/core/orders/orders.component';
     ProductDetailsmainComponent,
     AnonymousPageComponent,
     OrdersComponent,
+    CardsComponent,
+    
   ],
   imports: [
     RouterModule,

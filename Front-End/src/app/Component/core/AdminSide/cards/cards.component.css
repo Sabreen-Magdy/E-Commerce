@@ -1,0 +1,125 @@
+* {
+    direction: ltr;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* Horizontal offset, vertical offset, blur radius, spread radius, color */
+}
+
+
+/* hr {
+    margin: 50px 50px;
+} */
+/* .card-body {
+    padding: 15px 15px 0px;
+}
+
+.numbers {
+    text-align: right;
+    font-size: 2em;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.card-category {
+    color: darkgray;
+    font-size: 16px;
+    line-height: 1.4em;
+}
+
+.card-footer {
+    padding: 0px 15px 15px;
+}
+
+.card-footer.stats {
+    color: darkgray;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 15px;
+} */
+/* *{
+    font-family: "Ubuntu" , sans-serif ;
+} */
+.material-icons {
+    font-size: 40px;
+    color: rgb(246, 246, 34);
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: 500;
+    font-size: 35px; /* Example size */
+    color: #83f343; /* Example color */
+  }
+
+ .order{
+    font-family: 'Material Symbols Outlined';
+    font-weight: 500;
+    font-size: 35px; /* Example size */
+    color: #fa7203; /* Example color */
+ } 
+ .users{
+    font-family: 'Material Symbols Outlined';
+    font-weight: 500;
+    font-size: 35px; /* Example size */
+    color: #fa03e9; /* Example color */
+ }
+.card-stats {
+    .card-body {
+        padding: 15px 15px 0px;
+
+        .numbers {
+            text-align: right;
+            font-size: 2em;
+
+            p {
+                margin-bottom: 0;
+            }
+
+            .card-category {
+                color: darkgray;
+                font-size: 16px;
+                line-height: 1.4em;
+            }
+        }
+    }
+
+    .card-footer {
+        padding: 0px 15px 15px;
+
+        .stats {
+            color: darkgray;
+        }
+
+        hr {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+    }
+
+    .icon-big {
+        font-size: 3em;
+        min-height: 64px;
+
+        i {
+            line-height: 59px;
+        }
+    }
+
+
+} 
+
+/* .icon-big {
+    font-size: 3em;
+    min-height: 64px;
+
+    
+}
+i {
+    line-height: 59px;
+} */
