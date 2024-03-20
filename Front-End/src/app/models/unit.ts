@@ -65,4 +65,7 @@ export class ComponentUrl {
   static get ProfileActivity() {
     return 'profileactivity';
   }
+  static get Homepage() {
+    return 'homePage';
+  }
 }

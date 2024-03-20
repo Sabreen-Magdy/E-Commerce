@@ -47,6 +47,8 @@ const routes: Routes = [
   { path: ComponentUrl.EditProfile, component: EditprofileComponent },
   { path: ComponentUrl.ProfileDetails, component: ProfiledetaileComponent },
   { path: ComponentUrl.ProfileActivity, component: ActivityComponent },
+  { path: ComponentUrl.Homepage, component:SliderHomeComponent },
+  
 ];
 
 @NgModule({
