@@ -1,10 +1,10 @@
 using Presentation;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
-using Services.Abstraction.DataServices;
 using Services.DataServices;
-using Domain.Repositories;
 using Persistence.Repositories;
+using Domain.Repositories.Customer;
+using Services.Abstraction.DataServices.Customer;
 
 var builder = WebApplication.CreateBuilder(args);
 

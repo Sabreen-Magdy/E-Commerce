@@ -2,7 +2,7 @@
 
 public sealed class AlreadyExistException : Exception
 {
-    public AlreadyExistException() :
-    base("this Customer already exist")
+    public AlreadyExistException(string entityName) :
+    base($"this {entityName} already exist")
     { }
 }

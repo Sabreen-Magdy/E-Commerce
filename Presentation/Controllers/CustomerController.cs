@@ -103,7 +103,7 @@ public class CustomerController : ControllerBase
 
 
     [HttpDelete("UpdateCustomers")]
-    public IActionResult Update(int id, Dictionary<CustomerProperties, string> newValues)
+    public IActionResult Update(int id, Dictionary<Properties, string> newValues)
     {
         _customerService.Update(id, newValues);
 
