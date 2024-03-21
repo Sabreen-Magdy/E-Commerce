@@ -40,6 +40,9 @@ builder.Services.AddControllers().AddApplicationPart(
 // Add Services Scope
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
 
 #endregion
 
