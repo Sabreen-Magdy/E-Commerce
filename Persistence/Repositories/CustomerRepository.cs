@@ -28,11 +28,11 @@ public class CustomerRepository : ICustomerRepository
       _context.Customers.Where(c => c.Name == name)
                     .Select(c => c).ToList();
 
-   
-
-    public int SaveChanges() =>
-        _context.SaveChanges();
-
     public void Update(Domain.Entities.Customer customer) =>
       _context.Customers.Update(customer);
+
+    public bool Login(string username, string password)
+    {
+        throw new NotImplementedException();
+    }
 }
