@@ -91,7 +91,7 @@ public class CustomerService: ICustomerService
     {
         var customer = _repository.CustomerRepository.Get(id);
         if (customer is null)
-            throw new NotFoundException();
+            throw new NotFoundException("Customer");
         else
         {
             _repository.CustomerRepository.Update(updateCustomer(customer, newValues));
@@ -103,7 +103,7 @@ public class CustomerService: ICustomerService
     {
         var customer = _repository.CustomerRepository.Get(id);
         if (customer is null)
-            throw new NotFoundException();
+            throw new NotFoundException("Customer");
         else
         {
             _repository.CustomerRepository.Delete(customer);

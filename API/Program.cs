@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Services.DataServices;
 using Persistence.Repositories;
-using Domain.Repositories.Customer;
-using Services.Abstraction.DataServices.Customer;
+using Services.Abstraction.DataServices;
+using Domain.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,14 +38,10 @@ builder.Services.AddControllers().AddApplicationPart(
      typeof(AssemblyReferneces).Assembly);
 
 // Add Services Scope
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 #endregion
-
 
 var app = builder.Build();
 
