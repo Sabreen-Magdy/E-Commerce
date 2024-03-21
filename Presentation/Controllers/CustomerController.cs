@@ -1,8 +1,8 @@
 ﻿using Contract.Customer;
 using Domain.Enums;
-using Services.Abst.DataServices;
 using Microsoft.AspNetCore.Mvc;
-
+using Services.Abstraction.DataServices;
+using Microsoft.AspNetCore.Http;
 
 namespace Presentation.Controllers;
 
@@ -103,7 +103,7 @@ public class CustomerController : ControllerBase
 
 
     [HttpDelete("UpdateCustomers")]
-    public IActionResult Update(int id, Dictionary<CustomerProperties, string> newValues)
+    public IActionResult Update(int id, Dictionary<Properties, string> newValues)
     {
         _customerService.Update(id, newValues);
 
