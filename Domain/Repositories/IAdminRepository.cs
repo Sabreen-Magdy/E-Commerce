@@ -12,6 +12,9 @@ public interface IAdminRepository
     IProductColerdRepository ProductColerdRepository { get; }
     IProductVarientRepository ProductVarientRepository { get; }
     ISallerRepository SallerRepository { get; }
+    IOrderReposatory OrderReposatory { get; }
+    
+
 
     /// <summary>
     /// Apply Changes in DataBase
