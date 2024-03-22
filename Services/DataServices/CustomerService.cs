@@ -77,7 +77,7 @@ public class CustomerService: ICustomerService
                 case Properties.Image:
                     customer.Image = item.Value;
                     break;
-                case Properties.Passwor:
+                case Properties.Password:
                     customer.Password = item.Value;
                     break;
 
