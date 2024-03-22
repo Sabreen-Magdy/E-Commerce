@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class CartRepository : ICartRepository
+    public class CartRepository : ICardRepositry
     {
         private readonly ApplicationDbContext _dbContext;
 

@@ -1,8 +1,9 @@
 ﻿using Contract.Customer;
 using Domain.Enums;
-using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction.DataServices;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Services.DataServices;
+
 
 namespace Presentation.Controllers;
 
@@ -10,18 +11,18 @@ namespace Presentation.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerService _customerService;
+    private readonly IAdminService _adminService;
 
-    public CustomerController(ICustomerService customerService)
+    public CustomerController(IAdminService adminService)
     {
-        _customerService = customerService;
+        _adminService = adminService;
     }
 
     
     [HttpGet("GetAllCustomers")]
     public IActionResult GetAll()
     {
-        var customer = _customerService.GetAll();
+        var customer = _adminService.CustomerService.GetAll();
 
         if (customer == null) NotFound("No Cudtomers in System");
         return Ok(customer);
@@ -30,7 +31,7 @@ public class CustomerController : ControllerBase
     [HttpGet("GetCustomerById")]
     public IActionResult GetCustomer(int id)
     {
-        var customer =  _customerService.Get(id);
+        var customer = _adminService.CustomerService.Get(id);
 
         if (customer == null) NotFound("this Customer Not Found");
         return Ok(customer);
@@ -39,7 +40,7 @@ public class CustomerController : ControllerBase
     [HttpGet("GetCustomerByName")]
     public IActionResult GetCustomer(string name)
     {
-        var customers = _customerService.Get(name);
+        var customers = _adminService.CustomerService.Get(name);
 
         if (customers == null) NotFound($"No Cudtomers with {name} Name Found");
         return Ok(customers);
@@ -48,7 +49,7 @@ public class CustomerController : ControllerBase
     [HttpGet("GetFavourites")]
     public IActionResult GetFavourites(int id)
     {
-        var favourites = _customerService.GetFavourites(id);
+        var favourites = _adminService.CustomerService.GetFavourites(id);
 
         if (favourites == null) NotFound("Empty List");
         return Ok(favourites);
@@ -57,7 +58,7 @@ public class CustomerController : ControllerBase
     [HttpGet("GetOrders")]
     public IActionResult GetOrders(int id)
     {
-        var orders = _customerService.GetOrders(id);
+        var orders = _adminService.CustomerService.GetOrders(id);
 
         if (orders == null) NotFound("Empty Orders");
         return Ok(orders);
@@ -67,7 +68,7 @@ public class CustomerController : ControllerBase
     public IActionResult GetCart(int id)
     {
        
-        var carts = _customerService.GetCart(id);
+        var carts = _adminService.CustomerService.GetCart(id);
 
         if (carts == null) NotFound("Empty Carts");
         return Ok(carts);
@@ -77,7 +78,7 @@ public class CustomerController : ControllerBase
     public IActionResult GetReviews(int id)
     {
 
-        var reviews = _customerService.GetReviews(id);
+        var reviews = _adminService.CustomerService.GetReviews(id);
 
         if (reviews == null) NotFound("Empty Reviews");
         return Ok(reviews);
@@ -87,7 +88,7 @@ public class CustomerController : ControllerBase
     [HttpPost("AddCustomers")]
     public IActionResult Add(CustomerAddDto customer)
     {
-        _customerService.Add(customer);
+        _adminService.CustomerService.Add(customer);
        
         return Ok();
     }
@@ -96,7 +97,7 @@ public class CustomerController : ControllerBase
     [HttpDelete("DeleteCustomers")]
     public IActionResult Delete(int id)
     {
-        _customerService.Delete(id);
+        _adminService.CustomerService.Delete(id);
 
         return Ok();
     }
@@ -105,7 +106,7 @@ public class CustomerController : ControllerBase
     [HttpDelete("UpdateCustomers")]
     public IActionResult Update(int id, Dictionary<Properties, string> newValues)
     {
-        _customerService.Update(id, newValues);
+        _adminService.CustomerService.Update(id, newValues);
 
         return Ok();
     }

@@ -11,9 +11,9 @@ namespace Domain.Entities
         // Foreign key to reference the product
         public int ProductVarientId { get; set; }
         public ProductVarient ProductVarient { get; set; } =null!;
-        public string ProductName { get; set; }
-        public string PictureUrl { get; set; }
-        public string ProductDescription { get; set; }
+        public string? ProductName { get; set; }
+        public string? PictureUrl { get; set; }
+        public string? ProductDescription { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
 

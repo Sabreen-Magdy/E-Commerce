@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface ICartRepository
+    public interface ICartRepositry
     {
         Cart? GetById(int id);
         Cart? GetByCustomerId(int id);

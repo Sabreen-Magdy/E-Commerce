@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities;
 
 public class ProductVarient : BaseEntity
 {
@@ -15,6 +17,10 @@ public class ProductVarient : BaseEntity
     public List<CartItem> CartItems { get; set; } = null!;
     public ICollection<Favourite> Favourites { get; set; } = null!;
     public List<FavoriteItems> FavoriteItems { get; set; } = null!;
+
+    [ForeignKey("ProductBelongToOrder")]
+    public virtual int ProductBelongToOrderId { get; set; }
+    public virtual ProductVarientBelongToOrder  ProductBelongToOrder { get; set; }
 
     #endregion
 }

@@ -27,25 +27,21 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("mosCon");
+var connection = builder.Configuration.GetConnectionString("soomcon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
-        connection, b => b.MigrationsAssembly("Customer.Persistence")));
+        connection, b => b.MigrationsAssembly("Persistence")));
 
 // Add Controllers 
 builder.Services.AddControllers().AddApplicationPart(
      typeof(AssemblyReferneces).Assembly);
 
 // Add Services Scope
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 #endregion
-
 
 var app = builder.Build();
 

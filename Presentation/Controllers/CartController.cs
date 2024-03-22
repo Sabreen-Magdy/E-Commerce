@@ -8,9 +8,9 @@ namespace Presentation.Controllers
     [ApiController]
     public class CartController: ControllerBase
     {
-        private readonly ICartRepository _cartRepository;
+        private readonly ICartRepositry _cartRepository;
 
-        public CartController(ICartRepository cartRepository)
+        public CartController(ICartRepositry cartRepository)
         {
             _cartRepository = cartRepository;
         }
@@ -42,7 +42,7 @@ namespace Presentation.Controllers
             return CreatedAtAction(nameof(GetById), new { id = cart.Id }, cart);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult UpdateCart(Cart cart)
         {
             var oldCart = _cartRepository.GetById(cart.Id);

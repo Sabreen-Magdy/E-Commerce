@@ -9,8 +9,21 @@ namespace Domain.Entities
 {
     public class Cart:BaseEntity
     {
-        public int TotalQuantity { get; set; }
-        public decimal TotalPrice { get; set; }
+        public int TotalQuantity
+        {
+            get
+            {
+                return CartItems.Sum(ci => ci.Quantity);
+            }
+        }
+
+        public decimal TotalPrice
+        {
+            get
+            {
+                return CartItems.Sum(ci => ci.Price * ci.Quantity);
+            }
+        }
 
         #region RelationShip Mapping
         public int CustomerId { get; set; }

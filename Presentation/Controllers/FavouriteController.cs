@@ -42,7 +42,7 @@ namespace Presentation.Controllers
             return CreatedAtAction(nameof(GetById), new { id = favourite.Id }, favourite);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult UpdateFav(Favourite favourite)
         {
             var oldFav = _favouriteRepository.GetById(favourite.Id);

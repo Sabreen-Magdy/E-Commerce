@@ -12,4 +12,5 @@ public class Customer : BaseEntity
     public List<Review> Reviews { get; set; } = null!;
 
 
+    public virtual List<Order>? orders { get; set; }
 }

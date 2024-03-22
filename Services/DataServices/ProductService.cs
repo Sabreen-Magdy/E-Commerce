@@ -6,7 +6,6 @@ using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
-using System.Diagnostics;
 
 namespace Services.DataServices
 {

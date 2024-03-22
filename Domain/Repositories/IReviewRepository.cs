@@ -10,10 +10,11 @@ namespace Domain.Repositories
     public interface IReviewRepository
     {
         List<Review> GetAll();
-        Review? Get(int id);
+        List<Review> GetAllReviewByCustomerId(int customerId);
+        List<Review> GetAllReviewByProductId(int productId);
         void Add(Review review);
         void Update(Review review);
-        void Delete(int id);
+        void Delete(Review review);
 
     }
 }

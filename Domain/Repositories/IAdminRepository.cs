@@ -5,12 +5,15 @@
 /// </summary>
 public interface IAdminRepository
 {
-    ICustomerRepository CustomerRepository { get; }
     IProductRepository ProductRepository { get; }
     ICategoryRepository CategoryRepository { get; }
     IProductCategoryRepository ProductCategoryRepository { get; }
     IProductColerdRepository ProductColerdRepository { get; }
     IProductVarientRepository ProductVarientRepository { get; }
+    ISallerRepositry SallerRepository { get; }
+    IOrderReposatory OrderReposatory { get; }
+    
+
 
     /// <summary>
     /// Apply Changes in DataBase

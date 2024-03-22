@@ -77,7 +77,7 @@ public class CustomerService: ICustomerService
                 case Properties.Image:
                     customer.Image = item.Value;
                     break;
-                case Properties.Passwor:
+                case Properties.Password:
                     customer.Password = item.Value;
                     break;
 
@@ -91,7 +91,7 @@ public class CustomerService: ICustomerService
     {
         var customer = _repository.CustomerRepository.Get(id);
         if (customer is null)
-            throw new NotFoundException();
+            throw new NotFoundException("Customer");
         else
         {
             _repository.CustomerRepository.Update(updateCustomer(customer, newValues));
@@ -103,7 +103,7 @@ public class CustomerService: ICustomerService
     {
         var customer = _repository.CustomerRepository.Get(id);
         if (customer is null)
-            throw new NotFoundException();
+            throw new NotFoundException("Customer");
         else
         {
             _repository.CustomerRepository.Delete(customer);
@@ -115,7 +115,7 @@ public class CustomerService: ICustomerService
         //_client.FavouriteClient
         //.GetFavourites(customerId).Adapt<List<ItemDto>>(); 
 
-    public List<OrderDto> GetOrders(int customerId) => null!;
+    public List<OrderDto> GetOrders(int customerId) =>  null!;
     //_client.OrderClient
     //.GetOrders(customerId).Adapt<List<OrderDto>>();
 
