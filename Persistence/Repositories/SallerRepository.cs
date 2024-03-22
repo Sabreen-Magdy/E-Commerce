@@ -17,10 +17,10 @@ namespace Persistence.Repositories
         public SallerRepository(ApplicationDbContext context) =>
             _context = context;
 
-        public List<Domain.Entities.Saller> GetAll()
-        {
-            return _context.Saller.ToList();
-        }
+        //public List<Domain.Entities.Saller> GetAll()
+        //{
+        //    return _context.Saller.ToList();
+        //}
 
         public Saller Get(int id)
         {
