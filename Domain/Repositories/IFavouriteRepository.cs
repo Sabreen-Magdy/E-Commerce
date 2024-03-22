@@ -9,7 +9,8 @@ namespace Domain.Repositories
 {
     public interface IFavouriteRepository
     {
-        Favourite? Get(int id);
+        Favourite? GetById(int id);
+        Favourite? GetByCustomerId(int id);
         void Add(Favourite favourite);
         void Update(Favourite favourite);
         void Delete(int id);

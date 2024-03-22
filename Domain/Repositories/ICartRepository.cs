@@ -9,7 +9,8 @@ namespace Domain.Repositories
 {
     public interface ICartRepository
     {
-        Cart? Get(int id);
+        Cart? GetById(int id);
+        Cart? GetByCustomerId(int id);
         void Add(Cart cart);
         void Update(Cart cart);
         void Delete(int id);

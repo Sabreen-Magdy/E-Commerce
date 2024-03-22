@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Favourite
+    public class Favourite:BaseEntity
     {
-        public int Id { get; set; }
-        [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } = null!;
+        public ICollection<ProductVarient> ProductVarients { get; set; } = null!;
+        public List<FavoriteItems> FavoriteItems{ get; set; } = null!;
+
     }
 }

@@ -11,4 +11,5 @@ public class Product : BaseEntity
     // RelationShip Mapping
     public virtual int SallerId { get; set; }
     public virtual Saller Saller { get; set; } = null!;
+    public List<Review> Reviews { get; set; } = null!;
 }

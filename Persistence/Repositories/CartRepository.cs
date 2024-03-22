@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +11,43 @@ namespace Persistence.Repositories
 {
     public class CartRepository : ICartRepository
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public CartRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public void Add(Cart cart)
         {
-            throw new NotImplementedException();
+            _dbContext.Carts.Add(cart);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var cart = _dbContext.Carts.Find(id);
+            if (cart != null)
+            {
+                _dbContext.Carts.Remove(cart);
+                _dbContext.SaveChanges();
+            }
         }
 
-        public Cart? Get(int id)
+        public Cart? GetByCustomerId(int customerId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Carts.FirstOrDefault(c => c.CustomerId == customerId);
         }
 
-        public int SaveChanges()
+        public Cart? GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Carts.Find(id);
+
         }
 
         public void Update(Cart cart)
         {
-            throw new NotImplementedException();
+            _dbContext.Carts.Update(cart);
+            _dbContext.SaveChanges();
         }
     }
 }

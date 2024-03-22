@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +12,43 @@ namespace Persistence.Repositories
 {
     public class FavouriteRepository : IFavouriteRepository
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public FavouriteRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public void Add(Favourite favourite)
         {
-            throw new NotImplementedException();
+            _dbContext.Favourites.Add(favourite);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var fav = _dbContext.Favourites.Find(id);
+            if (fav != null)
+            {
+                _dbContext.Favourites.Remove(fav);
+                _dbContext.SaveChanges();
+            }
         }
 
-        public Favourite? Get(int id)
+        public Favourite? GetByCustomerId(int customerId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Favourites.FirstOrDefault(f => f.CustomerId == customerId);
         }
 
-        public int SaveChanges()
+        public Favourite? GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Favourites.Find(id);
+
         }
 
-        public void Update(Favourite favourite)
+        public void Update(Favourite fav)
         {
-            throw new NotImplementedException();
+            _dbContext.Favourites.Update(fav);
+            _dbContext.SaveChanges();
         }
     }
 }
