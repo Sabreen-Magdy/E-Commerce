@@ -16,30 +16,26 @@ namespace Persistence.Repositories
 
         public SallerRepository(ApplicationDbContext context) =>
             _context = context;
+        public List<Saller> GetAll() =>
+      _context.Sallers.ToList();
+        public void Add(Saller saller) =>
+    _context.Sallers.Add(saller);
 
-        //public List<Domain.Entities.Saller> GetAll()
-        //{
-        //    return _context.Saller.ToList();
-        //}
+      //  public void Delete(Saller saller) =>
+      //_context.Customers.Remove(saller.Id);
+        public Domain.Entities.Customer? Get(int id) =>
+          _context.Customers.Find(id);
 
-        public Saller Get(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Domain.Entities.Customer> Get(string name) =>
+          _context.Customers.Where(c => c.Name == name)
+                        .Select(c => c).ToList();
 
-        public void Add(Saller saller)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Domain.Entities.Customer customer) =>
+          _context.Customers.Update(customer);
 
-        public void Update(Saller saller)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
+
+
     }
 }

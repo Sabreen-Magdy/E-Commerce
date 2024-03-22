@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Context;
 
 public class ApplicationDbContext: DbContext
 {
-    internal readonly object Saller;
-
+    public DbSet<Saller> Sallers
+    { get; set; }
     public DbSet<Domain.Entities.Customer> Customers { get; set; }
     public ApplicationDbContext(DbContextOptions options)
        : base(options)

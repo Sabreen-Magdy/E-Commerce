@@ -14,7 +14,7 @@ namespace Contract.Saller
 
         public string Name { get; set; } = null!;
         public string Password { get; set; }
-        public string Phono { get; set; } = null!;
+        public string Phono{ get; set; } = null!;
         public string Email { get; set; } = null!;
         //public List<ItemDto> items { get; set; } = null!;
     }
