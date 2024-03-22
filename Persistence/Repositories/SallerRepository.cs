@@ -21,21 +21,21 @@ namespace Persistence.Repositories
         public void Add(Saller saller) =>
     _context.Sallers.Add(saller);
 
-      //  public void Delete(Saller saller) =>
-      //_context.Customers.Remove(saller.Id);
-        public Domain.Entities.Customer? Get(int id) =>
-          _context.Customers.Find(id);
+        public void Get(int id) =>
+          _context.Sallers.Find(id);
 
-        public List<Domain.Entities.Customer> Get(string name) =>
-          _context.Customers.Where(c => c.Name == name)
-                        .Select(c => c).ToList();
+        public void Delete(Saller saller) =>
+      _context.Sallers.Remove(saller);
 
-        public void Update(Domain.Entities.Customer customer) =>
-          _context.Customers.Update(customer);
+        public List<Saller> Get(string name) =>
+    _context.Sallers.Where(c => c.Name == name)
+                  .Select(c => c).ToList();
+        public void Update(Saller saller) =>
+   _context.Sallers.Update(saller);
 
-
-       
-
-
+        Saller? IBaseRepository<Saller>.Get(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

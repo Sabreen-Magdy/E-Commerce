@@ -1,8 +1,7 @@
 ﻿namespace Domain.Entities;
 
-public record Saller 
+public class  Saller :BaseEntity
 {
-    public int Id { get; set; }
     public int NId { get; set; }
     public string Name { get; set; } = null!;
     public string Password { get; set; }
