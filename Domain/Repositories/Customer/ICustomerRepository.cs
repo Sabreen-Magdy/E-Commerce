@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories;
 
-public interface ICustomerRepository :
+public interface ISallerRepository :
     IBaseRepository<Customer>, ILoginRepository
 {
 

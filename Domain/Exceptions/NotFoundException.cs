@@ -2,7 +2,7 @@
 
 public sealed class NotFoundException : Exception
 {
-    public NotFoundException(string entityName ) :
-        base($"this {entityName} not found")
+    public NotFoundException(string v) :
+        base("this Customer not found")
     { }
 }

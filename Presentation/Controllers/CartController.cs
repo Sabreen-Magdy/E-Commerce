@@ -7,9 +7,9 @@ namespace Presentation.Controllers
     [ApiController]
     internal class CartController: ControllerBase
     {
-        private readonly ICartRepository _cartRepository;
+        private readonly ISallerRepositry _cartRepository;
 
-        public CartController(ICartRepository cartRepository)
+        public CartController(ISallerRepositry cartRepository)
         {
             _cartRepository = cartRepository;
         }
