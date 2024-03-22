@@ -3,7 +3,7 @@ using Persistence.Context;
 
 namespace Persistence.Repositories;
 
-public class CustomerRepository : ICustomerRepository
+public class CustomerRepository : ISallerRepository
 {
     private readonly ApplicationDbContext _context;
 

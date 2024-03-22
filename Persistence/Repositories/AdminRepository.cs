@@ -8,7 +8,7 @@ public class AdminRepository : IAdminRepository
 {
     private readonly ApplicationDbContext _context;
 
-    private ICustomerRepository _customerRepository;
+    private ISallerRepository _customerRepository;
     private IProductRepository _productRepository;
     private ICategoryRepository _categoryRepository;
 
@@ -19,7 +19,7 @@ public class AdminRepository : IAdminRepository
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
     
-    public ICustomerRepository CustomerRepository
+    public ISallerRepository CustomerRepository
     {
         get
         {

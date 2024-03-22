@@ -4,6 +4,8 @@ namespace Persistence.Context;
 
 public class ApplicationDbContext: DbContext
 {
+    internal readonly object Saller;
+
     public DbSet<Domain.Entities.Customer> Customers { get; set; }
     public DbSet<Domain.Entities.Order> Orders { get; set; }
     //public DbSet<Domain.Entities.ProductVarientBelongToOrder> ProductVarientBelongToOrders { get; set; }
