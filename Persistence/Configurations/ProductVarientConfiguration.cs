@@ -14,6 +14,9 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
                 .ValueGeneratedOnAddOrUpdate();
 
 
+        // Not Mapped Properties
+        builder.Ignore(pv => pv.Price);
+
         #region Properties Constrains
 
         builder.Property(pv => pv.Quantity)

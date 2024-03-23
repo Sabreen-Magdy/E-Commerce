@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Repositories;
+using Domain.Repositories.Order;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using System;

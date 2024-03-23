@@ -1,6 +1,4 @@
-﻿using Contract.OrderItem;
-
-namespace Contract.Cart;
+﻿namespace Contract;
 
 public record CartDto
 {

@@ -1,9 +1,4 @@
-﻿using Contract.Cart;
-using Contract.ClientDto;
-using Contract.Customer;
-using Contract.Order;
-using Contract.OrderItem;
-using Domain.Entities;
+﻿using Contract;
 using Domain.Enums;
 
 namespace Services.Abstraction.DataServices;
@@ -20,12 +15,15 @@ public interface ICustomerService
     void Update(int id, Dictionary<Properties, string> newValues);
 
     void Delete(int id);
-
-
     List<CustomerReviewDto> GetReviews(int customerId);
     List<ItemDto> GetFavourites(int customerId);
     List<OrderDto> GetOrders(int customerId);
     List<CartDto> GetCart(int customerId);
-   
 
+
+    void AddReview(int customerId, int productId, string comment, int rate);
+    void UpdateReview(int id, string comment, int rate);
+    void UpdateReview(int customerId, int productId, string comment, int rate); 
+    void DeleteReview(int id);
+    void DeleteReview(int customerId, int productId);
 }

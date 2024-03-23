@@ -1,5 +1,7 @@
 ﻿
 using Domain.Repositories;
+using Domain.Repositories.Order;
+using Domain.Repositories.Saller;
 using Persistence.Context;
 
 namespace Persistence.Repositories;

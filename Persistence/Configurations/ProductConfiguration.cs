@@ -11,6 +11,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         // Primary Key
         builder.HasKey(e => e.Id);
 
+        #region Not Mapped Properties
+
+        builder.Ignore(p => p.TotalQuantity);
+        builder.Ignore(p => p.TotalPrice);
+        builder.Ignore(p => p.AvgPrice);
+
+        #endregion
+
         #region Properties Constrains
 
         builder.Property(p => p.Name)

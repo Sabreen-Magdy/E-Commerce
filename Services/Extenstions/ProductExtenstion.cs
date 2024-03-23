@@ -1,4 +1,4 @@
-﻿using Contract.Product;
+﻿using Contract;
 using Domain.Entities;
 
 namespace Services.Extenstions;
@@ -18,94 +18,43 @@ public static class ProductExtenstion
             SallerId = product.SallerId
         };
     }
-    public static ColoredProduct ToColoredProductEntity(this ProductColoredNewDto productColored)
+    public static List<Product> ToProductEntity(this List<ProductNewDto> products)
     {
-        if (productColored == null)
-            throw new ArgumentNullException(nameof(productColored));
+        if (products == null)
+            throw new ArgumentNullException(nameof(products));
+
+        var Products = new List<Product>();
+        foreach (var item in products)
+            Products.Add(item.ToProductEntity());
+
+        return Products;
+    }
+
+    public static ProductDto ToProductDto(this Product product)
+    {
+        if (product == null)
+            throw new ArgumentNullException(nameof(product));
+
+        var coloredProducts = product.ColoredProducts;
+        var coloredProduct = coloredProducts is null? null : coloredProducts.First();
 
         return new()
         {
-            ColorId = productColored.ColorId,
-            Image = productColored.Image,
-            ProductId = productColored.ProductId
+            Id = product.Id,
+            Image = coloredProduct is null? "" : coloredProduct.Image,
+            Name = product.Name,
+            Price = product.AvgPrice  
         };
     }
-    public static List<ColoredProduct> ToColoredProductEntity
-        (this List<KeyValuePair<int, string>> images, int productId)
+    public static List<ProductDto> ToProductDto(this List<Product> products)
     {
-        if (images == null)
-            throw new ArgumentNullException(nameof(images));
+        if (products == null)
+            throw new ArgumentNullException(nameof(products));
 
-        var coloredProducts = new List<ColoredProduct>();
+        var ProductDtos = new List<ProductDto>();
+        foreach( var item in products) 
+            ProductDtos.Add(item.ToProductDto());
 
-        foreach (var image in images)
-            coloredProducts.Add(new()
-            {
-                ColorId = image.Key,
-                Image = image.Value,
-                ProductId = productId
-            } );
-
-        return coloredProducts;
-    }
-
-    public static List<int> GetIds(this List<ColoredProduct> coloredProducts)
-    {
-        if (coloredProducts == null)
-            throw new ArgumentNullException(nameof(coloredProducts));
-       
-        var ids = new List<int>();
-
-        foreach (var coloredProduct in coloredProducts)
-            ids.Add(coloredProduct.Id);
-
-        return ids;
-    }
-
-    public static void FillIds(this List<ProductVariantNewDto> productVariants
-        , List<int> ids)
-    {
-        if (productVariants == null)
-            throw new ArgumentNullException(nameof(productVariants));
-        if (ids == null)
-            throw new ArgumentNullException(nameof(ids));
-
-        int len = productVariants.Count;
-        if (len != ids.Count) 
-            throw new IndexOutOfRangeException("2 Lists must have the Same Lenght");
-
-        for (int i = 0; i < len; i++)
-            productVariants[i].ColoredProductId = ids[i];
-    }
-
-    public static List<ProductVarient> ToProductVariantEntity
-        (this List<ProductVariantNewDto> productVariants, List<int> ids)
-    {
-        if (productVariants == null)
-            throw new ArgumentNullException(nameof(productVariants));
-
-        var productVariantsEntity = new List<ProductVarient>();
-
-        productVariants.FillIds(ids);
-        
-        foreach (var productVariant in productVariants)
-            productVariantsEntity.Add(productVariant.ToProductVariantEntity());
-
-        return productVariantsEntity;
-    }
-    public static ProductVarient ToProductVariantEntity
-       (this ProductVariantNewDto productVariant)
-    {
-        if (productVariant == null)
-            throw new ArgumentNullException(nameof(productVariant));
-
-        return new()
-        {
-            Discount = productVariant.Discount,
-            ColoredProductId = productVariant.ColoredProductId,
-            Quantity = productVariant.Quantity,
-            SizeId = productVariant.SizeId,
-            UnitPrice = productVariant.UnitPrice
-        };
+        return ProductDtos;
     }
 }

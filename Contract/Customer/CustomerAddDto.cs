@@ -1,4 +1,4 @@
-﻿namespace Contract.Customer;
+﻿namespace Contract;
 
 public record CustomerAddDto
 {

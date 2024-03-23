@@ -1,7 +1,7 @@
-﻿using Contract.Customer;
+﻿using Contract;
 using Domain.Entities;
 
-namespace Services.DataServices.Extenstions;
+namespace Services.Extenstions;
 
 public static class CustomerExtenstion
 {

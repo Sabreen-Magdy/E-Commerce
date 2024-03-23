@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Domain.Repositories;
+using Domain.Repositories.Favourite;
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]

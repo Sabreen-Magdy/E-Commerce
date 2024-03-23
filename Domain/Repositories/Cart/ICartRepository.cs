@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface IFavouriteRepository
+    public interface ICardRepositry : IBaseRepository<Cart>
     {
-        Favourite? Get(int id);
-        void Add(Favourite favourite);
-        void Update(Favourite favourite);
-        void Delete(int id);
-
     }
 }

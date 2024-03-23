@@ -1,5 +1,4 @@
-﻿using Contract.ClientDto;
-using Contract.Product;
+﻿using Contract;
 using Domain.Enums;
 
 namespace Services.Abstraction.DataServices;

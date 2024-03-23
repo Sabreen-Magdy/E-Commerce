@@ -1,4 +1,4 @@
-﻿namespace Contract.Product;
+﻿namespace Contract;
 
 public record ProductNewDto
 {

@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Repositories;
+using Domain.Repositories.Review;
 using Persistence.Context;
 using System;
 using System.Collections.Generic;

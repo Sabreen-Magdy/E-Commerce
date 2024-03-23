@@ -1,27 +1,23 @@
-﻿using Mapster;
-using Contract.Customer;
+﻿using Contract;
+using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
-using Contract.OrderItem;
-using Contract.Order;
-using Contract.Cart;
-using Contract.ClientDto;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
-using Services.DataServices.Extenstions;
+using Services.Extenstions;
 
 namespace Services.DataServices;
 
-public class CustomerService: ICustomerService
+public class CustomerService : ICustomerService
 {
     private readonly IAdminRepository _repository;
 
-    public CustomerService(IAdminRepository repository) 
+    public CustomerService(IAdminRepository repository)
         => _repository = repository;
-    
-    public List<CustomerDto>  GetAll() => 
+
+    public List<CustomerDto> GetAll() =>
         _repository.CustomerRepository.GetAll().ToCustomerDto();
-    
+
     public CustomerDto? Get(int id)
     {
         var customer = _repository.CustomerRepository.Get(id);
@@ -42,7 +38,7 @@ public class CustomerService: ICustomerService
 
     public void Add(string name, string image, string phono, string email, string passwor)
     {
-        _repository.CustomerRepository.Add(new Domain.Entities.Customer
+        _repository.CustomerRepository.Add(new Customer
         {
             Id = 0,
             Name = name,
@@ -62,7 +58,7 @@ public class CustomerService: ICustomerService
         _repository.SaveChanges();
     }
 
-    private Domain.Entities.Customer updateCustomer(Domain.Entities.Customer customer, 
+    private Customer UpdateCustomer(Customer customer,
         Dictionary<Properties, string> newValues)
     {
         foreach (var item in newValues)
@@ -94,7 +90,7 @@ public class CustomerService: ICustomerService
             throw new NotFoundException("Customer");
         else
         {
-            _repository.CustomerRepository.Update(updateCustomer(customer, newValues));
+            _repository.CustomerRepository.Update(UpdateCustomer(customer, newValues));
             _repository.SaveChanges();
         }
     }
@@ -111,19 +107,78 @@ public class CustomerService: ICustomerService
         }
     }
 
-    public List<ItemDto> GetFavourites(int customerId) => null!;
-        //_client.FavouriteClient
-        //.GetFavourites(customerId).Adapt<List<ItemDto>>(); 
+    public List<ItemDto> GetFavourites(int customerId) =>
+         _repository.FavouriteRepository
+                    .GetByCustomer(customerId)
+                    .ToItemDto();
 
-    public List<OrderDto> GetOrders(int customerId) =>  null!;
-    //_client.OrderClient
-    //.GetOrders(customerId).Adapt<List<OrderDto>>();
+
+    public List<OrderDto> GetOrders(int customerId) =>
+        _repository.OrderReposatory
+                    .GetByCustomer(customerId)
+                    .ToOrderDto();
 
     public List<CartDto> GetCart(int customerId) => null!;
-    //_client.CartClient
-    //.GetCarts(customerId).Adapt<List<CartDto>>();
+    //_repository.OrderReposatory
+    //            .GetByCustomer(customerId)
+    //            .ToOrderDto();
 
     public List<CustomerReviewDto> GetReviews(int customerId) => null!;
-    //_client.ReviewClient
-    //    .GetReviews(customerId).Adapt<List<ReviewDto>>();
+    //_repository.ReviewRepository
+    //           .GetByCustomer(customerId)
+    //           .ToCustomerReviewDto();
+
+    public void AddReview(int customerId, int productId, string comment, int rate)
+    {
+        _repository.ReviewRepository.Add(
+            new()
+            {
+                CustomerId = customerId,
+                ProductId = productId,
+                Comment = comment,
+                Rate = rate
+            });
+
+        int affectedRows = _repository.SaveChanges();
+        if (affectedRows != 0)
+        {
+            _repository.ProductRepository.AddReview(rate);
+            _repository.SaveChanges();
+        }
+    }
+
+    private void DeleteRiview(Review? review)
+    {
+        if (review == null)
+            throw new NotFoundException("Review");
+
+        _repository.ReviewRepository.Delete(review);
+        int affectedRows = _repository.SaveChanges();
+        if (affectedRows != 0)
+        {
+            _repository.ProductRepository
+                .DeleteReview(review.Rate);
+            _repository.SaveChanges();
+        }
+    }
+    private void UpdateRiview(Review? review)
+    {
+        if (review == null)
+            throw new NotFoundException("Review");
+        _repository.ReviewRepository.Update(review);
+        _repository.SaveChanges();
+    }
+
+    public void UpdateReview(int id, string comment, int rate) =>
+        UpdateRiview(_repository.ReviewRepository.Get(id));
+    public void UpdateReview(int customerId, int productId, string comment, int rate) =>
+        UpdateRiview(_repository.ReviewRepository
+            .GetByCustomerProduct(customerId, productId));
+
+    public void DeleteReview(int id) =>
+        DeleteRiview(_repository.ReviewRepository.Get(id));
+    public void DeleteReview(int customerId, int productId) =>
+        DeleteRiview(_repository.ReviewRepository
+            .GetByCustomerProduct(customerId, productId));
+
 }
