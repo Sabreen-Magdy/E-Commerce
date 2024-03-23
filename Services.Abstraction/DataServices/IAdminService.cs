@@ -8,4 +8,5 @@ public interface IAdminService
     public IProductService ProductService { get; }
     public ICategoryService CategoryService { get; }
     public IOrderService OrderService { get; }
+    public ISallerService SallerService { get; }
 }

@@ -11,8 +11,11 @@ public interface IAdminRepository
     IProductColerdRepository ProductColerdRepository { get; }
     IProductVarientRepository ProductVarientRepository { get; }
     ISallerRepositry SallerRepository { get; }
-    //ISallerRepository SallerRepository { get; }
+    ISallerRepository SallerRepository { get; }
     IOrderReposatory OrderReposatory { get; }
+    object CustomerRepository { get; }
+
+
     
     ICustomerRepository CustomerRepository { get; }
     IProductVarientBelongToOrderReposatory ProductVarientBelongToOrderReposatory { get; }
