@@ -8,27 +8,39 @@ public class AdminRepository : IAdminRepository
 {
     private readonly ApplicationDbContext _context;
 
-    private ISallerRepository _customerRepository;
+            
+    private ISallerRepositry _SallerRepositry;
     private IProductRepository _productRepository;
     private ICategoryRepository _categoryRepository;
 
     private IProductCategoryRepository _productCategoryRepository;
     private IProductColerdRepository _productColerdRepository;
     private IProductVarientRepository _productVarientRepository;
-    
+    private IOrderReposatory _OrderReposatory ;
+
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
     
-    public ISallerRepository CustomerRepository
+    public ISallerRepositry SallerRepository
     {
         get
         {
-            if (_customerRepository == null)
-                _customerRepository = new CustomerRepository(_context);
+            if (_SallerRepositry == null)
+                _SallerRepositry = new SallerRepository(_context);
 
-            return _customerRepository;
+            return _SallerRepositry;
         }
     }
+    //public ISallerRepositry SallerRepository
+    //{
+    //    get
+    //    {
+    //        if (_customerRepository == null)
+    //            _customerRepository = new CustomerRepository(_context);
+
+    //        return _customerRepository;
+    //    }
+    //}
     public IProductRepository ProductRepository
     {
         get
@@ -40,6 +52,20 @@ public class AdminRepository : IAdminRepository
             return _productRepository;
         }
     }
+    public IOrderReposatory orderReposatory
+    {
+        get
+        {
+            if (_OrderReposatory == null)
+            {
+                _OrderReposatory = new OrderRepository(_context);
+            }
+
+            return _OrderReposatory;
+        }
+    }
+
+    public IOrderReposatory OrderReposatory => throw new NotImplementedException();
 
     public ICategoryRepository CategoryRepository
     {
@@ -84,6 +110,11 @@ public class AdminRepository : IAdminRepository
             return _productVarientRepository;
         }
     }
+
+    //public ISallerRepositry SallerRepository => throw new NotImplementedException();
+
+    //public ISallerRepositry SallerRepository => throw new NotImplementedException();
+
 
     public int SaveChanges()
     {

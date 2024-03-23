@@ -1,6 +1,8 @@
 ﻿using Contract.Order;
+using Domain.Entities;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
+using Services.Extenstions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,12 @@ namespace Services.DataServices
             _repository = repository;
         }
 
-        public void Add(OrderDto DTO)
+        public void Add(OrderDto orderDto)
         {
-            throw new NotImplementedException();
+            Order OrderEntity = orderDto.ToOrderEntity();
+            _repository.OrderReposatory.Add(OrderEntity);
+            _repository.SaveChanges();
+            
         }
 
         public void Delete(int id)
