@@ -40,7 +40,7 @@ namespace Persistence.Repositories
 
         public List<Order> GetAll()
         {
-            return _context.Orders.Include(order=>order.ProductBelongToOrder).Include(order => order.Customer).ToList();
+            return _context.Orders.Include(order=>order.ProductVarientBelongToOrders).Include(order => order.Customer).ToList();
         }
 
         public void Update(Order entity)

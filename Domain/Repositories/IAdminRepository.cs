@@ -13,7 +13,7 @@ public interface IAdminRepository
     ISallerRepositry SallerRepository { get; }
    // ISallerRepository SallerRepository { get; }
     IOrderReposatory OrderReposatory { get; }
-    object CustomerRepository { get; }
+    ICustomerRepository CustomerRepository { get; }
 
 
     
