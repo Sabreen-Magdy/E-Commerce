@@ -9,8 +9,11 @@ namespace Domain.Entities
     public class ProductVarientBelongToOrder : BaseEntity
     {
         public int Quantity { get; set; }
-        public double Price { get; set; }
-        public virtual List<Order> Orders { get; set; }
-        public virtual List<ProductVarient> Products { get; set; }
+        public double TotalPrice { get; set; }
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; }
+        public int ProductsVerientId { get; set; }
+
+        public virtual ProductVarient ProductsVerient { get; set; }
     }
 }

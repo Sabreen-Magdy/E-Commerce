@@ -12,6 +12,6 @@ public record OrderDto
     public double TotalCost { get; set; }
     public string CustomerAddress { get; set; } 
 
-    public List<int> ProductId { get; set; } 
-    public List<string> ProductName { get; set; } 
+    public List<int> ProductvareintId { get; set; } 
+    public List<string> ProductvareinName { get; set; } 
 }

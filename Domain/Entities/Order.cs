@@ -20,10 +20,11 @@ namespace Domain.Entities
        [ForeignKey("Customer")]
         public virtual int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+        public ICollection<ProductVarientBelongToOrder>? ProductVarientBelongToOrders { get; set; }
 
-        [ForeignKey("ProductBelongToOrder")]
-        public virtual int ProductBelongToOrderId { get; set; }
-        public virtual ProductVarientBelongToOrder ProductBelongToOrder { get; set; }
+        //[ForeignKey("ProductBelongToOrder")]
+        //public virtual int ProductBelongToOrderId { get; set; }
+        //public virtual ProductVarientBelongToOrder ProductBelongToOrder { get; set; }
 
         #endregion
 

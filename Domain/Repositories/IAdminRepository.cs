@@ -15,6 +15,7 @@ public interface IAdminRepository
     IOrderReposatory OrderReposatory { get; }
     
     ICustomerRepository CustomerRepository { get; }
+    IProductVarientBelongToOrderReposatory ProductVarientBelongToOrderReposatory { get; }
 
     /// <summary>
     /// Apply Changes in DataBase

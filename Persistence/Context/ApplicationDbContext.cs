@@ -17,6 +17,7 @@ public class ApplicationDbContext: DbContext
     public DbSet<Size> Sizes { get; set; }
     public DbSet<ColoredProduct> ColoredProducts { get; set; }
     public DbSet<ProductVarient> ProductVarients { get; set; }
+    public DbSet<Order> Orders { get; set; }
     //public DbSet<Category> Categories { get; set; }
     //public DbSet<ProductCategory> ProductCategories { get; set; }
 

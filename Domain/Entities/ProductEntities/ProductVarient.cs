@@ -17,10 +17,11 @@ public class ProductVarient : BaseEntity
     public ICollection<Cart> Carts { get; set; } = null!;
     public List<CartItem> CartItems { get; set; } = null!;
     public ICollection<Favourite> Favourites { get; set; } = null!;
+    public ICollection<ProductVarientBelongToOrder>? ProductVarientBelongToOrders { get; set; }
 
-    [ForeignKey("ProductBelongToOrder")]
-    public virtual int ProductBelongToOrderId { get; set; }
-    public virtual ProductVarientBelongToOrder  ProductBelongToOrder { get; set; }
+    //[ForeignKey("ProductBelongToOrder")]
+    //public virtual int ProductBelongToOrderId { get; set; }
+    //public virtual ProductVarientBelongToOrder  ProductBelongToOrder { get; set; }
 
     #endregion
 }

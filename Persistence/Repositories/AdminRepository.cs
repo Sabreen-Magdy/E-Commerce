@@ -18,6 +18,7 @@ public class AdminRepository : IAdminRepository
     private IProductColerdRepository _productColerdRepository;
     private IProductVarientRepository _productVarientRepository;
     private IOrderReposatory _OrderReposatory ;
+    private IProductVarientBelongToOrderReposatory _ProductVarientBelongToOrderReposatory;
 
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
@@ -31,6 +32,16 @@ public class AdminRepository : IAdminRepository
                 _SallerRepositry = new SallerRepository(_context);
 
             return _SallerRepositry;
+        }
+    }
+    public IProductVarientBelongToOrderReposatory ProductVarientBelongToOrderReposatory
+    {
+        get
+        {
+            if (_ProductVarientBelongToOrderReposatory == null)
+                _ProductVarientBelongToOrderReposatory = new ProductVarientBelongToOrderReposatory(_context);
+
+            return _ProductVarientBelongToOrderReposatory;
         }
     }
     //public ISallerRepositry SallerRepository
@@ -54,7 +65,7 @@ public class AdminRepository : IAdminRepository
             return _productRepository;
         }
     }
-    public IOrderReposatory orderReposatory
+    public IOrderReposatory OrderReposatory
     {
         get
         {
@@ -112,7 +123,9 @@ public class AdminRepository : IAdminRepository
     }
     ICustomerRepository IAdminRepository.CustomerRepository => throw new NotImplementedException();
 
-    public IOrderReposatory OrderReposatory => throw new NotImplementedException();
+    //public IOrderReposatory OrderReposatory => throw new NotImplementedException();
+
+    
 
     public int SaveChanges()
     {

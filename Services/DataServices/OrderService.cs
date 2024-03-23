@@ -22,7 +22,20 @@ namespace Services.DataServices
 
         public void Add(OrderDto orderDto)
         {
-            Order OrderEntity = orderDto.ToOrderEntity();
+            // Order OrderEntity = orderDto.ToOrderEntity();
+            Order OrderEntity = new Order
+            {
+                OrderedDate = orderDto.OrderDate,
+                ConfirmDate = orderDto.ConfirmDate,
+                CustomerAddress = orderDto.CustomerAddress,
+                CustomerId = orderDto.CustomerId,
+                //Customer = _repository.CustomerRepository.Get(orderDto.CustomerId),
+                State = orderDto.State, 
+                TotalCost = orderDto.TotalCost, 
+               // ProductBelongToOrder = _repository.ProductVarientBelongToOrderReposatory.
+            };
+
+
             _repository.OrderReposatory.Add(OrderEntity);
             _repository.SaveChanges();
             
