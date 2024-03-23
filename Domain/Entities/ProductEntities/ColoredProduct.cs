@@ -6,10 +6,13 @@ public class ColoredProduct : BaseEntity
    
     #region RelationShip Mapping
 
-    public virtual int ProductId { get; set; }
-    public virtual Product Product { get; set; } = null!;
-    public virtual int ColorId { get; set; }
-    public virtual Color Color { get; set; } = null!;
-
+    public int ProductId { get; set; }
+    public Product Product { get; set; } = null!;
+    public int ColorId { get; set; }
+    public Color Color { get; set; } = null!;
+    
     #endregion
+
+    // Reduce Join
+    public ICollection<ProductVarient>? Varients { get; set; }
 }

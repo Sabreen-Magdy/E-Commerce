@@ -8,10 +8,10 @@ public class ProductVarient : BaseEntity
 
     #region RelationShip Mapping
 
-    public virtual int ColoredProductId { get; set; }
+    public int ColoredProductId { get; set; }
     public virtual ColoredProduct ColoredProduct { get; set; } = null!;
-    public virtual int SizeId { get; set; }
-    public virtual Size Size { get; set; } = null!;
+    public int SizeId { get; set; }
+    public Size Size { get; set; } = null!;
 
     #endregion
 }
