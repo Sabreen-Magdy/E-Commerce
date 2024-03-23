@@ -16,7 +16,6 @@ public class ProductVarient : BaseEntity
     public ICollection<Cart> Carts { get; set; } = null!;
     public List<CartItem> CartItems { get; set; } = null!;
     public ICollection<Favourite> Favourites { get; set; } = null!;
-    public List<FavoriteItems> FavoriteItems { get; set; } = null!;
 
     [ForeignKey("ProductBelongToOrder")]
     public virtual int ProductBelongToOrderId { get; set; }

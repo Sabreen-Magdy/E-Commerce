@@ -13,6 +13,7 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<CartItem> builder)
         {
+            builder.Ignore(c => c.TotalPrice);
             #region Relationship Constrains
             builder.HasKey(ci => new { ci.CartId, ci.ProductVarientId });
             builder.HasOne(ci => ci.ProductVarient)

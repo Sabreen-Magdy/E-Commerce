@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,6 +15,7 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Review> builder)
         {
+            builder.Ignore(r => r.Id);
             #region Relationship Constrains
             builder.HasKey(r => new { r.CustomerId, r.ProductId });
             builder.HasOne(r => r.Product)
@@ -38,6 +40,9 @@ namespace Persistence.Configurations
                      v => Convert.ToInt32(v))
                    .HasMaxLength(5)
                    .HasColumnType("int");
+            builder.ToTable(r =>
+            r.HasCheckConstraint("RateValidation",
+                $"[{Properties.Rate.ToString()}] >= 0 and [{Properties.Rate.ToString()}] <= 5"));
             // Set the maximum length for Comment to 100 characters
             builder.Property(r => r.Comment)
                    .HasMaxLength(100);

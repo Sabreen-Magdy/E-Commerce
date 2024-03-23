@@ -13,7 +13,7 @@ public interface IAdminRepository
     ISallerRepositry SallerRepository { get; }
     IOrderReposatory OrderReposatory { get; }
     
-
+    ICustomerRepository CustomerRepository { get; }
 
     /// <summary>
     /// Apply Changes in DataBase

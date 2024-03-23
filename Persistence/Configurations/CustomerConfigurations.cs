@@ -15,18 +15,6 @@ public class CustomerConfigurations : IEntityTypeConfiguration<Domain.Entities.C
         // Unique Property
         builder.HasIndex(e => e.Email)
                .IsUnique();
-        #region Relationship Constrains
-        //Relation one to one between customer and cart
-        builder.HasOne(c => c.Cart)
-               .WithOne(c => c.Customer)
-               .HasForeignKey<Cart>(c => c.CustomerId);
-
-        //Relation one to one between customer and Favorite
-        builder.HasOne(c => c.Favourite)
-               .WithOne(f => f.Customer)
-               .HasForeignKey<Favourite>(f => f.CustomerId);
-        #endregion
-
         #region Properties Constrains
 
         builder.Property(c => c.Name)

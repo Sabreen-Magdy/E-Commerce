@@ -16,6 +16,10 @@ namespace Persistence.Configurations
         {
             builder.Ignore(c => c.TotalPrice);
             builder.Ignore(c => c.TotalQuantity);
+            //Relation one to one between customer and cart
+            builder.HasOne(c => c.Customer)
+                   .WithOne(c => c.Cart)
+                   .HasForeignKey<Cart>(c => c.CustomerId);
         }
     }
 }

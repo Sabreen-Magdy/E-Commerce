@@ -15,7 +15,8 @@ public class AdminRepository : IAdminRepository
     private IProductCategoryRepository _productCategoryRepository;
     private IProductColerdRepository _productColerdRepository;
     private IProductVarientRepository _productVarientRepository;
-    
+    private ISallerRepositry _sallerRepositry;
+    private IOrderReposatory _orderReposatory;
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
     public ICustomerRepository CustomerRepository
@@ -86,9 +87,27 @@ public class AdminRepository : IAdminRepository
 
 
 
-    public IOrderReposatory OrderReposatory => throw new NotImplementedException();
+    public IOrderReposatory OrderReposatory
+    {
+        get
+        {
+            if (_orderReposatory == null) { }
+            //_orderReposatory = new ord(_context);
 
-    public ISallerRepositry SallerRepository => throw new NotImplementedException();
+            return _orderReposatory;
+        }
+    }
+
+    public ISallerRepositry SallerRepository
+    {
+        get
+        {
+            if (_sallerRepositry == null) { }
+            //_productVarientRepository = new CustomerRepository(_context);
+
+            return _sallerRepositry;
+        }
+    }
 
     public int SaveChanges()
     {

@@ -17,11 +17,11 @@ namespace Domain.Entities
             }
         }
 
-        public decimal TotalPrice
+        public double TotalPrice
         {
             get
             {
-                return CartItems.Sum(ci => ci.Price * ci.Quantity);
+                return CartItems.Sum(ci => ci.TotalPrice);
             }
         }
 

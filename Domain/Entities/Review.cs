@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Review
+    public class Review:BaseEntity
     {
         public int CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;

@@ -11,8 +11,8 @@ namespace Domain.Entities
     {
         public int CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;
-        public ICollection<ProductVarient> ProductVarients { get; set; } = null!;
-        public List<FavoriteItems> FavoriteItems{ get; set; } = null!;
+        public int ProductVarientId { get; set; }
+        public ProductVarient ProductVarients { get; set; } = null!;
 
     }
 }
