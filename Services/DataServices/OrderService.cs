@@ -1,5 +1,6 @@
 ﻿using Contract.Order;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
@@ -30,7 +31,12 @@ namespace Services.DataServices
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            //Product? product = _repository.ProductRepository.Get(id);
+            //if (product is null)
+            //    throw new NotFoundException("Product");
+
+            //_repository.ProductRepository.Delete(product);
+            //_repository.SaveChanges();
         }
 
         public OrderDto Get(int id)
