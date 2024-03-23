@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
-using Domain.Repositories;
 namespace Persistence.Context;
 
 public class ApplicationDbContext: DbContext
 {
+    public DbSet<Saller> Sallers { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Color> Colors { get; set; }

@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface ICardRepositry
+    public interface IOrderReposatory :IBaseRepository<Order>
     {
-        Cart? Get(int id);
-        void Add(Cart cart);
-        void Update(Cart cart);
-        void Delete(int id);
-
     }
 }

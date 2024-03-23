@@ -4,11 +4,14 @@ namespace Contract.Order;
 
 public record OrderDto
 {
-    public DateTime Date { get; set; }
+    public int CustomerId { get; set; }
+    public string CustomerName { get; set; }
+    public DateTime OrderDate { get; set; }
     public DateTime ConfirmDate { get; set; }
     public int State { get; set; }
-    public double TotalAmount { get; set; }
-    public string Address { get; set; } = null!;
+    public double TotalCost { get; set; }
+    public string CustomerAddress { get; set; } 
 
-    public List<ItemDto> items { get; set; } = null!;
+    public List<int> ProductId { get; set; } 
+    public List<string> ProductName { get; set; } 
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class CartRepository : ICartRepository
+    public class CartRepository : ICardRepositry
     {
         public void Add(Cart cart)
         {

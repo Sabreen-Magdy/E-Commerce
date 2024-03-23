@@ -5,12 +5,18 @@ public enum Properties
     Id,
     Name   ,
     Image  ,
-    Phono  ,
+    Phone, orders,
     Email  , ProductId,
-    Passwor, SallerId,
+    Password, SallerId,
     Description, SizeId,
     AddingDate, ColoredProductId, 
     NumberReviews, Discount,
     AvgRate, UnitPrice,
-    Code, Quantity,
+    Code, Quantity,// ProductBelongToOrderId, ProductBelongToOrder, متككررة
+    //order prop
+    OrderedDate , ConfirmDate , State , TotalCost , CustomerAddress , CustomerId, Customer, ProductBelongToOrderId, ProductBelongToOrder,
+    // ProductVarientBelongToOrder props
+    // Quantity , متكررة
+    Price, Orders , Products,
+
 }
