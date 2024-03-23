@@ -9,26 +9,40 @@ public class AdminRepository : IAdminRepository
     private readonly ApplicationDbContext _context;
 
     private ICustomerRepository _customerRepository;
+            
+    private ISallerRepositry _SallerRepositry;
     private IProductRepository _productRepository;
     private ICategoryRepository _categoryRepository;
 
     private IProductCategoryRepository _productCategoryRepository;
     private IProductColerdRepository _productColerdRepository;
     private IProductVarientRepository _productVarientRepository;
-    private ISallerRepositry _sallerRepositry;
-    private IOrderReposatory _orderReposatory;
+    private IOrderReposatory _OrderReposatory ;
+
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
-    public ICustomerRepository CustomerRepository
+    public ICustomerRepository CustomerRepository;
+    
+    public ISallerRepositry SallerRepository
     {
         get
         {
-            if (_customerRepository == null)
-                _customerRepository = new CustomerRepository(_context);
+            if (_SallerRepositry == null)
+                _SallerRepositry = new SallerRepository(_context);
 
-            return _customerRepository;
+            return _SallerRepositry;
         }
     }
+    //public ISallerRepositry SallerRepository
+    //{
+    //    get
+    //    {
+    //        if (_customerRepository == null)
+    //            _customerRepository = new CustomerRepository(_context);
+
+    //        return _customerRepository;
+    //    }
+    //}
     public IProductRepository ProductRepository
     {
         get
@@ -38,6 +52,18 @@ public class AdminRepository : IAdminRepository
                 //_productRepository = new CustomerRepository(_context);
 
             return _productRepository;
+        }
+    }
+    public IOrderReposatory orderReposatory
+    {
+        get
+        {
+            if (_OrderReposatory == null)
+            {
+                _OrderReposatory = new OrderRepository(_context);
+            }
+
+            return _OrderReposatory;
         }
     }
 
@@ -84,30 +110,9 @@ public class AdminRepository : IAdminRepository
             return _productVarientRepository;
         }
     }
+    ICustomerRepository IAdminRepository.CustomerRepository => throw new NotImplementedException();
 
-
-
-    public IOrderReposatory OrderReposatory
-    {
-        get
-        {
-            if (_orderReposatory == null) { }
-            //_orderReposatory = new ord(_context);
-
-            return _orderReposatory;
-        }
-    }
-
-    public ISallerRepositry SallerRepository
-    {
-        get
-        {
-            if (_sallerRepositry == null) { }
-            //_productVarientRepository = new CustomerRepository(_context);
-
-            return _sallerRepositry;
-        }
-    }
+    public IOrderReposatory OrderReposatory => throw new NotImplementedException();
 
     public int SaveChanges()
     {

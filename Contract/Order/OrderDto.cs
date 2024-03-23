@@ -4,8 +4,8 @@ namespace Contract.Order;
 
 public record OrderDto
 {
-    int CustomerId { get; set; }
-    string CustomerName { get; set; }
+    public int CustomerId { get; set; }
+    public string CustomerName { get; set; }
     public DateTime OrderDate { get; set; }
     public DateTime ConfirmDate { get; set; }
     public int State { get; set; }
