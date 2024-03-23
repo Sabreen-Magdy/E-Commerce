@@ -22,17 +22,17 @@ public class AdminRepository : IAdminRepository
 
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
+    //public ICustomerRepository CustomerRepository;
     public ICustomerRepository CustomerRepository
     {
         get
         {
-            if (_customerRepository == null) { }
-                //_customerRepository = new CustomerRepository(_context);
+            if (_customerRepository == null)
+                _customerRepository = new CustomerRepository(_context);
 
             return _customerRepository;
         }
     }
-    
     public ISallerRepositry SallerRepository
     {
         get
@@ -130,8 +130,7 @@ public class AdminRepository : IAdminRepository
             return _productVarientRepository;
         }
     }
-
-    object IAdminRepository.CustomerRepository => throw new NotImplementedException();
+    //ICustomerRepository IAdminRepository.CustomerRepository => throw new NotImplementedException();
 
     //public IOrderReposatory OrderReposatory => throw new NotImplementedException();
 
