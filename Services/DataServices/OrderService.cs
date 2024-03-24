@@ -19,31 +19,7 @@ namespace Services.DataServices
         public void Add(OrderDtoNew orderDtonewFromCustomer)
         {
             // Order OrderEntity = orderDto.ToOrderEntity();
-            List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
-
-            foreach (var item in orderDtonewFromCustomer.productsperOrder)
-                
-            {
-                // محمد لسه معملهاش implement
-                ProductVarient productVarient = _repository.ProductVarientRepository.Get(item.products.Id);
-                //{
-                //    Id = item.products.Id,
-                //    UnitPrice = item.products.Price,
-                //    Discount = item.products.Discount,
-                //    Quantity = item.products.Quantity,
-                    
-                //};
-                productVarientBelongToOrders.Add(new ProductVarientBelongToOrder {
-                    TotalPrice = item.TotalCostPerQuantity,
-                    Quantity = item.Quantity,
-                    OrderId = item.OrderId,
-                    //ProductId = item.products.ProductId,
-                    //ColorId = item.ColorId,
-                    //SizeId = item.products.Size.
-                    ProductVarient = productVarient
-
-                });
-            }
+           
             Order OrderEntity = new Order
             {
                 OrderedDate = orderDtonewFromCustomer.OrderDate,
@@ -53,14 +29,46 @@ namespace Services.DataServices
                 //Customer = _repository.CustomerRepository.Get(orderDtonewFromCustomer.CustomerId),
                 State = orderDtonewFromCustomer.State, 
                 TotalCost = orderDtonewFromCustomer.OrderTotalCost, 
-                ProductBelongToOrders = productVarientBelongToOrders
+               // ProductBelongToOrders = productVarientBelongToOrders
                 // ProductBelongToOrder = _repository.ProductVarientBelongToOrderReposatory.
             };
-
-
             _repository.OrderReposatory.Add(OrderEntity);
             _repository.SaveChanges();
-            
+
+            List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
+
+            foreach (var item in orderDtonewFromCustomer.productsperOrder)
+
+            {
+                // محمد لسه معملهاش implement
+                ProductVarient productVarient = _repository.ProductVarientRepository.Get(item.products.Id);
+                //{
+                //    Id = item.products.Id,
+                //    UnitPrice = item.products.Price,
+                //    Discount = item.products.Discount,
+                //    Quantity = item.products.Quantity,
+
+                //};
+                if (productVarient != null)
+                {
+                    ProductVarientBelongToOrder productVarientBelongToOrderEntity = new ProductVarientBelongToOrder
+                    {
+                        TotalPrice = item.TotalCostPerQuantity,
+                        Quantity = item.Quantity,
+                        OrderId = OrderEntity.Id,
+                        Order = OrderEntity,
+                        ProductId = productVarient.ProductId,
+                        ColorId = productVarient.ColorId,
+                        SizeId = productVarient.SizeId,
+                        ProductVarient = productVarient
+
+                    };
+                    productVarientBelongToOrders.Add(productVarientBelongToOrderEntity);
+                    _repository.productVarientBelongToOrderReposatory.Add(productVarientBelongToOrderEntity);
+                    _repository.SaveChanges();
+                }
+                // مش عارفه المفروض اعمل update في ال order بالليست بتاعت ال علاثه ولا لا 
+            }
         }
 
         public void Add(OrderDto DTO)
