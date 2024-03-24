@@ -1,0 +1,72 @@
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+<div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus icon'></i>
+        <div class="logo_name">موقعنا</div>
+        <i class='bx bx-menu' id="btn" (click)="menuBtnChange()" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+          <i class='bx bx-search' ></i>
+         <input type="text" placeholder="البحث...">
+         <span class="tooltip">البحث</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">لوحة البيانات</span>
+        </a>
+         <span class="tooltip">لوحة البيانات</span>
+      </li>
+      <li>
+       <a href="#">
+        <i class='bx bxs-t-shirt'></i>
+         <span class="links_name">المنتجات</span>
+       </a>
+       <span class="tooltip">المنتجات</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cart-alt' ></i>
+         <span class="links_name">الطلبات</span>
+       </a>
+       <span class="tooltip">الطلبات</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">الاعدادات</span>
+       </a>
+       <span class="tooltip">الاعدادات</span>
+     </li>
+     <li class="profile">
+        <a href="#">
+            <i class='bx bx-log-out' id="log_out" ></i>
+          <span class="links_name">تسجيل الخروج</span>
+        </a>
+        <span class="tooltip">تسجيل الخروج</span>
+      </li>
+     <!-- <li class="profile">
+         <div class="profile-details">
+           <img src="profile.jpg" alt="profileImg">
+           <div class="name_job">
+             <div class="name">Prem Shahi</div>
+             <div class="job">Web designer</div>
+           </div>
+         </div>
+         <i class='bx bx-log-out' id="log_out" ></i>
+     </li> -->
+    </ul>
+  </div>
+  <section class="home-section">
+    <!-- <app-admin-nav></app-admin-nav> -->
+      <!-- <app-admin></app-admin> -->
+      <!-- <app-product-form></app-product-form> -->
+      <!-- <app-admin-order></app-admin-order> -->
+      <!-- <app-category-table></app-category-table> -->
+      <!-- <app-category-form></app-category-form> -->
+      <!-- <app-cart></app-cart> -->
+      <app-product-tabel></app-product-tabel>
+      <!-- <app-product-details></app-product-details> -->
+  </section>

@@ -48,6 +48,13 @@ import { RouterModule } from '@angular/router';
 import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
 import { OrdersComponent } from './Component/core/orders/orders.component';
 import { CardsComponent } from './Component/core/AdminSide/cards/cards.component';
+import { SidebarAdminComponent } from './Component/core/AdminSide/sidebar-admin/sidebar-admin.component';
+import { ProductFormComponent } from './Component/core/AdminSide/products/product-form/product-form.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AdminOrderComponent } from './Component/core/AdminSide/admin-order/admin-order.component';
+import { CategoryFormComponent } from './Component/core/AdminSide/Category/category-form/category-form.component';
+import { CategoryTableComponent } from './Component/core/AdminSide/Category/category-table/category-table.component';
+import { ProductTabelComponent } from './Component/core/AdminSide/products/product-tabel/product-tabel.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +93,12 @@ import { CardsComponent } from './Component/core/AdminSide/cards/cards.component
     AnonymousPageComponent,
     OrdersComponent,
     CardsComponent,
+    SidebarAdminComponent,
+    ProductFormComponent,
+    AdminOrderComponent,
+    CategoryFormComponent,
+    CategoryTableComponent,
+    ProductTabelComponent,
     
   ],
   imports: [
@@ -95,6 +108,7 @@ import { CardsComponent } from './Component/core/AdminSide/cards/cards.component
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
 
     // ChartsModule
     //BrowserModule,

@@ -1,0 +1,244 @@
+
+<div class="container">
+  <h3 class="mb-3">اضافة منتج</h3>
+  <form class="row g-3">
+    <div class="col-md-5 form-control-div sucess">
+      <label for="validationServer01" class="form-label">اسم المنتج</label>
+      <input
+        type="text"
+        class="form-control our-is-valid"
+        id="validationServer01"
+        required
+      />
+      <i *ngIf="true" class="bi bi-check-circle-fill"></i>
+      <i *ngIf="false" class="bi bi-exclamation-circle-fill"></i>
+      <div *ngIf="false" class="alert p-1 alert-danger">Looks good!</div>
+    </div>
+    <div class="col-md-5 ">
+        <label class="mb-2" >الفئات</label>
+        <ng-multiselect-dropdown 
+        [placeholder]="'.'"
+        [settings]="dropdownSettings"
+        [data]="dropdownList"
+        [(ngModel)]="selectedItems"
+        (onselect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+        >
+        </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-10 form-control-div danger">
+        <label for="validationServer02" class="form-label">وصف المنتج</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+        <i *ngIf="false" class="bi bi-check-circle-fill"></i>
+        <i *ngIf="true" class="bi bi-exclamation-circle-fill"></i>
+        <div class="error-msg">يجب مادواة</div>
+      </div>
+    <div class="col-md-10 text-start">
+      <button class="btn btn-success rounded-1  px-5" type="submit">اضف</button>
+    </div>
+  </form>
+  <div class="mt-3">
+    <div class="col-md-10 text-start">
+        <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" (click)="togglePhoto()">الصور <i class="me-2 bi bi-plus-circle-fill"></i></button>
+      </div>
+    
+      <div class="row row-cols-1 row-cols-md-5 ps-md-5 g-4 ms-md-5 mt-2">
+        <div *ngFor="let x of imagesColor; let index = index" class="col">
+            <div class="card">
+                <div [id]="'carouselExampleIndicators' + index" class="carousel slide card-img-top" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button *ngFor="let img of x.imgSrcs; let i = index" type="button" [attr.data-bs-target]="'#carouselExampleIndicators' + index" [attr.data-bs-slide-to]="i" [class.active]="i === 0"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div *ngFor="let img of x.imgSrcs; let i = index" class="carousel-item" [class.active]="i === 0">
+                            <img [src]="img" class="d-block w-100" style="aspect-ratio: 1; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" [style.color]="x.colorCode">{{x.Colorname}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </div>
+  <div class="mt-3 col-md-10">
+    <div class=" text-start">
+        <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" (click)="toggleVarient()">المنتج <i class="me-2 bi bi-plus-circle-fill"></i></button>
+      </div>
+      <table *ngIf="productVariants.length>0" class="table w-md-75 mt-2">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">اللون</th>
+            <th scope="col">الحجم</th>
+            <th scope="col">السعر</th>
+            <th scope="col">العدد</th>
+            <th scope="col">الخصم</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of productVariants, let i = index">
+            <th scope="row">{{i}}</th>
+            <td>{{item.color}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.quantiy}}</td>
+            <td>{{item.disceount}}</td>
+          </tr>
+          
+        </tbody>
+      </table>
+     
+    
+  </div>
+  
+</div>
+
+<div id="photoForm" class="add-model model-wrapper">
+  <div class="model">
+    <div class="model-header">
+      <h3>اضافة صور للون</h3>
+    </div>
+    <div class="model-body">
+      <form class="row g-3" [formGroup]="picForm" (submit)="addPhoto($event)">
+        <div class="col-7">
+          <label for="colorname" class="form-label">اسم اللون</label>
+          <input
+            formControlName="Colorname"
+            type="text"
+            class="form-control"
+            id="colorname"
+            required
+          />
+        </div>
+        <div class="col-4">
+          <label for="colorDegree" class="form-label">درجة اللون</label>
+          <input
+            formControlName="colorCode"
+            type="color"
+            class="form-control form-control-color"
+            id="colorDegree"
+            required
+          />
+        </div>
+        <div class="col-12 center">
+          <label for="uploadImg" class="form-label uploadImglabel">
+            اختر الصور <i class="bi bi-upload"></i
+          ></label>
+          <input
+            type="file"
+            class="form-control"
+            id="uploadImg"
+            required
+            accept="image/png, image/jpeg, image/jpg"
+            (change)="handleFileInput($event)"
+            multiple
+          />
+          <p *ngIf="uploadedImages.length == 0" id="num-of-files">
+            لم يتم رفع صور
+          </p>
+          <p *ngIf="uploadedImages.length > 0" id="num-of-files">
+            عدد الصور {{ uploadedImages.length }}
+          </p>
+          <div id="images" class="row">
+            <div class="col-3 mb-3" *ngFor="let imageSrc of uploadedImages">
+              <img [src]="imageSrc" alt="Uploaded Image" class="img-fluid" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 center">
+          <button class="btn btn-success m-3" type="submit">اضف</button>
+          <button
+            class="btn btn-danger m-3"
+            type="button"
+            (click)="closePhoto()"
+          >
+            تجاهل
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="VariantForm" class="add-model2 model-wrapper2">
+  <div class="model2">
+    <div class="model-header2">
+        <i (click)="closeVarient()" class="bi bi-x-square-fill"></i>
+      <h3>اضافة تفاصيل المنتج</h3>
+    </div>
+    <div class="model-body2">
+      <form
+        class="row g-3"
+        [formGroup]="productVariantForm"
+        (submit)="addVariant($event)"
+      >
+        <div class="col-6">
+          <label for="colorSelect" class="form-label">اللون</label>
+          <select
+            formControlName="color"
+            class="form-select"
+            id="colorSelect"
+            required
+          >
+            <option value="اسود">اسود</option>
+            <option value="اخضر">اخضر</option>
+            <option value="ازرق">ازرق</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label for="colorSelect" class="form-label">الحجم</label>
+          <select
+            formControlName="size"
+            class="form-select"
+            id="colorSelect"
+            required
+          >
+            <option value="XL">XL</option>
+            <option value="l">L</option>
+            <option value="s">S</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="priceInp" class="form-label">السعر</label>
+          <input
+            formControlName="price"
+            type="number"
+            class="form-control"
+            id="priceInp"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-md-6">
+          <label for="quntityInp" class="form-label">العدد</label>
+          <input
+            formControlName="quantiy"
+            type="number"
+            class="form-control"
+            id="quntityInp"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-md-6">
+          <label for="quntityInp" class="form-label">الخصم</label>
+          <input
+            formControlName="disceount"
+            type="number"
+            class="form-control"
+            id="quntityInp"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-12 center">
+          <button class="btn btn-secondary" type="submit">اضف</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

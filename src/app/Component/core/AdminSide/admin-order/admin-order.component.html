@@ -1,0 +1,85 @@
+
+<div class="container">
+    <div class="contai">
+        <header>
+            <h3>طلبات العميل</h3>
+        </header>
+        <div class="table-wrapped">
+            <table class="table-products">
+                <thead>
+                    <tr>
+                        <th>العميل</th>
+                        <th>رقم الطلب</th>
+                        <th>السعر</th>
+                        <th>تاريخ الطلب</th>
+                        <th style="text-align: center;">الأجراءات</th>
+                        <th style="text-align: left;">تفاصيل الطلب</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbdyprod">
+                    <td data-label="العميل">روفيدة محمد</td>
+                    <td data-label="رقم الطلب">a93sj240</td>
+                    <td data-label="السعر">500$</td>
+                    <td data-label="تاريخ الطلب">25/1/2000</td>
+                    <td data-label="الاجراءات" style="text-align: center;">
+                        <button class="btn2 btn-edit">قبول</button>
+                        <button class="btn2 btn-delete">رفض</button>
+                    </td>
+                     <!-- <td style="text-align: center;">
+                        <p class="statusprreject">Accepted</p>
+                    </td>  -->
+                    <td style="text-align: left;" data-label="عرض الطلب">
+                        <button class="btn" (click)="toggleModel()" ><i class="bi bi-box-arrow-up-right"></i></button>
+                    </td>
+                </tbody>
+
+            </table>
+            <div id="loading-icon" class="loading-icon"></div>
+
+        </div>
+    </div>
+</div>
+
+<div id="orderForm" class="add-model model-wrapper">
+    <div class="model">
+      <div class="model-header">
+        <i (click)="closeModel()" class="bi bi-x-square-fill"></i>
+        <h3>تفاصيل الطلب </h3>
+        <h6 class="mt-3 text-secondary">#jsdfhusd121hs</h6>
+      </div>
+      <div class="model-body">
+        <div class="customerDetilas detilas">
+            <p> <span>اسم العميل </span> روفيدة محمد </p>
+            <p><span>عنوان الشحن </span>  القاهرة </p>
+            <p><span>تاريخ الطلب </span> 20/12/2012 </p>
+        </div>
+        <table class="table">
+            <thead class="table-success">
+              <tr>
+                <th scope="col">المنتج</th>
+                <th scope="col">الصورة</th>
+                <th scope="col">العدد</th>
+                <th scope="col">السعر</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of [1,2,3,4]">
+                <th scope="row">القميص</th>
+                <td>
+                    <img class="img-product-order-D" src="https://eg.hm.com/assets/HNM/12079948/454f72f02f1bb4997a06e221beac6859ecf756ef/2/3ca4f91b858f7b96f4dd5c61046e55d2e5b24126.jpg">
+                </td>
+                <td>2</td>
+                <td>150 جنيه</td>
+              </tr>
+             
+            </tbody>
+          </table>
+        <div class="PriceDetilas detilas">
+            <p><span>سعر المنتجات </span>  200 جنيه </p>
+            <p><span>سعر الشحن  </span>50 جنيه </p>
+            <p><span>سعر الكلي </span> 250 جنيه </p>
+        </div>
+      </div>
+    </div>
+  </div>

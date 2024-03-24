@@ -1,0 +1,43 @@
+<div class="container">
+    <h3 class="mb-3">اضافة منتج</h3>
+    <form class="row g-3">
+      <div class="col-md-6 form-control-div sucess">
+        <label for="validationServer01" class="form-label">اسم الفئة</label>
+        <input
+          type="text"
+          class="form-control our-is-valid"
+          id="validationServer01"
+          
+          required
+        />
+        <i *ngIf="true" class="bi bi-check-circle-fill"></i>
+        <i *ngIf="false" class="bi bi-exclamation-circle-fill"></i>
+        <div *ngIf="false" class="alert p-1 alert-danger">Looks good!</div>
+      </div>
+      <div class="col-md-6 form-control-div sucess">
+        <label for="validationServer01" class="form-label">الايقون</label>
+        <input
+          type="text"
+          class="form-control our-is-valid"
+          id="validationServer01"
+          required
+        />
+        <i *ngIf="true" class="bi bi-check-circle-fill"></i>
+        <i *ngIf="false" class="bi bi-exclamation-circle-fill"></i>
+        <div *ngIf="false" class="alert p-1 alert-danger">Looks good!</div>
+      </div>
+      <div class="col-md-12 form-control-div danger">
+        <label for="validationServer02" class="form-label">وصف الفئة</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+        <i *ngIf="false" class="bi bi-check-circle-fill"></i>
+        <i *ngIf="true" class="bi bi-exclamation-circle-fill"></i>
+        <div class="error-msg">يجب مادواة</div>
+      </div>
+      <div class="col-md-12 text-start">
+        <button class="btn btn-success rounded-1  px-5" type="submit">اضف</button>
+      </div>
+    </form>
+    
+    
+    
+  </div>

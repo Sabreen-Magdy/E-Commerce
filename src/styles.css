@@ -5,3 +5,36 @@
 * {
   font-family: "Cairo", sans-serif;
 }
+
+.form-control-div {
+  position: relative;
+}
+.form-control-div i {
+  position: absolute;
+  top :40px;
+  left: 14px;
+}
+.form-control-div.sucess input {
+  border: 1px solid #198754;
+}
+.form-control-div.sucess textarea {
+  outline: 1px solid #198754;
+}
+.form-control-div.sucess i {
+  color: #198754;
+}
+.form-control-div.danger input {
+  border: 1px solid #dc3545;
+}
+
+.form-control-div.danger textarea {
+  outline: 1px solid #dc3545;
+}
+.form-control-div.danger .error-msg{
+  margin-top: 4px;
+  color: #dd2a3c;
+  font-size: 14px;
+}
+.form-control-div.danger i {
+  color: #dc3545;
+}
