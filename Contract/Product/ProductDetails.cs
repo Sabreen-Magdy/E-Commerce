@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Contract.Product;
+namespace Contract;
 
 public record ProductDetailsDto
 {
@@ -26,7 +26,7 @@ public record ProductVariantDto
 }
 
 public record ColoredProuctDto(int Id, Color ColorCode, 
-    string ColorName, string Image)
+    string ColorName, string? Image)
 {
 }
 public record ProductCategoryDto(int Id, string CategorName)

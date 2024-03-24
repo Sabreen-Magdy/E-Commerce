@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class CartRepository : ICartRepositry
+    public class CartRepository : ICardRepositry
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public CartRepository(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public CartRepository(ApplicationDbContext dbContext) =>
+           _dbContext = dbContext;
+
         public void Add(Cart cart)
         {
             _dbContext.Carts.Add(cart);
@@ -31,6 +30,26 @@ namespace Persistence.Repositories
                 _dbContext.Carts.Remove(cart);
                 _dbContext.SaveChanges();
             }
+        }
+
+        public void Delete(Cart entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cart? Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Cart> Get(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Cart> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public Cart? GetByCustomerId(int customerId)

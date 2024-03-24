@@ -9,16 +9,18 @@ using System.Threading.Tasks;
 
 namespace Persistence.Configurations
 {
-    public class CartItemConfiguration : IEntityTypeConfiguration<Domain.Entities.CartItem>
+    public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
     {
         public void Configure(EntityTypeBuilder<CartItem> builder)
         {
+            builder.HasKey(ci => new { ci.CartId, ci.ProductId, ci.SizeId, ci.ColorId });
+            
             builder.Ignore(c => c.TotalPrice);
+           
             #region Relationship Constrains
-            builder.HasKey(ci => new { ci.CartId, ci.ProductVarientId });
             builder.HasOne(ci => ci.ProductVarient)
                    .WithMany(pv => pv.CartItems)
-                   .HasForeignKey(pv => pv.ProductVarientId);
+                   .HasForeignKey(pv => new { pv.ProductId, pv.SizeId, pv.ColorId });
             builder.HasOne(ci => ci.Cart)
                    .WithMany(c => c.CartItems)
                    .HasForeignKey(c => c.CartId);

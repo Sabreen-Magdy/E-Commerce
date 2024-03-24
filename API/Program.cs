@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("soomcon");
+var connection = builder.Configuration.GetConnectionString("mohCon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(

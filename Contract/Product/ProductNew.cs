@@ -1,4 +1,4 @@
-﻿namespace Contract.Product;
+﻿namespace Contract;
 
 public record ProductNewDto
 {
@@ -13,7 +13,8 @@ public record ProductNewDto
 
 public record ProductVariantNewDto
 {
-    public int ColoredProductId { get; set; }
+    public int ProductId { get; set; }
+    public int ColorId { get; set; }
     public double UnitPrice { get; set; }
     public double Discount { get; set; }
     public int Quantity { get; set; }

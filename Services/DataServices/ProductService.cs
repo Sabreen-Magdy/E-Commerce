@@ -1,5 +1,4 @@
-﻿using Contract.ClientDto;
-using Contract.Product;
+﻿using Contract;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
@@ -28,14 +27,8 @@ namespace Services.DataServices
                 Image = GetColoresImages(product.Id)[0].Image
             };
         }
-        private List<ProductDto> Map(List<Product> products)
-        {
-            List<ProductDto> productDtos = new List<ProductDto>();
-            foreach (var product in products)
-                productDtos.Add(Map(product));
-
-            return productDtos;
-        }
+        private List<ProductDto> Map(List<Product> products) =>
+            products.Select(p => Map(p)).ToList();
 
         public void Add(ProductNewDto product)
         {
@@ -251,35 +244,123 @@ namespace Services.DataServices
 
         public List<ColoredProuctDto> GetColoresImages(int productId)
         {
-            //var product = Get(productId); 
-            // if (product is null)
-            //     throw new NotFoundException("Prodect");
+            var product = Get(productId);
+            if (product is null)
+                throw new NotFoundException("Prodect");
 
-            //var productColorLis = _repository.ProductColerdRepository
-            //     .GetByProduct(productId);
-
-            // Map()
-            throw new NotImplementedException();
+            return _repository.ProductColerdRepository
+                .GetByProduct(productId).ToColoredProductDto();                       
         }
 
         public List<ProductReviewDto> GetReviews(int productId)
         {
-            throw new NotImplementedException();
+            var product = Get(productId);
+            if (product is null)
+                throw new NotFoundException("Prodect");
+
+            return _repository.ReviewRepository
+                .GetByProduct(productId).ToProductReview();
         }
 
         public List<ProductVariantDto> GetVarients(int productId)
         {
-            throw new NotImplementedException();
+            var product = _repository.ProductRepository.Get(productId);
+            if (product is null)
+                throw new NotFoundException("Prodect");
+
+            var coloredProducts = product.ColoredProducts;
+            List<ProductVariantDto> products = new List<ProductVariantDto>();
+
+            if (coloredProducts is null)
+                throw new NotFoundException("ColoredProdect");
+
+            var res = coloredProducts.Select(cp => cp.Varients!
+                            .ToList().ToProductVariantDto());
+   
+            return res.SelectMany(innerList => innerList).ToList();
         }
 
+        private Product UpdateProduct(Product product,
+                            Dictionary<Properties, string> newValues)
+        {
+            foreach (var item in newValues)
+            {
+                switch (item.Key)
+                {
+                    case Properties.Name:
+                        product.Name = item.Value;
+                        break;
+                    case Properties.Description:
+                        product.Description = item.Value;
+                        break;
+                    case Properties.AddingDate:
+                        product.AddingDate = DateTime.Parse(item.Value);
+                        break;
+
+                    default:
+                        throw new PropertyException(item.Key.ToString());
+                }
+            }
+            return product;
+        }
         public void Update(int id, Dictionary<Properties, string> newValues)
         {
-            throw new NotImplementedException();
+            var product = _repository.ProductRepository.Get(id);
+            if (product is null)
+                throw new NotFoundException("Product");
+            else
+            {
+                _repository.ProductRepository.Update(UpdateProduct(product, newValues));
+                _repository.SaveChanges();
+            }
         }
 
+
+        private ProductVarient UpdateVarient(ProductVarient product,
+                           Dictionary<Properties, string> newValues)
+        {
+            foreach (var item in newValues)
+            {
+                switch (item.Key)
+                {
+                    case Properties.SizeId:
+                        product.SizeId = int.Parse(item.Value);
+                        break;
+                    case Properties.UnitPrice:
+                        product.UnitPrice = int.Parse(item.Value);
+                        break;
+                    case Properties.Quantity:
+                        product.Quantity = int.Parse(item.Value);
+                        break;
+                    case Properties.ProductId:
+                        product.ProductId = int.Parse(item.Value);
+                        break;
+                    case Properties.ColorId:
+                        product.ColorId = int.Parse(item.Value);
+                        break;
+
+                    default:
+                        throw new PropertyException(item.Key.ToString());
+                }
+            }
+            return product;
+        }
         public void UpdateVarient(int id, Dictionary<Properties, string> newValues)
         {
-            throw new NotImplementedException();
+            var product = _repository.ProductVarientRepository.Get(id);
+            if (product is null)
+                throw new NotFoundException("Product");
+            else
+            {
+                _repository.ProductVarientRepository
+                    .Update(UpdateVarient(product, newValues));
+                _repository.SaveChanges();
+            }
         }
+
+        //public void UpdateVarient(int int id, Dictionary<Properties, string> newValues)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

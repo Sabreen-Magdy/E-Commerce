@@ -2,11 +2,6 @@
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
@@ -40,7 +35,17 @@ namespace Persistence.Repositories
 
         public List<Order> GetAll()
         {
-            return _context.Orders.Include(order=>order.ProductVarientBelongToOrders).Include(order => order.Customer).ToList();
+            return null; // _context.Orders.Include(order=>order.ProductBelongToOrder).Include(order => order.Customer).ToList();
+        }
+
+        public List<Order> GetByCustomer(int customerID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Order> GetByProduct(int productID)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Order entity)

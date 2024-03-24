@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class CartItem:BaseEntity
     {
-        // Foreign key to reference the product
-        public int ProductVarientId { get; set; }
-        public ProductVarient ProductVarient { get; set; } =null!;
+
         public int Quantity { get; set; }
         public double TotalPrice { 
             get {
@@ -20,5 +12,10 @@ namespace Domain.Entities
         // Foreign key to reference the cart
         public int CartId { get; set; }
         public Cart Cart { get; set; } = null!;
+        // Foreign key to reference the product
+        public int ProductId { get; set; }
+        public int ColorId { get; set; }
+        public int SizeId { get; set; }
+        public ProductVarient ProductVarient { get; set; } = null!;
     }
 }

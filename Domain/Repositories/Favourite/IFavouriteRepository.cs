@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface IOrderReposatory :IBaseRepository<Order>
+    public interface IFavouriteRepository : IBaseRepository<Favourite>
     {
+        List<Favourite> GetByCustomer(int customerID); 
+        List<Favourite> GetByProduct(int productID);
     }
 }

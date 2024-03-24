@@ -1,4 +1,4 @@
-﻿namespace Contract.Product;
+﻿namespace Contract;
 
 public record ProductDto
 {
@@ -6,5 +6,5 @@ public record ProductDto
     public string Name { get; set; } = null!;
     public double Price { get; set; }
 
-    public string Image { get; set; } = null!;
+    public string? Image { get; set; }
 }

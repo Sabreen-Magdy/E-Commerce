@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Order : BaseEntity
     {
@@ -13,18 +6,15 @@ namespace Domain.Entities
         public DateTime? ConfirmDate { get; set; }
         public int State { get; set; }
         public double TotalCost { get; set; }
-        public string CustomerAddress { get; set; }
+        public string CustomerAddress { get; set; } = null!;
 
         #region Relationship Mapping
 
-       [ForeignKey("Customer")]
-        public virtual int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
-        public ICollection<ProductVarientBelongToOrder>? ProductVarientBelongToOrders { get; set; }
+     // Use Configuration Ya Sama ! 
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; } = null!;
 
-        //[ForeignKey("ProductBelongToOrder")]
-        //public virtual int ProductBelongToOrderId { get; set; }
-        //public virtual ProductVarientBelongToOrder ProductBelongToOrder { get; set; }
+        public ICollection<ProductVarientBelongToOrder> ProductBelongToOrders { get; set; } = null!;
 
         #endregion
 

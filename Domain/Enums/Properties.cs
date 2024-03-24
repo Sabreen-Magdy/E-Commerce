@@ -17,6 +17,6 @@ public enum Properties
     OrderedDate , ConfirmDate , State , TotalCost , CustomerAddress , CustomerId, Customer, ProductBelongToOrderId, ProductBelongToOrder,
     // ProductVarientBelongToOrder props
     // Quantity , متكررة
-    Price, Orders , Products,Rate
+    Price, Orders , Products,Rate, ColorId
 
 }

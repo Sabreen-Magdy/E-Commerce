@@ -34,6 +34,31 @@ namespace Persistence.Repositories
             }
         }
 
+        public void Delete(Favourite entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Favourite? Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Favourite> Get(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Favourite> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Favourite> GetByCustomer(int customerID)
+        {
+            throw new NotImplementedException();
+        }
+
         public Favourite? GetByCustomerId(int customerId)
         {
             return _dbContext.Favourites.FirstOrDefault(f => f.CustomerId == customerId);
@@ -43,6 +68,11 @@ namespace Persistence.Repositories
         {
             return _dbContext.Favourites.Find(id);
 
+        }
+
+        public List<Favourite> GetByProduct(int productID)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Favourite fav)

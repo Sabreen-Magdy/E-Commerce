@@ -1,11 +1,5 @@
-﻿using Contract.Order;
-using Contract.Product;
+﻿using Contract;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Extenstions
 {
@@ -27,6 +21,46 @@ namespace Services.Extenstions
                 CustomerId = order.CustomerId,
                
             };
+        }
+
+        public static List<Order> ToOrderEntity(this List<OrderDto> orders)
+        {
+            if (orders == null)
+                throw new ArgumentNullException(nameof(orders));
+
+           var orderEntities = new List<Order>();
+            foreach (var order in orders)
+                order.ToOrderEntity();
+
+            return orderEntities;
+        }
+
+        public static OrderDto ToOrderDto(this Order order)
+        {
+            if (order == null)
+                throw new ArgumentNullException(nameof(order));
+
+            return new()
+            {
+                ConfirmDate = order.ConfirmDate,
+                OrderDate = order.OrderedDate,
+                CustomerAddress = order.CustomerAddress,
+                State = order.State,
+                TotalCost = order.TotalCost,
+                CustomerId = order.CustomerId,
+            };
+        }
+
+        public static List<OrderDto> ToOrderDto(this List<Order> orders)
+        {
+            if (orders == null)
+                throw new ArgumentNullException(nameof(orders));
+
+            var orderDtos = new List<OrderDto>();
+            foreach (var order in orders)
+                orderDtos.Add(order.ToOrderDto());
+
+            return orderDtos;
         }
     }
 }

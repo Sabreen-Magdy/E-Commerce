@@ -1,13 +1,8 @@
-﻿using Contract.Order;
+﻿using Contract;
 using Domain.Entities;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.DataServices
 {

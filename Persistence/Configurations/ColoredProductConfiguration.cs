@@ -13,6 +13,13 @@ public class ColoredProductConfiguration : IEntityTypeConfiguration<ColoredProdu
         builder.Property(e => e.Id)
                 .ValueGeneratedOnAddOrUpdate();
 
+        #region Not Mapped Properties
+
+        builder.Ignore(p => p.TotalPrice);
+        builder.Ignore(p => p.AvgPrice);
+        builder.Ignore(p => p.TotalQuntity);
+
+        #endregion
 
         #region Properties Constrains
 

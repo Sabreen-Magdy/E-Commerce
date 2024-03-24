@@ -1,4 +1,4 @@
-﻿using Contract.Category;
+﻿using Contract;
 using Domain.Enums;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;

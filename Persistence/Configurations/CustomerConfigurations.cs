@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations;
 
-public class CustomerConfigurations : IEntityTypeConfiguration<Domain.Entities.Customer>
+public class CustomerConfigurations : IEntityTypeConfiguration<Customer>
 {
-    void IEntityTypeConfiguration<Domain.Entities.Customer>.Configure
-        (EntityTypeBuilder<Domain.Entities.Customer> builder)
+    void IEntityTypeConfiguration<Customer>.Configure
+        (EntityTypeBuilder<Customer> builder)
     {
         // Primary Key
         builder.HasKey(e => e.Id);

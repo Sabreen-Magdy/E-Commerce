@@ -1,24 +1,25 @@
-﻿namespace Domain.Repositories;
+﻿using Domain.Repositories;
+
+namespace Domain.Repositories;
 
 /// <summary>
 /// Main Repository 
 /// </summary>
 public interface IAdminRepository
 {
+    ICustomerRepository CustomerRepository { get; }
+    IFavouriteRepository FavouriteRepository { get; }
     IProductRepository ProductRepository { get; }
     ICategoryRepository CategoryRepository { get; }
     IProductCategoryRepository ProductCategoryRepository { get; }
     IProductColerdRepository ProductColerdRepository { get; }
     IProductVarientRepository ProductVarientRepository { get; }
     ISallerRepositry SallerRepository { get; }
-   // ISallerRepository SallerRepository { get; }
     IOrderReposatory OrderReposatory { get; }
-    ICustomerRepository CustomerRepository { get; }
+    ICardRepositry CardRepositry { get; }
+    IReviewRepository ReviewRepository { get; }
 
 
-    
-   // ICustomerRepository CustomerRepository { get; }
-    IProductVarientBelongToOrderReposatory ProductVarientBelongToOrderReposatory { get; }
 
     /// <summary>
     /// Apply Changes in DataBase
