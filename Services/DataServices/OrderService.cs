@@ -16,7 +16,7 @@ namespace Services.DataServices
             _repository = repository;
         }
 
-        public void Add(OrderDtoNew orderDtonewFromCustomer)
+        public void Add(OrderDtoNew orderDtonewFromCustomer) // for customer
         {
             // Order OrderEntity = orderDto.ToOrderEntity();
            
@@ -27,7 +27,7 @@ namespace Services.DataServices
                 CustomerAddress = orderDtonewFromCustomer.CustomerAddress,
                 CustomerId = orderDtonewFromCustomer.CustomerId,
                 //Customer = _repository.CustomerRepository.Get(orderDtonewFromCustomer.CustomerId),
-                State = orderDtonewFromCustomer.State, 
+                State = 0, 
                 TotalCost = orderDtonewFromCustomer.OrderTotalCost, 
                // ProductBelongToOrders = productVarientBelongToOrders
                 // ProductBelongToOrder = _repository.ProductVarientBelongToOrderReposatory.
@@ -35,13 +35,13 @@ namespace Services.DataServices
             _repository.OrderReposatory.Add(OrderEntity);
             _repository.SaveChanges();
 
-            List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
+            //List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
 
             foreach (var item in orderDtonewFromCustomer.productsperOrder)
 
             {
                 // محمد لسه معملهاش implement
-                ProductVarient productVarient = _repository.ProductVarientRepository.Get(item.products.Id);
+                ProductVarient productVarient = _repository.ProductVarientRepository.Get(item.ProductVarientId);
                 //{
                 //    Id = item.products.Id,
                 //    UnitPrice = item.products.Price,
@@ -61,9 +61,8 @@ namespace Services.DataServices
                         ColorId = productVarient.ColorId,
                         SizeId = productVarient.SizeId,
                         ProductVarient = productVarient
-
                     };
-                    productVarientBelongToOrders.Add(productVarientBelongToOrderEntity);
+                   // productVarientBelongToOrders.Add(productVarientBelongToOrderEntity);
                     _repository.productVarientBelongToOrderReposatory.Add(productVarientBelongToOrderEntity);
                     _repository.SaveChanges();
                 }
@@ -81,7 +80,7 @@ namespace Services.DataServices
             throw new NotImplementedException();
         }
 
-        public OrderDto Get(int id)
+        public OrderDto Get(int id) // for admin
         {
             throw new NotImplementedException();
         }
@@ -93,7 +92,9 @@ namespace Services.DataServices
 
         public List<OrderDto> GetAll()
         {
-            throw new NotImplementedException();
+            var orders = _repository.OrderReposatory.GetAll();
+
+            return orders.ToOrderDto();
         }
 
         public void Update(OrderDto DTO)
