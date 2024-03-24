@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
-using Domain.Repositories.Review;
+using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -9,23 +10,30 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class ReviewRepository:IReviewRepository
+    public class ReviewRepository: IReviewRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbContext;
 
-        public ReviewRepository(ApplicationDbContext context)
+        public ReviewRepository(ApplicationDbContext dbcontext)
         {
-            _context = context;
+            _dbContext = dbcontext;
         }
 
         public void Add(Review review)
         {
-            throw new NotImplementedException();
+            _dbContext.Reviews.Add(review);
+       
         }
 
-        public void Delete(int id)
+        public void Delete(Review review)
         {
-            throw new NotImplementedException();
+            var existingReview = _dbContext.Reviews.FirstOrDefault(r => r.CustomerId == review.CustomerId && r.ProductId== review.ProductId);
+            
+            if (existingReview != null)
+            {
+                _dbContext.Reviews.Remove(existingReview);
+             
+            }
         }
 
         public Review? Get(int id)
@@ -33,20 +41,39 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Review> GetAll()
+        public List<Review> Get(string name)
         {
             throw new NotImplementedException();
         }
 
-        public int SaveChanges()
+        public List<Review> GetAll() =>
+            _dbContext.Reviews.ToList();
+        
+        public List<Review> GetAllReviewByCustomerId(int customerId) =>
+             _dbContext.Reviews.Where(r=>r.CustomerId== customerId).ToList();
+        
+
+        public List<Review> GetAllReviewByProductId(int productId) =>
+             _dbContext.Reviews.Where(r => r.ProductId == productId).ToList();
+
+        public List<Review> GetByCustomer(int customerID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Review GetByCustomerProduct(int customerID, int productID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Review> GetByProduct(int productID)
         {
             throw new NotImplementedException();
         }
 
         public void Update(Review review)
         {
-            throw new NotImplementedException();
+            _dbContext.Reviews.Update(review);
         }
-        //ابقي استخدمي find عشان افضل 
     }
 }

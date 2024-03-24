@@ -11,14 +11,17 @@ public class ProductVarient : BaseEntity
 
     #region RelationShip Mapping
 
-    public int ColoredProductId { get; set; }
+    public int ProductId { get; set; }
+    public int ColorId { get; set; }
+
     public ColoredProduct ColoredProduct { get; set; } = null!;
     public int SizeId { get; set; }
     public Size Size { get; set; } = null!;
 
-   
-    public int ProductBelongToOrderId { get; set; }
-    public ProductVarientBelongToOrder ProductBelongToOrder { get; set; } = null!;
+    public ICollection<Cart> Carts { get; set; } = null!;
+    public List<CartItem> CartItems { get; set; } = null!;
+ 
+    public ICollection<ProductVarientBelongToOrder> ProductBelongToOrders { get; set; } = null!;
 
     #endregion
 }

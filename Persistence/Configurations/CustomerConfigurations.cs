@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations;
 
-public class CustomerConfigurations : IEntityTypeConfiguration<Domain.Entities.Customer>
+public class CustomerConfigurations : IEntityTypeConfiguration<Customer>
 {
-    void IEntityTypeConfiguration<Domain.Entities.Customer>.Configure
-        (EntityTypeBuilder<Domain.Entities.Customer> builder)
+    void IEntityTypeConfiguration<Customer>.Configure
+        (EntityTypeBuilder<Customer> builder)
     {
         // Primary Key
         builder.HasKey(e => e.Id);
@@ -14,7 +15,6 @@ public class CustomerConfigurations : IEntityTypeConfiguration<Domain.Entities.C
         // Unique Property
         builder.HasIndex(e => e.Email)
                .IsUnique();
-
         #region Properties Constrains
 
         builder.Property(c => c.Name)

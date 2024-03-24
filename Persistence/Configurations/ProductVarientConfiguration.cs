@@ -9,7 +9,7 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<ProductVarient> builder)
     {
         // Primary Key
-        builder.HasKey(e => new { e.ColoredProductId, e.SizeId });
+        builder.HasKey(e => new { e.ProductId, e.ColorId, e.SizeId });
         builder.Property(e => e.Id)
                 .ValueGeneratedOnAddOrUpdate();
 
@@ -30,7 +30,7 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
 
         builder.HasOne(pv => pv.ColoredProduct)
             .WithMany(cp => cp.Varients)
-            .HasForeignKey(pv => pv.ColoredProductId);
+            .HasForeignKey(pv => new { pv.ProductId, pv.ColorId });
 
 
         builder.HasOne(pv => pv.Size)

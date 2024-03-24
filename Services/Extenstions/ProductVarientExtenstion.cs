@@ -19,7 +19,9 @@ public static class ProductVarientExtenstion
             throw new IndexOutOfRangeException("2 Lists must have the Same Lenght");
 
         for (int i = 0; i < len; i++)
-            productVariants[i].ColoredProductId = ids[i];
+        {
+            productVariants[i].ColorId = ids[i];
+        }
     }
 
     public static List<ProductVarient> ToProductVariantEntity
@@ -43,7 +45,8 @@ public static class ProductVarientExtenstion
         return new()
         {
             Discount = productVariant.Discount,
-            ColoredProductId = productVariant.ColoredProductId,
+            ColorId = productVariant.ColorId,
+            ProductId = productVariant.ProductId,
             Quantity = productVariant.Quantity,
             SizeId = productVariant.SizeId,
             UnitPrice = productVariant.UnitPrice

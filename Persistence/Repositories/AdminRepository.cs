@@ -1,7 +1,5 @@
 ﻿
 using Domain.Repositories;
-using Domain.Repositories.Order;
-using Domain.Repositories.Saller;
 using Persistence.Context;
 
 namespace Persistence.Repositories;
@@ -10,64 +8,64 @@ public class AdminRepository : IAdminRepository
 {
     private readonly ApplicationDbContext _context;
 
-            
-    private ISallerRepositry _SallerRepositry;
+    private ICustomerRepository _customerRepository;
+    private ISallerRepositry _sallerRepositry;
     private IProductRepository _productRepository;
     private ICategoryRepository _categoryRepository;
-
     private IProductCategoryRepository _productCategoryRepository;
     private IProductColerdRepository _productColerdRepository;
     private IProductVarientRepository _productVarientRepository;
-    private IOrderReposatory _OrderReposatory ;
+    private IOrderReposatory _OrderReposatory;
+    private IFavouriteRepository _favouriteRepository;
+    private ICardRepositry _cartRepository;
+    private IReviewRepository _reviewwRepository;
 
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
-    
+
+
     public ISallerRepositry SallerRepository
     {
         get
         {
-            if (_SallerRepositry == null)
-                _SallerRepositry = new SallerRepository(_context);
+            if (_sallerRepositry == null)
+                _sallerRepositry = new SallerRepository(_context);
 
-            return _SallerRepositry;
+            return _sallerRepositry;
         }
     }
-    //public ISallerRepositry SallerRepository
-    //{
-    //    get
-    //    {
-    //        if (_customerRepository == null)
-    //            _customerRepository = new CustomerRepository(_context);
+    public ICustomerRepository CustomerRepository
+    {
+        get
+        {
+            if (_customerRepository == null)
+                _customerRepository = new CustomerRepository(_context);
 
-    //        return _customerRepository;
-    //    }
-    //}
+            return _customerRepository;
+        }
+    }
     public IProductRepository ProductRepository
     {
         get
         {
             if (_productRepository == null)
             { }
-                //_productRepository = new CustomerRepository(_context);
+            //_productRepository = new CustomerRepository(_context);
 
             return _productRepository;
         }
     }
-    public IOrderReposatory orderReposatory
+    public IOrderReposatory OrderReposatory
     {
         get
         {
             if (_OrderReposatory == null)
-            {
+
                 _OrderReposatory = new OrderRepository(_context);
-            }
 
             return _OrderReposatory;
         }
     }
-
-    public IOrderReposatory OrderReposatory => throw new NotImplementedException();
 
     public ICategoryRepository CategoryRepository
     {
@@ -85,7 +83,7 @@ public class AdminRepository : IAdminRepository
         get
         {
             if (_productCategoryRepository == null) { }
-                //_productCategoryRepository = new CustomerRepository(_context);
+            //_productCategoryRepository = new CustomerRepository(_context);
 
             return _productCategoryRepository;
         }
@@ -96,7 +94,7 @@ public class AdminRepository : IAdminRepository
         get
         {
             if (_productColerdRepository == null) { }
-                //_productColerdRepository = new CustomerRepository(_context);
+            //_productColerdRepository = new CustomerRepository(_context);
 
             return _productColerdRepository;
         }
@@ -107,16 +105,44 @@ public class AdminRepository : IAdminRepository
         get
         {
             if (_productVarientRepository == null) { }
-                //_productVarientRepository = new CustomerRepository(_context);
+            //_productVarientRepository = new CustomerRepository(_context);
 
             return _productVarientRepository;
         }
     }
 
-    //public ISallerRepositry SallerRepository => throw new NotImplementedException();
+    public IFavouriteRepository FavouriteRepository
+    {
+        get
+        {
+            if (_favouriteRepository == null)
+                _favouriteRepository = new FavouriteRepository(_context);
 
-    //public ISallerRepositry SallerRepository => throw new NotImplementedException();
+            return _favouriteRepository;
+        }
+    }
 
+    public ICardRepositry CardRepositry
+    {
+        get
+        {
+            if (_cartRepository == null)
+                _cartRepository = new CartRepository(_context);
+
+            return _cartRepository;
+        }
+    }
+
+    public IReviewRepository ReviewRepository
+    {
+        get
+        {
+            if (_reviewwRepository == null)
+                _reviewwRepository = new ReviewRepository(_context);
+
+            return _reviewwRepository;
+        }
+    }
 
     public int SaveChanges()
     {

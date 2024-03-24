@@ -332,8 +332,11 @@ namespace Services.DataServices
                     case Properties.Quantity:
                         product.Quantity = int.Parse(item.Value);
                         break;
-                    case Properties.ColoredProductId:
-                        product.ColoredProductId = int.Parse(item.Value);
+                    case Properties.ProductId:
+                        product.ProductId = int.Parse(item.Value);
+                        break;
+                    case Properties.ColorId:
+                        product.ColorId = int.Parse(item.Value);
                         break;
 
                     default:

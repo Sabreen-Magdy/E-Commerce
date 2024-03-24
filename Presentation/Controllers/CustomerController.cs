@@ -1,8 +1,7 @@
-﻿using Contract.Customer;
+﻿using Contract;
 using Domain.Enums;
 using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
-using Services.DataServices;
 
 
 namespace Presentation.Controllers;
