@@ -64,13 +64,6 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
-       
-
-        object ISallerRepositry.GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public object GetByCustomerId(int customerId)
         {
             throw new NotImplementedException();

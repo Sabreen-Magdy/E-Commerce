@@ -23,7 +23,7 @@ public class AdminRepository : IAdminRepository
 
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
-    //public ICustomerRepository CustomerRepository;
+   
     public ICustomerRepository CustomerRepository
     {
         get
@@ -54,23 +54,13 @@ public class AdminRepository : IAdminRepository
             return _ProductVarientBelongToOrderReposatory;
         }
     }
-    //public ISallerRepositry SallerRepository
-    //{
-    //    get
-    //    {
-    //        if (_customerRepository == null)
-    //            _customerRepository = new CustomerRepository(_context);
-
-            return _customerRepository;
-        }
-    }
     public IProductRepository ProductRepository
     {
         get
         {
             if (_productRepository == null)
             { }
-            //_productRepository = new CustomerRepository(_context);
+            //_productRepository = new ProductRepository(_context);
 
             return _productRepository;
         }
