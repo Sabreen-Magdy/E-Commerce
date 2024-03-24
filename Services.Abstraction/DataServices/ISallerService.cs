@@ -1,4 +1,4 @@
-﻿using Contract.Saller;
+﻿using Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
