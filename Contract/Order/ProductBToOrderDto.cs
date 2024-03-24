@@ -10,8 +10,9 @@ namespace Contract.Order
     {
        public int  OrderId { get; set; }
         public int ProductId { get; set; }
+        public int ColorId { get; set; }
         public int Quantity { get; set; }
-        public ProductDto products { get; set; }
+        public ProductVariantDto? products { get; set; }
         public double TotalCostPerQuantity { get; set; }
     }
 }

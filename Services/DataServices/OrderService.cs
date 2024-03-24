@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Contract.Order;
 using Domain.Entities;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
@@ -15,25 +16,56 @@ namespace Services.DataServices
             _repository = repository;
         }
 
-        public void Add(OrderDto orderDto)
+        public void Add(OrderDtoNew orderDtonewFromCustomer)
         {
             // Order OrderEntity = orderDto.ToOrderEntity();
+            List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
+
+            foreach (var item in orderDtonewFromCustomer.productsperOrder)
+                
+            {
+                // محمد لسه معملهاش implement
+                ProductVarient productVarient = _repository.ProductVarientRepository.Get(item.products.Id);
+                //{
+                //    Id = item.products.Id,
+                //    UnitPrice = item.products.Price,
+                //    Discount = item.products.Discount,
+                //    Quantity = item.products.Quantity,
+                    
+                //};
+                productVarientBelongToOrders.Add(new ProductVarientBelongToOrder {
+                    TotalPrice = item.TotalCostPerQuantity,
+                    Quantity = item.Quantity,
+                    OrderId = item.OrderId,
+                    //ProductId = item.products.ProductId,
+                    //ColorId = item.ColorId,
+                    //SizeId = item.products.Size.
+                    ProductVarient = productVarient
+
+                });
+            }
             Order OrderEntity = new Order
             {
-                OrderedDate = orderDto.OrderDate,
-                ConfirmDate = orderDto.ConfirmDate,
-                CustomerAddress = orderDto.CustomerAddress,
-                CustomerId = orderDto.CustomerId,
-                //Customer = _repository.CustomerRepository.Get(orderDto.CustomerId),
-                State = orderDto.State, 
-                TotalCost = orderDto.TotalCost, 
-               // ProductBelongToOrder = _repository.ProductVarientBelongToOrderReposatory.
+                OrderedDate = orderDtonewFromCustomer.OrderDate,
+                ConfirmDate = null,
+                CustomerAddress = orderDtonewFromCustomer.CustomerAddress,
+                CustomerId = orderDtonewFromCustomer.CustomerId,
+                //Customer = _repository.CustomerRepository.Get(orderDtonewFromCustomer.CustomerId),
+                State = orderDtonewFromCustomer.State, 
+                TotalCost = orderDtonewFromCustomer.OrderTotalCost, 
+                ProductBelongToOrders = productVarientBelongToOrders
+                // ProductBelongToOrder = _repository.ProductVarientBelongToOrderReposatory.
             };
 
 
             _repository.OrderReposatory.Add(OrderEntity);
             _repository.SaveChanges();
             
+        }
+
+        public void Add(OrderDto DTO)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(int id)
@@ -60,5 +92,7 @@ namespace Services.DataServices
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

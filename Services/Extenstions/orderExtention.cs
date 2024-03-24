@@ -17,9 +17,9 @@ namespace Services.Extenstions
                 OrderedDate =order.OrderDate,
                 CustomerAddress = order.CustomerAddress,
                 State = order.State,    
-                TotalCost = order.TotalCost ,
+                TotalCost = order.OrderTotalCost ,
                 CustomerId = order.CustomerId,
-               
+               //ProductBelongToOrders=
             };
         }
 
@@ -46,7 +46,7 @@ namespace Services.Extenstions
                 OrderDate = order.OrderedDate,
                 CustomerAddress = order.CustomerAddress,
                 State = order.State,
-                TotalCost = order.TotalCost,
+                OrderTotalCost = order.TotalCost,
                 CustomerId = order.CustomerId,
             };
         }
