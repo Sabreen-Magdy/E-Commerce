@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface ISallerRepositry : IBaseRepository<Saller>
+    public interface IProductVarientBelongToOrderReposatory : IBaseRepository<ProductVarientBelongToOrder>
     {
     }
 }

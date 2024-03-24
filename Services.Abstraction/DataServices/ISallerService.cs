@@ -1,13 +1,13 @@
-﻿using Domain.Entities;
+﻿using Contract.Saller;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Repositories
+namespace Services.Abstraction.DataServices
 {
-    public interface ISallerRepositry : IBaseRepository<Saller>
+   public class ISallerService
     {
     }
 }

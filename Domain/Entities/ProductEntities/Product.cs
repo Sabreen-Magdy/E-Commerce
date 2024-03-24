@@ -44,6 +44,7 @@ public class Product : BaseEntity
     public virtual int SallerId { get; set; }
     public virtual Saller Saller { get; set; } = null!;
     public List<Review> Reviews { get; set; } = null!;
+    public ICollection<Favourite> Favourites { get; set; } = null!;
 
 
     // Reduce Join
