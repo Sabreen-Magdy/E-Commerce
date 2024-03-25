@@ -9,7 +9,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class GeneralController : ControllerBase
     {
         private readonly IAdminService _adminService;

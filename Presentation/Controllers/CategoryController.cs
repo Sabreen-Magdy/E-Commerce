@@ -9,7 +9,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+  //  [Authorize]
     public class CategoryController :  ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -31,7 +31,7 @@ namespace Presentation.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-        }
+}
 
         [HttpGet("GetById")]
         public IActionResult Get(int id)
