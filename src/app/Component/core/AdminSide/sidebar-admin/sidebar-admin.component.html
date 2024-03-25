@@ -13,26 +13,50 @@
          <span class="tooltip">البحث</span>
       </li>
       <li>
-        <a href="#">
+        <a 
+          [routerLink]="'/admin/dashboard'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class='bx bx-grid-alt'></i>
           <span class="links_name">لوحة البيانات</span>
         </a>
          <span class="tooltip">لوحة البيانات</span>
       </li>
       <li>
-       <a href="#">
+       <a 
+       [routerLink]="['/admin/product']"
+       [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{ exact: true }"
+       >
+        
         <i class='bx bxs-t-shirt'></i>
          <span class="links_name">المنتجات</span>
        </a>
        <span class="tooltip">المنتجات</span>
      </li>
      <li>
-       <a href="#">
+       <a 
+       [routerLink]="'/admin/order'"
+       [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{ exact: true }"
+       >
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">الطلبات</span>
        </a>
        <span class="tooltip">الطلبات</span>
      </li>
+     <li>
+      <a 
+      [routerLink]="'/admin/category'"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >
+      <i class='bx bxs-category-alt'></i>
+        <span class="links_name">الفئات</span>
+      </a>
+      <span class="tooltip">الفئات</span>
+    </li>
      <li>
        <a href="#">
          <i class='bx bx-cog' ></i>
@@ -67,6 +91,7 @@
       <!-- <app-category-table></app-category-table> -->
       <!-- <app-category-form></app-category-form> -->
       <!-- <app-cart></app-cart> -->
-      <app-product-tabel></app-product-tabel>
+      <!-- <app-product-tabel></app-product-tabel> -->
       <!-- <app-product-details></app-product-details> -->
+      <router-outlet></router-outlet>
   </section>

@@ -142,8 +142,29 @@
   transition: all 0.4s ease;
   background: #f5f5f5;
 }
+
+.sidebar li a.active{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #5cb85c;
+}
+.sidebar li a.active i{
+ 
+  color: #f5f5f5;
+}
 .sidebar li a:hover{
   background: #5cb85c;
+}
+
+.sidebar li a.active:hover{
+  background: #f5f5f5;
+  
+  border: 1px solid #5cb85c;
 }
 .sidebar li a .links_name{
   color: #268a26;
@@ -154,6 +175,10 @@
   pointer-events: none;
   transition: 0.4s;
 }
+.sidebar li a.active .links_name{
+  color: #f5f5f5;
+  
+}
 .sidebar.open li a .links_name{
   opacity: 1;
   pointer-events: auto;
@@ -162,6 +187,12 @@
 .sidebar li a:hover i{
   transition: all 0.5s ease;
   color: #f5f5f5;
+}
+
+.sidebar li a.active:hover .links_name,
+.sidebar li a.active:hover i{
+  transition: all 0.5s ease;
+  color: #268a26;
 }
 .sidebar li i{
   height: 50px;
