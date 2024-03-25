@@ -23,9 +23,9 @@ namespace Persistence.Repositories
             _dbContext.Favourites.Add(favourite);
         }
 
-        public void Delete(int id)
+        public void Delete(int productId,int customerId)
         {
-            var fav = _dbContext.Favourites.Find(id);
+            var fav = _dbContext.Favourites.FirstOrDefault(f=>f.CustomerId==customerId&&f.ProductId==productId);
             if (fav != null)
             {
                 _dbContext.Favourites.Remove(fav);
@@ -40,7 +40,7 @@ namespace Persistence.Repositories
 
         public Favourite? Get(int id)
         {
-            return _dbContext.Favourites.Find(id);
+            throw new NotImplementedException();
         }
 
         public List<Favourite> Get(string name)
@@ -58,9 +58,9 @@ namespace Persistence.Repositories
             return _dbContext.Favourites.Where(f => f.CustomerId == customerID).ToList();
         }
 
-        public Favourite? GetByCustomerId(int customerId)
+        public Favourite? GetByCustomerProduct(int customerId,int productId)
         {
-            return _dbContext.Favourites.FirstOrDefault(f => f.CustomerId == customerId);
+            return _dbContext.Favourites.FirstOrDefault(f => f.CustomerId == customerId&&f.ProductId==productId);
         }
 
         public List<Favourite> GetByProduct(int productID)

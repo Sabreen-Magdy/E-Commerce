@@ -27,9 +27,9 @@ namespace Services.DataServices
             _repository.SaveChanges();
         }
 
-        public void DeleteItem(int ItemId)
+        public void DeleteItem(int customerId, int productId)
         {
-            var fav = _repository.FavouriteRepository.Get(ItemId);
+            var fav = _repository.FavouriteRepository.GetByCustomerProduct(customerId,productId);
             if (fav is null)
                 throw new NotFoundException("Favorite");
             else
@@ -62,9 +62,9 @@ namespace Services.DataServices
             }
             return favourite;
         }
-        public void Update(int id, Dictionary<Properties, int> newValues)
+        public void Update(int customerId, int productId, Dictionary<Properties, int> newValues)
         {
-            var fav = _repository.FavouriteRepository.Get(id);
+            var fav = _repository.FavouriteRepository.GetByCustomerProduct(customerId,productId);
             if (fav is null)
                 throw new NotFoundException("Favorite");
             else
@@ -79,9 +79,9 @@ namespace Services.DataServices
             return _repository.FavouriteRepository.GetByCustomer(customerId).ToFavoriteDto();
         }
 
-        public  FavoriteDto GetById(int Id)
+        public  FavoriteDto GetById(int customerId, int productId)
         {
-            return _repository.FavouriteRepository.Get(Id).ToFavoriteDto();
+            return _repository.FavouriteRepository.GetByCustomerProduct(customerId,productId).ToFavoriteDto();
         }
     }
 }

@@ -38,9 +38,9 @@ namespace Services.DataServices
             _repository.SaveChanges();
         }
 
-        public void DeleteItem(int itemId)
+        public void DeleteItem(int productId,int cartId)
         {
-            _repository.CardRepositry.DeletItem(itemId);
+            _repository.CardRepositry.DeletItem(productId, cartId);
             _repository.SaveChanges();
         }
 
@@ -91,9 +91,9 @@ namespace Services.DataServices
             }
             return cartItem;
         }
-        public void UpdateItem(int id, Dictionary<Properties, int> newValues)
+        public void UpdateItem(int cartId ,int productId, Dictionary<Properties, int> newValues)
         {
-            var cartItem = _repository.CardRepositry.GetItem(id);
+            var cartItem = _repository.CardRepositry.GetItem(cartId, productId);
             if (cartItem is null)
                 throw new NotFoundException("cartItem");
             else
@@ -102,5 +102,7 @@ namespace Services.DataServices
                 _repository.SaveChanges();
             }
         }
+
+    
     }
 }

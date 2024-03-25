@@ -20,9 +20,9 @@ namespace Persistence.Repositories
         {
             _dbContext.cartItems.Add(item);
         }
-        public void DeletItem(int id)
+        public void DeletItem(int cartId,int productId)
         {
-            var item = _dbContext.cartItems.Find(id);
+            var item = _dbContext.cartItems.FirstOrDefault(ci=> ci.CartId == cartId && ci.ProductId == productId);
             if (item != null)
             {
                 _dbContext.cartItems.Remove(item);
@@ -58,9 +58,9 @@ namespace Persistence.Repositories
         {
             _dbContext.Carts.Update(cart);
         }
-        public CartItem GetItem(int itemId)
+        public CartItem GetItem(int cartId,int productId)
         {
-           return _dbContext.cartItems.Find(itemId);
+           return _dbContext.cartItems.FirstOrDefault(ci => ci.CartId == cartId && ci.ProductId == productId);
         }
 
         public void UpdateItem(CartItem item)

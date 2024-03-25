@@ -10,8 +10,8 @@ namespace Domain.Repositories
     public interface ICardRepositry : IBaseRepository<Cart>
     {
         public void AddItem(CartItem item);
-        public void DeletItem(int itemId);
-        public CartItem GetItem(int itemId);
+        public void DeletItem(int cardId,int productId);
+        public CartItem GetItem(int cardId, int productId);
         public void UpdateItem(CartItem item);
         public Cart? GetByCustomerId(int customerId);
     }
