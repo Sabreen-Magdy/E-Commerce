@@ -25,10 +25,12 @@ namespace Services.DataServices
             _repositoryAdmin = repositoryAdmin;
         }
 
-        public void Add(CategoryNewDto category) =>
+        public void Add(CategoryNewDto category)
+        {
             _repositoryAdmin.CategoryRepository
                 .Add(category.ToCategoryEntity());
-        
+            _repositoryAdmin.SaveChanges();
+        }
         public void Delete(int id)
         {
             var category = GetCategory(id);

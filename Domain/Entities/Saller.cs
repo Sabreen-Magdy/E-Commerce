@@ -10,7 +10,7 @@ public class  Saller : BaseEntity
     public string Password { get; set; } = null!;
     public UserRole Role => UserRole.Saller;
 
-    public int NId { get; set; }
+    public long NId { get; set; }
     public List<Product> Products { get; set; } = null!;
     
 }
