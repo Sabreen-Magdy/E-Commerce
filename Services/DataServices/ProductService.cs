@@ -252,14 +252,14 @@ namespace Services.DataServices
                 .GetByProduct(productId).ToColoredProductDto();                       
         }
 
-        public List<ProductReviewDto> GetReviews(int productId)
+        public List<CustomerReviewDto> GetReviews(int productId)
         {
             var product = Get(productId);
             if (product is null)
                 throw new NotFoundException("Prodect");
 
             return _repository.ReviewRepository
-                .GetByProduct(productId).ToProductReview();
+                .GetAllReviewByProductId(productId).ToCustomerReview();
         }
 
         public List<ProductVariantDto> GetVarients(int productId)

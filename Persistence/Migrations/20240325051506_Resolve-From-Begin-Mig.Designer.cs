@@ -12,7 +12,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240325050000_Resolve-From-Begin-Mig")]
+    [Migration("20240325051506_Resolve-From-Begin-Mig")]
     partial class ResolveFromBeginMig
     {
         /// <inheritdoc />
@@ -89,7 +89,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductId", "SizeId", "ColorId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>

@@ -11,6 +11,9 @@ public sealed class AdminService : IAdminService
     private readonly ICategoryService _categoryService;
     private readonly IOrderService _OrderService;
     private readonly ISallerService _SallerService;
+    private readonly ICartService _cartService;
+    private readonly IFavouriteService _favoriteService;
+    private readonly IReviewService _reviewService;
 
 
     public AdminService(IAdminRepository repositoryAdmin)
@@ -20,7 +23,9 @@ public sealed class AdminService : IAdminService
         _categoryService = new CategoryService(repositoryAdmin);
         _OrderService = new OrderService(repositoryAdmin);
         _SallerService = new SalleryService(repositoryAdmin);
-
+        _cartService=new CartService(repositoryAdmin);
+        _favoriteService=new FavouriteService(repositoryAdmin);
+        _reviewService=new ReviewService(repositoryAdmin);
     }
 
     public ICustomerService CustomerService => _customerService;
@@ -31,6 +36,11 @@ public sealed class AdminService : IAdminService
 
     public ISallerService SallerService => _SallerService;
 
+    public ICartService CartService => _cartService;
+
+    public IFavouriteService FavouriteService => _favoriteService;
+
+    public IReviewService ReviewService => _reviewService;
 }
 
 

@@ -86,7 +86,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductId", "SizeId", "ColorId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>

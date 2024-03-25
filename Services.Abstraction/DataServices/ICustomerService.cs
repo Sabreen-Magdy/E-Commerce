@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Contract.Favorite;
 using Domain.Enums;
 
 namespace Services.Abstraction.DataServices;
@@ -16,7 +17,7 @@ public interface ICustomerService
 
     void Delete(int id);
     List<CustomerReviewDto> GetReviews(int customerId);
-    List<ItemDto> GetFavourites(int customerId);
+    List<FavoriteDto> GetFavourites(int customerId);
     List<OrderDto> GetOrders(int customerId);
     List<CartDto> GetCart(int customerId);
 

@@ -21,25 +21,28 @@ namespace Persistence.Repositories
             _dbContext.Carts.Add(cart);
             _dbContext.SaveChanges();
         }
-
-        public void Delete(int id)
+        public void AddItem(CartItem item)
         {
-            var cart = _dbContext.Carts.Find(id);
-            if (cart != null)
+            _dbContext.cartItems.Add(item);
+        }
+        public void DeletItem(int id)
+        {
+            var item = _dbContext.cartItems.Find(id);
+            if (item != null)
             {
-                _dbContext.Carts.Remove(cart);
-                _dbContext.SaveChanges();
+                _dbContext.cartItems.Remove(item);
             }
         }
 
         public void Delete(Cart entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Carts.Remove(entity);
+            _dbContext.SaveChanges();
         }
 
         public Cart? Get(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Carts.Find(id);
         }
 
         public List<Cart> Get(string name)
@@ -56,17 +59,18 @@ namespace Persistence.Repositories
         {
             return _dbContext.Carts.FirstOrDefault(c => c.CustomerId == customerId);
         }
-
-        public Cart? GetById(int id)
-        {
-            return _dbContext.Carts.Find(id);
-
-        }
-
         public void Update(Cart cart)
         {
             _dbContext.Carts.Update(cart);
-            _dbContext.SaveChanges();
+        }
+        public CartItem GetItem(int itemId)
+        {
+           return _dbContext.cartItems.Find(itemId);
+        }
+
+        public void UpdateItem(CartItem item)
+        {
+            _dbContext.cartItems.Update(item);
         }
     }
 }

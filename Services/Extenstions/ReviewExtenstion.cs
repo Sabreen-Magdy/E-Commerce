@@ -11,14 +11,30 @@ public static class ReviewExtenstion
     {
         if (review == null)
             throw new ArgumentNullException(nameof(review));
-
-        return new()
+        return new CustomerReviewDto()
         {
             ProductId = review.ProductId,
             Rate = review.Rate,
             Review = review.Comment,
             ProductName = review.Product.Name,
+            CustomerId =review.CustomerId,
+            Date = review.Date,
+            CustomerName=review.Customer.Name,
         };
+    }
+    public static Review ToReviewEntity(this CustomerReviewDto reviewDto)
+    {
+        if (reviewDto == null)
+            throw new ArgumentNullException(nameof(reviewDto));
+
+        return new Review
+        {
+            ProductId = reviewDto.ProductId,
+            Rate = reviewDto.Rate,
+            Comment = reviewDto.Review,
+            Date =reviewDto.Date,
+            CustomerId=reviewDto.CustomerId
+};
     }
     public static List<CustomerReviewDto> ToCustomerReview(this List<Review> reviews)
     {
@@ -31,29 +47,15 @@ public static class ReviewExtenstion
 
         return reviewsDto;
     }
-
-    public static ProductReviewDto ToProductReview(this Review review)
+    public static List<Review> ToReviewEntities(this List<CustomerReviewDto> reviewsDto)
     {
-        if (review == null)
-            throw new ArgumentNullException(nameof(review));
+        if (reviewsDto == null)
+            throw new ArgumentNullException(nameof(reviewsDto));
 
-        return new()
-        {
-            CustomertId = review.CustomerId,
-            Rate = review.Rate,
-            Review = review.Comment,
-            CustomerName = review.Customer.Name,
-        };
-    }
-    public static List<ProductReviewDto> ToProductReview(this List<Review> reviews)
-    {
-        if (reviews == null)
-            throw new ArgumentNullException(nameof(reviews));
+        var reviews = new List<Review>();
+        foreach (var item in reviewsDto)
+            reviews.Add(item.ToReviewEntity());
 
-        var reviewsDto = new List<ProductReviewDto>();
-        foreach (var item in reviews)
-            reviewsDto.Add(item.ToProductReview());
-
-        return reviewsDto;
+        return reviews;
     }
 }

@@ -102,6 +102,12 @@ namespace Services.DataServices
             return order.ToOrderDto();
         }
 
+        public List<OrderDto> Get(string Name)
+        {
+            var order = _repository.OrderReposatory.Get(Name);
+            return order.ToOrderDto();
+        }
+
         //public OrderDto Get(string Name)
         //{
         //    var order = _repository.OrderReposatory.Get(Name);

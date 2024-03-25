@@ -295,7 +295,7 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartItem",
+                name: "cartItems",
                 columns: table => new
                 {
                     CartId = table.Column<int>(type: "int", nullable: false),
@@ -307,15 +307,15 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItem", x => new { x.CartId, x.ProductId, x.SizeId, x.ColorId });
+                    table.PrimaryKey("PK_cartItems", x => new { x.CartId, x.ProductId, x.SizeId, x.ColorId });
                     table.ForeignKey(
-                        name: "FK_CartItem_Carts_CartId",
+                        name: "FK_cartItems_Carts_CartId",
                         column: x => x.CartId,
                         principalTable: "Carts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartItem_ProductVarients_ProductId_SizeId_ColorId",
+                        name: "FK_cartItems_ProductVarients_ProductId_SizeId_ColorId",
                         columns: x => new { x.ProductId, x.SizeId, x.ColorId },
                         principalTable: "ProductVarients",
                         principalColumns: new[] { "ProductId", "ColorId", "SizeId" },
@@ -378,8 +378,8 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_ProductId_SizeId_ColorId",
-                table: "CartItem",
+                name: "IX_cartItems_ProductId_SizeId_ColorId",
+                table: "cartItems",
                 columns: new[] { "ProductId", "SizeId", "ColorId" });
 
             migrationBuilder.CreateIndex(
@@ -443,7 +443,7 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartItem");
+                name: "cartItems");
 
             migrationBuilder.DropTable(
                 name: "CartProductVarient");

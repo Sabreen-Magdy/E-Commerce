@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Contract.Favorite;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
@@ -107,10 +108,10 @@ public class CustomerService : ICustomerService
         }
     }
 
-    public List<ItemDto> GetFavourites(int customerId) =>
+    public List<FavoriteDto> GetFavourites(int customerId) =>
          _repository.FavouriteRepository
                     .GetByCustomer(customerId)
-                    .ToItemDto();
+                    .ToFavoriteDto();
 
 
     public List<OrderDto> GetOrders(int customerId) =>
