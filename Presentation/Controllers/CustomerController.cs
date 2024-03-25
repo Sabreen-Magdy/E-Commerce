@@ -2,12 +2,14 @@
 using Domain.Enums;
 using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CustomerController : ControllerBase
 {
     private readonly IAdminService _adminService;

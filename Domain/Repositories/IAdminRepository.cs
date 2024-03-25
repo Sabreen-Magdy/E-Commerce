@@ -1,6 +1,4 @@
-﻿using Domain.Repositories;
-
-namespace Domain.Repositories;
+﻿namespace Domain.Repositories;
 
 /// <summary>
 /// Main Repository 

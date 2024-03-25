@@ -1,7 +1,8 @@
 ﻿using Domain.Repositories;
 using Services.Abstraction.DataServices;
+using Services.DataServices;
 
-namespace Services.DataServices;
+namespace Services;
 
 public sealed class AdminService : IAdminService
 {
@@ -31,7 +32,7 @@ public sealed class AdminService : IAdminService
     public IProductService ProductService => _productService;
     public ICategoryService CategoryService => _categoryService;
 
-    public IOrderService OrderService => _OrderService; 
+    public IOrderService OrderService => _OrderService;
 
     public ISallerService SallerService => _SallerService;
 

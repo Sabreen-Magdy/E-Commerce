@@ -166,21 +166,18 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("1234567");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -188,18 +185,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.ToTable("Customers", t =>
                         {
-                            t.HasCheckConstraint("EmailValidation", "[Email] like '%[a-zA-Z0-9.]@__%.__%' and [Email] not like '%[-+/*]%'");
-
                             t.HasCheckConstraint("ImageValidation", "[Image] like '%.png'");
-
-                            t.HasCheckConstraint("PasswordValidation", "len([Password]) >= 6");
-
-                            t.HasCheckConstraint("PhoneValidation", "len([Phone]) = 11 and [Phone] not like '%[a-zA-Z]%'");
                         });
                 });
 

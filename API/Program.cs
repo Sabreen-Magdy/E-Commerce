@@ -1,10 +1,15 @@
 using Presentation;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
-using Services.DataServices;
 using Persistence.Repositories;
 using Services.Abstraction.DataServices;
 using Domain.Repositories;
+using Services;
+using Persistence.JWTAuthentication;
+using Persistence.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +32,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("soomCon");
+var connection = builder.Configuration.GetConnectionString("mosCon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -41,6 +46,26 @@ builder.Services.AddControllers().AddApplicationPart(
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+
+
+// Add Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
 #endregion
 
 var app = builder.Build();
@@ -52,7 +77,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
+app.UseAuthentication();
+//app.UseMvc();
 
 app.MapControllers();
 

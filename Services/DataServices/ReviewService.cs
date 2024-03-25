@@ -53,12 +53,11 @@ namespace Services.DataServices
             _repository.ReviewRepository
                        .GetAllReviewByCustomerId(customerId)
                        .ToCustomerReview();
-        
 
-        public List<ProductReviewDto> GetAllReviewsOfProduct(int productId) =>
+        public List<CustomerReviewDto> GetAllReviewsOfProduct(int productId)=>
             _repository.ReviewRepository
-                   .GetAllReviewByProductId(productId)
-                   .ToProductReview();
+                       .GetAllReviewByProductId(productId)
+                       .ToCustomerReview();
 
         public CustomerReviewDto? GetReviewOfCustomer(int customerId, int productId)
         {
@@ -66,11 +65,6 @@ namespace Services.DataServices
             return rev.ToCustomerReview();
         }
 
-        public ProductReviewDto? GetReviewOfProduct(int customerId, int productId)
-        {
-            var rev = _repository.ReviewRepository.GetByCustomerProduct(customerId, productId);
-            return rev.ToProductReview();
-        }
 
         public Review UpdateReview(Review review,
            Dictionary<Properties, object> newValues)

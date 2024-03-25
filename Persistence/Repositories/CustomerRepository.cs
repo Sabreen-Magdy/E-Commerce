@@ -31,8 +31,4 @@ public class CustomerRepository : ICustomerRepository
     public void Update(Domain.Entities.Customer customer) =>
       _context.Customers.Update(customer);
 
-    public bool Login(string username, string password)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -1,16 +1,18 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
 
-//using Domain.Entities;
-//using Services.Abstraction.DataServices;
-//using Contract;
-//using Domain.Enums;
-//namespace Presentation.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class CartController : ControllerBase
-//    {
-//        private readonly IAdminService _adminService;
+using Domain.Entities;
+using Services.Abstraction.DataServices;
+using Contract;
+using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
+namespace Presentation.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class CartController : ControllerBase
+    {
+        private readonly IAdminService _adminService;
 
 //        public CartController(IAdminService adminService)
 //        {
@@ -51,19 +53,19 @@
 //            return NoContent();
 //        }
 
-//        [HttpPut]
-//        public IActionResult UpdateCartItem(int id, Dictionary<Properties, int> newValues)
-//        {
-//            _adminService.CartService.UpdateItem(id,newValues);
-//            return NoContent();
-//        }
+        [HttpPut]
+        public IActionResult UpdateCartItem(int id, Dictionary<Properties, int> newValues)
+        {
+            _adminService.CartService.UpdateItem(id,newValues);
+            return NoContent();
+        }
 
-//        [HttpDelete("{id}")]
-//        public IActionResult DeleteCartItem(int id)
-//        {
-//            _adminService.CartService.DeleteItem(id);
-//            return NoContent();
-//        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCartItem(int id)
+        {
+            _adminService.CartService.DeleteItem(id);
+            return NoContent();
+        }
 
 //    }
 //}
