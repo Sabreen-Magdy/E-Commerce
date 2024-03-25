@@ -13,10 +13,10 @@ namespace Presentation.Controllers
             _adminService = adminService;
 
         //[HttpGet("{Id}")]
-        [HttpGet]
+        [HttpGet("GetByProductCustomer")]
         public IActionResult GetByProductCustomer(int customerId, int productId)
         {
-            var fav = _adminService.FavouriteService.GetById(customerId,productId);
+            var fav = _adminService.FavouriteService.GetById(customerId, productId);
             if (fav == null)
             {
                 return NotFound();
@@ -24,7 +24,7 @@ namespace Presentation.Controllers
             return Ok(fav);
         }
         //[HttpGet("customer/{customerId}")]
-        [HttpGet]
+        [HttpGet("GetByCustomerId")]
         public IActionResult GetByCustomerId(int customerId)
         {
             var fav = _adminService.FavouriteService.GetAllByCustomerId(customerId);
@@ -34,17 +34,17 @@ namespace Presentation.Controllers
             }
             return Ok(fav);
         }
-        [HttpPost]
+        [HttpPost("AddFavorite")]
         public IActionResult AddFavorite(FavoriteDto favourite)
         {
             _adminService.FavouriteService.AddFavorite(favourite);
             return Ok();
         }
         //[HttpDelete("{id}")]
-        [HttpDelete]
+        [HttpDelete("DeleteFavorite")]
         public IActionResult DeleteFavorite(int customerId, int productId)
         {
-            _adminService.FavouriteService.DeleteItem(customerId,productId);
+            _adminService.FavouriteService.DeleteItem(customerId, productId);
             return Ok();
         }
     }
