@@ -2,7 +2,7 @@
 {
     public class Color : BaseEntity
     {
-        public System.Drawing.Color Code { get; set; }
+        public string Code { get; set; } = null!;
         public string Name { get; set; } = null!;
 
         // To use in Filter Products By Color and Reduce Join

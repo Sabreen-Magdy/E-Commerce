@@ -21,12 +21,12 @@ public record ProductVariantDto
     public double PriceAfter => Price - OfferPrice;
 
     public int Quantity { get; set; }
-    public Color Code { get; set; }
+    public string Code { get; set; } = null!;
     public string? coloredimage { get; set; }
     public string Size { get; set; } = null!;
 }
 
-public record ColoredProuctDto(int Id, Color ColorCode, 
+public record ColoredProuctDto(int Id, string ColorCode, 
     string ColorName, string? Image)
 {
 }

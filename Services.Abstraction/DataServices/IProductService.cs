@@ -17,8 +17,8 @@ public interface IProductService
     List<ProductDto> GetByPrice(double price);
     List<ProductDto> GetByQuantity(int quantity);
     List<ProductDto> GetByColor(int id);
-    List<ProductDto> GetByColor(System.Drawing.Color color);
-    List<ProductDto> GetByColor(string name);
+    List<ProductDto> GetByColorCode(string color);
+    List<ProductDto> GetByColorName(string name);
     List<ProductDto> GetByGetegory(int id);
     List<ProductDto> GetByGetegory(string name);
 

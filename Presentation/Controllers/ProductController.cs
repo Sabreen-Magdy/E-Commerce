@@ -81,7 +81,7 @@ namespace Presentation.Controllers
         {
             try
             {
-                var result = _adminService.ProductService.GetByColor(name);
+                var result = _adminService.ProductService.GetByColorName(name);
                 if (result == null) return NotFound();
 
                 return Ok(result);
@@ -93,11 +93,11 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("GetByColorCode")]
-        public IActionResult GetByColor(System.Drawing.Color code)
+        public IActionResult GetByColorCode(string code)
         {
             try
             {
-                var result = _adminService.ProductService.GetByColor(code);
+                var result = _adminService.ProductService.GetByColorCode(code);
                 if (result == null) return NotFound();
 
                 return Ok(result);
@@ -207,10 +207,6 @@ namespace Presentation.Controllers
             }
         }
 
-        #endregion
-
-        
-
-        
+        #endregion   
     }
 }

@@ -185,7 +185,7 @@ namespace Services.DataServices
             return Map(productColors.Select(e => e.Product).ToList());
         }
 
-        public List<ProductDto> GetByColor(System.Drawing.Color color)
+        public List<ProductDto> GetByColorName(string color)
         {
             var productColors = _repository.ProductColerdRepository
                 .GetAll().FindAll(e => e.Color.Code == color);
@@ -193,7 +193,7 @@ namespace Services.DataServices
             return Map(productColors.Select(e => e.Product).ToList());
         }
 
-        public List<ProductDto> GetByColor(string name)
+        public List<ProductDto> GetByColorCode(string name)
         {
             var productColors = _repository.ProductColerdRepository
               .GetAll().FindAll(e => e.Color.Name == name);

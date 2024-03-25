@@ -86,7 +86,7 @@ namespace Presentation.Controllers
 
         [HttpPost("AddColor")]
         [Authorize(Roles = "Saller")]
-        public IActionResult Add(string name, Color code)
+        public IActionResult Add(string name, string code)
         {
             try
             {
