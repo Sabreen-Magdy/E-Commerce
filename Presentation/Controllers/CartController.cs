@@ -4,10 +4,12 @@ using Domain.Entities;
 using Services.Abstraction.DataServices;
 using Contract;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -17,7 +19,7 @@ namespace Presentation.Controllers
             _adminService = adminService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetCart")]
         public IActionResult GetById(int id)
         {
             var cart = _adminService.CartService.Get(id);
@@ -27,7 +29,8 @@ namespace Presentation.Controllers
             }
             return Ok(cart);
         }
-        [HttpGet("customer/{customerId}")]
+
+        [HttpGet("GetByCustomerId")]
         public IActionResult GetByCustomerId(int customerId)
         {
             var cart = _adminService.CartService.GetByCustomerId(customerId);
@@ -37,28 +40,30 @@ namespace Presentation.Controllers
             }
             return Ok(cart);
         }
-        [HttpPost]
-        public IActionResult AddItemToCart(ItemDto itemDto, int cartId)
+        
+        
+        [HttpPost("AddItem")]
+        public IActionResult AddItemToCart(int cartId, ItemDto itemDto)
         {
             _adminService.CartService.AddItemToCart(itemDto, cartId);
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public IActionResult UpdateCart(Cart cart)
         {
             _adminService.CartService.Update(cart.CustomerId);
             return NoContent();
         }
 
-        [HttpPut("item/{id}")]
+        [HttpPut("UpdateItem")]
         public IActionResult UpdateCartItem(int id, Dictionary<Properties, int> newValues)
         {
-            _adminService.CartService.UpdateItem(id,newValues);
+            _adminService.CartService.UpdateItem(id, newValues);
             return NoContent();
         }
 
-        [HttpDelete("item/{id}")]
+        [HttpDelete("DeleteItem")]
         public IActionResult DeleteCartItem(int id)
         {
             _adminService.CartService.DeleteItem(id);

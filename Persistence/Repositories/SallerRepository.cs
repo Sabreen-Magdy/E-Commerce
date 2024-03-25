@@ -68,5 +68,11 @@ namespace Persistence.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool Login(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

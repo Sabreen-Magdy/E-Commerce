@@ -9,6 +9,7 @@ public interface IProductService
    
     List<ProductDto> GetAll();
     ProductDto? Get(int id);
+    
     #region Search&Filter
 
     List<ProductDto> Get(string name);

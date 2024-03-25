@@ -102,8 +102,7 @@ namespace Services.DataServices
         public void DeleteCategory(int productId, int categoryId)
         {
             var prodCat = _repository.ProductCategoryRepository
-                .GetAll().Find(e => e.ProductId == productId 
-                && e.CategoryId == categoryId);
+                                .Get(productId, categoryId);
            
             if (prodCat is null)
                 throw new NotFoundException("ProductCategory");
@@ -357,10 +356,5 @@ namespace Services.DataServices
                 _repository.SaveChanges();
             }
         }
-
-        //public void UpdateVarient(int int id, Dictionary<Properties, string> newValues)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

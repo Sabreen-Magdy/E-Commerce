@@ -21,7 +21,6 @@ public interface ICustomerService
     List<OrderDto> GetOrders(int customerId);
     List<CartDto> GetCart(int customerId);
 
-
     void AddReview(int customerId, int productId, string comment, int rate);
     void UpdateReview(int id, string comment, int rate);
     void UpdateReview(int customerId, int productId, string comment, int rate); 

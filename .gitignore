@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # BootStrap
 /dist
+
+
+# Persistence/Migrations/ApplicationDbContextModelSnapshot.cs

@@ -12,4 +12,5 @@ public interface IAdminService
     public ICartService CartService { get; }
     public IFavouriteService FavouriteService { get; }
     public IReviewService ReviewService { get; }
+    public IGeneralService GeneralService { get; }
 }
