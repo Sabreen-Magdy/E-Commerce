@@ -66,29 +66,47 @@ namespace Services.DataServices
                     _repository.productVarientBelongToOrderReposatory.Add(productVarientBelongToOrderEntity);
                     _repository.SaveChanges();
                 }
+
+                // update quantity for products that ordered
+                if (OrderEntity.ProductBelongToOrders != null)
+                {
+                    foreach (var pveriant in OrderEntity.ProductBelongToOrders)
+                    {
+                        var ProductsV = pveriant.ProductVarient;
+                        ProductsV.Quantity = ProductsV.Quantity - pveriant.Quantity;
+                        _repository.ProductVarientRepository.Update(ProductsV);
+                        _repository.SaveChanges();
+
+                        //var Product = ProductsV.ColoredProduct.Product;
+                        //Product.TotalQuantity = Product.TotalQuantity - pveriant.Quantity;
+                    }
+                }
                 // مش عارفه المفروض اعمل update في ال order بالليست بتاعت ال علاثه ولا لا 
             }
         }
 
-        public void Add(OrderDto DTO)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Add(OrderDto DTO)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _repository.OrderReposatory.Delete(_repository.OrderReposatory.Get(id));
+            _repository.SaveChanges();  
         }
 
         public OrderDto Get(int id) // for admin
         {
-            throw new NotImplementedException();
+            var order = _repository.OrderReposatory.Get(id);
+            return order.ToOrderDto();
         }
 
-        public OrderDto Get(string Name)
-        {
-            throw new NotImplementedException();
-        }
+        //public OrderDto Get(string Name)
+        //{
+        //    var order = _repository.OrderReposatory.Get(Name);
+        //    return order.ToOrderDto();
+        //}
 
         public List<OrderDto> GetAll()
         {
@@ -99,9 +117,31 @@ namespace Services.DataServices
 
         public void Update(OrderDto DTO)
         {
-            throw new NotImplementedException();
+            _repository.OrderReposatory.Update(DTO.ToOrderEntity());
+            _repository.SaveChanges();
+        }
+        public void Updatestatus(int id , int status)
+        {
+            var order = _repository.OrderReposatory.Get(id);
+            order.State = status;
+            order.ConfirmDate = DateTime.Now;
+            _repository.OrderReposatory.Update(order);
+            _repository.SaveChanges();
+            if (status == 2)
+            {
+                if (order.ProductBelongToOrders != null)
+                {
+                    foreach (var pveriant in order.ProductBelongToOrders)
+                    {
+                        var Products = pveriant.ProductVarient;
+                        Products.Quantity = Products.Quantity + pveriant.Quantity;
+                        _repository.ProductVarientRepository.Update(Products);
+                        _repository.SaveChanges();
+                    }
+                }
+            }
+            //_repository.ProductVarientRepository.Update()
         }
 
-       
     }
 }
