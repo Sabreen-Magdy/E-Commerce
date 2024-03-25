@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Mvc;
 
 using Domain.Entities;
 using Services.Abstraction.DataServices;
@@ -14,10 +14,10 @@ namespace Presentation.Controllers
     {
         private readonly IAdminService _adminService;
 
-        public CartController(IAdminService adminService)
-        {
-            _adminService = adminService;
-        }
+//        public CartController(IAdminService adminService)
+//        {
+//            _adminService = adminService;
+//        }
 
         [HttpGet]
         public IActionResult GetById(int id)
@@ -70,5 +70,5 @@ namespace Presentation.Controllers
             return NoContent();
         }
 
-    }
-}
+//    }
+//}
