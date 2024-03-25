@@ -24,8 +24,7 @@ namespace Presentation.Controllers
             _adminService.ReviewService.Add(review);
             return Ok();
         }
-        //[HttpGet("customer/{customerId}")]
-        [HttpGet]
+        [HttpGet("customer/{customerId}")]
         public IActionResult GetByCustomerId(int customerId)
         {
             var reviews = _adminService.ReviewService.GetAllReviewsOfCustomer(customerId);
@@ -35,8 +34,7 @@ namespace Presentation.Controllers
             }
             return Ok(reviews);
         }
-        //[HttpGet("product/{productId}")]
-        [HttpGet]
+        [HttpGet("product/{productId}")]
         public IActionResult GetByProductId(int productId)
         {
             var reviews = _adminService.ReviewService.GetAllReviewsOfProduct(productId);
@@ -46,14 +44,13 @@ namespace Presentation.Controllers
             }
             return Ok(reviews);
         }
-        [HttpPut("UpdateReview")]
-        public IActionResult UpdateReview(int id, Dictionary<Properties, object> newValues)
+        [HttpPut]
+        public IActionResult UpdateReview( int customerId,int productId , Dictionary<Properties, object> newValues)
         {
-            _adminService.ReviewService.Update_Review(id, newValues);
+            _adminService.ReviewService.Update_Review(customerId,productId, newValues);
             return NoContent();
         }
-
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteReview(Review review)
         {
             _adminService.ReviewService.Delete_Review(review.CustomerId, review.ProductId);

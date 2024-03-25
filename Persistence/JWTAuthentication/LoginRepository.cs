@@ -23,13 +23,13 @@ namespace Persistence.JWTAuthentication
         public User? Login(string email, string password)
         {
             var userCostomer = _dbContext.Customers
-                            .FirstOrDefault(u => u.Password.Equals(email)
-                            && u.Password.Equals(password));
+                            .FirstOrDefault(u => u.Password.Equals(password)
+                            && u.Email.Equals(email));
             if (userCostomer == null)
             {
                 var userSaller = _dbContext.Sallers
-                            .FirstOrDefault(u => u.Password.Equals(email)
-                            && u.Password.Equals(password));
+                            .FirstOrDefault(u => u.Password.Equals(password)
+                            && u.Email.Equals(email));
 
                 if (userSaller != null)
                     return new()

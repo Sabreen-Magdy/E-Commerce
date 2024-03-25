@@ -14,11 +14,11 @@ namespace Services.Abstraction.DataServices
     {
         List<FavoriteDto> GetAll();
         List<FavoriteDto> GetAllByCustomerId(int customerId);
-        FavoriteDto GetById(int Id);
+        FavoriteDto GetById(int customerId, int productId);
         void AddFavorite(FavoriteDto FavDto);
         Favourite UpdateFav(Favourite favourite, Dictionary<Properties, int> newValues);
-        void Update(int id, Dictionary<Properties, int> newValues);
-        void DeleteItem(int ItemId);
+        void Update(int customerId, int productId, Dictionary<Properties, int> newValues);
+        void DeleteItem(int customerId, int productId);
 
     }
 }

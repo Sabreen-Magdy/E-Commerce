@@ -91,9 +91,9 @@ namespace Services.DataServices
             }
             return review;
         }
-        public void Update_Review(int id, Dictionary<Properties, object> newValues)
+        public void Update_Review(int customerId,int productId, Dictionary<Properties, object> newValues)
         {
-            var rev = _repository.ReviewRepository.Get(id);
+            var rev = _repository.ReviewRepository.GetByCustomerProduct(customerId,productId);
             if (rev is null)
                 throw new NotFoundException("Review");
             else
