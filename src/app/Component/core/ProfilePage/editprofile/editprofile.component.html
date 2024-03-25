@@ -1,47 +1,170 @@
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">الإسم</label>
+<form [formGroup]="editProfileForm">
+  <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: namecontrol?.valid,
+      danger: namecontrol?.errors && namecontrol?.touched
+    }"
+  >
+    <label for="username" class="form-label">الإسم</label>
     <input
       type="text"
       class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
+      id="username"
+      formControlName="name"
     />
-    <div id="emailHelp" class="form-text"></div>
+    <i *ngIf="namecontrol?.valid" class="bi bi-check-circle-fill"></i>
+    <i
+      *ngIf="namecontrol?.errors && namecontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="namecontrol?.errors && namecontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="namecontrol?.hasError('required')">
+        يجب عليك ادخال الاسم
+      </ng-container>
+      <ng-container *ngIf="namecontrol?.hasError('minlength')">
+        يجب علي الاسم ان تكون اطول من 2 حروف
+      </ng-container>
+      <ng-container *ngIf="namecontrol?.hasError('pattern')">
+        ادخل الاسم بالغة العربية رجاء
+      </ng-container>
+    </div>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">البريد الإلكتروني</label>
+  <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: emailcontrol?.valid,
+      danger: emailcontrol?.errors && emailcontrol?.touched
+    }"
+  >
+    <label for="useremail" class="form-label">البريد الإلكتروني</label>
     <input
+      formControlName="email"
       type="email"
       class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
+      id="useremail"
     />
-    <div id="emailHelp" class="form-text"></div>
+    <i
+      *ngIf="emailcontrol?.valid && emailcontrol?.touched"
+      class="bi bi-check-circle-fill"
+    ></i>
+    <i
+      *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="emailcontrol?.hasError('required')">
+        يجب عليك ادخال البريد الالكتروني
+      </ng-container>
+      <ng-container *ngIf="emailcontrol?.hasError('pattern')">
+        ادخل بريد الكتروني صالح
+      </ng-container>
+    </div>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">رقم التليفون</label>
+  <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: phonecontrol?.valid && phonecontrol?.touched,
+      danger: phonecontrol?.errors && phonecontrol?.touched
+    }"
+  >
+    <label for="userPhone" class="form-label">رقم التليفون</label>
     <input
-      type="number"
-      class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-    />
-    <div id="emailHelp" class="form-text"></div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">كلمة السر</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" />
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label"> العنوان</label>
-    <input
+      formControlName="phone"
       type="text"
       class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
+      id="userPhone"
     />
-    <div id="emailHelp" class="form-text"></div>
+    <i
+      *ngIf="phonecontrol?.valid && phonecontrol?.touched"
+      class="bi bi-check-circle-fill"
+    ></i>
+    <i
+      *ngIf="phonecontrol?.errors && phonecontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="phonecontrol?.errors && phonecontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="phonecontrol?.hasError('pattern')">
+        ادخل رقم صالح يبدأ 010 او 012 او 015
+      </ng-container>
+    </div>
+  </div>
+  <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: passwordcontrol?.valid,
+      danger: passwordcontrol?.errors && passwordcontrol?.touched
+    }"
+  >
+    <label for="userPassword" class="form-label">كلمة السر</label>
+    <input
+      formControlName="password"
+      type="password"
+      class="form-control"
+      id="userPassword"
+    />
+    <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
+    <i
+      *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="passwordcontrol?.hasError('required')">
+        يجب عليك ادخال كلمة المرور
+      </ng-container>
+      <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
+        يجب علي كلمة المرور ان تكون اطول من 5 حروف
+      </ng-container>
+    </div>
+  </div>
+  <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: addresscontrol?.valid && addresscontrol?.touched,
+      danger: addresscontrol?.errors && addresscontrol?.touched
+    }"
+  >
+    <label for="useraddress" class="form-label"> العنوان</label>
+    <input
+      formControlName="address"
+      type="text"
+      class="form-control"
+      id="useraddress"
+    />
+    <i
+      *ngIf="addresscontrol?.valid && addresscontrol?.touched"
+      class="bi bi-check-circle-fill"
+    ></i>
+    <i
+      *ngIf="addresscontrol?.errors && addresscontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="addresscontrol?.errors && addresscontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="addresscontrol?.hasError('required')">
+        يجب عليك ادخال العنوان
+      </ng-container>
+      <ng-container *ngIf="addresscontrol?.hasError('minlength')">
+        هذا العنوان قصير
+      </ng-container>
+      <ng-container *ngIf="addresscontrol?.hasError('pattern')">
+        ادخل العنوان باللغة العربية
+      </ng-container>
+    </div>
   </div>
   <button type="submit" class="btn btn-success">تعديل</button>
 </form>

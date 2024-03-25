@@ -64,12 +64,6 @@ export class ProductFormComponent implements OnInit {
     console.log(items);
   }
 
-  togglePhoto(){
-    var form = document.getElementById("photoForm");
-    form?.classList.add('model-show');
-    
-  }
-
   handleFileInput(event: any) {
     this.uploadedImages = [];
     const files: FileList = event.target.files;
@@ -84,6 +78,23 @@ export class ProductFormComponent implements OnInit {
     }
   }
 
+  productForm : FormGroup = new FormGroup({
+    nameproduct: new FormControl('',[Validators.required,Validators.pattern('[\u0600-\u06FF ,]+'),Validators.minLength(5)]),
+    categoryproduct: new FormControl('',[Validators.required]),
+    descriptionProduct : new FormControl('',[Validators.required, Validators.minLength(7),Validators.pattern('[\u0600-\u06FF ,\n]+')
+  ])
+  })
+
+  get nameproductcontrol (){
+    return this.productForm.get('nameproduct')
+  }
+  get categoryproductcontrol (){
+    return this.productForm.get('categoryproduct')
+  }
+  get descriptionProductcontrol (){
+    return this.productForm.get('descriptionProduct')
+  }
+
   picForm: FormGroup = new FormGroup({
     Colorname: new FormControl('', [Validators.required]),
     colorCode: new FormControl('', [Validators.required]),
@@ -91,13 +102,37 @@ export class ProductFormComponent implements OnInit {
   });
 
   productVariantForm: FormGroup = new FormGroup({
-    color: new FormControl(),
-    size: new FormControl(),
-    price: new FormControl(),
-    quantiy: new FormControl(),
-    disceount: new FormControl(),
+    color: new FormControl('',[Validators.required]),
+    size: new FormControl('',[Validators.required]),
+    price: new FormControl('',[Validators.required, Validators.min(70)]),
+    quantiy: new FormControl('',[Validators.required,Validators.min(5) ]),
+    disceount: new FormControl('',[Validators.max(25),Validators.min(0)]),
   });
 
+  get  colorvariantcontrol (){
+    return this.productVariantForm.get('color')
+  }
+  get sizevariantcontrol (){
+    return this.productVariantForm.get('size') 
+  }
+  get pricevariantcontrol (){
+    return this.productVariantForm.get('price') 
+  }
+  get quantiyVariantcontrol (){
+    return this.productVariantForm.get('quantiy') 
+  }
+  get disceountvariantcontrol (){
+    return this.productVariantForm.get('disceount') 
+  }
+
+
+  /* Toggle */
+  togglePhoto(){
+    var form = document.getElementById("photoForm");
+    form?.classList.add('model-show');
+    
+  }
+  
   addPhoto(e: Event) {
     e.preventDefault();
     console.log(this.uploadedImages);
@@ -135,12 +170,12 @@ export class ProductFormComponent implements OnInit {
     var form = document.getElementById("photoForm");
     form?.classList.remove('model-show');
   }
-
   toggleVarient(){
     var form = document.getElementById("VariantForm");
     form?.classList.add('model-show2');
   }
   closeVarient(){
+    this.productVariantForm.reset();
     var form = document.getElementById("VariantForm");
     form?.classList.remove('model-show2');
   }
@@ -149,7 +184,6 @@ export class ProductFormComponent implements OnInit {
     e.preventDefault();
     this.productVariants.push(this.productVariantForm.value);
     console.log(this.productVariants);
-    this.productVariantForm.reset();
     this.closeVarient();
   }
 }

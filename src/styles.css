@@ -20,6 +20,11 @@
 .form-control-div.sucess textarea {
   outline: 1px solid #198754;
 }
+
+.form-control-div.sucess select {
+  outline: 1px solid #198754;
+}
+
 .form-control-div.sucess i {
   color: #198754;
 }
@@ -28,6 +33,9 @@
 }
 
 .form-control-div.danger textarea {
+  outline: 1px solid #dc3545;
+}
+.form-control-div.danger select {
   outline: 1px solid #dc3545;
 }
 .form-control-div.danger .error-msg{

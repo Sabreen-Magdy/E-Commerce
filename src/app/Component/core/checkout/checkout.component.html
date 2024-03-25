@@ -5,33 +5,33 @@
   <div class="row g-3">
     <div class="col-md-4 col-lg-3 order-md-last">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-success ">مشترياتك</span>
+        <span class="text-success">مشترياتك</span>
         <span class="badge bg-success rounded-pill">3</span>
       </h4>
-      
+
       <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between lh-sm p-3 ">
+        <li class="list-group-item d-flex justify-content-between lh-sm p-3">
           <div>
             <h6 class="my-0">Nike jeans</h6>
             <small class="text-muted">Best Quality</small>
           </div>
           <span class="text-muted">500 EGY</span>
         </li>
-        <li class="list-group-item d-flex justify-content-between lh-sm p-3 ">
+        <li class="list-group-item d-flex justify-content-between lh-sm p-3">
           <div>
             <h6 class="my-0">Shoe from bata</h6>
             <small class="text-muted">Best product</small>
           </div>
           <span class="text-muted">1000 EGY</span>
         </li>
-        <li class="list-group-item d-flex justify-content-between lh-sm p-3 ">
+        <li class="list-group-item d-flex justify-content-between lh-sm p-3">
           <div>
             <h6 class="my-0">Focut shirt</h6>
             <small class="text-muted">Ladki pat jayegi</small>
           </div>
           <span class="text-muted">500 EGY</span>
         </li>
-        <li class="list-group-item d-flex justify-content-between bg-light p-3 ">
+        <li class="list-group-item d-flex justify-content-between bg-light p-3">
           <div class="text-success">
             <h6 class="my-0">Promo code</h6>
             <small>SALE500</small>
@@ -50,39 +50,84 @@
           <button type="submit" class="btn btn-success">خصم</button>
         </div>
       </form>
-      
     </div>
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3 text-success">عنوان العميل</h4>
-      <form class="needs-validation" novalidate>
+      <form class="needs-validation" novalidate [formGroup]="checkoutForm">
         <div class="row g-3">
-          <div class="col-sm-6">
+          <div
+            class="col-sm-6 form-control-div"
+            [ngClass]="{
+              sucess: firstnamecontrol?.valid,
+              danger: firstnamecontrol?.errors && firstnamecontrol?.touched
+            }"
+          >
             <label for="firstName" class="form-label">الإسم الأول</label>
             <input
               type="text"
               class="form-control"
               id="firstName"
-              placeholder=""
-              value=""
+              formControlName="firstname"
               required
             />
-            <div class="invalid-feedback">مطلوب اسم أول صالح</div>
+            <i
+              *ngIf="firstnamecontrol?.valid"
+              class="bi bi-check-circle-fill"
+            ></i>
+            <i *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched" class="alert p-1 mt-3 alert-danger">
+              <ng-container *ngIf="firstnamecontrol?.hasError('required')">
+                يجب عليك ادخال الاسم
+              </ng-container>
+              <ng-container *ngIf="firstnamecontrol?.hasError('minlength')">
+                يجب علي الاسم ان تكون اطول من 2 حروف
+              </ng-container>
+              <ng-container *ngIf="firstnamecontrol?.hasError('pattern')">
+                ادخل الاسم بالغة العربية رجاء
+              </ng-container>
+            </div>
           </div>
 
-          <div class="col-sm-6">
+          <div
+            class="col-sm-6 form-control-div"
+            [ngClass]="{
+              sucess: lastnamecontrol?.valid,
+              danger: lastnamecontrol?.errors && lastnamecontrol?.touched
+            }"
+          >
             <label for="lastName" class="form-label">الإسم الثاني</label>
             <input
               type="text"
               class="form-control"
               id="lastName"
-              placeholder=""
-              value=""
+              formControlName="lastname"
               required
             />
-            <div class="invalid-feedback">مطلوب اسم ثان صالح</div>
+            <i
+              *ngIf="lastnamecontrol?.valid"
+              class="bi bi-check-circle-fill"
+            ></i>
+            <i *ngIf="lastnamecontrol?.errors && lastnamecontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="lastnamecontrol?.errors && lastnamecontrol?.touched" class="alert p-1 mt-3 alert-danger">
+              <ng-container *ngIf="lastnamecontrol?.hasError('required')">
+                يجب عليك ادخال الاسم
+              </ng-container>
+              <ng-container *ngIf="lastnamecontrol?.hasError('minlength')">
+                يجب علي الاسم ان تكون اطول من 2 حروف
+              </ng-container>
+              <ng-container *ngIf="lastnamecontrol?.hasError('pattern')">
+                ادخل الاسم بالغة العربية رجاء
+              </ng-container>
+            </div>
           </div>
 
-          <div class="col-12">
+          <div
+            class="col-12 form-control-div"
+            [ngClass]="{
+              sucess: emailcontrol?.valid && emailcontrol?.touched,
+              danger: emailcontrol?.errors && emailcontrol?.touched
+            }"
+          >
             <label for="email" class="form-label"
               >البريد إلكتروني<span class="text-muted">(إختياري)</span></label
             >
@@ -91,36 +136,89 @@
               class="form-control"
               id="email"
               placeholder="you@example.com"
+              formControlName="email"
             />
-            <div class="invalid-feedback">
-              الرجاء إدخال عنوان بريد إلكتروني صالح لتحديثات الشحن
+            <i
+              *ngIf="emailcontrol?.valid && emailcontrol?.touched"
+              class="bi bi-check-circle-fill"
+            ></i>
+            <i *ngIf="emailcontrol?.errors && emailcontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="emailcontrol?.errors && emailcontrol?.touched" class="alert p-1 mt-3 alert-danger">
+              
+              <ng-container *ngIf="emailcontrol?.hasError('pattern')">
+                ادخل بريد الكتروني صالح
+              </ng-container>
             </div>
           </div>
-          <div class="col-12">
-            <label for="email" class="form-label">رقم التليفون</label>
+          <div
+            class="col-12 form-control-div"
+            [ngClass]="{
+              sucess: phonecontrol?.valid,
+              danger: phonecontrol?.errors && phonecontrol?.touched
+            }"
+          >
+            <label for="phone" class="form-label">رقم التليفون</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               id="phone"
-              placeholder=""
+              formControlName="phone"
             />
-            <div class="invalid-feedback">
-              الرجاء إدخال رقم تليفون صالح لتحديثات الشحن
+            <i
+              *ngIf="phonecontrol?.valid"
+              class="bi bi-check-circle-fill"
+            ></i>
+            <i *ngIf="phonecontrol?.errors && phonecontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="phonecontrol?.errors && phonecontrol?.touched" class="alert p-1 mt-3 alert-danger">
+              <ng-container *ngIf="phonecontrol?.hasError('required')">
+                يجب عليك ادخال الرقم
+              </ng-container>
+              <ng-container *ngIf="phonecontrol?.hasError('pattern')">
+                ادخل رقم صالح يبدأ 010 او 012 او 015
+              </ng-container>
             </div>
           </div>
-          <div class="col-12">
+          <div
+            class="col-12 form-control-div"
+            [ngClass]="{
+              sucess: mainaddresscontrol?.valid,
+              danger: mainaddresscontrol?.errors && mainaddresscontrol?.touched
+            }"
+          >
             <label for="address" class="form-label">العنوان</label>
             <input
               type="text"
               class="form-control"
               id="address"
+              formControlName="mainaddress"
               placeholder="محافظة القاهرة ،مدينة نصر ،شارع الطيران"
               required
             />
-            <div class="invalid-feedback">يرجى إدخال عنوان الشحن الخاص بك</div>
+            <i
+              *ngIf="mainaddresscontrol?.valid"
+              class="bi bi-check-circle-fill"
+            ></i>
+            <i *ngIf="mainaddresscontrol?.errors && mainaddresscontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="mainaddresscontrol?.errors && mainaddresscontrol?.touched" class="alert p-1 mt-3 alert-danger">
+              <ng-container *ngIf="mainaddresscontrol?.hasError('required')">
+                يجب عليك ادخال العنوان
+              </ng-container>
+              <ng-container *ngIf="mainaddresscontrol?.hasError('minlength')">
+                هذا العنوان قصير
+              </ng-container>
+              <ng-container *ngIf="mainaddresscontrol?.hasError('pattern')">
+                ادخل العنوان باللغة العربية
+              </ng-container>
+            </div>
           </div>
 
-          <div class="col-12">
+          <div
+            class="col-12 form-control-div"
+            [ngClass]="{
+              sucess: address2control?.valid && address2control?.touched,
+              danger: address2control?.errors && address2control?.touched
+            }"
+          >
             <label for="address2" class="form-label"
               >عنوان ثانٍ <span class="text-muted">(إختياري)</span></label
             >
@@ -129,7 +227,21 @@
               class="form-control"
               id="address2"
               placeholder=" محافظة القاهرة ،مدينة نصر ،شارع الطيران"
+              formControlName="address2"
             />
+            <i
+            *ngIf="address2control?.valid && address2control?.touched"
+            class="bi bi-check-circle-fill"
+          ></i>
+          <i *ngIf="address2control?.errors && address2control?.touched" class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="address2control?.errors && address2control?.touched" class="alert p-1 mt-3 alert-danger">
+            <ng-container *ngIf="address2control?.hasError('minlength')">
+              هذا العنوان قصير
+            </ng-container>
+            <ng-container *ngIf="address2control?.hasError('pattern')">
+              ادخل العنوان باللغة العربية
+            </ng-container>
+          </div>
           </div>
         </div>
 

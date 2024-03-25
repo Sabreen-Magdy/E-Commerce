@@ -1,37 +1,72 @@
 <div class="container">
     <h3 class="mb-3">اضافة منتج</h3>
-    <form class="row g-3">
-      <div class="col-md-6 form-control-div sucess">
-        <label for="validationServer01" class="form-label">اسم الفئة</label>
+    <form class="row g-3" [formGroup]="categoryForm">
+      <div class="col-md-6 form-control-div " [ngClass]="{
+        sucess: categorynamecontrol?.valid,
+        danger: categorynamecontrol?.errors && categorynamecontrol?.touched
+      }">
+        <label for="catename" class="form-label">اسم الفئة</label>
         <input
           type="text"
           class="form-control our-is-valid"
-          id="validationServer01"
-          
+          id="catename"
+          formControlName="categoryname"
           required
         />
-        <i *ngIf="true" class="bi bi-check-circle-fill"></i>
-        <i *ngIf="false" class="bi bi-exclamation-circle-fill"></i>
-        <div *ngIf="false" class="alert p-1 alert-danger">Looks good!</div>
+        <i *ngIf="categorynamecontrol?.valid" class="bi bi-check-circle-fill"></i>
+      <i *ngIf="categorynamecontrol?.errors && categorynamecontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+      <div *ngIf="categorynamecontrol?.errors && categorynamecontrol?.touched" class="alert p-1 mt-2 alert-danger">
+      <ng-container *ngIf="categorynamecontrol?.hasError('required')">
+        يجب عليك ادخال الاسم
+      </ng-container>
+      <ng-container  *ngIf="categorynamecontrol?.hasError('minlength')">
+        يجب علي الاسم ان تكون اطول من 3 حروف 
+      </ng-container>
+      <ng-container *ngIf="categorynamecontrol?.hasError('pattern')">
+        ادخل الاسم بالغة العربية رجاء
+      </ng-container>
+    </div>
       </div>
-      <div class="col-md-6 form-control-div sucess">
-        <label for="validationServer01" class="form-label">الايقون</label>
+      <div class="col-md-6 form-control-div " [ngClass]="{
+        sucess: categoryiconcontrol?.valid,
+        danger: categoryiconcontrol?.errors && categoryiconcontrol?.touched
+      }">
+        <label for="cateicon" class="form-label">الايقون</label>
         <input
           type="text"
           class="form-control our-is-valid"
-          id="validationServer01"
+          id="cateicon"
+          formControlName="categoryicon"
           required
         />
-        <i *ngIf="true" class="bi bi-check-circle-fill"></i>
-        <i *ngIf="false" class="bi bi-exclamation-circle-fill"></i>
-        <div *ngIf="false" class="alert p-1 alert-danger">Looks good!</div>
+        <i *ngIf="categoryiconcontrol?.valid" class="bi bi-check-circle-fill"></i>
+      <i *ngIf="categoryiconcontrol?.errors && categoryiconcontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+      <div *ngIf="categoryiconcontrol?.errors && categoryiconcontrol?.touched" class="alert p-1 mt-2 alert-danger">
+      <ng-container *ngIf="categoryiconcontrol?.hasError('required')">
+        يجب عليك ادخال الايقون
+      </ng-container>
+      
+    </div>
       </div>
-      <div class="col-md-12 form-control-div danger">
-        <label for="validationServer02" class="form-label">وصف الفئة</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
-        <i *ngIf="false" class="bi bi-check-circle-fill"></i>
-        <i *ngIf="true" class="bi bi-exclamation-circle-fill"></i>
-        <div class="error-msg">يجب مادواة</div>
+      <div class="col-md-12 form-control-div" [ngClass]="{
+        sucess: categorydescriptioncontrol?.valid,
+        danger: categorydescriptioncontrol?.errors && categorydescriptioncontrol?.touched
+      }">
+        <label for="cateDescrip" class="form-label">وصف الفئة</label>
+        <textarea formControlName="categorydescription" class="form-control" id="cateDescrip" rows="3" required></textarea>
+        <i *ngIf="categorydescriptioncontrol?.valid" class="bi bi-check-circle-fill"></i>
+        <i *ngIf="categorydescriptioncontrol?.errors && categorydescriptioncontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
+        <div *ngIf="categorydescriptioncontrol?.errors && categorydescriptioncontrol?.touched" class="alert p-1 mt-2 alert-danger">
+        <ng-container *ngIf="categorydescriptioncontrol?.hasError('required')">
+          يجب عليك ادخال للفئة
+        </ng-container>
+        <ng-container  *ngIf="categorydescriptioncontrol?.hasError('minlength')">
+          يجب علي الوصف ان تكون اطول من 6 حروف 
+        </ng-container>
+        <ng-container *ngIf="categorydescriptioncontrol?.hasError('pattern')">
+          ادخل الوصف بالغة العربية رجاء
+        </ng-container>
+      </div>
       </div>
       <div class="col-md-12 text-start">
         <button class="btn btn-success rounded-1  px-5" type="submit">اضف</button>

@@ -26,3 +26,9 @@
 .logo:hover{
     padding: 3px;
 }
+
+.form-control-div i {
+    position: absolute;
+    top :12px;
+    left: 20px;
+  }
