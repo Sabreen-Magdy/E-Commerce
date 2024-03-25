@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using Services.Abstraction.DataServices;
 
 namespace Persistence.Authentication

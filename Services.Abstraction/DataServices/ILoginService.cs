@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Repositories;
 
 namespace Services.Abstraction.DataServices
 {

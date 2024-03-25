@@ -366,4 +366,4 @@ FodyWeavers.xsd
 /dist
 
 
-Persistence/Migrations/ApplicationDbContextModelSnapshot.cs
+# Persistence/Migrations/ApplicationDbContextModelSnapshot.cs

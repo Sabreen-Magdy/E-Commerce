@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -21,12 +22,29 @@ namespace Persistence.JWTAuthentication
 
         public User? Login(string email, string password)
         {
-             _dbContext.Reviews.FirstOrDefault(r => r.CustomerId == 5 && r.ProductId == 5);
+            var userCostomer = _dbContext.Customers
+                            .FirstOrDefault(u => u.Password.Equals(email)
+                            && u.Password.Equals(password));
+            if (userCostomer == null)
+            {
+                var userSaller = _dbContext.Sallers
+                            .FirstOrDefault(u => u.Password.Equals(email)
+                            && u.Password.Equals(password));
 
-            User? user = _dbContext.Users
-            .FirstOrDefault(u => u.Password.Equals(password) && u.Password.Equals(password));
+                if (userSaller != null)
+                    return new()
+                    {
+                        Id = userSaller.Id,
+                        Role = userSaller.Role
+                    };
+                else return null;
+            }
+            else return new()
+            {
+                Id = userCostomer.Id,
+                Role = userCostomer.Role
+            };
 
-            return user!;
         }
       
         public string GenerateJSONWebToken(User user)
@@ -42,8 +60,8 @@ namespace Persistence.JWTAuthentication
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("Role", user.Role)
+                 new Claim(JwtRegisteredClaimNames.Sid, user.Id.ToString()),
+                 new Claim("Role", user.ToString())
             };
 
             var token = new JwtSecurityToken(issuer, audience, claims,
