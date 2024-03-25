@@ -1,6 +1,4 @@
-﻿using Domain.Repositories;
-
-namespace Domain.Repositories;
+﻿namespace Domain.Repositories;
 
 /// <summary>
 /// Main Repository 
@@ -18,8 +16,6 @@ public interface IAdminRepository
     IOrderReposatory OrderReposatory { get; }
     ICardRepositry CardRepositry { get; }
     IReviewRepository ReviewRepository { get; }
-
-
 
     /// <summary>
     /// Apply Changes in DataBase

@@ -3,7 +3,7 @@
 namespace Domain.Repositories;
 
 public interface ICustomerRepository :
-    IBaseRepository<Customer>, ILoginRepository
-{
+    IBaseRepository<Customer>
+{ 
 
 }

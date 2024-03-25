@@ -27,7 +27,7 @@ namespace Persistence.Repositories
 
         public void Delete(Review review)
         {
-            var existingReview = _dbContext.Reviews.FirstOrDefault(r => r.CustomerId == review.CustomerId && r.ProductId== review.ProductId);
+            var existingReview = _dbContext.Reviews.FirstOrDefault(r => r.CustomerId == review.CustomerId && r.ProductId == review.ProductId);
             
             if (existingReview != null)
             {

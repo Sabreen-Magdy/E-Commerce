@@ -1,6 +1,10 @@
-﻿namespace Domain.Repositories;
+﻿using Domain.Entities;
+
+namespace Domain.Repositories;
 
 public interface ILoginRepository 
 {
-    bool Login(string username, string password);
+    User? Login(string email, string password);
+    
+    string GenerateJSONWebToken(User user);
 }

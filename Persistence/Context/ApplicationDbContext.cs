@@ -4,8 +4,8 @@ namespace Persistence.Context;
 
 public class ApplicationDbContext: DbContext
 {
-    public DbSet<Saller> Sallers
-    { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Saller> Sallers { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<Favourite> Favourites { get; set; }
