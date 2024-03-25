@@ -38,7 +38,7 @@ namespace Persistence.Repositories
 
         public Review? Get(int id)
         {
-            throw new NotImplementedException();
+          return  _dbContext.Reviews.Find(id);
         }
 
         public List<Review> Get(string name)
@@ -56,17 +56,7 @@ namespace Persistence.Repositories
         public List<Review> GetAllReviewByProductId(int productId) =>
              _dbContext.Reviews.Where(r => r.ProductId == productId).ToList();
 
-        public List<Review> GetByCustomer(int customerID)
-        {
-            throw new NotImplementedException();
-        }
-
         public Review GetByCustomerProduct(int customerID, int productID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Review> GetByProduct(int productID)
         {
             throw new NotImplementedException();
         }

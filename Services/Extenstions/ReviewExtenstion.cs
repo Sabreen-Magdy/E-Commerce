@@ -18,7 +18,23 @@ public static class ReviewExtenstion
             Rate = review.Rate,
             Review = review.Comment,
             ProductName = review.Product.Name,
-        };
+            CustomerId =review.CustomerId,
+            Date = review.Date,
+};
+    }
+    public static Review ToReviewEntity(this CustomerReviewDto reviewDto)
+    {
+        if (reviewDto == null)
+            throw new ArgumentNullException(nameof(reviewDto));
+
+        return new Review
+        {
+            ProductId = reviewDto.ProductId,
+            Rate = reviewDto.Rate,
+            Comment = reviewDto.Review,
+            Date =reviewDto.Date,
+            CustomerId=reviewDto.CustomerId
+};
     }
     public static List<CustomerReviewDto> ToCustomerReview(this List<Review> reviews)
     {
@@ -31,6 +47,17 @@ public static class ReviewExtenstion
 
         return reviewsDto;
     }
+    //public static List<Review> ToReviewEntities(this List<CustomerReviewDto> reviewsDto)
+    //{
+    //    if (reviewsDto == null)
+    //        throw new ArgumentNullException(nameof(reviewsDto));
+
+    //    var reviews = new List<Review>();
+    //    foreach (var item in reviewsDto)
+    //        reviews.Add(item.ToReviewEntity());
+
+    //    return reviews;
+    //}
 
     public static ProductReviewDto ToProductReview(this Review review)
     {
@@ -43,6 +70,21 @@ public static class ReviewExtenstion
             Rate = review.Rate,
             Review = review.Comment,
             CustomerName = review.Customer.Name,
+            Date = review.Date,
+};
+    }
+    public static Review ToReviewEntity(this ProductReviewDto reviewDto)
+    {
+        if (reviewDto == null)
+            throw new ArgumentNullException(nameof(reviewDto));
+
+        return new Review
+        {
+            ProductId = reviewDto.ProductId,
+            Rate = reviewDto.Rate,
+            Comment = reviewDto.Review,
+            Date = reviewDto.Date,
+            CustomerId = reviewDto.CustomertId
         };
     }
     public static List<ProductReviewDto> ToProductReview(this List<Review> reviews)

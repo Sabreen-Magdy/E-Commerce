@@ -259,7 +259,7 @@ namespace Services.DataServices
                 throw new NotFoundException("Prodect");
 
             return _repository.ReviewRepository
-                .GetByProduct(productId).ToProductReview();
+                .GetAllReviewByProductId(productId).ToProductReview();
         }
 
         public List<ProductVariantDto> GetVarients(int productId)

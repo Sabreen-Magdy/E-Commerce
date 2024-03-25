@@ -53,6 +53,23 @@ public static class ProductVarientExtenstion
         };
     }
 
+//    public static ProductVarient ToProductVariantEntity
+//      (this ProductVariantDto productVariant)
+//    {
+//        if (productVariant == null)
+//            throw new ArgumentNullException(nameof(productVariant));
+
+//        return new()
+//        {
+//            ProductId = productVariant.Id,
+//            UnitPrice = productVariant.Price,
+//            Discount = productVariant.Discount,
+//            //ColorId = productVariant.Code.Name,
+//            Quantity = productVariant.Quantity,
+//            SizeId = productVariant.Size.Id,
+//        };
+//}
+
     public static ProductVariantDto ToProductVariantDto
    (this ProductVarient productVariant)
     {

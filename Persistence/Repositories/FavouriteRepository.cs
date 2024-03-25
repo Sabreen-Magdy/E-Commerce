@@ -21,7 +21,6 @@ namespace Persistence.Repositories
         public void Add(Favourite favourite)
         {
             _dbContext.Favourites.Add(favourite);
-            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -36,12 +35,12 @@ namespace Persistence.Repositories
 
         public void Delete(Favourite entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Favourites.Remove(entity);
         }
 
         public Favourite? Get(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Favourites.Find(id);
         }
 
         public List<Favourite> Get(string name)
@@ -51,12 +50,12 @@ namespace Persistence.Repositories
 
         public List<Favourite> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Favourites.ToList();
         }
 
         public List<Favourite> GetByCustomer(int customerID)
         {
-            throw new NotImplementedException();
+            return _dbContext.Favourites.Where(f => f.CustomerId == customerID).ToList();
         }
 
         public Favourite? GetByCustomerId(int customerId)
@@ -64,21 +63,14 @@ namespace Persistence.Repositories
             return _dbContext.Favourites.FirstOrDefault(f => f.CustomerId == customerId);
         }
 
-        public Favourite? GetById(int id)
-        {
-            return _dbContext.Favourites.Find(id);
-
-        }
-
         public List<Favourite> GetByProduct(int productID)
         {
-            throw new NotImplementedException();
+            return _dbContext.Favourites.Where(f => f.ProductId == productID).ToList();
         }
 
         public void Update(Favourite fav)
         {
             _dbContext.Favourites.Update(fav);
-            _dbContext.SaveChanges();
         }
     }
 }
