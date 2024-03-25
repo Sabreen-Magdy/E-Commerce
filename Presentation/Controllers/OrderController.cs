@@ -1,6 +1,4 @@
-﻿using Contract;
-using Domain.Enums;
-using Services.Abstraction.DataServices;
+﻿using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
 using Contract.Order;
 
@@ -18,7 +16,7 @@ public class OrderController : ControllerBase
         _adminService = adminService;
     }
 
-    
+
     [HttpGet("GetAllOrders")]
     public IActionResult GetAll()
     {
@@ -36,7 +34,7 @@ public class OrderController : ControllerBase
         if (order == null) NotFound("this order Not Found");
         return Ok(order);
     }
-    
+
     [HttpGet("GetOrderByCustomerName")]
     public IActionResult GetOrder(string name)
     {
@@ -46,19 +44,19 @@ public class OrderController : ControllerBase
         return Ok(order);
     }
 
-   
-    
-   
+
+
+
 
     [HttpPost("AddOrder")]
     public IActionResult Add(OrderDtoNew order)
     {
         _adminService.OrderService.Add(order);
-       
+
         return Ok();
     }
 
-   
+
     [HttpDelete("DeleteOrder")]
     public IActionResult Delete(int id)
     {

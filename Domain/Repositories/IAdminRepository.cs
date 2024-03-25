@@ -1,4 +1,6 @@
-﻿namespace Domain.Repositories;
+﻿using Domain.Repositorie;
+
+namespace Domain.Repositories;
 
 /// <summary>
 /// Main Repository 
@@ -18,6 +20,9 @@ public interface IAdminRepository
     IReviewRepository ReviewRepository { get; }
 
     IProductVarientBelongToOrderReposatory productVarientBelongToOrderReposatory { get; }
+
+     IColorRepository ColorRepository {  get; }
+     ISizeRepository SizeRepository { get; }
 
     /// <summary>
     /// Apply Changes in DataBase

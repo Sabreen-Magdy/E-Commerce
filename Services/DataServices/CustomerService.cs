@@ -143,7 +143,7 @@ public class CustomerService : ICustomerService
         int affectedRows = _repository.SaveChanges();
         if (affectedRows != 0)
         {
-            _repository.ProductRepository.AddReview(rate);
+            _repository.ProductRepository.AddReview(productId, rate);
             _repository.SaveChanges();
         }
     }
@@ -158,7 +158,7 @@ public class CustomerService : ICustomerService
         if (affectedRows != 0)
         {
             _repository.ProductRepository
-                .DeleteReview(review.Rate);
+                .DeleteReview(review.ProductId, review.Rate);
             _repository.SaveChanges();
         }
     }

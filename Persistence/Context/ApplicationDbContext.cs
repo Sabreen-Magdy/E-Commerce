@@ -19,8 +19,6 @@ public class ApplicationDbContext: DbContext
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<ProductVarientBelongToOrder> ProductVarientBelongToOrder { get; set; }
-    //public DbSet<Category> Categories { get; set; }
-    //public DbSet<ProductCategory> ProductCategories { get; set; }
 
     public ApplicationDbContext(DbContextOptions options)
        : base(options)

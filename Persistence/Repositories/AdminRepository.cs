@@ -1,4 +1,5 @@
 ﻿
+using Domain.Repositorie;
 using Domain.Repositories;
 using Persistence.Context;
 
@@ -21,9 +22,13 @@ public class AdminRepository : IAdminRepository
     private IReviewRepository _reviewwRepository;
     private IProductVarientBelongToOrderReposatory _productVarientBelongToOrderReposatory;
 
+
+    private IColorRepository _colorRepository;
+    private ISizeRepository _sizeRepository;
+
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
-   
+
     public ICustomerRepository CustomerRepository
     {
         get
@@ -59,8 +64,8 @@ public class AdminRepository : IAdminRepository
         get
         {
             if (_productRepository == null)
-            { }
-            //_productRepository = new ProductRepository(_context);
+
+                _productRepository = new ProductRepository(_context);
 
             return _productRepository;
         }
@@ -81,8 +86,8 @@ public class AdminRepository : IAdminRepository
     {
         get
         {
-            if (_categoryRepository == null) { }
-            // _categoryRepository = new CustomerRepository(_context);
+            if (_categoryRepository == null)
+                _categoryRepository = new CategoryRepository(_context);
 
             return _categoryRepository;
         }
@@ -92,8 +97,8 @@ public class AdminRepository : IAdminRepository
     {
         get
         {
-            if (_productCategoryRepository == null) { }
-            //_productCategoryRepository = new CustomerRepository(_context);
+            if (_productCategoryRepository == null)
+                _productCategoryRepository = new ProductCategoryRepository(_context);
 
             return _productCategoryRepository;
         }
@@ -103,8 +108,8 @@ public class AdminRepository : IAdminRepository
     {
         get
         {
-            if (_productColerdRepository == null) { }
-            //_productColerdRepository = new CustomerRepository(_context);
+            if (_productColerdRepository == null)
+                _productColerdRepository = new ProductColerdRepository(_context);
 
             return _productColerdRepository;
         }
@@ -114,8 +119,8 @@ public class AdminRepository : IAdminRepository
     {
         get
         {
-            if (_productVarientRepository == null) { }
-            //_productVarientRepository = new CustomerRepository(_context);
+            if (_productVarientRepository == null)
+                _productVarientRepository = new ProductVarientRepository(_context);
 
             return _productVarientRepository;
         }
@@ -151,6 +156,28 @@ public class AdminRepository : IAdminRepository
                 _reviewwRepository = new ReviewRepository(_context);
 
             return _reviewwRepository;
+        }
+    }
+
+    public IColorRepository ColorRepository
+    {
+        get
+        {
+            if (_colorRepository == null)
+                _colorRepository = new ColorRepository(_context);
+
+            return _colorRepository;
+        }
+    }
+
+    public ISizeRepository SizeRepository
+    {
+        get
+        {
+            if (_sizeRepository == null)
+                _sizeRepository = new SizeReposetory(_context);
+
+            return _sizeRepository;
         }
     }
 

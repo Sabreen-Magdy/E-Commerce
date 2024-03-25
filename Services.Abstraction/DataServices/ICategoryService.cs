@@ -8,9 +8,9 @@ namespace Services.Abstraction.DataServices
         List<CategoryDto> GetAll();
 
         CategoryDto? Get(int id);
-        CategoryDto Get(string name);
+        CategoryDto? Get(string name);
 
-        void Add(CategoryNewDto customer);
+        void Add(CategoryNewDto category);
 
         void Update(int id, Dictionary<Properties, string> newValues);
 

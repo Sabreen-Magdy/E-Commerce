@@ -49,4 +49,5 @@ public class Product : BaseEntity
 
     // Reduce Join
     public ICollection<ColoredProduct> ColoredProducts { get; set; } = null!;
+    public ICollection<ProductCategory> ProductCategories { get; set; } = null!;
 }
