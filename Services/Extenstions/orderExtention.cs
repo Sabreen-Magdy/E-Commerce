@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Contract.Order;
 using Domain.Entities;
 
 namespace Services.Extenstions
@@ -17,9 +18,9 @@ namespace Services.Extenstions
                 OrderedDate =order.OrderDate,
                 CustomerAddress = order.CustomerAddress,
                 State = order.State,    
-                TotalCost = order.TotalCost ,
+                TotalCost = order.OrderTotalCost ,
                 CustomerId = order.CustomerId,
-               
+               //ProductBelongToOrders=
             };
         }
 
@@ -40,14 +41,30 @@ namespace Services.Extenstions
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
+            var orderBlist = order.ProductBelongToOrders.Where(o => o.OrderId == order.Id).ToList();
+            var productsperOrderprop = new List<ProductBToOrderDto>();
+            foreach (var item in orderBlist)
+            {
+                productsperOrderprop.Add(new ProductBToOrderDto(){
+                    //ColorId = item.ColorId ,
+                    //OrderId = item.OrderId,
+                    //ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    TotalCostPerQuantity= item.TotalPrice,
+                    products=item.ProductVarient.ToProductVariantDto(),
+                });
+            }
             return new()
             {
                 ConfirmDate = order.ConfirmDate,
                 OrderDate = order.OrderedDate,
                 CustomerAddress = order.CustomerAddress,
                 State = order.State,
-                TotalCost = order.TotalCost,
+                OrderTotalCost = order.TotalCost,
                 CustomerId = order.CustomerId,
+                CustomerName = order.Customer.Name,
+                OrderId= order.Id,
+                productsperOrder = productsperOrderprop,
             };
         }
 

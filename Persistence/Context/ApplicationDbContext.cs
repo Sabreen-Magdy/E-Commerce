@@ -18,13 +18,20 @@ public class ApplicationDbContext: DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Order> Orders { get; set; }
-   
-    
+    public DbSet<ProductVarientBelongToOrder> ProductVarientBelongToOrder { get; set; }
+    //public DbSet<Category> Categories { get; set; }
+    //public DbSet<ProductCategory> ProductCategories { get; set; }
+
     public ApplicationDbContext(DbContextOptions options)
        : base(options)
     { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+    //    modelBuilder.Entity<ProductVarient>()
+    //.HasOne(pv => pv.ColoredProduct)
+    //.WithMany(cp => cp.Varients)
+    //.HasForeignKey(pv => pv.ColoredProductId);
+
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(ApplicationDbContext).Assembly);
     }

@@ -53,6 +53,22 @@ public static class ProductVarientExtenstion
         };
     }
 
+    //public static ProductVarient ToProductVariantEntity
+    //   (this ProductVariantDto productVariantdto)
+    //{
+    //    if (productVariantdto == null)
+    //        throw new ArgumentNullException(nameof(productVariantdto));
+
+    //    return new()
+    //    {
+    //        Id = productVariantdto.Id,
+    //        UnitPrice = productVariantdto.Price,
+    //        Discount = productVariantdto.Discount,
+    //        Quantity= productVariantdto.Quantity,
+            
+    //    };
+    //}
+
     public static ProductVariantDto ToProductVariantDto
    (this ProductVarient productVariant)
     {
@@ -62,9 +78,10 @@ public static class ProductVarientExtenstion
         var coloredProduct = productVariant.ColoredProduct.ToColoredProductDto();
         return new()
         {
-            Id = coloredProduct.Id,
+            Id = productVariant.Id,
             Discount = productVariant.Discount,
             Code = coloredProduct.ColorCode,
+            coloredimage= coloredProduct.Image,
             Price = productVariant.Price,
             Quantity = productVariant.Quantity,
             Size = productVariant.Size.Name

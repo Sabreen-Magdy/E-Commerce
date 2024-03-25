@@ -17,6 +17,8 @@ public interface IAdminRepository
     ICardRepositry CardRepositry { get; }
     IReviewRepository ReviewRepository { get; }
 
+    IProductVarientBelongToOrderReposatory productVarientBelongToOrderReposatory { get; }
+
     /// <summary>
     /// Apply Changes in DataBase
     /// </summary>

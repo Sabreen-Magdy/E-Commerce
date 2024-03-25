@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Contract.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,14 @@ using System.Threading.Tasks;
 
 namespace Services.Abstraction.DataServices
 {
-    public interface IOrderService : IBaseService<OrderDto>
+    public interface IOrderService 
     {
+        public List<OrderDto> GetAll();
+        public OrderDto Get(int id);
+       // public OrderDto Get(string Name);
+        public void Add(OrderDtoNew DTO);
+        public void Update(OrderDto DTO);
+        public void Delete(int id);
+        public void Updatestatus(int id, int status);
     }
 }

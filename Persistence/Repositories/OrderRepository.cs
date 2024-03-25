@@ -35,7 +35,7 @@ namespace Persistence.Repositories
 
         public List<Order> GetAll()
         {
-            return null; // _context.Orders.Include(order=>order.ProductBelongToOrder).Include(order => order.Customer).ToList();
+            return  _context.Orders.ToList();
         }
 
         public List<Order> GetByCustomer(int customerID)
