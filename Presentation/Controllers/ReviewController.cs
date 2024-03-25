@@ -45,9 +45,9 @@ namespace Presentation.Controllers
             return Ok(reviews);
         }
         [HttpPut]
-        public IActionResult UpdateReview( int customerId,int productId , Dictionary<Properties, object> newValues)
+        public IActionResult UpdateReview(int customerId, int productId, Dictionary<Properties, object> newValues)
         {
-            _adminService.ReviewService.Update_Review(customerId,productId, newValues);
+            _adminService.ReviewService.Update_Review(customerId, productId, newValues);
             return NoContent();
         }
         [HttpDelete("{id}")]

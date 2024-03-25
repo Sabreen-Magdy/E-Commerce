@@ -16,7 +16,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult GetByProductCustomer(int customerId, int productId)
         {
-            var fav = _adminService.FavouriteService.GetById(customerId,productId);
+            var fav = _adminService.FavouriteService.GetById(customerId, productId);
             if (fav == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace Presentation.Controllers
         [HttpDelete]
         public IActionResult DeleteFavorite(int customerId, int productId)
         {
-            _adminService.FavouriteService.DeleteItem(customerId,productId);
+            _adminService.FavouriteService.DeleteItem(customerId, productId);
             return Ok();
         }
     }
