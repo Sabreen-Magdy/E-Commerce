@@ -38,7 +38,7 @@ namespace Persistence.Repositories
 
         public Review? Get(int id)
         {
-          return  _dbContext.Reviews.Find(id);
+            throw new NotImplementedException();
         }
 
         public List<Review> Get(string name)
@@ -58,7 +58,7 @@ namespace Persistence.Repositories
 
         public Review GetByCustomerProduct(int customerID, int productID)
         {
-            throw new NotImplementedException();
+           return _dbContext.Reviews.FirstOrDefault(r => r.CustomerId == customerID && r.ProductId == productID);
         }
 
         public void Update(Review review)
