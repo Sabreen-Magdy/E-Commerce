@@ -40,13 +40,13 @@ namespace Persistence.Repositories
 
         public List<Order> GetByCustomer(int customerID)
         {
-            throw new NotImplementedException();
+            return _context.Orders.Where(o=> o.CustomerId == customerID).ToList();
         }
 
-        public List<Order> GetByProduct(int productID)
-        {
-            throw new NotImplementedException();
-        }
+        //public List<Order> GetByProduct(int productID)
+        //{
+        //    return _context.Orders.Where(o => o. == customerID).ToList();
+        //}
 
         public void Update(Order entity)
         {
