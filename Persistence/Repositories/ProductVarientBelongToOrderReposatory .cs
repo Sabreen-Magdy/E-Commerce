@@ -18,17 +18,17 @@ namespace Persistence.Repositories
         }
         public void Add(ProductVarientBelongToOrder entity)
         {
-            throw new NotImplementedException();
+           _context.ProductVarientBelongToOrder.Add(entity);
         }
 
         public void Delete(ProductVarientBelongToOrder entity)
         {
-            throw new NotImplementedException();
+            _context.ProductVarientBelongToOrder.Remove(entity);
         }
 
         public ProductVarientBelongToOrder? Get(int id)
         {
-            throw new NotImplementedException();
+            return _context.ProductVarientBelongToOrder.FirstOrDefault(o => o.Id == id);
         }
 
         public List<ProductVarientBelongToOrder> Get(string name)
@@ -38,12 +38,12 @@ namespace Persistence.Repositories
 
         public List<ProductVarientBelongToOrder> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.ProductVarientBelongToOrder.ToList();
         }
 
         public void Update(ProductVarientBelongToOrder entity)
         {
-            throw new NotImplementedException();
+            _context.ProductVarientBelongToOrder.Update(entity);
         }
     }
 }

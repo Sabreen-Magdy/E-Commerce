@@ -19,7 +19,7 @@ public class AdminRepository : IAdminRepository
     private IFavouriteRepository _favouriteRepository;
     private ICardRepositry _cartRepository;
     private IReviewRepository _reviewwRepository;
-    private IProductVarientBelongToOrderReposatory _ProductVarientBelongToOrderReposatory;
+    private IProductVarientBelongToOrderReposatory _productVarientBelongToOrderReposatory;
 
     public AdminRepository(ApplicationDbContext context) =>
         _context = context;
@@ -44,14 +44,14 @@ public class AdminRepository : IAdminRepository
             return _sallerRepositry;
         }
     }
-    public IProductVarientBelongToOrderReposatory ProductVarientBelongToOrderReposatory
+    public IProductVarientBelongToOrderReposatory productVarientBelongToOrderReposatory
     {
         get
         {
-            if (_ProductVarientBelongToOrderReposatory == null)
-                _ProductVarientBelongToOrderReposatory = new ProductVarientBelongToOrderReposatory(_context);
+            if (_productVarientBelongToOrderReposatory == null)
+                _productVarientBelongToOrderReposatory = new ProductVarientBelongToOrderReposatory(_context);
 
-            return _ProductVarientBelongToOrderReposatory;
+            return _productVarientBelongToOrderReposatory;
         }
     }
     public IProductRepository ProductRepository
