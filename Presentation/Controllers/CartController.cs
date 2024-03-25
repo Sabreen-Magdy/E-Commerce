@@ -56,19 +56,19 @@
 //            return NoContent();
 //        }
 
-//        [HttpPut("UpdateItem")]
-//        public IActionResult UpdateCartItem(int id, Dictionary<Properties, int> newValues)
-//        {
-//            _adminService.CartService.UpdateItem(id, newValues);
-//            return NoContent();
-//        }
+        [HttpPut("UpdateItem")]
+        public IActionResult UpdateCartItem(int cartId,int productId, Dictionary<Properties, int> newValues)
+        {
+            _adminService.CartService.UpdateItem(cartId,productId, newValues);
+            return NoContent();
+        }
 
-//        [HttpDelete("DeleteItem")]
-//        public IActionResult DeleteCartItem(int id)
-//        {
-//            _adminService.CartService.DeleteItem(id);
-//            return NoContent();
-//        }
+        [HttpDelete("DeleteItem")]
+        public IActionResult DeleteCartItem(int cartId,int productId)
+        {
+            _adminService.CartService.DeleteItem(productId,cartId);
+            return NoContent();
+        }
 
 //    }
 //}

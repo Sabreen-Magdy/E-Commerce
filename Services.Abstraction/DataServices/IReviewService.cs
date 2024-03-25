@@ -18,7 +18,7 @@ namespace Services.Abstraction.DataServices
         void Add(CustomerReviewDto review);
         Review UpdateReview(Review review,
            Dictionary<Properties, object> newValues);
-        void Update_Review(int id, Dictionary<Properties, object> newValues);
+        void Update_Review(int customerId,int productId, Dictionary<Properties, object> newValues);
         void DeleteReview(int id);
         void Delete_Review(int customerId, int productId);
     }

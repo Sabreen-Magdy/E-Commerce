@@ -11,7 +11,7 @@ namespace Domain.Repositories
     {
         List<Favourite> GetByCustomer(int customerID); 
         List<Favourite> GetByProduct(int productID);
-        public Favourite? GetByCustomerId(int customerId);
-        public void Delete(int id);
+        public Favourite? GetByCustomerProduct(int customerId , int productId);
+        public void Delete(int productId,int customerId);
     }
 }

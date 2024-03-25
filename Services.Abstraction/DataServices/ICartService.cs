@@ -15,8 +15,8 @@ namespace Services.Abstraction.DataServices
         CartDto? Get(int id);
         CartDto? GetByCustomerId(int id);
         void Update(int customerId);
-        void UpdateItem(int id, Dictionary<Properties, int> newValues);
-        void DeleteItem(int ItemId);
+        void UpdateItem(int cartId,int productId, Dictionary<Properties, int> newValues);
+        void DeleteItem(int productId, int cartId);
         void AddItemToCart(ItemDto itemDto,int cartId);
         CartItem Update_Item(CartItem cartItem, Dictionary<Properties, int> newValues);     
          
