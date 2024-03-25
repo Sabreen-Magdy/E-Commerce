@@ -12,9 +12,9 @@ namespace Services.Abstraction.DataServices
     public interface IReviewService
     {
         List<CustomerReviewDto> GetAllReviewsOfCustomer(int customerId);
-        List<ProductReviewDto> GetAllReviewsOfProduct(int productId);
+        List<CustomerReviewDto> GetAllReviewsOfProduct(int productId);
+
         CustomerReviewDto? GetReviewOfCustomer(int customerId,int productId);
-        ProductReviewDto? GetReviewOfProduct(int customerId, int productId);
         void Add(CustomerReviewDto review);
         Review UpdateReview(Review review,
            Dictionary<Properties, object> newValues);

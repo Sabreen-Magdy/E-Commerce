@@ -53,7 +53,7 @@ namespace Presentation.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteReview(Review review)
         {
-            _adminService.ReviewService.Delete_Review(review.CustomerId,review.ProductId);
+            _adminService.ReviewService.Delete_Review(review.CustomerId, review.ProductId);
             return NoContent();
         }
     }

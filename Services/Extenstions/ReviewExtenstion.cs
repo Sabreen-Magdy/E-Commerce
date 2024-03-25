@@ -11,8 +11,7 @@ public static class ReviewExtenstion
     {
         if (review == null)
             throw new ArgumentNullException(nameof(review));
-
-        return new()
+        return new CustomerReviewDto()
         {
             ProductId = review.ProductId,
             Rate = review.Rate,
@@ -20,7 +19,8 @@ public static class ReviewExtenstion
             ProductName = review.Product.Name,
             CustomerId =review.CustomerId,
             Date = review.Date,
-};
+            CustomerName=review.Customer.Name,
+        };
     }
     public static Review ToReviewEntity(this CustomerReviewDto reviewDto)
     {
@@ -47,55 +47,15 @@ public static class ReviewExtenstion
 
         return reviewsDto;
     }
-    //public static List<Review> ToReviewEntities(this List<CustomerReviewDto> reviewsDto)
-    //{
-    //    if (reviewsDto == null)
-    //        throw new ArgumentNullException(nameof(reviewsDto));
-
-    //    var reviews = new List<Review>();
-    //    foreach (var item in reviewsDto)
-    //        reviews.Add(item.ToReviewEntity());
-
-    //    return reviews;
-    //}
-
-    public static ProductReviewDto ToProductReview(this Review review)
+    public static List<Review> ToReviewEntities(this List<CustomerReviewDto> reviewsDto)
     {
-        if (review == null)
-            throw new ArgumentNullException(nameof(review));
+        if (reviewsDto == null)
+            throw new ArgumentNullException(nameof(reviewsDto));
 
-        return new()
-        {
-            CustomertId = review.CustomerId,
-            Rate = review.Rate,
-            Review = review.Comment,
-            CustomerName = review.Customer.Name,
-            Date = review.Date,
-};
-    }
-    public static Review ToReviewEntity(this ProductReviewDto reviewDto)
-    {
-        if (reviewDto == null)
-            throw new ArgumentNullException(nameof(reviewDto));
+        var reviews = new List<Review>();
+        foreach (var item in reviewsDto)
+            reviews.Add(item.ToReviewEntity());
 
-        return new Review
-        {
-            ProductId = reviewDto.ProductId,
-            Rate = reviewDto.Rate,
-            Comment = reviewDto.Review,
-            Date = reviewDto.Date,
-            CustomerId = reviewDto.CustomertId
-        };
-    }
-    public static List<ProductReviewDto> ToProductReview(this List<Review> reviews)
-    {
-        if (reviews == null)
-            throw new ArgumentNullException(nameof(reviews));
-
-        var reviewsDto = new List<ProductReviewDto>();
-        foreach (var item in reviews)
-            reviewsDto.Add(item.ToProductReview());
-
-        return reviewsDto;
+        return reviews;
     }
 }

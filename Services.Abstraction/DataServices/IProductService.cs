@@ -24,7 +24,7 @@ public interface IProductService
     List<ProductVariantDto> GetVarients(int productId);
     List<ColoredProuctDto> GetColoresImages(int productId);
 
-    List<ProductReviewDto> GetReviews(int productId);
+    List<CustomerReviewDto> GetReviews(int productId);
     #endregion
 
     #endregion
