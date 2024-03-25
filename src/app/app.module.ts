@@ -55,6 +55,7 @@ import { AdminOrderComponent } from './Component/core/AdminSide/admin-order/admi
 import { CategoryFormComponent } from './Component/core/AdminSide/Category/category-form/category-form.component';
 import { CategoryTableComponent } from './Component/core/AdminSide/Category/category-table/category-table.component';
 import { ProductTabelComponent } from './Component/core/AdminSide/products/product-tabel/product-tabel.component';
+import { OrderlistComponent } from './Component/core/orderlist/orderlist.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { ProductTabelComponent } from './Component/core/AdminSide/products/produ
     CategoryFormComponent,
     CategoryTableComponent,
     ProductTabelComponent,
+    OrderlistComponent,
     
   ],
   imports: [
