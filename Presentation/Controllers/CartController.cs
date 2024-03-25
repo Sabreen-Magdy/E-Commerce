@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Mvc;
 
 using Domain.Entities;
 using Services.Abstraction.DataServices;
@@ -9,17 +9,17 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CartController : ControllerBase
     {
         private readonly IAdminService _adminService;
 
-        public CartController(IAdminService adminService)
-        {
-            _adminService = adminService;
-        }
+//        public CartController(IAdminService adminService)
+//        {
+//            _adminService = adminService;
+//        }
 
-        [HttpGet("GetCart")]
+        [HttpGet]
         public IActionResult GetById(int id)
         {
             var cart = _adminService.CartService.Get(id);
@@ -30,7 +30,7 @@ namespace Presentation.Controllers
             return Ok(cart);
         }
 
-        [HttpGet("GetByCustomerId")]
+        [HttpGet("{customerId}")]
         public IActionResult GetByCustomerId(int customerId)
         {
             var cart = _adminService.CartService.GetByCustomerId(customerId);
@@ -42,19 +42,19 @@ namespace Presentation.Controllers
         }
 
 
-        [HttpPost("AddItem")]
+        [HttpPost]
         public IActionResult AddItemToCart(int cartId, ItemDto itemDto)
         {
             _adminService.CartService.AddItemToCart(itemDto, cartId);
             return NoContent();
         }
 
-        [HttpPut("Update")]
-        public IActionResult UpdateCart(Cart cart)
-        {
-            _adminService.CartService.Update(cart.CustomerId);
-            return NoContent();
-        }
+        //[HttpPut("Update")]
+        //public IActionResult UpdateCart(Cart cart)
+        //{
+        //    _adminService.CartService.Update(cart.CustomerId);
+        //    return NoContent();
+        //}
 
         [HttpPut("UpdateItem")]
         public IActionResult UpdateCartItem(int cartId, int productId, Dictionary<Properties, int> newValues)
@@ -70,5 +70,5 @@ namespace Presentation.Controllers
             return NoContent();
         }
 
-    }
-}
+//    }
+//}
