@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.Abstraction.DataServices
 {
-   public class ISallerService
+   public interface ISallerService
     {
     }
 }

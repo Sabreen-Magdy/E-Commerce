@@ -12,7 +12,7 @@ namespace Services.Abstraction.DataServices
     {
         public List<OrderDto> GetAll();
         public OrderDto Get(int id);
-       // public OrderDto Get(string Name);
+        public List<OrderDto> Get(string Name);
         public void Add(OrderDtoNew DTO);
         public void Update(OrderDto DTO);
         public void Delete(int id);

@@ -9,7 +9,7 @@ public interface IAdminService
     public ICategoryService CategoryService { get; }
     public IOrderService OrderService { get; }
     public ISallerService SallerService { get; }
-    ICartService CartService { get; }
-    IFavouriteService FavouriteService { get; }
-    IReviewService ReviewService { get; }
+    public ICartService CartService { get; }
+    public IFavouriteService FavouriteService { get; }
+    public IReviewService ReviewService { get; }
 }
