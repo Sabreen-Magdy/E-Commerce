@@ -45,7 +45,7 @@ namespace Presentation.Controllers
             return Ok(reviews);
         }
         [HttpPut]
-        public IActionResult UpdateReview(CustomerReviewDto review, Dictionary<Properties, object> newValues)
+        public IActionResult UpdateReview([FromBody] CustomerReviewDto review, [FromQuery] Dictionary<Properties, object> newValues)
         {
             _adminService.ReviewService.UpdateReview(review.ToReviewEntity(), newValues);
             return NoContent();

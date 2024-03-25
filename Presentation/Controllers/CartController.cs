@@ -51,14 +51,14 @@ namespace Presentation.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("item/{id}")]
         public IActionResult UpdateCartItem(int id, Dictionary<Properties, int> newValues)
         {
             _adminService.CartService.UpdateItem(id,newValues);
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("item/{id}")]
         public IActionResult DeleteCartItem(int id)
         {
             _adminService.CartService.DeleteItem(id);

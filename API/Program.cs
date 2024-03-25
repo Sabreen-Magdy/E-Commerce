@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("soomCon");
+var connection = builder.Configuration.GetConnectionString("sabrinaCon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(

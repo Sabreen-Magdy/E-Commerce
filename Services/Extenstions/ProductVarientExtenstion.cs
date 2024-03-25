@@ -81,7 +81,7 @@ public static class ProductVarientExtenstion
             Id = productVariant.Id,
             Discount = productVariant.Discount,
             Code = coloredProduct.ColorCode,
-            coloredimage= coloredProduct.Image,
+            //coloredimage= coloredProduct.Image,
             Price = productVariant.Price,
             Quantity = productVariant.Quantity,
             Size = productVariant.Size.Name
