@@ -4,10 +4,12 @@ using Domain.Entities;
 using Services.Abstraction.DataServices;
 using Contract;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly IAdminService _adminService;
