@@ -8,6 +8,8 @@
   background: #009860;
   border-radius: 4px 4px 4px 4px;
   padding: 30px;
+  padding-top: 50px;
+  height: 140px;
   text-align: center;
   color: #fff;
 }

@@ -1,0 +1,22 @@
+.nav-link{
+    font-weight: 500;
+}
+
+.nav-link.active{
+    color: #178640;
+
+}
+
+.nav-link:hover{
+    color: #178640;
+}
+
+.dropdown-menu  li a:focus{
+    color: #000;
+    background-color: gainsboro;
+}
+
+.dropdown-menu  li a.active{
+    color: #178640;
+    background-color: gainsboro;
+}

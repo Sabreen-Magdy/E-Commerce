@@ -4,7 +4,9 @@
             <h3>المنتجات</h3>
         </header>
         <div class="addbtn">
-            <button class="btn btn-outline-secondary rounded-1">اضافة منتج</button>
+            <button 
+            [routerLink]="'/admin/product/add'"
+            class="btn btn-outline-secondary rounded-1">اضافة منتج</button>
         </div>
         <div class="table-wrapped">
             
@@ -34,7 +36,7 @@
                     <td data-label="التقييم">4</td>
                     <td data-label="تاريخ الاضافة">12/3/2034</td>
                     <td data-label="الاجراءات">
-                        <button class="btn2 btn-edit">تعديل</button>
+                        <button class="btn2 btn-edit" [routerLink]="'/admin/product/edit/1'">تعديل</button>
                         <button class="btn2 btn-delete">مسح</button>
                     </td>
                      <!-- <td style="text-align: center;">

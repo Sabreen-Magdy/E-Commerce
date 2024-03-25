@@ -16,11 +16,13 @@
       <input type="password" class="form-control" placeholder="كلمة المرور" />
     </div>
     <div class="mb-3">
-      <a href="" class="forgetmsg">هل نسيت كلمة المرور؟</a>
+      <a [routerLink]="'/main/forgetpassword'" class="forgetmsg">هل نسيت كلمة المرور؟</a>
     </div>
     <div class="d-flex gap-2">
       <button class="btn btn-success col-md-7">تسجيل الدخول</button>
-      <a class="btn btn-outline-success col border-2" href="signup"
+      <a
+      [routerLink]="'/main/signup'"
+       class="btn btn-outline-success col border-2" 
         >انشئ حساب</a
       >
     </div>

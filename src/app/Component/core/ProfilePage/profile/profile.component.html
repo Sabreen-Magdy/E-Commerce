@@ -3,12 +3,12 @@
     <div class="profile-nav col-md-3">
       <div class="panel">
         <div class="user-heading round">
-          <a href="#">
+          <!-- <a href="#">
             <img
               src="https://bootdey.com/img/Content/avatar/avatar3.png"
               alt=""
             />
-          </a>
+          </a> -->
           <h1>صابرين مجدي</h1>
           <p>sabreenmagdy@gmail.com</p>
         </div>
@@ -16,21 +16,21 @@
           <ul class="list-group list-group-flush">
             <li
               class="list-group-item"
-              routerLink="/profiledetails"
+              [routerLink]="'/profile/profiledetails'"
               routerLinkActive="active"
             >
               <a> <i class="fa fa-user"></i> الملف الشخصي</a>
             </li>
             <li
               class="list-group-item"
-              routerLink="/activity"
+              [routerLink]="'/profile/activity'"
               routerLinkActive="active"
             >
               <a> <i class="fa fa-calendar"></i> الأنشطة الحديثة </a>
             </li>
             <li
               class="list-group-item"
-              routerLink="/editprofile"
+              [routerLink]="'/profile/editprofile'"
               routerLinkActive="active"
             >
               <a> <i class="fa fa-edit"></i> تعديل الملف</a>

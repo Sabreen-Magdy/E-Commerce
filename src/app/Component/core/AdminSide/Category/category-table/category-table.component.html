@@ -4,7 +4,10 @@
             <h3>الفئات</h3>
         </header>
         <div class="addbtn">
-            <button class="btn btn-outline-secondary rounded-1">اضافة فئة</button>
+            <button 
+            [routerLink]="'/admin/category/add'"
+            class="btn btn-outline-secondary rounded-1"
+            >اضافة فئة</button>
         </div>
         <div class="table-wrapped">
             
@@ -25,7 +28,10 @@
                     <td data-label="الايقون"><i class="bi bi-gender-male"></i></td>
                     <td data-label="الوصف"><p>يتميز القسم بتوفر مجموعة متنوعة من الملابس بدءًا من البدل التقليدية الأنيقة والملابس الرسمية المناسبة للمناسبات الخاصة والعمل، وصولاً إلى الملابس الكاجوال المريحة المثالية للاستخدام اليومي والنشاطات الرياضية.</p></td>
                     <td data-label="الاجراءات">
-                        <button class="btn2 btn-edit">تعديل</button>
+                        <button 
+                        [routerLink]="'/admin/category/edit/1'"
+                        class="btn2 btn-edit"
+                        >تعديل</button>
                         <button class="btn2 btn-delete">مسح</button>
                     </td>
                      <!-- <td style="text-align: center;">

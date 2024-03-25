@@ -55,6 +55,11 @@ import { AdminOrderComponent } from './Component/core/AdminSide/admin-order/admi
 import { CategoryFormComponent } from './Component/core/AdminSide/Category/category-form/category-form.component';
 import { CategoryTableComponent } from './Component/core/AdminSide/Category/category-table/category-table.component';
 import { ProductTabelComponent } from './Component/core/AdminSide/products/product-tabel/product-tabel.component';
+import { SignFamilyComponent } from './Component/collectionCompent/sign-family/sign-family.component';
+import { DashboardAdminPageComponent } from './Component/collectionCompent/dashboard-admin-page/dashboard-admin-page.component';
+import { HomePageLayoutComponent } from './Component/collectionCompent/home-page-layout/home-page-layout.component';
+import { HomePageComponent } from './Component/collectionCompent/home-page/home-page.component';
+import { Navbar2Component } from './Component/shared/navbar2/navbar2.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +104,11 @@ import { ProductTabelComponent } from './Component/core/AdminSide/products/produ
     CategoryFormComponent,
     CategoryTableComponent,
     ProductTabelComponent,
+    SignFamilyComponent,
+    DashboardAdminPageComponent,
+    HomePageLayoutComponent,
+    HomePageComponent,
+    Navbar2Component,
     
   ],
   imports: [
