@@ -43,9 +43,35 @@ namespace Persistence.Repositories
             GetAll().Where(p => p.Name == name).ToList();
 
 
-        public List<Product> GetAll() =>
-            _dbContext.Products
-            .Include(p => p.ColoredProducts).ThenInclude(pc => new { pc.Varients,pc.Color }).ToList();
+        public List<Product> GetAll()
+        {
+            return _dbContext.Products.Include(p => p.ColoredProducts).ToList();
+        //.Include(p => p.ColoredProducts).ThenInclude(pc => pc.Varients).ThenInclude(v => v.Size).Include(pc => pc.ColoredProducts).ThenInclude(cp => cp.Color).Include(p=>p.Reviews).Include(p=>p.Favourites).Include(p=>p.Saller).Include(p=>p.ProductCategories).ToList();
+        //ThenInclude(pc => pc.Varients ).ThenInclude(v=>v.Size).Include(pc=>pc.ColoredProducts).ThenInclude(cp=>cp.Color).ToList();
+        //        return _dbContext.Products
+        //.Include(p => p.ColoredProducts)
+        //    .ThenInclude(cp => cp.Color)   // Include Color within ColoredProducts
+        //.Include(p => p.ColoredProducts)
+        //    .ThenInclude(cp => cp.Varients) // Include Varients within ColoredProducts
+        //        .ThenInclude(v => v.Size)   // Include Size within Varients
+        //.Include(p => p.Reviews)
+        //.Include(p => p.Favourites)
+        //.Include(p => p.Saller)
+        //.Include(p => p.ProductCategories)
+        //.ToList();
+
+        }
+
+        //_dbContext.Products
+        //.Include(p => p.ColoredProducts).ThenInclude(pc => pc.Varients).ThenInclude(v => v.Size).Include(pc => pc.ColoredProducts).ThenInclude(cp => cp.Color).Include(p=>p.Reviews).Include(p=>p.Favourites).Include(p=>p.Saller).Include(p=>p.ProductCategories).ToList();
+        //ThenInclude(pc => pc.Varients ).ThenInclude(v=>v.Size).Include(pc=>pc.ColoredProducts).ThenInclude(cp=>cp.Color).ToList();
+        //    _dbContext.Products
+        //.Include(p => p.ColoredProducts)
+        //    .ThenInclude(cp => cp.Varients)
+        //        .ThenInclude(v => v.Size)
+        //.Include(p => p.ColoredProducts)
+        //    .ThenInclude(cp => cp.Color)
+        //.ToList();
 
         public void Update(Product entity) =>
             _dbContext.Products.Update(entity);

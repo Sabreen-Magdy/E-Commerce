@@ -134,13 +134,14 @@ public class SallerController : ControllerBase
 
     #region Add
 
-    [HttpPost("Add")]
+    [HttpPost("AddProduct")]
     public IActionResult Add(ProductNewDto product)
     {
+        _adminService.ProductService.Add(product);
+        return Ok();
         try
         {
-            _adminService.ProductService.Add(product);
-            return Ok();
+            
         }
         catch (Exception ex)
         {
