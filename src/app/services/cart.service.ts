@@ -4,6 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CartService {
-  baseURL :string ="http://localhost:5058/api/Category/";
+  baseURL :string ="http://localhost:5058/api/Cart/";
   constructor() { }
 }
