@@ -3,40 +3,85 @@
   <span class="text-secondary mb-3"
     >قم بالتسجيل للتمكن من عرض المنتجات، والبدء بتسويقها وربح الاموال.
   </span>
-  <form class="my-3 row" [formGroup]="signupform" (submit)="enter($event)">
-    <div class="mb-3 col-md-6 form-control-div" [ngClass]="{'sucess':firstnamecontrol?.valid,'danger':firstnamecontrol?.errors && firstnamecontrol?.touched}">
-      <input formControlName="firstname" type="text" class="form-control" placeholder="الأسم الاول" />
+  <!-- enter($event) -->
+  <form
+    class="my-3 row"
+    [formGroup]="signupform"
+    (ngSubmit)="submitRegisterForm(signupform)"
+  >
+    <div
+      class="mb-3 col-md-6 form-control-div"
+      [ngClass]="{
+        sucess: firstnamecontrol?.valid,
+        danger: firstnamecontrol?.errors && firstnamecontrol?.touched
+      }"
+    >
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control"
+        placeholder="الأسم الاول"
+      />
       <i *ngIf="firstnamecontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched" class="alert p-1 mt-3 alert-danger">
+      <i
+        *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched"
+        class="bi bi-exclamation-circle-fill"
+      ></i>
+      <div
+        *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched"
+        class="alert p-1 mt-3 alert-danger"
+      >
         <ng-container *ngIf="firstnamecontrol?.hasError('required')">
           يجب عليك ادخال الاسم
-      </ng-container>
-      <ng-container *ngIf="firstnamecontrol?.hasError('minlength')">
+        </ng-container>
+        <ng-container *ngIf="firstnamecontrol?.hasError('minlength')">
           يجب علي الاسم ان يكون اطول من 3 حروف
-      </ng-container>
-      <ng-container *ngIf="firstnamecontrol?.hasError('pattern')">
-        ادخل الاسم باللغة العربية رجاء
-    </ng-container>
+        </ng-container>
+        <ng-container *ngIf="firstnamecontrol?.hasError('pattern')">
+          ادخل الاسم باللغة العربية رجاء
+        </ng-container>
       </div>
     </div>
-    <div class="mb-3 col-md-6 form-control-div" [ngClass]="{'sucess':lastnamecontrol?.valid,'danger':lastnamecontrol?.errors && lastnamecontrol?.touched}">
-      <input type="text" formControlName="lastname" class="form-control" placeholder="الأسم الاخير" />
-      <i *ngIf="lastnamecontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="lastnamecontrol?.errors && lastnamecontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="lastnamecontrol?.errors && lastnamecontrol?.touched" class="alert p-1 mt-3 alert-danger">
-        <ng-container *ngIf="lastnamecontrol?.hasError('required')">
-          يجب عليك ادخال الاسم
-      </ng-container>
-      <ng-container *ngIf="lastnamecontrol?.hasError('minlength')">
-          يجب علي الاسم ان يكون اطول من 3 حروف
-      </ng-container>
-      <ng-container *ngIf="lastnamecontrol?.hasError('pattern')">
-        ادخل الاسم باللغة العربية رجاء
-    </ng-container>
+    <div
+      class="mb-3 col-md-6 form-control-div"
+      [ngClass]="{
+        sucess: phonecontrol?.valid,
+        danger: phonecontrol?.errors && phonecontrol?.touched
+      }"
+    >
+      <input
+        type="text"
+        formControlName="phone"
+        class="form-control"
+        placeholder="رقم التليفون"
+      />
+      <i *ngIf="phonecontrol?.valid" class="bi bi-check-circle-fill"></i>
+      <i
+        *ngIf="phonecontrol?.errors && phonecontrol?.touched"
+        class="bi bi-exclamation-circle-fill"
+      ></i>
+      <div
+        *ngIf="phonecontrol?.errors && phonecontrol?.touched"
+        class="alert p-1 mt-3 alert-danger"
+      >
+        <ng-container *ngIf="phonecontrol?.hasError('required')">
+          يجب عليك ادخال رقم التليفون
+        </ng-container>
+        <ng-container *ngIf="phonecontrol?.hasError('minlength')">
+          يجب علي الرقم ان يكون 11 رقم
+        </ng-container>
+        <ng-container *ngIf="phonecontrol?.hasError('maxlength')">
+          يجب علي الرقم ان يكون 11 رقم
+        </ng-container>
       </div>
     </div>
-    <div class="mb-3 form-control-div" [ngClass]="{'sucess':emailcontrol?.valid,'danger':emailcontrol?.errors && emailcontrol?.touched}">
+    <div
+      class="mb-3 form-control-div"
+      [ngClass]="{
+        sucess: emailcontrol?.valid,
+        danger: emailcontrol?.errors && emailcontrol?.touched
+      }"
+    >
       <input
         formControlName="email"
         type="email"
@@ -44,56 +89,106 @@
         placeholder="البريد الالكتروني"
       />
       <i *ngIf="emailcontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="emailcontrol?.errors && emailcontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="emailcontrol?.errors && emailcontrol?.touched" class="alert p-1 mt-3 alert-danger">
+      <i
+        *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+        class="bi bi-exclamation-circle-fill"
+      ></i>
+      <div
+        *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+        class="alert p-1 mt-3 alert-danger"
+      >
         <ng-container *ngIf="emailcontrol?.hasError('required')">
           يجب عليك ادخال البريد الالكتروني
-      </ng-container>
-      
-      <ng-container *ngIf="emailcontrol?.hasError('pattern')">
-        ادخل بريد الالكتروني صحيح
-    </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="emailcontrol?.hasError('pattern')">
+          ادخل بريد الالكتروني صحيح
+        </ng-container>
       </div>
     </div>
-    <div class="mb-3 col-md-6 form-control-div" [ngClass]="{'sucess':passwordcontrol?.valid,'danger':passwordcontrol?.errors && passwordcontrol?.touched}">
-      <input type="password" formControlName="password" class="form-control" placeholder="كلمة المرور" />
+    <div
+      class="mb-3 col-md-6 form-control-div"
+      [ngClass]="{
+        sucess: passwordcontrol?.valid,
+        danger: passwordcontrol?.errors && passwordcontrol?.touched
+      }"
+    >
+      <input
+        type="password"
+        formControlName="password"
+        class="form-control"
+        placeholder="كلمة المرور"
+      />
       <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="passwordcontrol?.errors && passwordcontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="passwordcontrol?.errors && passwordcontrol?.touched" class="alert p-1 mt-3 alert-danger">
+      <i
+        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        class="bi bi-exclamation-circle-fill"
+      ></i>
+      <div
+        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        class="alert p-1 mt-3 alert-danger"
+      >
         <ng-container *ngIf="passwordcontrol?.hasError('required')">
           يجب عليك ادخال كلمة المرور
-      </ng-container>
-      <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
+        </ng-container>
+        <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
           يجب علي كلمة المرور ان تكون اطول من 5 حروف
-      </ng-container>
-      
+        </ng-container>
       </div>
     </div>
-    <div class="mb-3 col-md-6 form-control-div" [ngClass]="{'sucess':confirmpasswordcontrol?.valid &&  !signupform.hasError('mismatch'),'danger':confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched || signupform.hasError('mismatch')}">
+    <div
+      class="mb-3 col-md-6 form-control-div"
+      [ngClass]="{
+        sucess:
+          confirmpasswordcontrol?.valid && !signupform.hasError('mismatch'),
+        danger:
+          (confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched) ||
+          signupform.hasError('mismatch')
+      }"
+    >
       <input
-      formControlName="confirmpassword"
+        formControlName="confirmpassword"
         type="password"
         class="form-control"
         placeholder="تأكيد كلمة المرور"
       />
-      <i *ngIf="confirmpasswordcontrol?.valid && !signupform.hasError('mismatch')" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched || signupform.hasError('mismatch')" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched || signupform.hasError('mismatch')" class="alert p-1 mt-3 alert-danger">
+      <i
+        *ngIf="
+          confirmpasswordcontrol?.valid && !signupform.hasError('mismatch')
+        "
+        class="bi bi-check-circle-fill"
+      ></i>
+      <i
+        *ngIf="
+          (confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched) ||
+          signupform.hasError('mismatch')
+        "
+        class="bi bi-exclamation-circle-fill"
+      ></i>
+      <div
+        *ngIf="
+          (confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched) ||
+          signupform.hasError('mismatch')
+        "
+        class="alert p-1 mt-3 alert-danger"
+      >
         <ng-container *ngIf="confirmpasswordcontrol?.hasError('required')">
           يجب عليك ادخال كلمة المرور
-      </ng-container>
-      <ng-container *ngIf="signupform.hasError('mismatch')">
-        الرجاء التأكد من تطابق كلمة المرور
-      </ng-container>
+        </ng-container>
+        <ng-container *ngIf="signupform.hasError('mismatch')">
+          الرجاء التأكد من تطابق كلمة المرور
+        </ng-container>
       </div>
     </div>
     <div class="d-flex gap-2">
       <button class="btn btn-success col-md-7">انشاء الحساب</button>
-      <a class="btn btn-outline-success col border-2" 
+      <a
+        class="btn btn-outline-success col border-2"
         [routerLink]="'/main/signin'"
         >تسجيل الدخول</a
       >
     </div>
+    <div class="alert alert-danger">{{ errorMessage }}</div>
   </form>
   <span class="text-secondary">- او سجل الدخول بواسطة -</span>
   <div>

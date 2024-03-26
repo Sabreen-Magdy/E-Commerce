@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -9,22 +11,23 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 export class SignUpFormComponent {
   signupform : FormGroup;
 
-  constructor(){
+  constructor(private _AuthService:AuthService , private _Router:Router){
     this.signupform = new FormGroup({
-      firstname: new FormControl(
+      name: new FormControl(
         "",
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.pattern('[\u0600-\u06FF]+')
+          Validators.pattern('[\u0600-\u06FF ,]+')
         ]
       ),
-      lastname: new FormControl(
+      phone: new FormControl(
         "",
         [
           Validators.required,
-          Validators.minLength(3),
-          Validators.pattern('[\u0600-\u06FF]+')
+          Validators.minLength(11),
+          Validators.maxLength(11)
+          // Validators.pattern('[\u0600-\u06FF]+')
         ]
       ),
       email: new FormControl(
@@ -50,15 +53,15 @@ export class SignUpFormComponent {
       ),
     },
     {
-      validators : this.passwordMatchValidator 
+      validators : this.passwordMatchValidator
     }
     );
   }
   // Custom validator function to compare password and confirm password
   passwordMatchValidator(control: AbstractControl) {
-    return control.get('password')?.value === 
-    control.get('confirmpassword')?.value 
-    ? null 
+    return control.get('password')?.value ===
+    control.get('confirmpassword')?.value
+    ? null
     : { mismatch : true };
    }
 
@@ -69,19 +72,38 @@ export class SignUpFormComponent {
    }
 
   get firstnamecontrol(){
-    return this.signupform.get('firstname')
+    return this.signupform.get('Name')
   }
-  get lastnamecontrol(){
-    return this.signupform.get('lastname')
+  get phonecontrol(){
+    return this.signupform.get('Phono')
   }
   get emailcontrol(){
-    return this.signupform.get('email')
+    return this.signupform.get('Email')
   }
   get passwordcontrol(){
-    return this.signupform.get('password')
+    return this.signupform.get('Password')
   }
   get confirmpasswordcontrol(){
     return this.signupform.get('confirmpassword')
   }
-  
+  errorMessage:string="";
+  submitRegisterForm(signupform:FormGroup){
+    console.log(signupform.value);
+    this._AuthService.signUp(signupform.value).subscribe({
+      next:(response)=>{
+        console.log("ffff",response)
+        this._Router.navigate(['/main/signin']);
+        // if(response.message==='Success'){
+        //   //navigate home page
+        //   console.log("S");
+        // }else{
+        //   console.log("F");
+        //   this.errorMessage=response.message;
+
+        // }
+      }
+    })
+
+  }
 }
+
