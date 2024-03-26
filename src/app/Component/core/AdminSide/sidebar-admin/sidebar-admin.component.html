@@ -58,7 +58,11 @@
       <span class="tooltip">الفئات</span>
     </li>
      <li>
-       <a href="#">
+       <a 
+       [routerLink]="['/admin/Settings']"
+       [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{ exact: true }"
+       >
          <i class='bx bx-cog' ></i>
          <span class="links_name">الاعدادات</span>
        </a>

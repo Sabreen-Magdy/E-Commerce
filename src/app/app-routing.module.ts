@@ -26,6 +26,7 @@ import { ForgetPasswordComponent } from './Component/core/SignComp/forget-passwo
 import { AboutComponent } from './Component/core/about/about.component';
 import { ComponentUrl } from './models/unit';
 import { ReviewsComponent } from './Component/core/anonymous-page/reviews/reviews.component';
+import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,7 @@ const routes: Routes = [
     {path:"category",component:CategoryTableComponent, },
     {path:"category/add",component:CategoryFormComponent, },
     {path:"category/edit/:id",component:CategoryFormComponent, },
+    {path:"Settings",component:TableComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
     {path:"main",component:AnonymousPageComponent, },
