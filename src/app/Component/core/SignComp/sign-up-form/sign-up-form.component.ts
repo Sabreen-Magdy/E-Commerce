@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class SignUpFormComponent {
   signupform : FormGroup;
+  showerror : boolean = false;
 
   constructor(private _AuthService:AuthService , private _Router:Router){
     this.signupform = new FormGroup({
@@ -25,16 +26,14 @@ export class SignUpFormComponent {
         "",
         [
           Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11)
-          // Validators.pattern('[\u0600-\u06FF]+')
+          Validators.pattern(/^(010|012|015)[0-9]{8}$/)
         ]
       ),
       email: new FormControl(
         "",
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+          Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.com$/)
         ]
       ),
       password : new FormControl (
@@ -72,37 +71,40 @@ export class SignUpFormComponent {
    }
 
   get firstnamecontrol(){
-    return this.signupform.get('Name')
+    return this.signupform.get('name')
   }
   get phonecontrol(){
-    return this.signupform.get('Phono')
+    return this.signupform.get('phone')
   }
   get emailcontrol(){
-    return this.signupform.get('Email')
+    return this.signupform.get('email')
   }
   get passwordcontrol(){
-    return this.signupform.get('Password')
+    return this.signupform.get('password')
   }
   get confirmpasswordcontrol(){
     return this.signupform.get('confirmpassword')
   }
   errorMessage:string="";
-  submitRegisterForm(signupform:FormGroup){
-    console.log(signupform.value);
-    this._AuthService.signUp(signupform.value).subscribe({
+  submitRegisterForm(e : Event){
+    e.preventDefault();
+    if (this.signupform.valid){
+      console.log(this.signupform.value);
+      this._AuthService.signUp(this.signupform.value).subscribe({
       next:(response)=>{
         console.log("ffff",response)
         this._Router.navigate(['/main/signin']);
-        // if(response.message==='Success'){
-        //   //navigate home page
-        //   console.log("S");
-        // }else{
-        //   console.log("F");
-        //   this.errorMessage=response.message;
-
-        // }
+       
+      },
+      error : (e) => {
+        console.log(e);
       }
     })
+    }
+    else{
+      this.showerror = true
+    }
+    
 
   }
 }

@@ -7,23 +7,16 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private token: boolean =false;
-  private id: number =0;
 
   constructor(private _HttpClient:HttpClient) { }
   signUp(userData:object):Observable<any>
   {
     return this._HttpClient.post('http://localhost:5058/api/Customer/AddCustomers/',userData);
   }
-  signIn(email:string,password:string)
+  signIn(email:string,password:string) : Observable<any>
   {
-     this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`).subscribe({
-      next:(response)=>{
-        if(response.message=="success") {
-             this.token=true;
-
-        }
-      }
-    });
+     return this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`)
+     
   }
 
   IsLogin(): boolean {

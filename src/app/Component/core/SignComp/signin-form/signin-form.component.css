@@ -38,3 +38,10 @@ a.forgetmsg:hover{
     text-decoration: none;
     color:#32A04C ;
 }
+
+
+.form-control-div i {
+    position: absolute;
+    top :12px;
+    left: 20px;
+  }
