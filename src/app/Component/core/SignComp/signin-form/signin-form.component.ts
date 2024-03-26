@@ -46,7 +46,7 @@ export class SigninFormComponent {
 
   errorMessage:string="";
   submitLoginForm(signinform:FormGroup){
-    console.log(signinform.value);
+    // console.log(signinform.value);
     this._AuthService.signIn(signinform.value.email,signinform.value.password);
     this._Router.navigate(['/home']);
     // console.log(this._AuthService.getUserId())

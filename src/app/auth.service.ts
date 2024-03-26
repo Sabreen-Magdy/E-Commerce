@@ -18,14 +18,17 @@ export class AuthService {
   {
      this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`).subscribe({
       next:(response)=>{
-        if(response.message=="success") {
+        console.log(response)
+        if(response.message==="success") {
              this.token=true;
-
+             this.id=response.id;
         }
       }
     });
   }
-
+  getDataOfUser():Observable<any>{
+   return this._HttpClient.get<any>(`http://localhost:5058/api/Customer/GetCustomerById?id=${this.id}`);
+  }
   IsLogin(): boolean {
     return this.token;
   }
