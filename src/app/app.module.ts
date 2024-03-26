@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { FutureComponentComponent } from './Component/core/future-component/future-component.component';
 import { NavbarComponent } from './Component/shared/navbar/navbar.component';
 import { FooterComponent } from './Component/shared/footer/footer.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SigninFormComponent } from './Component/core/SignComp/signin-form/signin-form.component';
 import { SignUpFormComponent } from './Component/core/SignComp/sign-up-form/sign-up-form.component';
@@ -118,9 +119,9 @@ import { TableComponent } from './Component/core/AdminSide/general/table/table.c
   imports: [
     RouterModule,
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot()
 
