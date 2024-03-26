@@ -7,13 +7,13 @@
   <form
     class="my-3 row"
     [formGroup]="signupform"
-    (ngSubmit)="submitRegisterForm(signupform)"
+    (ngSubmit)="submitRegisterForm($event)"
   >
     <div
       class="mb-3 col-md-6 form-control-div"
       [ngClass]="{
         sucess: firstnamecontrol?.valid,
-        danger: firstnamecontrol?.errors && firstnamecontrol?.touched
+        danger: firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)
       }"
     >
       <input
@@ -24,11 +24,11 @@
       />
       <i *ngIf="firstnamecontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched"
+        *ngIf="firstnamecontrol?.errors && ( firstnamecontrol?.touched || showerror)"
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="firstnamecontrol?.errors && firstnamecontrol?.touched"
+        *ngIf="firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)"
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="firstnamecontrol?.hasError('required')">
@@ -46,7 +46,7 @@
       class="mb-3 col-md-6 form-control-div"
       [ngClass]="{
         sucess: phonecontrol?.valid,
-        danger: phonecontrol?.errors && phonecontrol?.touched
+        danger: phonecontrol?.errors && (phonecontrol?.touched || showerror)
       }"
     >
       <input
@@ -57,29 +57,27 @@
       />
       <i *ngIf="phonecontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="phonecontrol?.errors && phonecontrol?.touched"
+        *ngIf="phonecontrol?.errors && (phonecontrol?.touched || showerror)"
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="phonecontrol?.errors && phonecontrol?.touched"
+        *ngIf="phonecontrol?.errors && (phonecontrol?.touched || showerror)"
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="phonecontrol?.hasError('required')">
           يجب عليك ادخال رقم التليفون
         </ng-container>
-        <ng-container *ngIf="phonecontrol?.hasError('minlength')">
-          يجب علي الرقم ان يكون 11 رقم
+        <ng-container *ngIf="phonecontrol?.hasError('pattern')">
+          يجب علي الرقم ان يكون 11 رقم، ويبدا ب 010 |012|015 
         </ng-container>
-        <ng-container *ngIf="phonecontrol?.hasError('maxlength')">
-          يجب علي الرقم ان يكون 11 رقم
-        </ng-container>
+        
       </div>
     </div>
     <div
       class="mb-3 form-control-div"
       [ngClass]="{
         sucess: emailcontrol?.valid,
-        danger: emailcontrol?.errors && emailcontrol?.touched
+        danger: emailcontrol?.errors && (emailcontrol?.touched || showerror)
       }"
     >
       <input
@@ -90,11 +88,11 @@
       />
       <i *ngIf="emailcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+        *ngIf="emailcontrol?.errors && (emailcontrol?.touched || showerror)"
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+        *ngIf="emailcontrol?.errors && (emailcontrol?.touched || showerror)"
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="emailcontrol?.hasError('required')">
@@ -110,7 +108,7 @@
       class="mb-3 col-md-6 form-control-div"
       [ngClass]="{
         sucess: passwordcontrol?.valid,
-        danger: passwordcontrol?.errors && passwordcontrol?.touched
+        danger: passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
       }"
     >
       <input
@@ -121,11 +119,11 @@
       />
       <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        *ngIf="passwordcontrol?.errors && ( passwordcontrol?.touched || showerror)"
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        *ngIf="passwordcontrol?.errors &&( passwordcontrol?.touched || showerror )"
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="passwordcontrol?.hasError('required')">
@@ -142,7 +140,7 @@
         sucess:
           confirmpasswordcontrol?.valid && !signupform.hasError('mismatch'),
         danger:
-          (confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched) ||
+          (confirmpasswordcontrol?.errors && (confirmpasswordcontrol?.touched || showerror)) ||
           signupform.hasError('mismatch')
       }"
     >
@@ -160,14 +158,14 @@
       ></i>
       <i
         *ngIf="
-          (confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched) ||
+          (confirmpasswordcontrol?.errors && (confirmpasswordcontrol?.touched || showerror)) ||
           signupform.hasError('mismatch')
         "
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
         *ngIf="
-          (confirmpasswordcontrol?.errors && confirmpasswordcontrol?.touched) ||
+          (confirmpasswordcontrol?.errors && (confirmpasswordcontrol?.touched || showerror)) ||
           signupform.hasError('mismatch')
         "
         class="alert p-1 mt-3 alert-danger"
@@ -188,7 +186,7 @@
         >تسجيل الدخول</a
       >
     </div>
-    <div class="alert alert-danger">{{ errorMessage }}</div>
+    <!-- <div class="alert alert-danger">{{ errorMessage }}</div> -->
   </form>
   <span class="text-secondary">- او سجل الدخول بواسطة -</span>
   <div>

@@ -19,7 +19,7 @@ export class SalesChartComponent implements OnInit, OnChanges {
     this.draw()
   }
   salesData: number[] = [ 100,150,200,250,300,350, 400  ];
-  Labels: string[] = ['SaturDay', 'SunDay', 'MonDay', 'Tuesday ', 'Wednesday ', 'Thursday ', 'Friday']
+  Labels: string[] = ['السبت', 'الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعة']
   minSalesValue: number = Math.min(...this.salesData);
   ngOnInit(): void {
     // Fetch sales data here (e.g., using HttpClient)
@@ -198,7 +198,7 @@ export class SalesChartComponent implements OnInit, OnChanges {
     console.log(event.target.value)
     if (event.target.value === "This Week") {
       // Call a method to update the chart for "This Week"
-      this.Labels = ['SaturDay', 'SunDay', 'MonDay', 'Tuesday ', 'Wednesday ', 'Thursday ', 'Friday']
+      this.Labels = ['السبت', 'الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعة']
       this.salesData = [15500, 21500, 18500, 24000, 23900, 24000, 12000]
     this.minSalesValue= Math.min(...this.salesData);
       this.draw()
@@ -207,7 +207,7 @@ export class SalesChartComponent implements OnInit, OnChanges {
     } else if (event.target.value === "This Year") {
       // Call a method to update the chart for "This Year"
       this.salesData = [15500, 21500, 18500, 24000, 23900, 24000, 12000, 33798, 1000, 9001, 19120, 40000 ];
-      this.Labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      this.Labels = ["يناير", "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفمبر", "ديسمبر"]
       //this.weekselected = false;
     this.minSalesValue= Math.min(...this.salesData);
 

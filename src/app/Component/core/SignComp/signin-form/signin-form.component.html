@@ -4,16 +4,17 @@
     >قم بتسجيل الدخول للموقع للتمكن من عرض المنتجات، الاسعار، والتسويق
     لها.</span
   >
+  <div *ngIf="unauthorized" class="alert alert-danger mt-3">هذا الحساب غير مسجل</div>
   <form
     class="my-3"
     [formGroup]="signinform"
-    (ngSubmit)="submitLoginForm(signinform)"
+    (ngSubmit)="submitLoginForm($event)"
   >
     <div
       class="mb-3 form-control-div"
       [ngClass]="{
         sucess: emailcontrol?.valid,
-        danger: emailcontrol?.errors && emailcontrol?.touched
+        danger: emailcontrol?.errors && (emailcontrol?.touched || showerror)
       }"
     >
       <input
@@ -24,11 +25,11 @@
       />
       <i *ngIf="emailcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+        *ngIf="emailcontrol?.errors && (emailcontrol?.touched || showerror)"
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="emailcontrol?.errors && emailcontrol?.touched"
+        *ngIf="emailcontrol?.errors && (emailcontrol?.touched || showerror)"
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="emailcontrol?.hasError('required')">
@@ -41,10 +42,10 @@
       </div>
     </div>
     <div
-      class="mb-3 col-md-6 form-control-div"
+      class="mb-3  form-control-div"
       [ngClass]="{
         sucess: passwordcontrol?.valid,
-        danger: passwordcontrol?.errors && passwordcontrol?.touched
+        danger: passwordcontrol?.errors && (passwordcontrol?.touched || showerror )
       }"
     >
       <input
@@ -55,11 +56,11 @@
       />
       <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        *ngIf="passwordcontrol?.errors &&( passwordcontrol?.touched || showerror)"
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        *ngIf="passwordcontrol?.errors && (passwordcontrol?.touched || showerror)"
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="passwordcontrol?.hasError('required')">

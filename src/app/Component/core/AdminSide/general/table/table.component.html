@@ -1,0 +1,211 @@
+<div class="container d-flex m-auto">
+    <div class="contai ">
+        <header>
+            <h3>الالوان</h3>
+        </header>
+        <div class="addbtn">
+            <button 
+            (click)="toggleColorForm()"
+            class="btn btn-outline-secondary rounded-1"
+            >اضافة لون</button>
+        </div>
+        <div class="table-wrapped">
+            
+            <table class="table-products">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم</th>
+                        <th>الكود</th>
+                        <th>الاجراءات</th>
+                        
+                    </tr>
+                </thead>
+
+                <tbody id="tbdyprod">
+                    <tr *ngFor="let x of colorList">
+                        <td data-label="#">{{x.id}}</td>
+                    <td data-label="الاسم">{{x.name}}</td>
+                    <td  data-label="الكود"> <div [style.backgroundColor]="x.code" class="codebox"></div></td>
+
+                    <td data-label="الاجراءات">
+                        <button 
+                        (click)="editColor(x)"
+                        class="btn2 btn-edit"
+                        >تعديل</button>
+                        <button (click)="deleteColor(x.id)" class="btn2 btn-delete">مسح</button>
+                    </td>
+                    </tr>
+                    
+                   
+                    
+                </tbody>
+
+            </table>
+            <div id="loading-icon" class="loading-icon"></div>
+
+        </div>
+    </div>
+    <div class="contai ">
+        <header>
+            <h3>الاحجام</h3>
+        </header>
+        <div class="addbtn">
+            <button 
+            (click)="toggleSizeForm()"
+            class="btn btn-outline-secondary rounded-1"
+            >اضافة حجم</button>
+        </div>
+        <div class="table-wrapped">
+            
+            <table class="table-products">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم</th>
+                        <th>الاجراءات</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbdyprod">
+                    <tr *ngFor="let s of sizeList">
+                        <td data-label="#">{{s.id}}</td>
+                    <td data-label="الاسم">{{s.size}}</td>
+                    
+                    <td data-label="الاجراءات">
+                        <button 
+                        (click)="editSize(s)"
+                        class="btn2 btn-edit"
+                        >تعديل</button>
+                        <button (click)="deleteSize(s.id)" class="btn2 btn-delete">مسح</button>
+                    </td>
+                    </tr>
+                    
+                    
+                    
+                </tbody>
+
+            </table>
+            <div id="loading-icon" class="loading-icon"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="colorForm" class="add-model model-wrapper">
+    <div class="model">
+      <div class="model-header">
+        <h3>اضافة  لون</h3>
+      </div>
+      <div class="model-body">
+        <form class="row g-3" [formGroup]="colorForm" (submit)="subColor($event)">
+          <div class="col-7 form-control-div" [ngClass]="{
+            sucess: colornamecontrol.valid,
+            danger: colornamecontrol.errors && (colornamecontrol.touched || showerro)
+          }">
+            <label for="colorname" class="form-label">اسم اللون</label>
+            <input
+              formControlName="name"
+              type="text"
+              class="form-control"
+              id="colorname"
+              required
+            />
+            <i *ngIf="colornamecontrol.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="colornamecontrol?.errors && (colornamecontrol?.touched || showerro)" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="colornamecontrol?.errors && (colornamecontrol?.touched || showerro)" class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="colornamecontrol?.hasError('required')">
+          يجب عليك ادخال الاسم
+        </ng-container>
+        <ng-container  *ngIf="colornamecontrol?.hasError('minlength')">
+          يجب علي الاسم ان تكون اطول من 3 حروف 
+        </ng-container>
+        
+      </div>
+          </div>
+          <div class="col-4 form-control-div" [ngClass]="{
+            sucess: colorcodecontrol.valid,
+            danger: colorcodecontrol.errors && (colorcodecontrol.touched || showerro)
+          }">
+            <label for="colorDegree" class="form-label">درجة اللون</label>
+            <input
+              formControlName="code"
+              type="color"
+              class="form-control form-control-color"
+              id="colorDegree"
+              required
+            />
+            <i *ngIf="colorcodecontrol.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="colorcodecontrol?.errors && (colorcodecontrol?.touched || showerro)" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="colorcodecontrol?.errors && ( colorcodecontrol?.touched || showerro )" class="alert p-1 mt-2 w-50 alert-danger">
+            <ng-container  *ngIf="colorcodecontrol?.hasError('required')">
+          يجب عليك اختيار الاسم
+        </ng-container>
+        
+        
+      </div>
+          </div>
+          
+  
+          <div class="col-12 center">
+            <button class="btn btn-success m-3" type="submit">اضف</button>
+            <button
+              class="btn btn-danger m-3"
+              type="button"
+              (click)="closeColorForm()"
+            >
+              تجاهل
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="sizeForm" class="add-model model-wrapper">
+    <div class="model">
+      <div class="model-header">
+        <h3>اضافة  حجم</h3>
+      </div>
+      <div class="model-body">
+        <form class="row g-3" [formGroup]="sizeForm" (submit)="subSize($event)">
+          <div class="col-7 form-control-div" [ngClass]="{
+            sucess: sizecontrol.valid,
+            danger: sizecontrol.errors && (sizecontrol.touched || showerro)
+          }">
+            <label for="colorname" class="form-label">اسم اللون</label>
+            <input
+              formControlName="size"
+              type="text"
+              class="form-control"
+              id="colorname"
+              required
+            />
+            <i *ngIf="sizecontrol.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="sizecontrol?.errors && (sizecontrol?.touched || showerro)" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="sizecontrol?.errors && (sizecontrol?.touched || showerro)" class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="sizecontrol?.hasError('required')">
+          يجب عليك ادخال الحجم
+        </ng-container>
+        
+        
+      </div>
+          </div>
+          
+  
+          <div class="col-12 center">
+            <button class="btn btn-success m-3" type="submit">اضف</button>
+            <button
+              class="btn btn-danger m-3"
+              type="button"
+              (click)="closeSizeForm()"
+            >
+              تجاهل
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

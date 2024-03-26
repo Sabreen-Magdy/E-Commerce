@@ -62,6 +62,7 @@ import { DashboardAdminPageComponent } from './Component/collectionCompent/dashb
 import { HomePageLayoutComponent } from './Component/collectionCompent/home-page-layout/home-page-layout.component';
 import { HomePageComponent } from './Component/collectionCompent/home-page/home-page.component';
 import { Navbar2Component } from './Component/shared/navbar2/navbar2.component';
+import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { Navbar2Component } from './Component/shared/navbar2/navbar2.component';
     HomePageLayoutComponent,
     HomePageComponent,
     Navbar2Component,
-
+    TableComponent
+    
   ],
   imports: [
     RouterModule,

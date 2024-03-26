@@ -14,7 +14,7 @@ export class AuthService {
   {
     return this._HttpClient.post('http://localhost:5058/api/Customer/AddCustomers/',userData);
   }
-  signIn(email:string,password:string)
+  signIn(email:string,password:string) : Observable<any>
   {
      this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`).subscribe({
       next:(response)=>{
@@ -25,6 +25,9 @@ export class AuthService {
         }
       }
     });
+
+     return this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`)
+
   }
   getDataOfUser():Observable<any>{
    return this._HttpClient.get<any>(`http://localhost:5058/api/Customer/GetCustomerById?id=${this.id}`);
