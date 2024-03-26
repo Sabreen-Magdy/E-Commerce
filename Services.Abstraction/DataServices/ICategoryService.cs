@@ -12,7 +12,7 @@ namespace Services.Abstraction.DataServices
 
         void Add(CategoryNewDto category);
 
-        void Update(CategoryDto categoryDto);
+        void Update(int id, Dictionary<Properties, string> newValues);
 
         void Delete(int id);
     }

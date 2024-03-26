@@ -31,6 +31,171 @@
         }
       }
     },
+    "/api/Cart": {
+      "get": {
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Cart/{customerId}": {
+      "get": {
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Cart/UpdateItem": {
+      "put": {
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Cart/DeleteItem": {
+      "delete": {
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Category/GetAll": {
       "get": {
         "tags": ["Category"],
@@ -403,6 +568,111 @@
         }
       }
     },
+    "/api/Favourite/GetByProductCustomer": {
+      "get": {
+        "tags": ["Favourite"],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Favourite/GetByCustomerId": {
+      "get": {
+        "tags": ["Favourite"],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Favourite/AddFavorite": {
+      "post": {
+        "tags": ["Favourite"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Favourite/DeleteFavorite": {
+      "delete": {
+        "tags": ["Favourite"],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/General/GetAllColor": {
       "get": {
         "tags": ["General"],
@@ -478,7 +748,7 @@
             "name": "code",
             "in": "query",
             "schema": {
-              "$ref": "#/components/schemas/Color"
+              "type": "string"
             }
           }
         ],
@@ -735,9 +1005,19 @@
     "/api/Product/GetAll": {
       "get": {
         "tags": ["Product"],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Product/GetDetailsById": {
+      "get": {
+        "tags": ["Product"],
         "parameters": [
           {
-            "name": "pageNumber",
+            "name": "id",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -752,7 +1032,7 @@
         }
       }
     },
-    "/api/Product/GetDetailsById": {
+    "/api/Product/GetVarientsById": {
       "get": {
         "tags": ["Product"],
         "parameters": [
@@ -818,7 +1098,7 @@
             "name": "code",
             "in": "query",
             "schema": {
-              "$ref": "#/components/schemas/Color"
+              "type": "string"
             }
           }
         ],
@@ -948,19 +1228,28 @@
         }
       }
     },
-    "/api/Product/DeleteProduct": {
-      "delete": {
-        "tags": ["Product"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+    "/api/Review": {
+      "post": {
+        "tags": ["Review"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerReviewDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerReviewDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerReviewDto"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -968,29 +1257,29 @@
         }
       }
     },
-    "/api/Product/DeleteVarient": {
-      "delete": {
-        "tags": ["Product"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/Product/DeleteColor": {
+    "/api/Review/product": {
       "get": {
-        "tags": ["Product"],
+        "tags": ["Review"],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/DeleteProduct": {
+      "delete": {
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "id",
@@ -1008,9 +1297,49 @@
         }
       }
     },
-    "/api/Product/DeleteColorByProductColor": {
+    "/api/Saller/DeleteVarient": {
       "delete": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/DeleteColor": {
+      "get": {
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/DeleteColorByProductColor": {
+      "delete": {
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "productId",
@@ -1036,9 +1365,9 @@
         }
       }
     },
-    "/api/Product/DeleteCategory": {
+    "/api/Saller/DeleteCategory": {
       "delete": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "id",
@@ -1056,9 +1385,9 @@
         }
       }
     },
-    "/api/Product/DeleteCategoryByProductColor": {
+    "/api/Saller/DeleteCategoryByProductColor": {
       "delete": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "productId",
@@ -1084,9 +1413,9 @@
         }
       }
     },
-    "/api/Product/Add": {
+    "/api/Saller/Add": {
       "post": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1113,9 +1442,9 @@
         }
       }
     },
-    "/api/Product/AddVarient": {
+    "/api/Saller/AddVarient": {
       "post": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1142,9 +1471,9 @@
         }
       }
     },
-    "/api/Product/AddColor": {
+    "/api/Saller/AddColor": {
       "post": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1171,9 +1500,9 @@
         }
       }
     },
-    "/api/Product/AddCategory": {
+    "/api/Saller/AddCategory": {
       "post": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "productId",
@@ -1199,9 +1528,9 @@
         }
       }
     },
-    "/api/Product/Update": {
+    "/api/Saller/Update": {
       "put": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "id",
@@ -1247,9 +1576,146 @@
         }
       }
     },
-    "/api/Product/UpdateVarient": {
+    "/api/Saller/UpdateVarient": {
       "put": {
-        "tags": ["Product"],
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/GetAllCustomers": {
+      "get": {
+        "tags": ["Saller"],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/GetCustomerById": {
+      "get": {
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/GetCustomerByName": {
+      "get": {
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/GetOrders": {
+      "get": {
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/DeleteCustomers": {
+      "delete": {
+        "tags": ["Saller"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Saller/UpdateCustomers": {
+      "delete": {
+        "tags": ["Saller"],
         "parameters": [
           {
             "name": "id",
@@ -1316,53 +1782,6 @@
         },
         "additionalProperties": false
       },
-      "Color": {
-        "type": "object",
-        "properties": {
-          "r": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "g": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "b": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "a": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "isKnownColor": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "isEmpty": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "isNamedColor": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "isSystemColor": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ColorDto": {
         "type": "object",
         "properties": {
@@ -1371,7 +1790,8 @@
             "format": "int32"
           },
           "code": {
-            "$ref": "#/components/schemas/Color"
+            "type": "string",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -1391,10 +1811,6 @@
             "type": "string",
             "nullable": true
           },
-          "phono": {
-            "type": "string",
-            "nullable": true
-          },
           "email": {
             "type": "string",
             "nullable": true
@@ -1410,16 +1826,100 @@
         },
         "additionalProperties": false
       },
-      "Int32StringKeyValuePair": {
+      "CustomerReviewDto": {
         "type": "object",
         "properties": {
-          "key": {
+          "productId": {
             "type": "integer",
             "format": "int32"
           },
-          "value": {
+          "productName": {
             "type": "string",
             "nullable": true
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "review": {
+            "type": "string",
+            "nullable": true
+          },
+          "rate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FavoriteDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -1448,6 +1948,21 @@
             "items": {
               "$ref": "#/components/schemas/ProductsToOrderDtoNew"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductColoredAddDto": {
+        "type": "object",
+        "properties": {
+          "colorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
             "nullable": true
           }
         },
@@ -1497,14 +2012,14 @@
           "images": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Int32StringKeyValuePair"
+              "$ref": "#/components/schemas/ProductColoredAddDto"
             },
             "nullable": true
           },
           "productVariants": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ProductVariantNewDto"
+              "$ref": "#/components/schemas/ProductVarientAddDto"
             },
             "nullable": true
           }
@@ -1518,6 +2033,32 @@
             "type": "integer",
             "format": "int32"
           },
+          "colorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "discount": {
+            "type": "number",
+            "format": "double"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sizeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductVarientAddDto": {
+        "type": "object",
+        "properties": {
           "colorId": {
             "type": "integer",
             "format": "int32"

@@ -12,7 +12,6 @@ public class ColoredProduct : BaseEntity
                 return 0;
             return Varients!.Sum(v => v.Price);
         }
-        
     }
     public double AvgPrice
     {
@@ -22,7 +21,6 @@ public class ColoredProduct : BaseEntity
                 return 0;
             return Varients!.Average(v => v.Price);
         }
-        
     }
     public int TotalQuntity
     {
@@ -32,7 +30,6 @@ public class ColoredProduct : BaseEntity
                 return 0;
             return Varients!.Sum(v => v.Quantity);
         }
-       
     }
     
     #region RelationShip Mapping

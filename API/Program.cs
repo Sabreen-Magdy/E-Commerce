@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("soomcon");
+var connection = builder.Configuration.GetConnectionString("mosCon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -77,6 +77,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(corsName);
+app.UseStaticFiles();
 //app.UseAuthentication();
 //app.UseMvc();
 

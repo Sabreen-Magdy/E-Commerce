@@ -5,7 +5,7 @@ namespace Services.Extenstions
 {
     public static class ColoredProductExtenstion
     {
-        public static List<int> GetIds(this List<ColoredProduct> coloredProducts)
+        public static List<int> GetIds(this List<ProductColoredAddDto> coloredProducts)
         {
             if (coloredProducts == null)
                 throw new ArgumentNullException(nameof(coloredProducts));
@@ -13,7 +13,7 @@ namespace Services.Extenstions
             var ids = new List<int>();
 
             foreach (var coloredProduct in coloredProducts)
-                ids.Add(coloredProduct.Id);
+                ids.Add(coloredProduct.ColorId);
 
             return ids;
         }
@@ -42,6 +42,36 @@ namespace Services.Extenstions
                 {
                     ColorId = image.Key,
                     Image = image.Value,
+                    ProductId = productId
+                });
+
+            return coloredProducts;
+        }
+
+        public static ColoredProduct ToColoredProductEntity(this ProductColoredAddDto productColored)
+        {
+            if (productColored == null)
+                throw new ArgumentNullException(nameof(productColored));
+
+            return new()
+            {
+                ColorId = productColored.ColorId,
+                Image = productColored.Image.Name,
+            };
+        }
+        public static List<ColoredProduct> ToColoredProductEntity
+            (this List<ProductColoredAddDto> images, int productId)
+        {
+            if (images == null)
+                throw new ArgumentNullException(nameof(images));
+
+            var coloredProducts = new List<ColoredProduct>();
+
+            foreach (var image in images)
+                coloredProducts.Add(new()
+                {
+                    ColorId = image.ColorId,
+                    Image = image.Image.Name,
                     ProductId = productId
                 });
 

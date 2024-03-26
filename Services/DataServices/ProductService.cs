@@ -14,17 +14,29 @@ namespace Services.DataServices
 
         public ProductService(IAdminRepository repository)
             => _repository = repository;
-       
+        private void AddImages(int productId, List<ProductColoredAddDto> Images)
+        {
+            foreach (var item in Images)
+            {
+                string name = $"{productId}_{item.ColorId}";
+                Static.SaveImage(name, item.Image);
+            }
+        }
         private ProductDto Map(Product product)
         {
             var varients = GetVarients(product.Id);
+            double price = varients is null || varients.Count == 0 ? 
+                    0 : varients.Sum(v => v.Price) / varients.Count;
+            var coloresImages = GetColoresImages(product.Id);
 
+            var image = coloresImages is null || coloresImages.Count == 0 ?
+                    null : coloresImages[0].Image;
             return new()
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price = varients.Select(varient => varient.Price).Sum() / varients.Count,
-                Image = GetColoresImages(product.Id)[0].Image
+                Price = price,
+                Image = image
             };
         }
         private List<ProductDto> Map(List<Product> products) =>
@@ -40,6 +52,9 @@ namespace Services.DataServices
             // Save Product Images
             var productColoredLis = product.Images
                 .ToColoredProductEntity(productEntity.Id);
+
+            AddImages(productEntity.Id, product.Images);
+
             _repository.ProductColerdRepository
                 .AddRange(productColoredLis);
             _repository.SaveChanges();
@@ -47,7 +62,7 @@ namespace Services.DataServices
             // Save Product Varients
             _repository.ProductVarientRepository
                 .AddRange(product.ProductVariants
-                .ToProductVariantEntity(productColoredLis.GetIds()));
+                .ToProductVariantEntity(productEntity.Id));
             _repository.SaveChanges();
         }
 
@@ -243,7 +258,7 @@ namespace Services.DataServices
 
         public List<ColoredProuctDto> GetColoresImages(int productId)
         {
-            var product = Get(productId);
+            var product = _repository.ProductRepository.Get(productId);
             if (product is null)
                 throw new NotFoundException("Prodect");
 
@@ -273,10 +288,18 @@ namespace Services.DataServices
             if (coloredProducts is null)
                 throw new NotFoundException("ColoredProdect");
 
-            var res = coloredProducts.Select(cp => cp.Varients?
+            var res = coloredProducts.Select(cp => cp.Varients
                             .ToList().ToProductVariantDto());
    
             return res.SelectMany(innerList => innerList).ToList();
+        }
+        public ProductDetailsDto GetDetails(int productId)
+        {
+            var product = _repository.ProductRepository.Get(productId);
+            if (product is null)
+                throw new NotFoundException("Prodect");
+          
+            return product.ToProductDetailsDto();
         }
 
         private Product UpdateProduct(Product product,

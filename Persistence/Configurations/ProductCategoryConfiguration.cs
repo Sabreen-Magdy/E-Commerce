@@ -10,6 +10,11 @@ namespace Persistence.Configurations
         {
             builder.HasKey(e => new { e.ProductId, e.CategoryId });
 
+            builder.Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+            builder.HasIndex(e => e.ProductId)
+                .IsUnique();
+
             builder.HasOne(pc => pc.Product)
                 .WithMany(p => p.ProductCategories)
                 .HasForeignKey(pc => pc.ProductId);

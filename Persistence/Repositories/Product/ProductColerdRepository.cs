@@ -37,7 +37,8 @@ namespace Persistence.Repositories
         public List<ColoredProduct> GetAll() =>
             _dbContext.ColoredProducts
             .Include(cp => cp.Product)
-            .Include(cp => cp.Color).ToList();
+            .Include(cp => cp.Color)
+            .Include(cp=> cp.Varients).ToList();
 
         public List<ColoredProduct> GetByProduct(int productId) =>
             GetAll()

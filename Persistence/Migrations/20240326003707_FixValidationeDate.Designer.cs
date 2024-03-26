@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326003707_FixValidationeDate")]
+    partial class FixValidationeDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,10 +151,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -160,9 +161,6 @@ namespace Persistence.Migrations
                     b.HasKey("ProductId", "ColorId");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.ToTable("ColoredProducts");
                 });
@@ -306,17 +304,11 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("ProductId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.ToTable("ProductCategories");
                 });
@@ -336,10 +328,8 @@ namespace Persistence.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -348,9 +338,6 @@ namespace Persistence.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ProductId", "ColorId", "SizeId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.HasIndex("SizeId");
 

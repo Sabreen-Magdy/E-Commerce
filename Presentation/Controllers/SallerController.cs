@@ -19,6 +19,7 @@ public class SallerController : ControllerBase
     {
         _adminService = adminService;
     }
+    
 
     #region Delete
 
@@ -134,14 +135,13 @@ public class SallerController : ControllerBase
 
     #region Add
 
-    [HttpPost("AddProduct")]
+    [HttpPost("Add")]
     public IActionResult Add(ProductNewDto product)
     {
-        _adminService.ProductService.Add(product);
-        return Ok();
         try
         {
-            
+            _adminService.ProductService.Add(product);
+            return Ok();
         }
         catch (Exception ex)
         {
@@ -152,12 +152,10 @@ public class SallerController : ControllerBase
     [HttpPost("AddVarient")]
     public IActionResult Add(ProductVariantNewDto productVarient)
     {
-        
         try
         {
             _adminService.ProductService.AddVarient(productVarient);
             return Ok();
-
         }
         catch (Exception ex)
         {
@@ -290,10 +288,10 @@ public class SallerController : ControllerBase
     }
 
 
-    [HttpPut("UpdateCustomers")]
-    public IActionResult UpdateCustomer(CustomerDto customerDto)
+    [HttpDelete("UpdateCustomers")]
+    public IActionResult UpdateCustomer(int id, Dictionary<Properties, string> newValues)
     {
-        _adminService.CustomerService.Update(customerDto);
+        _adminService.CustomerService.Update(id, newValues);
 
         return Ok();
     }

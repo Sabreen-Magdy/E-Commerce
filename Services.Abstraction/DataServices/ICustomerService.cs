@@ -13,7 +13,7 @@ public interface ICustomerService
 
     void Add(CustomerAddDto customer);
 
-    void Update(CustomerDto customerDto);
+    void Update(int id, Dictionary<Properties, string> newValues);
 
     void Delete(int id);
     List<CustomerReviewDto> GetReviews(int customerId);
