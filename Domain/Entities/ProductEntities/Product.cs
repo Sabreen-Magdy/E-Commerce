@@ -41,8 +41,8 @@ public class Product : BaseEntity
         ColoredProducts != null || !ColoredProducts!.Any();
 
     // RelationShip Mapping
-    public  int SallerId { get; set; }
-    public  Saller Saller { get; set; } = null!;
+    public virtual int SallerId { get; set; }
+    public virtual Saller Saller { get; set; } = null!;
     public List<Review> Reviews { get; set; } = null!;
     public ICollection<Favourite> Favourites { get; set; } = null!;
 

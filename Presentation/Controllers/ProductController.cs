@@ -1,7 +1,4 @@
-﻿using Contract;
-using Domain.Enums;
-using Domain.Exceptions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction.DataServices;
 
@@ -13,29 +10,21 @@ namespace Presentation.Controllers
     //[Authorize]
     public class ProductController : ControllerBase
     {
-        private const int count = 20;
         private readonly IAdminService _adminService;
 
         public ProductController(IAdminService adminService) =>
             _adminService = adminService;
 
-        private Range GetRange(int pageNumber)
-        {
-            int start = pageNumber * count;
-            return new(start, start + count);
-        }
-
         #region Get
         
         [HttpGet("GetAll")]
-        public IActionResult GetAll(int pageNumber) {
-            var result = _adminService.ProductService.GetAll();
-            if (result == null) return NotFound();
-
-            return Ok(result.Take(GetRange(pageNumber)));
+        public IActionResult GetAll() {
             try
             {
-                
+                var result = _adminService.ProductService.GetAll();
+                if(result == null) return NotFound();
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -43,10 +32,42 @@ namespace Presentation.Controllers
             }
         }
 
-        #region Filtering
+       
+        //[HttpGet("GetAllNew")]
+        //public IActionResult GetAllNew()
+        //{
+        //    try
+        //    {
+        //        var result = null;//_adminService.ProductService.GetAll().OrderBy(p=> p.;
+        //        if (result == null) return NotFound();
 
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
+
+        #region Filtering
         [HttpGet("GetDetailsById")]
-        public IActionResult Get(int id)
+        public IActionResult GetDetails(int id)
+        {
+            try
+            {
+                var result = _adminService.ProductService.GetDetails(id);
+                if (result == null) return NotFound();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("GetVarientsById")]
+        public IActionResult GetVarients(int id)
         {
             try
             {

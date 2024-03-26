@@ -78,26 +78,24 @@ namespace Services.DataServices
 
         public void UpdaterColor(ColorDto color)
         {
-            _adminRepository.ColorRepository.Update(color.ToColorEntity());
-            _adminRepository.SaveChanges();
-            //if (_adminRepository.ColorRepository.Get(color.Id) != null)
-            //{
-               
-            //}
-            //else
-            //    throw new NotFoundException("Color"); ;
+            if (_adminRepository.ColorRepository.Get(color.Id) != null)
+            {
+                _adminRepository.ColorRepository.Update(color.ToColorEntity());
+                _adminRepository.SaveChanges();
+            }
+            else
+                throw new NotFoundException("Color"); ;
         }
 
         public void UpdateSize(SizeDto size)
         {
-            _adminRepository.SizeRepository.Update(size.ToSizeEntity());
-            _adminRepository.SaveChanges();
-            //    if (_adminRepository.SizeRepository.Get(size.Id) != null)
-            //    {
-
-            //    }
-            //    else
-            //        throw new NotFoundException("Size"); ;
+            if (_adminRepository.SizeRepository.Get(size.Id) != null)
+            {
+                _adminRepository.SizeRepository.Update(size.ToSizeEntity());
+                _adminRepository.SaveChanges();
+            }
+            else
+                throw new NotFoundException("Size"); ;
         }
     }
 }

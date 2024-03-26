@@ -73,12 +73,11 @@ namespace Services.DataServices
             return category;
         }
 
-        public void Update(CategoryDto categoryDto)
+        public void Update(int id, Dictionary<Properties, string> newValues)
         {
-            //var category = GetCategory(id);
-            //UpdateCategory(category, newValues);
-            _repositoryAdmin.CategoryRepository.Update(categoryDto.ToCategoryEntity());
-            
+            var category = GetCategory(id);
+            UpdateCategory(category, newValues);
+           
             _repositoryAdmin.SaveChanges();
         }
     }

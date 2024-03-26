@@ -12,7 +12,7 @@ public static class ProductExtenstion
 
         return new()
         {
-            AddingDate = DateTime.Now.AddMinutes(1),
+            AddingDate = DateTime.Now,
             Description = product.Description,
             Name = product.Name,
             SallerId = product.SallerId
@@ -44,6 +44,19 @@ public static class ProductExtenstion
             Image = coloredProduct is null? "" : coloredProduct.Image,
             Name = product.Name,
             Price = product.AvgPrice  
+        };
+    }
+    public static ProductDetailsDto ToProductDetailsDto(this Product product)
+    {
+        if (product == null)
+            throw new ArgumentNullException(nameof(product));
+        return new()
+        {
+            Id = product.Id,
+            Description = product.Description,
+            Name = product.Name,
+            NumberReviews = product.NumberReviews,
+            AvgRating = product.AvgRate
         };
     }
     public static List<ProductDto> ToProductDto(this List<Product> products)

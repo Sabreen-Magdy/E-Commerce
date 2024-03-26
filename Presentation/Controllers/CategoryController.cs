@@ -81,12 +81,12 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("Update")]
-        public IActionResult Update(CategoryDto categoryDto)
+        public IActionResult Update(int id, 
+            Dictionary<Properties, string> categoryData)
         {
-           
             try
             {
-                _adminService.CategoryService.Update(categoryDto);
+                _adminService.CategoryService.Update(id, categoryData);
                 return Ok();
             }
             catch (NotFoundException)

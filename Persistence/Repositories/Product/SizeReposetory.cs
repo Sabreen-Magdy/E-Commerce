@@ -19,11 +19,8 @@ public class SizeReposetory : ISizeRepository
     public void Delete(Size entity) =>
         _dbContext.Sizes.Remove(entity);
 
-    public Size? Get(int id)
-    {
-        return _dbContext.Sizes.FirstOrDefault(x => x.Id == id);
-        //GetAll().Find(s => s.Id == id);
-    }
+    public Size? Get(int id) =>
+        GetAll().Find(s => s.Id == id);
 
     public List<Size> Get(string name) =>
            GetAll().FindAll(s => s.Name == name);
@@ -33,8 +30,6 @@ public class SizeReposetory : ISizeRepository
         .Include(s => s.Varients)
         .ToList();
 
-    public void Update(Size entity)
-    {
+    public void Update(Size entity) =>
         _dbContext.Sizes.Update(entity);
-    }
 }
