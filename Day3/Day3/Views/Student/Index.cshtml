@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Student>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>Index</title>
+</head>
+<body>
+    <h1 style="border-right-color" class="text-start text-info m-2">Student List</h1>
+    <table class=" table table-primary table-hover table-hover m-lg-5 vw-100">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Deparment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model?.Count() == 0)
+            {
+                <tr> <td colspan="2" class="text-center">There is no Student</td></tr>
+            }
+            else
+            {
+                foreach(var item in Model)
+                {   <tr>
+                        <td >@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Age</td>
+                        <td>@item.Department.Name</td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</body>
+</html>
