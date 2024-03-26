@@ -29,12 +29,13 @@ namespace Presentation.Controllers
         
         [HttpGet("GetAll")]
         public IActionResult GetAll(int pageNumber) {
+            var result = _adminService.ProductService.GetAll();
+            if (result == null) return NotFound();
+
+            return Ok(result.Take(GetRange(pageNumber)));
             try
             {
-                var result = _adminService.ProductService.GetAll();
-                if(result == null) return NotFound();
-
-                return Ok(result.Take(GetRange(pageNumber)));
+                
             }
             catch (Exception ex)
             {

@@ -273,7 +273,7 @@ namespace Services.DataServices
             if (coloredProducts is null)
                 throw new NotFoundException("ColoredProdect");
 
-            var res = coloredProducts.Select(cp => cp.Varients!
+            var res = coloredProducts.Select(cp => cp.Varients?
                             .ToList().ToProductVariantDto());
    
             return res.SelectMany(innerList => innerList).ToList();

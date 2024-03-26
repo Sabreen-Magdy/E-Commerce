@@ -41,11 +41,11 @@ namespace Persistence.Repositories
 
         public List<Product> Get(string name) =>
             GetAll().Where(p => p.Name == name).ToList();
-        
+
 
         public List<Product> GetAll() =>
             _dbContext.Products
-            .Include(p => p.ColoredProducts).ToList();
+            .Include(p => p.ColoredProducts).ThenInclude(pc => new { pc.Varients,pc.Color }).ToList();
 
         public void Update(Product entity) =>
             _dbContext.Products.Update(entity);

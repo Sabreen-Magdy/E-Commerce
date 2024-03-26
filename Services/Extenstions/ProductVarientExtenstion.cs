@@ -49,7 +49,9 @@ public static class ProductVarientExtenstion
             ProductId = productVariant.ProductId,
             Quantity = productVariant.Quantity,
             SizeId = productVariant.SizeId,
-            UnitPrice = productVariant.UnitPrice
+            UnitPrice = productVariant.UnitPrice,
+            
+            
         };
     }
 

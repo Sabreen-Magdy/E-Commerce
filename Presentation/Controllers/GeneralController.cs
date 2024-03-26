@@ -88,10 +88,12 @@ namespace Presentation.Controllers
         //[Authorize(Roles = "Saller")]
         public IActionResult Add(string name, string code)
         {
+            _adminService.GeneralService.AddColor(name, code);
+            return Ok();
             try
             {
-                _adminService.GeneralService.AddColor(name, code);
-                return Ok();
+                //_adminService.GeneralService.AddColor(name, code);
+                //return Ok();
             }
             catch (Exception ex)
             {
