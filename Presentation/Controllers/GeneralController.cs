@@ -85,7 +85,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("AddColor")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult Add(string name, string code)
         {
             try
@@ -100,7 +100,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("AddSize")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult Add(string name)
         {
             try
@@ -115,7 +115,7 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("DeleteColor")]
-        [Authorize(Roles = "Saller")]
+       // [Authorize(Roles = "Saller")]
         public IActionResult DeleteColor(int id)
         {
             try
@@ -134,7 +134,7 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("DeleteSize")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult DeleteSize(int id)
         {
             try
@@ -154,7 +154,7 @@ namespace Presentation.Controllers
 
 
         [HttpPut("UpdateSize")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult UpdateSize(SizeDto size)
         {
             try
@@ -173,7 +173,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("UpdateColor")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult UpdateColor(ColorDto color)
         {
             try
