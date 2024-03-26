@@ -290,10 +290,10 @@ public class SallerController : ControllerBase
     }
 
 
-    [HttpDelete("UpdateCustomers")]
-    public IActionResult UpdateCustomer(int id, Dictionary<Properties, string> newValues)
+    [HttpPut("UpdateCustomers")]
+    public IActionResult UpdateCustomer(CustomerDto customerDto)
     {
-        _adminService.CustomerService.Update(id, newValues);
+        _adminService.CustomerService.Update(customerDto);
 
         return Ok();
     }

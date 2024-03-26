@@ -18,7 +18,19 @@ namespace Services.Extenstions
                 Icon = category.Icon,
             };
         }
+        public static Category ToCategoryEntity(this CategoryDto category)
+        {
+            if (category == null)
+                throw new ArgumentNullException(nameof(category));
 
+            return new()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                Icon = category.Icon,
+            };
+        }
         public static CategoryDto ToCategoryDto(this Category category)
         {
             if (category == null)

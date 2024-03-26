@@ -20,8 +20,10 @@ namespace Persistence.Repositories
         public void Delete(Color entity) =>
             _dbContext.Colors.Remove(entity);
 
-        public Color? Get(int id) =>
-            GetAll().Find(s => s.Id == id);
+        public Color? Get(int id)
+        {
+            return _dbContext.Colors.Include(c=>c.ColoredProducts).FirstOrDefault(c => c.Id == id);
+        }
 
         public List<Color> Get(string name) =>
                GetAll().FindAll(s => s.Name == name);
@@ -34,7 +36,10 @@ namespace Persistence.Repositories
         public void Color(Color entity) =>
             _dbContext.Colors.Update(entity);
 
-        public void Update(Color entity) =>
+        public void Update(Color entity)
+        {
             _dbContext.Colors.Update(entity);
+        }
+            
     }
 }

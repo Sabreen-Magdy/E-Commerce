@@ -19,6 +19,21 @@ public static class CustomerExtenstion
             Phone = customer.Phone,
         };
     }
+    public static Customer ToCustomerEntity(this CustomerDto customer)
+    {
+        if (customer == null)
+            throw new ArgumentNullException(nameof(customer));
+
+        return new Customer
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Password = customer.Password,
+            Email = customer.Email,
+            Image = customer.Image,
+            Phone = customer.Phone,
+        };
+    }
 
     public static CustomerDto ToCustomerDto(this Customer customer)
     {

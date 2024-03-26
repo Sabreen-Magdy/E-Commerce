@@ -88,10 +88,12 @@ namespace Presentation.Controllers
         //[Authorize(Roles = "Saller")]
         public IActionResult Add(string name, string code)
         {
-            _adminService.GeneralService.AddColor(name, code);
-            return Ok();
+            
+           
             try
             {
+                _adminService.GeneralService.AddColor(name, code);
+                return Ok();
                 //_adminService.GeneralService.AddColor(name, code);
                 //return Ok();
             }
@@ -159,6 +161,7 @@ namespace Presentation.Controllers
         //[Authorize(Roles = "Saller")]
         public IActionResult UpdateSize(SizeDto size)
         {
+            
             try
             {
                 _adminService.GeneralService.UpdateSize(size);
@@ -178,6 +181,7 @@ namespace Presentation.Controllers
         //[Authorize(Roles = "Saller")]
         public IActionResult UpdateColor(ColorDto color)
         {
+            
             try
             {
                 _adminService.GeneralService.UpdaterColor(color);

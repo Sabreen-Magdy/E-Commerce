@@ -84,14 +84,14 @@ public class CustomerService : ICustomerService
         }
         return customer;
     }
-    public void Update(int id, Dictionary<Properties, string> newValues)
+    public void Update(CustomerDto customerDto)
     {
-        var customer = _repository.CustomerRepository.Get(id);
-        if (customer is null)
+       // var customer = _repository.CustomerRepository.Get(id);
+        if (customerDto is null)
             throw new NotFoundException("Customer");
         else
         {
-            _repository.CustomerRepository.Update(UpdateCustomer(customer, newValues));
+            _repository.CustomerRepository.Update(customerDto.ToCustomerEntity());
             _repository.SaveChanges();
         }
     }
