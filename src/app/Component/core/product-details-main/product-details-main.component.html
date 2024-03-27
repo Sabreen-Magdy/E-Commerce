@@ -21,8 +21,8 @@
         >
           keyboard_arrow_up
         </span>
-        <div class="smallImgs" #smallImgs (click)="showImage($event)">
-          <img *ngFor="let x of list" [src]="x" alt="" />
+        <div class="smallImgs" #smallImgs (click)="showImage($event,index)" *ngFor="let x of prodVariantList; let index = index">
+          <img  [src]="'http://localhost:5058/Images/' +x.coloredimage" alt="" />
         </div>
         <span
           class="material-symbols-outlined down"
@@ -39,28 +39,24 @@
     </div>
     <div class="pData col-md-4">
       <div class="detials">
-        <h3>جوارب رياضية 5 أزواج</h3>
-        <div class="rate">
+        <h3> {{prodDet.name}}</h3>
+        <div class="rate"  *ngFor="let c in prodDet.avgRating">
           <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
-          <span>(5 تعليقات)</span>
+          <span>({{prodDet.numberReviews}} تعليقات)</span>
         </div>
         <div class="price">
           <div class="rowe">
             <div class="title">قبل:</div>
-            <div class="before">400 جنيه</div>
+            <div class="before">{{prodVariantList[selectedindex].price/prodVariantList[selectedindex].quantity}} جنيه</div>
           </div>
           <div class="rowe">
             <div class="title">الان:</div>
-            <div class="now">300 جنيه</div>
+            <div class="now">{{prodVariantList[selectedindex].priceAfter/prodVariantList[selectedindex].quantity}} جنيه</div>
           </div>
           <div class="rowe">
             <div class="title">وفرت:</div>
-            <div class="sale">100 جنيه</div>
-            <div class="precent">خصم 25%</div>
+            <div class="sale">{{prodVariantList[selectedindex].offerPrice}} جنيه</div>
+            <div class="precent">خصم {{prodVariantList[selectedindex].discount*100}}%</div>
           </div>
         </div>
         <div class="comment">اي تعليق جديد</div>
@@ -74,10 +70,10 @@
           </div>
           <div class="clrs">
             <div
-              *ngFor="let c of color"
+              *ngFor="let c of prodVariantList ; let index = index"
               class="box"
-              [class.selected]="c.name === selectedColor"
-              (click)="selectColor(c.name)"
+              [class.selected]="c.colorName === selectedColor"
+              (click)="selectColor(c.colorName ,index)"
             >
               <div class="circle" [style.background-color]="c.code"></div>
             </div>
@@ -89,12 +85,12 @@
           </div>
           <div class="sizes">
             <div
-              *ngFor="let s of size"
+              *ngFor="let s of prodVariantList;let index =index"
               class="box"
-              [class.selected]="s === selectedSize"
-              (click)="selectSize(s)"
+              [class.selected]="s.size+index === selectedSize"
+              (click)="selectSize(s.size , index)"
             >
-              {{ s }}
+              {{ s .size}}
             </div>
           </div>
         </div>
@@ -109,8 +105,8 @@
               (click)="minus()"
               >-</span
             >
-            <span class="num">{{ quantityNumber }}</span>
-            <span class="plus" (click)="plus()">+</span>
+            <span class="num">{{ quantityNumber}}</span>
+            <span class="plus"  (click)="plus()">+</span>
           </div>
         </div>
         <div class="rowe">
@@ -132,18 +128,7 @@
           </span>
         </div>
         <div>
-          <pre class="content" id="descptionProductString">
-لون:	 الأسود
-مغناطيسي:	لا
-حجم الحقيبة:	صغير
-نوع الاغلاق:	سستة
-أصناف التصميم:	الصاف
-أنواع الأشرطة:	حقيبة مقبض
-تصاميم:	كاجوال, عصري
-نوع:	حقيبة هوبو
-طبقة خارجية:	100% البولي يوريثين
-تكوين:	100% البولي يوريثين
-المواد:	جلد صناعي</pre
+          <pre class="content" id="descptionProductString">{{prodDet.description}}</pre
           >
         </div>
       </div>
@@ -155,8 +140,8 @@
     <div class="averageRate">
       <h6>متوسط التقييم</h6>
       <div class="rowe">
-        <span class="num">4.00</span>
-        <span class="star">
+        <span class="num">{{prodDet.avgRating}}</span>
+        <span class="star" *ngIf="let r in prodDet.numberReviews">
           <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>

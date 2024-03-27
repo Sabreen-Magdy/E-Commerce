@@ -7,4 +7,10 @@ export interface Iproduct {
   onSale: boolean;
   discount: number;
   quantity: number;
+
+  // id: number;
+  // name: string;
+  // avgRating: number
+  // numberReviews: number
+  // description: string
 }
