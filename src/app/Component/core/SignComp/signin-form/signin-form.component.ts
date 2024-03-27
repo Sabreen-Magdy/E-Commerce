@@ -46,7 +46,9 @@ ngOnInit():void{
 
   errorMessage:string="";
   submitLoginForm(e:Event){
+    console.log("start");
       if (this.signinform.valid){
+        console.log("valid");
         this._AuthService.signIn(this.signinform.value.email,this.signinform.value.password).subscribe({
           next : (g) => {
             this._Router.navigate(['/home']);

@@ -38,8 +38,10 @@ export class AuthService {
   }
   signIn(email:string,password:string) : Observable<any>
   {
+    console.log("hi from service");
      this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`).subscribe({
       next:(response)=>{
+        console.log(response)
         if(response.token) {
              localStorage.setItem('loginToken',response.token);
              this.saveUserData();
