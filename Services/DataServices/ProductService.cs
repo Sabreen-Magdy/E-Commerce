@@ -19,7 +19,7 @@ namespace Services.DataServices
             foreach (var item in Images)
             {
                 string name = $"{productId}_{item.ColorId}";
-                Static.SaveImage(name, item.Image);
+               
             }
         }
         private ProductDto Map(Product product)
@@ -53,7 +53,6 @@ namespace Services.DataServices
             var productColoredLis = product.Images
                 .ToColoredProductEntity(productEntity.Id);
 
-            AddImages(productEntity.Id, product.Images);
 
             _repository.ProductColerdRepository
                 .AddRange(productColoredLis);
