@@ -161,9 +161,6 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ColorId");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
-
                     b.ToTable("ColoredProducts");
                 });
 
@@ -348,9 +345,6 @@ namespace Persistence.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ProductId", "ColorId", "SizeId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.HasIndex("SizeId");
 

@@ -12,8 +12,8 @@ public class ColoredProductConfiguration : IEntityTypeConfiguration<ColoredProdu
         
         builder.Property(e => e.Id)
          .ValueGeneratedOnAdd();
-        builder.HasIndex(e => e.ProductId)
-            .IsUnique();
+        //builder.HasIndex(e => e.ProductId)
+        //    .IsUnique();
 
         #region Not Mapped Properties
 

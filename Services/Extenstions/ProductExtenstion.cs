@@ -12,7 +12,7 @@ public static class ProductExtenstion
 
         return new()
         {
-            AddingDate = DateTime.Now,
+            AddingDate = DateTime.Now.AddMinutes(1),
             Description = product.Description,
             Name = product.Name,
             SallerId = product.SallerId
