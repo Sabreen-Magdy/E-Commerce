@@ -32,11 +32,12 @@ export class ProductDetailsmainComponent implements OnInit {
     //   console.log('ID:', id); // Use the ID as needed
     // });
     this.id=this.Actrouter.snapshot.params['id']
+    console.log("hiiiiiii" + this.id);
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
         this.prodVariantList = data.filter(item => item.quantity > 0);
         console.log(this.prodVariantList);
-        this.selectedImage = "http://localhost:5058/Images/" + this.prodVariantList[0].coloredimage;
+        this.selectedImage = this.prodVariantList[0].coloredimage;
         this.selectedColor = this.prodVariantList[0].colorName;
         this.selectedSize = this.prodVariantList[0].size + 0;
       }
@@ -147,7 +148,7 @@ export class ProductDetailsmainComponent implements OnInit {
 
     this.selectedColor = colorName;
     this.selectedindex = index
-    this.selectedImage = "http://localhost:5058/Images/" + this.prodVariantList[this.selectedindex].coloredimage
+    this.selectedImage =  this.prodVariantList[this.selectedindex].coloredimage
     this.selectedSize = this.prodVariantList[this.selectedindex].size + index
     this.quantityNumber = 1; // Reset quantity to 1
   }
@@ -155,7 +156,7 @@ export class ProductDetailsmainComponent implements OnInit {
 
     this.selectedSize = sizename + index;
     this.selectedindex = index
-    this.selectedImage = "http://localhost:5058/Images/" + this.prodVariantList[this.selectedindex].coloredimage
+    this.selectedImage =  this.prodVariantList[this.selectedindex].coloredimage
     // this.selectedSize = this.prodVariantList[this.selectedindex].size+index
     this.selectedColor = this.prodVariantList[this.selectedindex].colorName
     this.quantityNumber = 1; // Reset quantity to 1

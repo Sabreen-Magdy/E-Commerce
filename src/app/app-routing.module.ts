@@ -28,6 +28,7 @@ import { ComponentUrl } from './models/unit';
 import { ReviewsComponent } from './Component/core/anonymous-page/reviews/reviews.component';
 import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
 import { AuthGuard } from './auth.guard';
+import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
 
 
 const routes: Routes = [
@@ -55,7 +56,7 @@ const routes: Routes = [
     {path:"home",canActivate:[AuthGuard],component:HomePageComponent, },
     {path:"store",canActivate:[AuthGuard],component:StoreComponent, },
     {path:"store/:catgoryname",canActivate:[AuthGuard],component:StoreComponent, },
-    {path:"store/productDetials/:id",canActivate:[AuthGuard],component:ProductDetailsComponent, },
+    {path:"store/productDetials/:id",canActivate:[AuthGuard],component:ProductDetailsmainComponent, },
     {path:"cart",canActivate:[AuthGuard],component:CartComponent, },
     {path:"favorite",canActivate:[AuthGuard],component:FavoriteComponent, },
     {path:"checkout",canActivate:[AuthGuard],component:CheckoutComponent, },

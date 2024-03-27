@@ -2,10 +2,6 @@
     <div class="Mtitle">
         <span>
             <a href="">الرئيسية</a>   / 
-            <span *ngFor="let item of [1,1]" >
-                <a  href="">فئته </a> /
-            </span>
-            
             
             اسم المنتج
         </span>
@@ -22,7 +18,7 @@
           keyboard_arrow_up
         </span>
         <div class="smallImgs" #smallImgs (click)="showImage($event,index)" *ngFor="let x of prodVariantList; let index = index">
-          <img  [src]="'http://localhost:5058/Images/' +x.coloredimage" alt="" />
+          <img  [src]="x.coloredimage" alt="" />
         </div>
         <span
           class="material-symbols-outlined down"
