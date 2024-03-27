@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
 namespace Persistence.Repositories
@@ -32,7 +33,12 @@ namespace Persistence.Repositories
 
         public List<ProductVarientBelongToOrder> GetAll()
         {
-            return _context.ProductVarientBelongToOrder.ToList();
+            return _context.ProductVarientBelongToOrder
+                .Include(pvo => pvo.ProductVarient)
+                    .ThenInclude(pv => pv.ColoredProduct)
+                    .ThenInclude(cp => cp.Product)
+                .Include(pvo => pvo.Order)
+                .ToList();
         }
 
         public void Update(ProductVarientBelongToOrder entity)

@@ -30,6 +30,16 @@ namespace Services.Extenstions
             };
         }
 
+        public static void UpdateToEntity(this ColorDto color, Color source)
+        {
+            if (color == null || source == null)
+                throw new ArgumentNullException(nameof(color));
+
+            source.Code = color.Code;
+            source.Name = color.Name;
+
+        }
+
         public static List<ColorDto> ToColorDto(this List<Color> colors)
         {
             if (colors == null)

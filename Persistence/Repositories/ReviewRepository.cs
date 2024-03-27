@@ -37,9 +37,9 @@ namespace Persistence.Repositories
         }
 
         public Review? Get(int id)
-        {
-            throw new NotImplementedException();
-        }
+        =>
+            GetAll().FirstOrDefault(r => r.Id == id);
+        
 
         public List<Review> Get(string name)
         {
@@ -47,18 +47,21 @@ namespace Persistence.Repositories
         }
 
         public List<Review> GetAll() =>
-            _dbContext.Reviews.ToList();
+            _dbContext.Reviews
+            .Include(r => r.Customer)
+            .Include(r => r.Product)
+            .ToList();
         
         public List<Review> GetAllReviewByCustomerId(int customerId) =>
-             _dbContext.Reviews.Where(r=>r.CustomerId== customerId).ToList();
+             GetAll().Where(r=>r.CustomerId== customerId).ToList();
         
 
         public List<Review> GetAllReviewByProductId(int productId) =>
-             _dbContext.Reviews.Where(r => r.ProductId == productId).ToList();
+             GetAll().Where(r => r.ProductId == productId).ToList();
 
-        public Review GetByCustomerProduct(int customerID, int productID)
+        public Review? GetByCustomerProduct(int customerID, int productID)
         {
-           return _dbContext.Reviews.FirstOrDefault(r => r.CustomerId == customerID && r.ProductId == productID);
+           return GetAll().FirstOrDefault(r => r.CustomerId == customerID && r.ProductId == productID);
         }
 
         public void Update(Review review)

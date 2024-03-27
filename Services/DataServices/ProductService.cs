@@ -196,7 +196,8 @@ namespace Services.DataServices
         {
             var productColors = _repository.ProductColerdRepository
                 .GetAll().FindAll(e => e.ColorId == id);
-
+            if (productColors == null)
+                throw new NotFoundException("Products");
             return Map(productColors.Select(e => e.Product).ToList());
         }
 
@@ -204,7 +205,8 @@ namespace Services.DataServices
         {
             var productColors = _repository.ProductColerdRepository
                 .GetAll().FindAll(e => e.Color.Code == color);
-
+            if (productColors == null)
+                throw new NotFoundException("Products");
             return Map(productColors.Select(e => e.Product).ToList());
         }
 
@@ -220,6 +222,8 @@ namespace Services.DataServices
         {
             var productCategs = _repository.ProductCategoryRepository
                .GetAll().FindAll(e => e.CategoryId == id);
+            if (productCategs == null)
+                throw new NotFoundException("Products");
 
             return Map(productCategs.Select(e => e.Product).ToList());
         }
@@ -228,6 +232,8 @@ namespace Services.DataServices
         {
             var productCategs = _repository.ProductCategoryRepository
               .GetAll().FindAll(e => e.Category.Name == name);
+            if (productCategs == null)
+                throw new NotFoundException("Products");
 
             return Map(productCategs.Select(e => e.Product).ToList());
         }
@@ -236,14 +242,17 @@ namespace Services.DataServices
         {
             var productVarients = _repository.ProductVarientRepository
                  .GetAll().FindAll(e => e.UnitPrice == price);
-            
+            if (productVarients == null)
+                throw new NotFoundException("Products");
             return Map(productVarients.Select(e => e.ColoredProduct.Product).ToList());
         }
 
         public List<ProductDto> GetByQuantity(int quantity)
         {
             var productVarients = _repository.ProductVarientRepository
-                .GetAll().FindAll(e => e.Quantity == quantity);
+                .GetAll().FindAll(e => e.Quantity == quantity); 
+            if (productVarients == null)
+                throw new NotFoundException("Products");
 
             return Map(productVarients.Select(e => e.ColoredProduct.Product).ToList());
         }
@@ -252,6 +261,8 @@ namespace Services.DataServices
         {
             var products = _repository.ProductRepository
                  .GetAll().FindAll(e => e.AvgRate == rate);
+            if (products == null)
+                throw new NotFoundException("Products");
 
             return Map(products);
         }

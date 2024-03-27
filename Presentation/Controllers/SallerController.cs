@@ -136,7 +136,7 @@ public class SallerController : ControllerBase
     #region Add
 
     [HttpPost("Add")]
-    public IActionResult Add(ProductNewDto product)
+    public IActionResult Add([FromForm] ProductNewDto product)
     {
         try
         {

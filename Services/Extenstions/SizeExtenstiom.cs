@@ -28,6 +28,13 @@ namespace Services.Extenstions
                 Name = size.Size,
             };
         }
+        public static void UpdateToEntity(this SizeDto size, Size sourse)
+        {
+            if (size == null || sourse == null)
+                throw new ArgumentNullException(nameof(size));
+
+            sourse.Name = size.Size;
+        }
 
         public static List<SizeDto> ToSizeDto(this List<Size> sizes)
         {

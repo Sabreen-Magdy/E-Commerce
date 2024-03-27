@@ -24,15 +24,7 @@ namespace Presentation.Controllers
             _adminService.ReviewService.Add(review);
             return Ok();
         }
-        //[HttpGet("customer")]
-        //public IActionResult GetByCustomerId(int customerId)
-        //{
-        //    var reviews = _adminService.ReviewService.GetAllReviewsOfCustomer(customerId);
-        //    if (reviews == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(reviews);
+      
         //}
         [HttpGet("product")]
         public IActionResult GetByProductId(int productId)

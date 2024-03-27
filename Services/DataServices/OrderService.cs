@@ -16,7 +16,18 @@ namespace Services.DataServices
         {
             _repository = repository;
         }
-
+        private void RemoveOrder(Order order, List<ProductsToOrderDtoNew> products)
+        {
+           var varients = _repository.productVarientBelongToOrderReposatory.GetAll()
+                .Where(pvo => pvo.OrderId == order.Id)
+                .Select(pvo => pvo.ProductVarient);
+            foreach (var (item, product) in varients.Zip(products))
+                    item.Quantity += product.Quantity;
+            
+            _repository.OrderReposatory.Delete(order);
+            _repository.SaveChanges();
+        }
+        
         public void Add(OrderDtoNew orderDtonewFromCustomer) // for customer
         {
             // Order OrderEntity = orderDto.ToOrderEntity();
@@ -27,11 +38,8 @@ namespace Services.DataServices
                 ConfirmDate = null,
                 CustomerAddress = orderDtonewFromCustomer.CustomerAddress,
                 CustomerId = orderDtonewFromCustomer.CustomerId,
-                //Customer = _repository.CustomerRepository.Get(orderDtonewFromCustomer.CustomerId),
                 State = 0, 
-                TotalCost = orderDtonewFromCustomer.OrderTotalCost, 
-               // ProductBelongToOrders = productVarientBelongToOrders
-                // ProductBelongToOrder = _repository.ProductVarientBelongToOrderReposatory.
+                TotalCost = orderDtonewFromCustomer.OrderTotalCost
             };
             _repository.OrderReposatory.Add(OrderEntity);
             _repository.SaveChanges();
@@ -39,7 +47,6 @@ namespace Services.DataServices
             //List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
 
             foreach (var item in orderDtonewFromCustomer.productsperOrder)
-
             {
                
                 ProductVarient? productVarient = _repository.ProductVarientRepository.Get(item.ProductVarientId);
@@ -48,40 +55,42 @@ namespace Services.DataServices
                 {
                     int newQuan = productVarient.Quantity - item.Quantity;
                     if (newQuan < 0)
-                        throw new NotAllowedException("This Quantity Not Availabe in Stock ");
+                    {
+                        RemoveOrder(OrderEntity, orderDtonewFromCustomer.productsperOrder);
+                        throw new NotAllowedException("This Quantity Not Availabe in Stock, Order Cancelled");
+                    }
                     productVarient.Quantity = newQuan;
-
                     _repository.ProductVarientRepository.Update(productVarient);
-                    _repository.SaveChanges();
 
                     ProductVarientBelongToOrder productVarientBelongToOrderEntity = new ProductVarientBelongToOrder
                     {
                         TotalPrice = item.TotalCostPerQuantity,
                         Quantity = item.Quantity,
                         OrderId = OrderEntity.Id,
-                        //Order = OrderEntity,
                         ProductId = productVarient.ProductId,
                         ColorId = productVarient.ColorId,
-                        SizeId = productVarient.SizeId,
-                        //ProductVarient = productVarient
+                        SizeId = productVarient.SizeId
                     };
-                   // productVarientBelongToOrders.Add(productVarientBelongToOrderEntity);
                     _repository.productVarientBelongToOrderReposatory.Add(productVarientBelongToOrderEntity);
-                    _repository.SaveChanges();
+                   
                 }
             }
+            _repository.SaveChanges();
         }
-
-        //public void Add(OrderDto DTO)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public void Delete(int id)
         {
             var order = _repository.OrderReposatory.Get(id);
             if (order == null)
                 throw new NotFoundException("Order");
+
+            var varients = _repository
+                .productVarientBelongToOrderReposatory
+                .GetAll().Where(pvo => pvo.OrderId == id);
+
+            foreach ( var varient in varients)
+            {
+                varient.ProductVarient.Quantity += varient.Quantity;
+            }
             _repository.OrderReposatory.Delete(order);
             _repository.SaveChanges();  
         }
