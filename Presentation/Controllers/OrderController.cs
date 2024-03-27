@@ -104,7 +104,7 @@ public class OrderController : ControllerBase
     }
 
 
-    [HttpDelete("UpdateOrderStatus")]
+    [HttpPut("UpdateOrderStatus")]
     public IActionResult Update(int id, int status)
     {
         try
