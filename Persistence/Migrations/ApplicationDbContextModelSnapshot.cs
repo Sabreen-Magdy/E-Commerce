@@ -125,8 +125,9 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -147,8 +148,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:Identity", "1, 1");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -324,8 +325,8 @@ namespace Persistence.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:Identity", "1, 1");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

@@ -14,7 +14,7 @@ namespace Services.Abstraction.DataServices
         ICollection<SizeDto> GetSize(string name);
 
 
-        void AddColor(string name, Color code);
+        void AddColor(string name, string code);
         void AddSize(string name);
 
         void RemoveColor(int colorId);

@@ -1,0 +1,47 @@
+﻿@model Student;
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+
+<div class="container">
+    <div class="d-flex flex-column justify-content-center align-items-start">
+        <div class="actions-btns my-2">
+            <a class="btn btn-primary" asp-controller="Students" asp-action="Index">Student List</a>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form method="post" action="Update" class="w-75">
+            <div class="form-floating">
+                <input type="hidden" asp-for="@Model.Id">
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" asp-for="@Model.Name" placeholder="name...">
+                <label asp-for="@Model.Name"></label>
+            </div>
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            <div class="form-floating mb-3">
+                <input class="form-control" asp-for="@Model.Address" placeholder="Address...">
+                <label asp-for="@Model.Address"></label>
+            </div>
+            <span asp-validation-for="@Model.Address" class="text-danger"></span>
+            <div class="form-floating mb-3">
+                <input class="form-control" asp-for="@Model.Age" placeholder="Age...">
+                <label asp-for="@Model.Age"></label>
+            </div>
+            <span asp-validation-for="@Model.Age" class="text-danger"></span>
+            <div class="form-floating">
+                <select class="form-select" asp-for="@Model.DepartmentId" asp-items=@ViewBag.Departments aria-label="Floating label select example">
+                </select>
+                <label asp-for="@Model.DepartmentId">Works with selects</label>
+            </div>
+            <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+            <div class="my-2">
+                <button class="btn btn-warning" type="submit">Edit</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}

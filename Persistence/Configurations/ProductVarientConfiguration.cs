@@ -10,8 +10,8 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
     {
         // Primary Key
         builder.HasKey(e => new { e.ProductId, e.ColorId, e.SizeId });
-        builder.Property(e => e.Id)
-                .ValueGeneratedOnAddOrUpdate();
+        builder.Property(e => e.Id).
+                HasAnnotation("SqlServer:Identity", "1, 1");
 
 
         // Not Mapped Properties

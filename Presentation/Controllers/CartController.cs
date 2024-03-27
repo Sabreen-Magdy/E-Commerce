@@ -14,10 +14,10 @@ namespace Presentation.Controllers
     {
         private readonly IAdminService _adminService;
 
-        //        public CartController(IAdminService adminService)
-        //        {
-        //            _adminService = adminService;
-        //        }
+        public CartController(IAdminService adminService)
+        {
+            _adminService = adminService;
+        }
 
         [HttpGet]
         public IActionResult GetById(int id)

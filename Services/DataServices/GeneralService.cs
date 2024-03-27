@@ -13,7 +13,7 @@ namespace Services.DataServices
         public GeneralService(IAdminRepository adminRepository) =>
             _adminRepository = adminRepository;
 
-        public void AddColor(string name, System.Drawing.Color code)
+        public void AddColor(string name, string code)
         {
             _adminRepository.ColorRepository.Add(new()
             {

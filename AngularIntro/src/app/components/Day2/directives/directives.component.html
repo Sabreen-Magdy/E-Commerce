@@ -1,0 +1,118 @@
+<p>directives works!</p>
+
+<button class="btn btn-warning" (click)="changeState()">Toggle</button>
+<div class="bg-dark text-light p-4" *ngIf="isAccepted ; else  ourElse">
+  <h1>Welcome in ITI</h1>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus molestias
+    aliquam, sint, impedit saepe architecto, esse culpa est magnam eius
+    doloremque porro? Veritatis esse tempora nemo optio facere fugiat expedita.
+  </p>
+</div>
+
+<!-- <ng-template #ourElse>
+  <div class="bg-light text-dark p-4">
+    <h1>Sorry Try Another time</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam beatae
+      impedit, maxime molestiae harum nesciunt quos modi. Id quia commodi fuga
+      accusamus? In molestiae modi ab! Quia itaque beatae placeat!
+    </p>
+  </div>
+</ng-template>
+
+<hr />
+
+<div
+  class="card"
+  style="width: 18rem"
+  *ngFor="let track of tracks; let i = index"
+>
+  <div class="card-body">
+    <p class="card-text">{{ i + 1 }}:{{ track }}</p>
+  </div>
+</div>
+
+<hr />
+
+<select [(ngModel)]="track">
+  <option track>Choose any option</option>
+  <option>DotNet</option>
+  <option>Mearn</option>
+  <option>PHP</option>
+</select>
+<h1>Welcome in Track</h1>
+<ng-container [ngSwitch]="track">
+  <p *ngSwitchCase="'DotNet'">DotNet</p>
+  <p *ngSwitchCase="'Mearn'">Mearn</p>
+  <ng-container *ngSwitchCase="'PHP'">
+    <h3>PHP</h3>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam,
+      cupiditate!
+    </p>
+  </ng-container>
+  <p *ngSwitchDefault>Try another Time</p>
+</ng-container>
+
+<!-- Used to apply more than one directive on element -->
+<!-- <ng-container *ngIf="isAccepted">
+  <p *ngFor="let i of [1, 2, 3]">test</p>
+</ng-container>
+
+<hr />
+<h1>Attribute Directives</h1>
+
+
+<button class="btn btn-warning" (click)="changeState()">Toggle</button>
+<p [ngClass]="{
+    red: isAccepted,
+    black: isAccepted,
+    'p-3' : isAccepted
+}">
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora cupiditate,
+  optio id, itaque eos quos ipsam quae iste, eius exercitationem ipsa veniam.
+  Voluptates voluptatibus obcaecati quia tempora sequi minima aspernatur.
+</p>
+
+
+<p [ngStyle]="{
+    color: myColor,
+    backgroundColor: isAccepted? 'brown':'blue'
+    }">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, impedit corrupti quisquam libero recusandae explicabo blanditiis vel assumenda cum! Facere dolores tenetur hic amet dolorem impedit, totam nostrum fugiat incidunt!
+</p>  -->
+
+
+ <ng-template #ourElse>
+  <div class="bg-light text-dark p-4">
+    <h1>Sorry Try Another time</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam beatae
+      impedit, maxime molestiae harum nesciunt quos modi. Id quia commodi fuga
+      accusamus? In molestiae modi ab! Quia itaque beatae placeat!
+    </p>
+  </div>
+</ng-template>
+
+<div
+  class="card"
+  style="width: 18rem"
+  *ngFor="let track of tracks; let i = index"
+>
+  <div class="card-body">
+    <p class="card-text">{{ i + 1 }}:{{ track }}</p>
+  </div>
+</div>
+<hr/>
+
+<select [(ngModel)]="track">
+  <option track>Choose any option</option>
+  <option>DotNet</option>
+  <option>Mearn</option>
+  <option>PHP</option>
+</select>
+<h1>Welcome in Track</h1>
+<ng-container [ngSwitch]="track">
+  <p *ngSwitchCase="'DotNet'">DotNet</p>
+  <p *ngSwitchCase="'Mearn'">Mearn</p>

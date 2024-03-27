@@ -9,7 +9,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class GeneralController : ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -85,13 +85,15 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("AddColor")]
-        [Authorize(Roles = "Saller")]
-        public IActionResult Add(string name, Color code)
+        //[Authorize(Roles = "Saller")]
+        public IActionResult Add(string name, string code)
         {
+            _adminService.GeneralService.AddColor(name, code);
+            return Ok();
             try
             {
-                _adminService.GeneralService.AddColor(name, code);
-                return Ok();
+                //_adminService.GeneralService.AddColor(name, code);
+                //return Ok();
             }
             catch (Exception ex)
             {
@@ -100,7 +102,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("AddSize")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult Add(string name)
         {
             try
@@ -115,7 +117,7 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("DeleteColor")]
-        [Authorize(Roles = "Saller")]
+       // [Authorize(Roles = "Saller")]
         public IActionResult DeleteColor(int id)
         {
             try
@@ -134,7 +136,7 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("DeleteSize")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult DeleteSize(int id)
         {
             try
@@ -154,7 +156,7 @@ namespace Presentation.Controllers
 
 
         [HttpPut("UpdateSize")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult UpdateSize(SizeDto size)
         {
             try
@@ -173,7 +175,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("UpdateColor")]
-        [Authorize(Roles = "Saller")]
+        //[Authorize(Roles = "Saller")]
         public IActionResult UpdateColor(ColorDto color)
         {
             try
