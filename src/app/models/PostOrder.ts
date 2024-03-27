@@ -6,4 +6,10 @@ export interface IOrder {
     OrderDate: number;
     ConfirmDate: number;
     CustomerAddress: string
+    ProductsOrder:IproductsperOrder[];
+}
+export interface IproductsperOrder {
+  
+    
+  
 }
