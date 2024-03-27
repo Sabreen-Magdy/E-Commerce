@@ -1,6 +1,4 @@
 export interface ColoredProduct {
-    Id : number,
-    ColorCode : string,
-    ColorName : string,
-    Image: string
+  colorId: number;
+  image: string;
 }

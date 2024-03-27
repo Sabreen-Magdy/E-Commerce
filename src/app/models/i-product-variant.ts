@@ -1,11 +1,31 @@
+import { ColoredProduct } from "./colored-product"
+
+export interface IProductAddForm {
+  sallerId: number,
+  name: string,
+  description: string,
+  categories: number[],
+  images: ColoredProduct[],
+  productVariants: IProductVariant []
+
+} 
+
 export interface IProductVariant {
-  Id: number;
-  Price: number;
-  Discount: number;
-  OfferPrice: number;
-  PriceAfter: number;
-  Quantity: number;
-  Code : string;
-  coloredimage : string;
-  Size: string;
+  
+    colorId: number,
+    unitPrice: number,
+    discount: number,
+    quantity: number,
+    sizeId: number
+  
 }
+
+export interface IproductShow {
+  
+    id: number,
+    name: string,
+    price: number,
+    image: string
+  
+}
+

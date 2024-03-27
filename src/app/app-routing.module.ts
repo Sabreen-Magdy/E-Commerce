@@ -53,7 +53,7 @@ const routes: Routes = [
     ]},
     {path:"home",component:HomePageComponent, },
     {path:"store",component:StoreComponent, },
-    {path:"store/{catgoryname}",component:StoreComponent, },
+    {path:"store/:catgoryname",component:StoreComponent, },
     {path:"store/productDetials/:id",component:ProductDetailsComponent, },
     {path:"cart",component:CartComponent, },
     {path:"favorite",component:FavoriteComponent, },
