@@ -3,6 +3,7 @@ using Domain.Enums;
 using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Exceptions;
 
 
 namespace Presentation.Controllers;
@@ -19,96 +20,193 @@ public class CustomerController : ControllerBase
         _adminService = adminService;
     }
 
-    
+
     [HttpGet("GetAllCustomers")]
     public IActionResult GetAll()
     {
-        var customer = _adminService.CustomerService.GetAll();
+        try{
+            var customer = _adminService.CustomerService.GetAll();
 
-        if (customer == null) NotFound("No Cudtomers in System");
-        return Ok(customer);
+            if (customer == null) NotFound("No Cudtomers in System");
+            return Ok(customer);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetCustomerById")]
     public IActionResult GetCustomer(int id)
     {
-        var customer = _adminService.CustomerService.Get(id);
+        try
+        {
+            var customer = _adminService.CustomerService.Get(id);
 
-        if (customer == null) NotFound("this Customer Not Found");
-        return Ok(customer);
+            if (customer == null) NotFound("this Customer Not Found");
+            return Ok(customer);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
-    
+
     [HttpGet("GetCustomerByName")]
     public IActionResult GetCustomer(string name)
     {
-        var customers = _adminService.CustomerService.Get(name);
+        try
+        {
+            var customers = _adminService.CustomerService.Get(name);
 
-        if (customers == null) NotFound($"No Cudtomers with {name} Name Found");
-        return Ok(customers);
+            if (customers == null) NotFound($"No Cudtomers with {name} Name Found");
+            return Ok(customers);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetFavourites")]
     public IActionResult GetFavourites(int id)
     {
-        var favourites = _adminService.CustomerService.GetFavourites(id);
+        try { var favourites = _adminService.CustomerService.GetFavourites(id);
 
-        if (favourites == null) NotFound("Empty List");
-        return Ok(favourites);
+            if (favourites == null) NotFound("Empty List");
+            return Ok(favourites);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetOrders")]
     public IActionResult GetOrders(int id)
     {
-        var orders = _adminService.CustomerService.GetOrders(id);
+        try
+        {
+            var orders = _adminService.CustomerService.GetOrders(id);
 
-        if (orders == null) NotFound("Empty Orders");
-        return Ok(orders);
+            if (orders == null) NotFound("Empty Orders");
+            return Ok(orders);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
-    
+
     [HttpGet("GetCart")]
     public IActionResult GetCart(int id)
     {
-       
-        var carts = _adminService.CustomerService.GetCart(id);
 
-        if (carts == null) NotFound("Empty Carts");
-        return Ok(carts);
+        try { var carts = _adminService.CustomerService.GetCart(id);
+
+            if (carts == null) NotFound("Empty Carts");
+            return Ok(carts);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetReviews")]
     public IActionResult GetReviews(int id)
     {
+        try {
+            var reviews = _adminService.CustomerService.GetReviews(id);
 
-        var reviews = _adminService.CustomerService.GetReviews(id);
-
-        if (reviews == null) NotFound("Empty Reviews");
-        return Ok(reviews);
+            if (reviews == null) NotFound("Empty Reviews");
+            return Ok(reviews);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 
     [HttpPost("AddCustomers")]
     public IActionResult Add(CustomerAddDto customer)
     {
-        _adminService.CustomerService.Add(customer);
-       
-        return Ok();
+        try {
+            _adminService.CustomerService.Add(customer);
+
+            return Ok();
+        }
+      
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
-   
+
     [HttpDelete("DeleteCustomers")]
     public IActionResult Delete(int id)
     {
-        _adminService.CustomerService.Delete(id);
+        try { _adminService.CustomerService.Delete(id);
 
-        return Ok();
+            return Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 
     [HttpPut("UpdateCustomers")]
-    public IActionResult Update(int id,CustomerAddDto customer)
+    public IActionResult Update(int id, CustomerAddDto customer)
     {
-        _adminService.CustomerService.Update(id,customer);
+        try
+        {
+            _adminService.CustomerService.Update(id, customer);
 
-        return Ok();
+            return Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 }
