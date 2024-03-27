@@ -1,73 +1,33 @@
-<div class="row notification-container">
-  <div class="card notification-card notification-warning">
-    <div class="card-body">
-      <table>
-        <tr>
-          <td style="width: 70%">
-            <div class="card-title" style="font-size: 18px">
-              لقد سجلت الدخول قبل قليل
-            </div>
-          </td>
-          <td style="width: 30%; text-align: left">
-            <a href="#" class="btn btn-info">عرض</a>
-            <a href="#" class="btn btn-danger dismiss-notification">تجاهل</a>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="card notification-card notification-warning">
-    <div class="card-body">
-      <table>
-        <tr>
-          <td style="width: 70%">
-            <div class="card-title" style="font-size: 18px">
-              لقد تم تأكيد طلبك وسيصل خلال يومان
-            </div>
-          </td>
-          <td style="width: 30%; text-align: left">
-            <a href="#" class="btn btn-info">عرض</a>
-            <a href="#" class="btn btn-danger dismiss-notification">تجاهل</a>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="card notification-card notification-danger">
-    <div class="card-body">
-      <table>
-        <tr>
-          <td style="width: 70%">
-            <div class="card-title" style="font-size: 18px">
-              لقد تم رفض طلبك
-            </div>
-          </td>
-          <td style="width: 30%; text-align: left">
-            <a href="#" class="btn btn-info">عرض</a>
-            <a href="#" class="btn btn-danger dismiss-notification">تجاهل</a>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="card notification-card notification-reminder">
-    <div class="card-body">
-      <table>
-        <tr>
-          <td style="width: 70%">
-            <div class="card-title" style="font-size: 18px">
-              لديك فى عربة التسوق منتجات على وشك النفاذ بادر بطلبها
-            </div>
-          </td>
-          <td style="width: 30%; text-align: left">
-            <a href="#" class="btn btn-info">عرض</a>
-            <a href="#" class="btn btn-danger dismiss-notification">تجاهل</a>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
+<table class="table align-middle bg-white mb-3 col-md-6">
+  <thead class="table-dark table table-bordered border-dark">
+    <tr>
+      <th>رقم الطلب</th>
+      <th>حالة الطلب</th>
+      <th>تاريخ الطلب</th>
+      <th>عنوان العميل</th>
+      <th>التكلفة</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of processedData">
+      <td>
+        <button type="button" class="btn btn-link btn-sm btn-rounded">
+          {{ item.orderId }}
+        </button>
+      </td>
+      <td>
+        <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
+        {{ item.status }}
+      </td>
+      <td>{{ item.date }}</td>
+      <td>
+        <p class="fw-normal mb-1">{{ item.address }}</p>
+      </td>
+      <td>
+        <p class="text-success fw-normal mb-1 fa-light fa-dollar-sign">
+          {{ item.totalCost }}
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>

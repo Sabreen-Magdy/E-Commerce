@@ -64,6 +64,9 @@ export class AuthService {
     return this._HttpClient.put<any>(`http://localhost:5058/api/Customer/UpdateCustomers?id=${this.id}`,data);
    }
 
-
+ getOrderOfUser():Observable<any>{
+  // return this._HttpClient.get<any>(`http://localhost:5058/api/Customer/GetOrders?id=${this.id}`);
+  return this._HttpClient.get<any>("http://localhost:5058/api/Customer/GetOrders?id=2");
+ }
 
 }

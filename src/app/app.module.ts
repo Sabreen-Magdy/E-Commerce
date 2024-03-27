@@ -63,7 +63,6 @@ import { HomePageLayoutComponent } from './Component/collectionCompent/home-page
 import { HomePageComponent } from './Component/collectionCompent/home-page/home-page.component';
 import { Navbar2Component } from './Component/shared/navbar2/navbar2.component';
 import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
-import { HistoryOrderComponent } from './Component/core/AdminSide/history-order/history-order.component';
 
 @NgModule({
   declarations: [
@@ -115,8 +114,7 @@ import { HistoryOrderComponent } from './Component/core/AdminSide/history-order/
     HomePageComponent,
     Navbar2Component,
     TableComponent,
-    HistoryOrderComponent
-    
+
   ],
   imports: [
     RouterModule,
