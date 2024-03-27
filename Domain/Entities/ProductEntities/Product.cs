@@ -14,7 +14,7 @@ public class Product : BaseEntity
         {
             if (IsColoredProductsNull())
                 return 0;
-            return ColoredProducts!.Average(cp => cp.TotalPrice);
+            return ColoredProducts.FirstOrDefault()!.AvgPrice;//ColoredProducts!.Average(cp => cp.AvgPrice);
         }
     }
     public double TotalPrice

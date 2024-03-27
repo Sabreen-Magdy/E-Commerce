@@ -10,7 +10,7 @@ public class ColoredProduct : BaseEntity
         {
             if (IsVarientsNull())
                 return 0;
-            return Varients!.Sum(v => v.Price);
+            return Varients!.Sum(v => v.UnitPrice);
         }
     }
     public double AvgPrice
@@ -19,7 +19,7 @@ public class ColoredProduct : BaseEntity
         {
             if (IsVarientsNull())
                 return 0;
-            return Varients!.Average(v => v.Price);
+            return Varients!.Average(v => v.UnitPrice);
         }
     }
     public int TotalQuntity

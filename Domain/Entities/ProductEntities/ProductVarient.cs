@@ -5,7 +5,7 @@ public class ProductVarient : BaseEntity
     public int Quantity { get; set; }
     public double UnitPrice { get; set; }
     public double Discount { get; set; }
-    public double Price => UnitPrice * Quantity;
+    public double Price => UnitPrice; //* Quantity;
 
 
 
