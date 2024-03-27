@@ -25,7 +25,7 @@ namespace Presentation.Controllers
             if(user == null)
                 return Unauthorized();
             
-            return Ok(new { token = _loginService.GenerateJSONWebToken(user) });
+            return Ok(new {message="success", id = user.Id,token = _loginService.GenerateJSONWebToken(user) });
         }
     }
 }

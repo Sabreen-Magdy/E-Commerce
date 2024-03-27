@@ -290,9 +290,9 @@ public class SallerController : ControllerBase
 
 
     [HttpDelete("UpdateCustomers")]
-    public IActionResult UpdateCustomer(int id, Dictionary<Properties, string> newValues)
+    public IActionResult UpdateCustomer(int id,CustomerAddDto customer)
     {
-        _adminService.CustomerService.Update(id, newValues);
+        _adminService.CustomerService.Update(id,customer);
 
         return Ok();
     }

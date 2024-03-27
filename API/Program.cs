@@ -10,6 +10,7 @@ using Persistence.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Services.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,12 +70,13 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 #endregion
 
 var app = builder.Build();
-
+app.UseCors(corsName);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
 }
 
 app.UseCors(corsName);

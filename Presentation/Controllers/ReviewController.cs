@@ -36,17 +36,6 @@ namespace Presentation.Controllers
             }
             return Ok(reviews);
         }
-        //[HttpPut]
-        //public IActionResult UpdateReview(int customerId, int productId, Dictionary<Properties, object> newValues)
-        //{
-        //    _adminService.ReviewService.Update_Review(customerId, productId, newValues);
-        //    return NoContent();
-        //}
-        //[HttpDelete]
-        //public IActionResult DeleteReview(Review review)
-        //{
-        //    _adminService.ReviewService.Delete_Review(review.CustomerId, review.ProductId);
-        //    return NoContent();
-        //}
+       
     }
 }
