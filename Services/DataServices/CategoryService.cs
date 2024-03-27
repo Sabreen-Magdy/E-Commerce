@@ -72,7 +72,13 @@ namespace Services.DataServices
             }
             return category;
         }
-
+        public int NumProduct(int categoryId)
+        {
+           var category =  _repositoryAdmin.CategoryRepository.Get(categoryId);
+            if (category == null)
+                throw new NotFoundException("Category");
+            return category.ProductCategories.Count;
+        }
         public void Update(int id, Dictionary<Properties, string> newValues)
         {
             var category = GetCategory(id);

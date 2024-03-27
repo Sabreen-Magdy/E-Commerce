@@ -28,9 +28,8 @@ namespace Persistence.Repositories
 
         public List<Category> GetAll() =>
             _dbContext.Categories
-           //.Include(c => c.ProductCategories)
-           // .ThenInclude(cp => cp.Product)
-
+           .Include(c => c.ProductCategories)
+            .ThenInclude(cp => cp.Product)
             .ToList();
 
         public void Update(Category entity) =>

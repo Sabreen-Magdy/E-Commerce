@@ -116,5 +116,21 @@ namespace Presentation.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet("GetNumberProducts")]
+        public IActionResult GetProductLen(int categoryId)
+        {
+            try
+            {
+               return Ok(_adminService.CategoryService.NumProduct(categoryId));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
