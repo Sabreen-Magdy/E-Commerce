@@ -43,6 +43,10 @@ namespace Persistence.Repositories
                             .ThenInclude(cp => cp.Color)
                  .Include(o => o.ProductBelongToOrders)
                     .ThenInclude(o => o.ProductVarient)
+                        .ThenInclude(pv => pv.ColoredProduct)
+                            .ThenInclude(cp => cp.Product)
+                 .Include(o => o.ProductBelongToOrders)
+                    .ThenInclude(o => o.ProductVarient)
                         .ThenInclude(pv => pv.Size)
                    .ToList();
         }

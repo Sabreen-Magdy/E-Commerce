@@ -6,6 +6,20 @@ namespace Services.Extenstions
 {
     public static class orderExtention
     {
+        //public static ProductVariantOrderDto ToProductBToOrderDto(this ProductVarient product, int quantity)
+        //{
+        //    if (product == null)
+        //        throw new ArgumentNullException(nameof(product));
+        //    var varient = product.ToProductVariantDto();
+        //    return new()
+        //    {
+        //        Image = varient.coloredimage,
+        //        Price = varient.Price * quantity,
+        //        ProductName = product.ColoredProduct.Product.Name,
+        //        ProductVarientId = product.Id,
+        //        Quantity = quantity,
+        //    };
+        //}
 
         public static Order ToOrderEntity(this OrderDto order)
         {
@@ -42,18 +56,20 @@ namespace Services.Extenstions
                 throw new ArgumentNullException(nameof(order));
 
             var orderBlist = order.ProductBelongToOrders;
+            
+            //item.ProductVarient.ToProductVariantDto(),
+
             var productsperOrderprop = new List<ProductBToOrderDto>();
             foreach (var item in orderBlist)
-            {
-                productsperOrderprop.Add(new ProductBToOrderDto(){
-                    //ColorId = item.ColorId ,
-                    //OrderId = item.OrderId,
-                    //ProductId = item.ProductId,
+                productsperOrderprop.Add(new()
+                {
+                    ProductVarientId = item.ProductVarient.Id,
                     Quantity = item.Quantity,
-                    TotalCostPerQuantity= item.TotalPrice,
-                    products=item.ProductVarient.ToProductVariantDto(),
+                    Image = item.ProductVarient.ColoredProduct.Image,
+                    ProductName = item.ProductVarient.ColoredProduct.Product.Name,
+                    TotalCost = item.Quantity * item.ProductVarient.UnitPrice
                 });
-            }
+
             return new()
             {
                 ConfirmDate = order.ConfirmDate,
@@ -64,7 +80,7 @@ namespace Services.Extenstions
                 CustomerId = order.CustomerId,
                 CustomerName = order.Customer.Name,
                 OrderId= order.Id,
-                productsperOrder = productsperOrderprop,
+                ProductsperOrders = productsperOrderprop,
             };
         }
 

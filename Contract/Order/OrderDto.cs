@@ -13,7 +13,7 @@ public record OrderDto
     public int State { get; set; }
     public double OrderTotalCost { get; set; }
     public string CustomerAddress { get; set; }
-    public List<ProductBToOrderDto> productsperOrder { get; set; }
+    public List<ProductBToOrderDto> ProductsperOrders { get; set; } = null!;
 
     //public int Quantity { get; set; }
 

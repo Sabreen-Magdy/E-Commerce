@@ -14,14 +14,7 @@ namespace Services.DataServices
 
         public ProductService(IAdminRepository repository)
             => _repository = repository;
-        private void AddImages(int productId, List<ProductColoredAddDto> Images)
-        {
-            foreach (var item in Images)
-            {
-                string name = $"{productId}_{item.ColorId}";
-               
-            }
-        }
+    
         private ProductDto Map(Product product)
         {
             var varients = GetVarients(product.Id);

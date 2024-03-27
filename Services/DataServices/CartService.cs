@@ -3,15 +3,9 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Linq;
 using Services.Extenstions;
 using Domain.Exceptions;
+using Contract.OrderItem;
 
 namespace Services.DataServices
 {
@@ -22,47 +16,65 @@ namespace Services.DataServices
         public CartService (IAdminRepository repository)
             => _repository = repository;
 
-        public void AddItemToCart(ItemDto item,int cart_id)
+        public void AddItemToCart(ItemNewDto item)
         {
-            var existProduct=_repository.ProductVarientRepository.Get(item.Id);
-            var cartitem= new CartItem
+            var existProduct = _repository.ProductVarientRepository.Get(item.ProductVarientId);
+            
+            Get(item.CartId); // throw when Cart Not Found
+
+            if (existProduct != null)
             {
-                ProductId = item.Id,
-                ColorId = existProduct.ColorId,
-                Quantity = item.Quantity,
-                SizeId = existProduct.SizeId,
-                CartId =cart_id
-        };
-           _repository.CardRepositry.AddItem(cartitem);
+                _repository.ProductVarientRepository
+                .UpdateQuntity(existProduct, item.Quantity * -1);
 
-            _repository.SaveChanges();
+                var cartitem = new CartItem
+                {
+                    ProductId = existProduct.Id,
+                    ColorId = existProduct.ColorId,
+                    Quantity = item.Quantity,
+                    SizeId = existProduct.SizeId,
+                    CartId = item.CartId
+                };
+                _repository.CardRepositry.AddItem(cartitem);
+
+                _repository.SaveChanges();
+            }
+           else throw new NotFoundException("Product Varient");
         }
 
-        public void DeleteItem(int productId,int cartId)
+        public void DeleteItem(int productVarientId, int cartId)
         {
-            _repository.CardRepositry.DeletItem(productId, cartId);
-            _repository.SaveChanges();
-        }
+            var existProduct = _repository.ProductVarientRepository.Get(productVarientId);
 
-        public CartDto? Get(int id)
-        {
-            return _repository.CardRepositry.Get(id).ToCartDto();
-        }
-        public CartDto? GetByCustomerId(int id)
-        {
-            return _repository.CardRepositry.GetByCustomerId(id).ToCartDto();
-        }
-        public void Update(int customerId)
-        {
-            var cart = _repository.CardRepositry.GetByCustomerId(customerId);
-            if (cart is null)
-                throw new NotFoundException("Cart");
-            else
+            if (existProduct != null)
             {
-                _repository.CardRepositry.Update(cart);
+               var item =  _repository.CardRepositry.GetItem(cartId, productVarientId);
+                if (item == null)
+                    throw new NotFoundException("Cart Item");
+
+                _repository.ProductVarientRepository
+                    .UpdateQuntity(existProduct, item.Quantity * -1);
+
+                _repository.CardRepositry.DeletItem(item);
                 _repository.SaveChanges();
             }
         }
+
+        public CartDto Get(int id)
+        {
+            var cart = _repository.CardRepositry.Get(id);
+            if (cart == null) throw new NotFoundException("Cart");   
+           
+            return cart.ToCartDto();
+        }
+        public CartDto GetByCustomerId(int id)
+        {
+            var cart = _repository.CardRepositry.GetByCustomerId(id);
+            if (cart == null) throw new NotFoundException("Cart");
+
+            return cart.ToCartDto();
+        }
+
         public CartItem Update_Item(CartItem cartItem,
          Dictionary<Properties, int> newValues)
         {
@@ -91,9 +103,9 @@ namespace Services.DataServices
             }
             return cartItem;
         }
-        public void UpdateItem(int cartId ,int productId, Dictionary<Properties, int> newValues)
+        public void UpdateItem(int cartId ,int productVarientId, Dictionary<Properties, int> newValues)
         {
-            var cartItem = _repository.CardRepositry.GetItem(cartId, productId);
+            var cartItem = _repository.CardRepositry.GetItem(cartId, productVarientId);
             if (cartItem is null)
                 throw new NotFoundException("cartItem");
             else
@@ -102,7 +114,5 @@ namespace Services.DataServices
                 _repository.SaveChanges();
             }
         }
-
-    
     }
 }

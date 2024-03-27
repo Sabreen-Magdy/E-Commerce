@@ -22,7 +22,7 @@ namespace Services.DataServices
                 .Where(pvo => pvo.OrderId == order.Id)
                 .Select(pvo => pvo.ProductVarient);
             foreach (var (item, product) in varients.Zip(products))
-                    item.Quantity += product.Quantity;
+                    item.Quantity -= product.Quantity;
             
             _repository.OrderReposatory.Delete(order);
             _repository.SaveChanges();
@@ -31,20 +31,19 @@ namespace Services.DataServices
         public void Add(OrderDtoNew orderDtonewFromCustomer) // for customer
         {
             // Order OrderEntity = orderDto.ToOrderEntity();
-           
+
             Order OrderEntity = new Order
             {
                 OrderedDate = orderDtonewFromCustomer.OrderDate,
                 ConfirmDate = null,
                 CustomerAddress = orderDtonewFromCustomer.CustomerAddress,
                 CustomerId = orderDtonewFromCustomer.CustomerId,
-                State = 0, 
-                TotalCost = orderDtonewFromCustomer.OrderTotalCost
+                State = 0,
+
+                TotalCost = orderDtonewFromCustomer.productsperOrder.Sum(p => p.TotalCost)
             };
             _repository.OrderReposatory.Add(OrderEntity);
             _repository.SaveChanges();
-
-            //List<ProductVarientBelongToOrder> productVarientBelongToOrders = new List<ProductVarientBelongToOrder>();
 
             foreach (var item in orderDtonewFromCustomer.productsperOrder)
             {
@@ -64,7 +63,7 @@ namespace Services.DataServices
 
                     ProductVarientBelongToOrder productVarientBelongToOrderEntity = new ProductVarientBelongToOrder
                     {
-                        TotalPrice = item.TotalCostPerQuantity,
+                        TotalPrice  = item.TotalCost,
                         Quantity = item.Quantity,
                         OrderId = OrderEntity.Id,
                         ProductId = productVarient.ProductId,
@@ -110,12 +109,6 @@ namespace Services.DataServices
                 throw new NotFoundException("Order");
             return order.ToOrderDto();
         }
-
-        //public OrderDto Get(string Name)
-        //{
-        //    var order = _repository.OrderReposatory.Get(Name);
-        //    return order.ToOrderDto();
-        //}
 
         public List<OrderDto> GetAll()
         {

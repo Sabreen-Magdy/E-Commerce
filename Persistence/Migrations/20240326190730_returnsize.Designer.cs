@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326190730_returnsize")]
+    partial class returnsize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,15 +33,15 @@ namespace Persistence.Migrations
                     b.Property<int>("ProductVarientsProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductVarientsSizeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductVarientsColorId")
                         .HasColumnType("int");
 
-                    b.HasKey("CartsId", "ProductVarientsProductId", "ProductVarientsSizeId", "ProductVarientsColorId");
+                    b.Property<int>("ProductVarientsSizeId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ProductVarientsProductId", "ProductVarientsSizeId", "ProductVarientsColorId");
+                    b.HasKey("CartsId", "ProductVarientsProductId", "ProductVarientsColorId", "ProductVarientsSizeId");
+
+                    b.HasIndex("ProductVarientsProductId", "ProductVarientsColorId", "ProductVarientsSizeId");
 
                     b.ToTable("CartProductVarient");
                 });
@@ -77,15 +80,12 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("CartId", "ProductId", "SizeId", "ColorId");
-
-                    b.HasIndex("Id");
 
                     b.HasIndex("ProductId", "SizeId", "ColorId");
 
@@ -151,8 +151,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:Identity", "1, 1");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -161,9 +161,6 @@ namespace Persistence.Migrations
                     b.HasKey("ProductId", "ColorId");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.ToTable("ColoredProducts");
                 });
@@ -290,7 +287,7 @@ namespace Persistence.Migrations
 
                     b.ToTable("Products", t =>
                         {
-                            t.HasCheckConstraint("AddingDateValidation", "DATEPART(YEAR, [AddingDate]) >= DATEPART(YEAR, GETDATE()) and DATEPART(MONTH, [AddingDate]) >= DATEPART(MONTH, GETDATE()) and DATEPART(DAY, [AddingDate]) >= DATEPART(DAY, GETDATE()) ");
+                            t.HasCheckConstraint("AddingDateValidation", "[AddingDate] >= GetDate()");
 
                             t.HasCheckConstraint("AvgRateValidation", "[AvgRate] >= 0 and [AvgRate] <= 5 ");
 
@@ -307,15 +304,11 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int");
 
                     b.HasKey("ProductId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.ToTable("ProductCategories");
                 });
@@ -325,18 +318,18 @@ namespace Persistence.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SizeId")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ColorId")
+                    b.Property<int>("SizeId")
                         .HasColumnType("int");
 
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:Identity", "1, 1");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -344,14 +337,9 @@ namespace Persistence.Migrations
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
-                    b.HasKey("ProductId", "SizeId", "ColorId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasKey("ProductId", "ColorId", "SizeId");
 
                     b.HasIndex("SizeId");
-
-                    b.HasIndex("ProductId", "ColorId");
 
                     b.ToTable("ProductVarients", t =>
                         {
@@ -389,9 +377,6 @@ namespace Persistence.Migrations
 
                     b.HasKey("OrderId", "ProductId", "SizeId", "ColorId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("ProductId", "SizeId", "ColorId");
 
                     b.ToTable("ProductVarientBelongToOrder");
@@ -399,10 +384,10 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Review", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
@@ -420,9 +405,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.HasKey("ProductId", "CustomerId");
+                    b.HasKey("CustomerId", "ProductId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Reviews", t =>
                         {
@@ -490,7 +475,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.ProductVarient", null)
                         .WithMany()
-                        .HasForeignKey("ProductVarientsProductId", "ProductVarientsSizeId", "ProductVarientsColorId")
+                        .HasForeignKey("ProductVarientsProductId", "ProductVarientsColorId", "ProductVarientsSizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

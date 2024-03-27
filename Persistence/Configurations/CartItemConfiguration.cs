@@ -15,6 +15,10 @@ namespace Persistence.Configurations
         {
             builder.HasKey(ci => new { ci.CartId, ci.ProductId, ci.SizeId, ci.ColorId });
             
+            builder.Property(ci => ci.Id)
+                .ValueGeneratedOnAddOrUpdate();
+            builder.HasIndex(ci => ci.Id);
+
             builder.Ignore(c => c.TotalPrice);
            
             #region Relationship Constrains

@@ -14,7 +14,7 @@ namespace Contract.Order
         public DateTime OrderDate { get; set; }
         //public DateTime? ConfirmDate { get; set; }
         //public int State { get; set; } = 0;
-        public double OrderTotalCost { get; set; }
+        //public double OrderTotalCost { get; set; }
         public string CustomerAddress { get; set; }
         public List<ProductsToOrderDtoNew> productsperOrder { get; set; }
     }
@@ -23,6 +23,6 @@ namespace Contract.Order
         public int ProductVarientId { get; set; }
         public int Quantity { get; set; }
        // public ProductVariantDto? products { get; set; }
-        public double TotalCostPerQuantity { get; set; }
+        public double TotalCost { get; set; }
     }
  }

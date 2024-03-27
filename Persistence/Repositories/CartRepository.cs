@@ -1,5 +1,8 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Repositories;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
 namespace Persistence.Repositories
@@ -14,30 +17,29 @@ namespace Persistence.Repositories
         public void Add(Cart cart)
         {
             _dbContext.Carts.Add(cart);
-            _dbContext.SaveChanges();
         }
         public void AddItem(CartItem item)
         {
             _dbContext.cartItems.Add(item);
         }
-        public void DeletItem(int cartId,int productId)
+        
+        public void DeletItem(CartItem item)
         {
-            var item = _dbContext.cartItems.FirstOrDefault(ci=> ci.CartId == cartId && ci.ProductId == productId);
             if (item != null)
-            {
                 _dbContext.cartItems.Remove(item);
-            }
+            else throw new NotFoundException("Cart Item");
+
         }
 
         public void Delete(Cart entity)
         {
             _dbContext.Carts.Remove(entity);
-            _dbContext.SaveChanges();
+         
         }
 
         public Cart? Get(int id)
         {
-            return _dbContext.Carts.Find(id);
+            return GetAll().Find(c => c.Id == id);
         }
 
         public List<Cart> Get(string name)
@@ -45,22 +47,27 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Cart> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Cart> GetAll() =>
+            _dbContext.Carts
+            .Include(ic => ic.ProductVarients)
+                .ThenInclude(pv => pv.ColoredProduct) 
+            .Include(ic => ic.CartItems)
+            .Include(ic => ic.Customer).ToList();
 
         public Cart? GetByCustomerId(int customerId)
         {
-            return _dbContext.Carts.FirstOrDefault(c => c.CustomerId == customerId);
+            return GetAll().FirstOrDefault(c => c.CustomerId == customerId);
         }
         public void Update(Cart cart)
         {
             _dbContext.Carts.Update(cart);
         }
-        public CartItem GetItem(int cartId,int productId)
+        public CartItem? GetItem(int cartId,int productVarientId)
         {
-           return _dbContext.cartItems.FirstOrDefault(ci => ci.CartId == cartId && ci.ProductId == productId);
+            var cart = Get(cartId);
+            if (cart == null)  throw new NotFoundException("Cart");
+            
+            return cart.CartItems.FirstOrDefault(ci => ci.ProductVarient.Id == productVarientId);
         }
 
         public void UpdateItem(CartItem item)

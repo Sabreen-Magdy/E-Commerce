@@ -5,6 +5,8 @@ using Services.Abstraction.DataServices;
 using Contract;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Exceptions;
+using Contract.OrderItem;
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
@@ -22,52 +24,92 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult GetById(int id)
         {
-            var cart = _adminService.CartService.Get(id);
-            if (cart == null)
+            try
             {
-                return NotFound();
+                var cart = _adminService.CartService.Get(id);
+
+                return Ok(cart);
             }
-            return Ok(cart);
+            catch(NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        [HttpGet("{customerId}")]
+        [HttpGet("GetByCustomerId")]
         public IActionResult GetByCustomerId(int customerId)
         {
+            try { 
             var cart = _adminService.CartService.GetByCustomerId(customerId);
-            if (cart == null)
-            {
-                return NotFound();
-            }
+
             return Ok(cart);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
 
         [HttpPost]
-        public IActionResult AddItemToCart(int cartId, ItemDto itemDto)
+        public IActionResult AddItemToCart(ItemNewDto itemDto)
         {
-            _adminService.CartService.AddItemToCart(itemDto, cartId);
-            return NoContent();
+            try
+            {
+                _adminService.CartService.AddItemToCart(itemDto);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
-
-        //[HttpPut("Update")]
-        //public IActionResult UpdateCart(Cart cart)
-        //{
-        //    _adminService.CartService.Update(cart.CustomerId);
-        //    return NoContent();
-        //}
 
         [HttpPut("UpdateItem")]
         public IActionResult UpdateCartItem(int cartId, int productId, Dictionary<Properties, int> newValues)
         {
-            _adminService.CartService.UpdateItem(cartId, productId, newValues);
-            return NoContent();
+            try
+            {
+                _adminService.CartService.UpdateItem(cartId, productId, newValues); return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("DeleteItem")]
         public IActionResult DeleteCartItem(int cartId, int productId)
         {
-            _adminService.CartService.DeleteItem(productId, cartId);
-            return NoContent();
+            try
+            {
+                _adminService.CartService.DeleteItem(productId, cartId);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
     }

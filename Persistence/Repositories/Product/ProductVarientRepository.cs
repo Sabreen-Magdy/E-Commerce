@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -48,5 +49,18 @@ namespace Persistence.Repositories
 
         public void Update(ProductVarient entity) =>
             _dbContext.ProductVarients.Update(entity);
+
+        public void UpdateQuntity(ProductVarient productVarient, int newQuntity)
+        {
+           
+            if (productVarient == null)
+                throw new NotFoundException("Product Varient");
+            
+            int res = productVarient.Quantity + newQuntity;
+            if (res < 0)
+                throw new NotAllowedException("Not Available Quantity in Stock");
+            productVarient.Quantity = res;
+
+        }
     }
 }

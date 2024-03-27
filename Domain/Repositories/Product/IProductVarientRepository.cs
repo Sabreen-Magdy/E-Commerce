@@ -10,6 +10,7 @@ public interface IProductVarientRepository
     void AddRange(List<ProductVarient> productVarients);
     void DeleteRange(List<ProductVarient> productVarients);
   
+    void UpdateQuntity(ProductVarient productVarients, int newQuntity);
     List<ProductVarient> GetByProductColored(int productId, int colorId);
     List<ProductVarient> GetBySize(int sizeId);
 
