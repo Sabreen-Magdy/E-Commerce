@@ -17,20 +17,28 @@
                     </tr>
                 </thead>
 
-                <tbody id="tbdyprod">
-                    <td data-label="العميل">روفيدة محمد</td>
-                    <td data-label="رقم الطلب">a93sj240</td>
-                    <td data-label="السعر">500$</td>
-                    <td data-label="تاريخ الطلب">25/1/2000</td>
+                <tbody id="tbdyprod" *ngFor="let o of orders; let index = index">
+                    <td data-label="العميل">{{o.customerName}}</td>
+                    <td data-label="رقم الطلب">{{o.orderId}}</td>
+                    <td data-label="السعر">{{o.orderTotalCost}}$</td>
+                    <td data-label="تاريخ الطلب">{{o.orderDate.split('T')}}</td>
                     <td data-label="الاجراءات" style="text-align: center;">
-                        <button class="btn2 btn-edit">قبول</button>
-                        <button class="btn2 btn-delete">رفض</button>
-                    </td>
+                    <ng-container *ngIf="o.state == 0">
+                        <button class="btn2 btn-edit" (click)="AcceptOrder(o)">قبول</button>
+                        <button class="btn2 btn-delete" (click)="RegectOrder(o)">رفض</button>
+                    </ng-container>
+                    <ng-container *ngIf="o.state == 1">
+                        <i class="material-icons">done</i>
+                    </ng-container>
+                    <ng-container *ngIf="o.state == 2">
+                        <i class="material-icons">clear</i>
+                    </ng-container>
+                </td>
                      <!-- <td style="text-align: center;">
                         <p class="statusprreject">Accepted</p>
                     </td>  -->
                     <td style="text-align: left;" data-label="عرض الطلب">
-                        <button class="btn" (click)="toggleModel()" ><i class="bi bi-box-arrow-up-right"></i></button>
+                        <button class="btn" (click)="toggleModel(index)" ><i class="bi bi-box-arrow-up-right"></i></button>
                     </td>
                 </tbody>
 
@@ -46,13 +54,13 @@
       <div class="model-header">
         <i (click)="closeModel()" class="bi bi-x-square-fill"></i>
         <h3>تفاصيل الطلب </h3>
-        <h6 class="mt-3 text-secondary">#jsdfhusd121hs</h6>
+        <h6 class="mt-3 text-secondary">{{orders[selectedIndex].orderId}}</h6>
       </div>
       <div class="model-body">
         <div class="customerDetilas detilas">
-            <p> <span>اسم العميل </span> روفيدة محمد </p>
-            <p><span>عنوان الشحن </span>  القاهرة </p>
-            <p><span>تاريخ الطلب </span> 20/12/2012 </p>
+            <p> <span>اسم العميل </span> {{orders[selectedIndex].customerName}}</p>
+            <p><span>عنوان الشحن </span>  {{orders[selectedIndex].customerAddress}}</p>
+            <p><span>تاريخ الطلب </span>{{orders[selectedIndex].orderDate.split('T')}} </p>
         </div>
         <table class="table">
             <thead class="table-success">
@@ -64,21 +72,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of [1,2,3,4]">
-                <th scope="row">القميص</th>
+              <tr *ngFor="let item of orders[selectedIndex].productsperOrders">
+                <th scope="row">{{item.productName}}</th>
                 <td>
-                    <img class="img-product-order-D" src="https://eg.hm.com/assets/HNM/12079948/454f72f02f1bb4997a06e221beac6859ecf756ef/2/3ca4f91b858f7b96f4dd5c61046e55d2e5b24126.jpg">
+                    <img class="img-product-order-D" [src]="item.image">
                 </td>
-                <td>2</td>
-                <td>150 جنيه</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.totalCost}} جنيه</td>
               </tr>
              
             </tbody>
           </table>
         <div class="PriceDetilas detilas">
-            <p><span>سعر المنتجات </span>  200 جنيه </p>
-            <p><span>سعر الشحن  </span>50 جنيه </p>
-            <p><span>سعر الكلي </span> 250 جنيه </p>
+            <p><span>سعر المنتجات </span>  {{orders[selectedIndex].orderTotalCost}} جنيه </p>
+            <p><span>سعر الشحن  </span>لم يتم تعينه بعض </p>
+            <p><span>سعر الكلي </span> {{orders[selectedIndex].orderTotalCost}} جنيه+ سعر الشحن  </p>
         </div>
       </div>
     </div>
