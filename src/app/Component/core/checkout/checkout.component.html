@@ -53,9 +53,9 @@
     </div>
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3 text-success">عنوان العميل</h4>
-      <form class="needs-validation" novalidate [formGroup]="checkoutForm">
+      <form class="needs-validation" novalidate [formGroup]="checkoutForm" (submit)="SendOrder($event)">
         <div class="row g-3">
-          <div
+          <!-- <div
             class="col-sm-6 form-control-div"
             [ngClass]="{
               sucess: firstnamecontrol?.valid,
@@ -86,9 +86,9 @@
                 ادخل الاسم بالغة العربية رجاء
               </ng-container>
             </div>
-          </div>
+          </div> -->
 
-          <div
+          <!-- <div
             class="col-sm-6 form-control-div"
             [ngClass]="{
               sucess: lastnamecontrol?.valid,
@@ -119,9 +119,9 @@
                 ادخل الاسم بالغة العربية رجاء
               </ng-container>
             </div>
-          </div>
+          </div> -->
 
-          <div
+          <!-- <div
             class="col-12 form-control-div"
             [ngClass]="{
               sucess: emailcontrol?.valid && emailcontrol?.touched,
@@ -149,8 +149,8 @@
                 ادخل بريد الكتروني صالح
               </ng-container>
             </div>
-          </div>
-          <div
+          </div> -->
+          <!-- <div
             class="col-12 form-control-div"
             [ngClass]="{
               sucess: phonecontrol?.valid,
@@ -177,12 +177,12 @@
                 ادخل رقم صالح يبدأ 010 او 012 او 015
               </ng-container>
             </div>
-          </div>
+          </div> -->
           <div
             class="col-12 form-control-div"
             [ngClass]="{
               sucess: mainaddresscontrol?.valid,
-              danger: mainaddresscontrol?.errors && mainaddresscontrol?.touched
+              danger: mainaddresscontrol?.errors && (mainaddresscontrol?.touched || showerror)
             }"
           >
             <label for="address" class="form-label">العنوان</label>
@@ -198,8 +198,8 @@
               *ngIf="mainaddresscontrol?.valid"
               class="bi bi-check-circle-fill"
             ></i>
-            <i *ngIf="mainaddresscontrol?.errors && mainaddresscontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
-            <div *ngIf="mainaddresscontrol?.errors && mainaddresscontrol?.touched" class="alert p-1 mt-3 alert-danger">
+            <i *ngIf="mainaddresscontrol?.errors && (mainaddresscontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="mainaddresscontrol?.errors && (mainaddresscontrol?.touched || showerror)" class="alert p-1 mt-3 alert-danger">
               <ng-container *ngIf="mainaddresscontrol?.hasError('required')">
                 يجب عليك ادخال العنوان
               </ng-container>
@@ -212,7 +212,7 @@
             </div>
           </div>
 
-          <div
+          <!-- <div
             class="col-12 form-control-div"
             [ngClass]="{
               sucess: address2control?.valid && address2control?.touched,
@@ -242,7 +242,7 @@
               ادخل العنوان باللغة العربية
             </ng-container>
           </div>
-          </div>
+          </div> -->
         </div>
 
         <hr class="my-4" />
