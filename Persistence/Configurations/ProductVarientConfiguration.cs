@@ -13,8 +13,8 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
         
         builder.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-        //builder.HasIndex(e => e.ProductId)
-        //    .IsUnique();
+        builder.HasIndex(e => e.ProductId)
+            .IsUnique();
 
 
         // Not Mapped Properties
