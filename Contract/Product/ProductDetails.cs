@@ -20,6 +20,7 @@ public record ProductVariantDto
 
     public int Quantity { get; set; }
     public string Code { get; set; } = null!;
+    public string ColorName { get; set; } = null!;
     public string? coloredimage { get; set; }
     public string Size { get; set; } = null!;
 }

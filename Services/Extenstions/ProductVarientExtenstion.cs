@@ -48,7 +48,8 @@ public static class ProductVarientExtenstion
             ProductId = productVariant.ProductId,
             Quantity = productVariant.Quantity,
             SizeId = productVariant.SizeId,
-            UnitPrice = productVariant.UnitPrice
+            UnitPrice = productVariant.UnitPrice,
+           
         };
     }
 
@@ -114,7 +115,10 @@ public static class ProductVarientExtenstion
             Code = coloredProduct.ColorCode,
             Price = productVariant.Price,
             Quantity = productVariant.Quantity,
-            Size = productVariant.Size.Name
+            Size = productVariant.Size.Name,
+            coloredimage=productVariant.ColoredProduct.Image,
+            ColorName = coloredProduct.ColorName,
+            
         };
     }
 

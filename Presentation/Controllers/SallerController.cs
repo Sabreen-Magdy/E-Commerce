@@ -136,11 +136,12 @@ public class SallerController : ControllerBase
     #region Add
 
     [HttpPost("Add")]
-    public IActionResult Add([FromForm] ProductNewDto product)
+    public IActionResult Add( ProductNewDto product)
     {
         try
         {
             _adminService.ProductService.Add(product);
+
             return Ok();
         }
         catch (Exception ex)
@@ -295,4 +296,52 @@ public class SallerController : ControllerBase
 
         return Ok();
     }
+
+    #region Orders
+    
+    [HttpGet("GetAllOrders")]
+    public IActionResult GetAllOreders()
+    {
+        var order = _adminService.OrderService.GetAll();
+
+        if (order == null) NotFound("No order in System");
+        return Ok(order);
+    }
+
+    [HttpGet("GetOrderById")]
+    public IActionResult GetOrder(int id)
+    {
+        var order = _adminService.OrderService.Get(id);
+
+        if (order == null) NotFound("this order Not Found");
+        return Ok(order);
+    }
+
+    [HttpGet("GetOrderByCustomerName")]
+    public IActionResult GetOrder(string name)
+    {
+        var order = _adminService.OrderService.Get(name);
+
+        if (order == null) NotFound($"No order with {name} Name Found");
+        return Ok(order);
+    }
+
+    [HttpDelete("DeleteOrder")]
+    public IActionResult DeleteOrder(int id)
+    {
+        _adminService.OrderService.Delete(id);
+
+        return Ok();
+    }
+
+
+    [HttpPut("UpdateOrderStatus")]
+    public IActionResult UpdateOrderStatus(int id, int status)
+    {
+        _adminService.OrderService.Updatestatus(id, status);
+
+        return Ok();
+    }
+
+    #endregion
 }

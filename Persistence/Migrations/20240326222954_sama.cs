@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class alldatabase : Migration
+    public partial class sama : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -68,7 +68,7 @@ namespace Persistence.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NId = table.Column<int>(type: "int", nullable: false)
+                    NId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,7 +147,7 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
-                    table.CheckConstraint("AddingDateValidation", "[AddingDate] >= GetDate()");
+                    table.CheckConstraint("AddingDateValidation", "DATEPART(YEAR, [AddingDate]) >= DATEPART(YEAR, GETDATE()) and DATEPART(MONTH, [AddingDate]) >= DATEPART(MONTH, GETDATE()) and DATEPART(DAY, [AddingDate]) >= DATEPART(DAY, GETDATE()) ");
                     table.CheckConstraint("AvgRateValidation", "[AvgRate] >= 0 and [AvgRate] <= 5 ");
                     table.CheckConstraint("NumberReviewsValidation", "[NumberReviews] >= 0");
                     table.ForeignKey(
@@ -166,6 +166,7 @@ namespace Persistence.Migrations
                     ColorId = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -215,6 +216,7 @@ namespace Persistence.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -272,6 +274,7 @@ namespace Persistence.Migrations
                     UnitPrice = table.Column<double>(type: "float", nullable: false),
                     Discount = table.Column<double>(type: "float", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -404,6 +407,12 @@ namespace Persistence.Migrations
                 column: "ColorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ColoredProducts_ProductId",
+                table: "ColoredProducts",
+                column: "ProductId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Favourites_CustomerId",
                 table: "Favourites",
                 column: "CustomerId");
@@ -419,6 +428,12 @@ namespace Persistence.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCategories_ProductId",
+                table: "ProductCategories",
+                column: "ProductId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_SallerId",
                 table: "Products",
                 column: "SallerId");
@@ -427,6 +442,12 @@ namespace Persistence.Migrations
                 name: "IX_ProductVarientBelongToOrder_ProductId_SizeId_ColorId",
                 table: "ProductVarientBelongToOrder",
                 columns: new[] { "ProductId", "SizeId", "ColorId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductVarients_ProductId",
+                table: "ProductVarients",
+                column: "ProductId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductVarients_SizeId",
