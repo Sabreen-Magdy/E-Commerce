@@ -1,6 +1,7 @@
 ﻿using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
 using Contract.Order;
+using Domain.Exceptions;
 
 
 namespace Presentation.Controllers;
@@ -20,53 +21,105 @@ public class OrderController : ControllerBase
     [HttpGet("GetAllOrders")]
     public IActionResult GetAll()
     {
-        var order = _adminService.OrderService.GetAll();
+        try
+        {
+            var order = _adminService.OrderService.GetAll();
 
-        if (order == null) NotFound("No order in System");
-        return Ok(order);
+            if (order == null) NotFound("No order in System");
+            return Ok(order);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetOrderById")]
     public IActionResult GetOrder(int id)
     {
-        var order = _adminService.OrderService.Get(id);
+        try
+        {
+            var order = _adminService.OrderService.Get(id);
 
-        if (order == null) NotFound("this order Not Found");
-        return Ok(order);
+            if (order == null) NotFound("this order Not Found");
+            return Ok(order);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetOrderByCustomerName")]
     public IActionResult GetOrder(string name)
     {
-        var order = _adminService.OrderService.Get(name);
+        try {
+            var order = _adminService.OrderService.Get(name);
 
-        if (order == null) NotFound($"No order with {name} Name Found");
-        return Ok(order);
+            if (order == null) NotFound($"No order with {name} Name Found");
+            return Ok(order);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpPost("AddOrder")]
     public IActionResult Add(OrderDtoNew order)
     {
-        _adminService.OrderService.Add(order);
+        try
+        {
+            _adminService.OrderService.Add(order);
 
-        return Ok();
+            return Ok();
+        }
+        catch (NotAllowedException ex)
+        {
+            return StatusCode(400, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 
     [HttpDelete("DeleteOrder")]
     public IActionResult Delete(int id)
     {
+        try { 
         _adminService.OrderService.Delete(id);
 
         return Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            return StatusCode(404, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 
     [HttpDelete("UpdateOrderStatus")]
     public IActionResult Update(int id, int status)
     {
-        _adminService.OrderService.Updatestatus(id, status);
+        try
+        {
+            _adminService.OrderService.Updatestatus(id, status);
 
-        return Ok();
+            return Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            return StatusCode(404, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 }

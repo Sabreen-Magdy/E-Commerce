@@ -78,9 +78,11 @@ namespace Services.DataServices
 
         public void UpdaterColor(ColorDto color)
         {
-            if (_adminRepository.ColorRepository.Get(color.Id) != null)
+            var colorEntity = _adminRepository.ColorRepository.Get(color.Id);
+            if (colorEntity != null)
             {
-                _adminRepository.ColorRepository.Update(color.ToColorEntity());
+                color.UpdateToEntity(colorEntity);
+                _adminRepository.ColorRepository.Update(colorEntity);
                 _adminRepository.SaveChanges();
             }
             else
@@ -89,9 +91,11 @@ namespace Services.DataServices
 
         public void UpdateSize(SizeDto size)
         {
-            if (_adminRepository.SizeRepository.Get(size.Id) != null)
+            var sizeEntity = _adminRepository.SizeRepository.Get(size.Id);
+            if (sizeEntity != null)
             {
-                _adminRepository.SizeRepository.Update(size.ToSizeEntity());
+                size.UpdateToEntity(sizeEntity);
+                _adminRepository.SizeRepository.Update(sizeEntity);
                 _adminRepository.SaveChanges();
             }
             else

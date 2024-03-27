@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("online");
+var connection = builder.Configuration.GetConnectionString("soomCon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(

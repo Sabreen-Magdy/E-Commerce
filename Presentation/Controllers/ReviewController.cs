@@ -25,6 +25,7 @@ namespace Presentation.Controllers
             return Ok();
         }
       
+        //}
         [HttpGet("product")]
         public IActionResult GetByProductId(int productId)
         {
