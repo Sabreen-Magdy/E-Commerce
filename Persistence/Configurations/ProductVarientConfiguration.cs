@@ -9,9 +9,12 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<ProductVarient> builder)
     {
         // Primary Key
-        builder.HasKey(e => new { e.ProductId, e.ColorId, e.SizeId });
-        builder.Property(e => e.Id).
-                HasAnnotation("SqlServer:Identity", "1, 1");
+        builder.HasKey(e => new { e.ProductId, e.SizeId, e.ColorId });
+        
+        builder.Property(e => e.Id)
+                .ValueGeneratedOnAddOrUpdate();
+        builder.HasIndex(e => e.Id)
+            .IsUnique();
 
 
         // Not Mapped Properties

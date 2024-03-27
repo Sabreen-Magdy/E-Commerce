@@ -1,6 +1,5 @@
 ﻿using Contract;
 using Domain.Entities;
-using Services.DataServices;
 
 namespace Services.Extenstions;
 
@@ -23,7 +22,7 @@ public static class ProductVarientExtenstion
             productVariants[i].ColorId = ids[i];
         }
     }
-
+   
     public static List<ProductVarient> ToProductVariantEntity
         (this List<ProductVariantNewDto> productVariants, List<int> ids)
     {
@@ -49,11 +48,41 @@ public static class ProductVarientExtenstion
             ProductId = productVariant.ProductId,
             Quantity = productVariant.Quantity,
             SizeId = productVariant.SizeId,
-            UnitPrice = productVariant.UnitPrice,
-            
-            
+            UnitPrice = productVariant.UnitPrice
         };
     }
+
+    public static List<ProductVarient> ToProductVariantEntity
+       (this List<ProductVarientAddDto> productVariants,
+        int productId)
+    {
+        if (productVariants == null)
+            throw new ArgumentNullException(nameof(productVariants));
+
+        var productVariantsEntities = new List<ProductVarient>();
+
+        foreach (var item in productVariants )
+            productVariantsEntities.Add(item.ToProductVariantEntity(productId));
+
+        return productVariantsEntities;
+    }
+    public static ProductVarient ToProductVariantEntity
+       (this ProductVarientAddDto productVariant, int productId)
+    {
+        if (productVariant == null)
+            throw new ArgumentNullException(nameof(productVariant));
+
+        return new()
+        {
+            ProductId = productId,
+            ColorId = productVariant.ColorId,
+            Discount = productVariant.Discount,
+            Quantity = productVariant.Quantity,
+            SizeId = productVariant.SizeId,
+            UnitPrice = productVariant.UnitPrice
+        };
+    }
+
 
     //public static ProductVarient ToProductVariantEntity
     //   (this ProductVariantDto productVariantdto)
@@ -67,7 +96,7 @@ public static class ProductVarientExtenstion
     //        UnitPrice = productVariantdto.Price,
     //        Discount = productVariantdto.Discount,
     //        Quantity= productVariantdto.Quantity,
-            
+
     //    };
     //}
 

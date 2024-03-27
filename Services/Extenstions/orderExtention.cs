@@ -15,12 +15,12 @@ namespace Services.Extenstions
             return new()
             {
                 ConfirmDate = order.ConfirmDate,
-                OrderedDate =order.OrderDate,
+                OrderedDate = order.OrderDate,
                 CustomerAddress = order.CustomerAddress,
-                State = order.State,    
-                TotalCost = order.OrderTotalCost ,
+                State = order.State,
+                TotalCost = order.OrderTotalCost,
                 CustomerId = order.CustomerId,
-               //ProductBelongToOrders=
+                //ProductBelongToOrders=
             };
         }
 
@@ -29,7 +29,7 @@ namespace Services.Extenstions
             if (orders == null)
                 throw new ArgumentNullException(nameof(orders));
 
-           var orderEntities = new List<Order>();
+            var orderEntities = new List<Order>();
             foreach (var order in orders)
                 order.ToOrderEntity();
 
@@ -41,7 +41,7 @@ namespace Services.Extenstions
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var orderBlist = order.ProductBelongToOrders.Where(o => o.OrderId == order.Id).ToList();
+            var orderBlist = order.ProductBelongToOrders;
             var productsperOrderprop = new List<ProductBToOrderDto>();
             foreach (var item in orderBlist)
             {

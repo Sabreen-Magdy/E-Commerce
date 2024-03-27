@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("sabrinaCon");
+var connection = builder.Configuration.GetConnectionString("online");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -79,6 +79,8 @@ if (app.Environment.IsDevelopment())
     
 }
 
+app.UseCors(corsName);
+app.UseStaticFiles();
 //app.UseAuthentication();
 //app.UseMvc();
 

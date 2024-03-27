@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Contract;
+﻿namespace Contract;
 
 public record ColorDto
 {

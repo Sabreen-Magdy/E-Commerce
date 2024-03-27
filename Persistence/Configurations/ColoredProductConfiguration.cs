@@ -9,8 +9,11 @@ public class ColoredProductConfiguration : IEntityTypeConfiguration<ColoredProdu
     {
         // Primary Key
         builder.HasKey(e => new { e.ProductId, e.ColorId });
+        
         builder.Property(e => e.Id)
-                .HasAnnotation("SqlServer:Identity", "1, 1");
+         .ValueGeneratedOnAddOrUpdate();
+        builder.HasIndex(e => e.Id)
+            .IsUnique();
 
         #region Not Mapped Properties
 

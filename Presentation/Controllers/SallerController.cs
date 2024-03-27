@@ -19,6 +19,7 @@ public class SallerController : ControllerBase
     {
         _adminService = adminService;
     }
+    
 
     #region Delete
 
@@ -151,12 +152,10 @@ public class SallerController : ControllerBase
     [HttpPost("AddVarient")]
     public IActionResult Add(ProductVariantNewDto productVarient)
     {
-        
         try
         {
             _adminService.ProductService.AddVarient(productVarient);
             return Ok();
-
         }
         catch (Exception ex)
         {

@@ -45,7 +45,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.ToTable(b =>
             b.HasCheckConstraint("AddingDateValidation",
-           $"[{Properties.AddingDate}] >= GetDate()"));
+            Unity.CheckDate($"[{Properties.AddingDate}]")));
 
         builder.ToTable(b => b
             .HasCheckConstraint("NumberReviewsValidation",

@@ -11,8 +11,11 @@ namespace Persistence.Configurations
         public void Configure(EntityTypeBuilder<ProductVarientBelongToOrder> builder)
         {
            builder.HasKey(e => new {e.OrderId, e.ProductId, e.SizeId, e.ColorId });
+           
             builder.Property(po => po.Id)
                 .ValueGeneratedOnAddOrUpdate();
+            builder.HasIndex(po => po.Id)
+                   .IsUnique();
 
             builder.HasOne(po => po.Order)
                 .WithMany(o => o.ProductBelongToOrders)

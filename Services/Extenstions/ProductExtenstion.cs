@@ -46,6 +46,19 @@ public static class ProductExtenstion
             Price = product.AvgPrice  
         };
     }
+    public static ProductDetailsDto ToProductDetailsDto(this Product product)
+    {
+        if (product == null)
+            throw new ArgumentNullException(nameof(product));
+        return new()
+        {
+            Id = product.Id,
+            Description = product.Description,
+            Name = product.Name,
+            NumberReviews = product.NumberReviews,
+            AvgRating = product.AvgRate
+        };
+    }
     public static List<ProductDto> ToProductDto(this List<Product> products)
     {
         if (products == null)
