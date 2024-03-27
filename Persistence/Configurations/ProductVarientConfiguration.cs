@@ -9,11 +9,11 @@ public class ProductVarientConfiguration : IEntityTypeConfiguration<ProductVarie
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<ProductVarient> builder)
     {
         // Primary Key
-        builder.HasKey(e => new { e.ProductId, e.ColorId, e.SizeId });
+        builder.HasKey(e => new { e.ProductId, e.SizeId, e.ColorId });
         
         builder.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-        builder.HasIndex(e => e.ProductId)
+                .ValueGeneratedOnAddOrUpdate();
+        builder.HasIndex(e => e.Id)
             .IsUnique();
 
 

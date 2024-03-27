@@ -1,6 +1,7 @@
 ﻿using Contract;
 using Contract.Order;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
@@ -40,48 +41,34 @@ namespace Services.DataServices
             foreach (var item in orderDtonewFromCustomer.productsperOrder)
 
             {
-                // محمد لسه معملهاش implement
-                ProductVarient productVarient = _repository.ProductVarientRepository.Get(item.ProductVarientId);
-                //{
-                //    Id = item.products.Id,
-                //    UnitPrice = item.products.Price,
-                //    Discount = item.products.Discount,
-                //    Quantity = item.products.Quantity,
-
-                //};
+               
+                ProductVarient? productVarient = _repository.ProductVarientRepository.Get(item.ProductVarientId);
+               
                 if (productVarient != null)
                 {
+                    int newQuan = productVarient.Quantity - item.Quantity;
+                    if (newQuan < 0)
+                        throw new NotAllowedException("This Quantity Not Availabe in Stock ");
+                    productVarient.Quantity = newQuan;
+
+                    _repository.ProductVarientRepository.Update(productVarient);
+                    _repository.SaveChanges();
+
                     ProductVarientBelongToOrder productVarientBelongToOrderEntity = new ProductVarientBelongToOrder
                     {
                         TotalPrice = item.TotalCostPerQuantity,
                         Quantity = item.Quantity,
                         OrderId = OrderEntity.Id,
-                        Order = OrderEntity,
+                        //Order = OrderEntity,
                         ProductId = productVarient.ProductId,
                         ColorId = productVarient.ColorId,
                         SizeId = productVarient.SizeId,
-                        ProductVarient = productVarient
+                        //ProductVarient = productVarient
                     };
                    // productVarientBelongToOrders.Add(productVarientBelongToOrderEntity);
                     _repository.productVarientBelongToOrderReposatory.Add(productVarientBelongToOrderEntity);
                     _repository.SaveChanges();
                 }
-
-                // update quantity for products that ordered
-                if (OrderEntity.ProductBelongToOrders != null)
-                {
-                    foreach (var pveriant in OrderEntity.ProductBelongToOrders)
-                    {
-                        var ProductsV = pveriant.ProductVarient;
-                        ProductsV.Quantity = ProductsV.Quantity - pveriant.Quantity;
-                        _repository.ProductVarientRepository.Update(ProductsV);
-                        _repository.SaveChanges();
-
-                        //var Product = ProductsV.ColoredProduct.Product;
-                        //Product.TotalQuantity = Product.TotalQuantity - pveriant.Quantity;
-                    }
-                }
-                // مش عارفه المفروض اعمل update في ال order بالليست بتاعت ال علاثه ولا لا 
             }
         }
 
@@ -92,19 +79,26 @@ namespace Services.DataServices
 
         public void Delete(int id)
         {
-            _repository.OrderReposatory.Delete(_repository.OrderReposatory.Get(id));
+            var order = _repository.OrderReposatory.Get(id);
+            if (order == null)
+                throw new NotFoundException("Order");
+            _repository.OrderReposatory.Delete(order);
             _repository.SaveChanges();  
         }
 
         public OrderDto Get(int id) // for admin
         {
             var order = _repository.OrderReposatory.Get(id);
+            if (order == null)
+                throw new NotFoundException("Order");
             return order.ToOrderDto();
         }
 
         public List<OrderDto> Get(string Name)
         {
             var order = _repository.OrderReposatory.Get(Name);
+            if (order == null)
+                throw new NotFoundException("Order");
             return order.ToOrderDto();
         }
 
@@ -129,6 +123,8 @@ namespace Services.DataServices
         public void Updatestatus(int id , int status)
         {
             var order = _repository.OrderReposatory.Get(id);
+            if (order == null)
+                throw new NotFoundException("Order");
             order.State = status;
             order.ConfirmDate = DateTime.Now;
             _repository.OrderReposatory.Update(order);
@@ -146,7 +142,6 @@ namespace Services.DataServices
                     }
                 }
             }
-            //_repository.ProductVarientRepository.Update()
         }
 
     }

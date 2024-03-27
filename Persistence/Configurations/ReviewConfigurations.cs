@@ -17,7 +17,7 @@ namespace Persistence.Configurations
         {
             builder.Ignore(r => r.Id);
             #region Relationship Constrains
-            builder.HasKey(r => new { r.CustomerId, r.ProductId });
+            builder.HasKey(r => new { r.ProductId, r.CustomerId });
             builder.HasOne(r => r.Product)
                    .WithMany(p => p.Reviews)
                    .HasForeignKey(r => r.ProductId);

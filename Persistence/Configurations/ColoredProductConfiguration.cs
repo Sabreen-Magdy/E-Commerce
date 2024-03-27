@@ -11,8 +11,8 @@ public class ColoredProductConfiguration : IEntityTypeConfiguration<ColoredProdu
         builder.HasKey(e => new { e.ProductId, e.ColorId });
         
         builder.Property(e => e.Id)
-         .ValueGeneratedOnAdd();
-        builder.HasIndex(e => e.ProductId)
+         .ValueGeneratedOnAddOrUpdate();
+        builder.HasIndex(e => e.Id)
             .IsUnique();
 
         #region Not Mapped Properties
