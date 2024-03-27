@@ -31,13 +31,11 @@ export class SigninFormComponent {
     }
     );
   }
-
-  //  enter(e:Event){
-  //   console.log(this.signupform.valid);
-  //   console.log(this.signupform.hasError('mismatch'));
-  //   console.log(this.confirmpasswordcontrol?.valid);
-  //  }
-
+ngOnInit():void{
+  if(this._AuthService.userData.getValue() != null){
+    this._Router.navigate(['/home']);
+  }
+}
 
   get emailcontrol(){
     return this.signinform.get('email')
@@ -47,18 +45,10 @@ export class SigninFormComponent {
   }
 
   errorMessage:string="";
-  // submitLoginForm(signinform:FormGroup){
-  //   // console.log(signinform.value);
-  //   this._AuthService.signIn(signinform.value.email,signinform.value.password);
-  //   this._Router.navigate(['/home']);
-    // console.log(this._AuthService.getUserId())
   submitLoginForm(e:Event){
       if (this.signinform.valid){
-        // console.log(this.signinform.value);
-        // console.log(this.signinform.value.email);
         this._AuthService.signIn(this.signinform.value.email,this.signinform.value.password).subscribe({
           next : (g) => {
-            console.log(g,"goooood");
             this._Router.navigate(['/home']);
           },
           error : (e) => {
