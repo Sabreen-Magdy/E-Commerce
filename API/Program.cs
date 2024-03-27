@@ -10,6 +10,7 @@ using Persistence.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Services.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,7 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("soomcon");
+var connection = builder.Configuration.GetConnectionString("sabrinaCon");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -69,12 +70,13 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 #endregion
 
 var app = builder.Build();
-
+app.UseCors(corsName);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
 }
 
 //app.UseAuthentication();

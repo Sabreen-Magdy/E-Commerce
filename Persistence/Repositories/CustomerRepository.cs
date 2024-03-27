@@ -7,7 +7,7 @@ public class CustomerRepository : ICustomerRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public CustomerRepository(ApplicationDbContext context)=>
+    public CustomerRepository(ApplicationDbContext context) =>
         _context = context;
 
 
@@ -16,7 +16,7 @@ public class CustomerRepository : ICustomerRepository
 
     public void Add(Domain.Entities.Customer customer) =>
       _context.Customers.Add(customer);
-      
+
 
     public void Delete(Domain.Entities.Customer customer) =>
       _context.Customers.Remove(customer);
