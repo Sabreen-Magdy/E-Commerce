@@ -56,7 +56,7 @@ namespace Services.Extenstions
             return new()
             {
                 ColorId = productColored.ColorId,
-                Image = productColored.Image.Name,
+                Image = productColored.Image,
             };
         }
         public static List<ColoredProduct> ToColoredProductEntity
@@ -71,7 +71,7 @@ namespace Services.Extenstions
                 coloredProducts.Add(new()
                 {
                     ColorId = image.ColorId,
-                    Image = image.Image.Name,
+                    Image = image.Image,
                     ProductId = productId
                 });
 

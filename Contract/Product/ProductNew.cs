@@ -12,7 +12,7 @@ public record ProductNewDto
     public List<ProductColoredAddDto> Images { get; set; } = null!;
     public List<ProductVarientAddDto> ProductVariants { get; set; } = null!;
 }
-public record ProductColoredAddDto(int ColorId, IFormFile Image) { }
+public record ProductColoredAddDto(int ColorId, string Image) { }
 
 public record ProductVarientAddDto
 {
