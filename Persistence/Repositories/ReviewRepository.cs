@@ -47,14 +47,14 @@ namespace Persistence.Repositories
         }
 
         public List<Review> GetAll() =>
-            _dbContext.Reviews.ToList();
+            _dbContext.Reviews.Include(r => r.Product).Include(r => r.Customer).ToList();
         
         public List<Review> GetAllReviewByCustomerId(int customerId) =>
-             _dbContext.Reviews.Where(r=>r.CustomerId== customerId).ToList();
+             _dbContext.Reviews.Include(r => r.Product).Include(r => r.Customer).Where(r=>r.CustomerId== customerId).ToList();
         
 
         public List<Review> GetAllReviewByProductId(int productId) =>
-             _dbContext.Reviews.Where(r => r.ProductId == productId).ToList();
+             _dbContext.Reviews.Include(r=>r.Product).Include(r=>r.Customer).Where(r => r.ProductId == productId).ToList();
 
         public Review GetByCustomerProduct(int customerID, int productID)
         {

@@ -104,7 +104,7 @@ public class CustomerController : ControllerBase
     }
 
 
-    [HttpDelete("UpdateCustomers")]
+    [HttpPut("UpdateCustomers")]
     public IActionResult Update(int id, Dictionary<Properties, string> newValues)
     {
         _adminService.CustomerService.Update(id, newValues);

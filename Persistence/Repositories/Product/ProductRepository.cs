@@ -49,7 +49,11 @@ namespace Persistence.Repositories
             .ThenInclude(cp => cp.Varients).ThenInclude(v => v.Size)
             .ThenInclude(cp => cp.Varients).ThenInclude(v => v.ProductBelongToOrders)
             .Include(p => p.ColoredProducts)
-            .ThenInclude(cp => cp.Color).ToList();
+            .ThenInclude(cp => cp.Color)
+            .Include(p => p.Reviews)
+            //.Include(p => p.ProductCategories)
+            //.ThenInclude(cp => cp.Category)
+            .ToList();
 
         public void Update(Product entity) =>
             _dbContext.Products.Update(entity);
