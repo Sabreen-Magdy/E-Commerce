@@ -1,5 +1,5 @@
+import { Icolor } from './../models/icolor';
 import { Injectable } from '@angular/core';
-import { Icolor } from '../models/icolor';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
@@ -16,6 +16,10 @@ export class ColorServiceService {
 
    getAllColor() : Observable<Icolor[]>{
     return this.http.get<Icolor[]>(`${this.baseURL}/GetAllColor`)
+   }
+
+   getcolorByID (id: number) : Observable<Icolor> {
+    return this.http.get<Icolor>(`${this.baseURL}/GetColor?id=${id}'`)
    }
 
    addcolor(name: string, code: string) {

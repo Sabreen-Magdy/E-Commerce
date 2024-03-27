@@ -1,25 +1,39 @@
+import { ColoredProduct } from './../../../../../models/colored-product';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IProductAddForm, IProductVariant } from 'src/app/models/i-product-variant';
+import { Icolor } from 'src/app/models/icolor';
+import { Isize } from 'src/app/models/isize';
+import { ICategory } from 'src/app/models/i-category';
+import { ColorServiceService } from 'src/app/services/color-service.service';
+import { SizeService } from 'src/app/services/size.service';
+import { CategoryService } from 'src/app/services/category.service';
+import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ProductFormService } from 'src/app/services/product-form.service';
+import { HttpClient, HttpEventType, HttpErrorResponse  } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
-interface coloredProduct {
-  Colorname: string;
-  colorCode: string;
-  imgSrcs: string[];
-}
 
-interface productVariant {
-  color: string;
-  size: string;
-  price: number;
-  quantiy: number;
-  disceount: number;
-}
+
+
 
 interface option {
   item_id:number,
   item_text:string
 
+}
+
+interface varienty {
+  colorname : string,
+  colorcode : string,
+  sizename :string
+}
+
+interface coloryy {
+  name: string,
+  code : string,
 }
 @Component({
   selector: 'app-product-form',
@@ -28,25 +42,30 @@ interface option {
   encapsulation: ViewEncapsulation.None,
 })
 export class ProductFormComponent implements OnInit {
-  imagesColor: coloredProduct[] = [];
-  uploadedImages: string[] = [];
-  productVariants: productVariant[] = [];
+
+  
+
+  showerroM : boolean = false;
+  showerroC : boolean = false;
+  showerroS : boolean = false;
+  colorList:Icolor[] =[];
+  sizeList:Isize[] =[];
+  categoryList:ICategory[] =[];
+  imagesColor: ColoredProduct[] = [];
+  uploadedImage: string = "";
+  nameofColorforImage : coloryy[] = [];
+  datafColorandSizeCari : varienty [] =[];
+  productVariants: IProductVariant[] = [];
   dropdownList:option[] = [];
   selectedItems:option[] = [];
   dropdownSettings:IDropdownSettings = {};
-  constructor() {}
+  constructor( private http: HttpClient, private sanitizer: DomSanitizer, private clrServ : ColorServiceService, private sizeServ:SizeService, private categServ :CategoryService , private addproductServ:ProductFormService,  private myRouter: Router,private actRoute: ActivatedRoute ) {}
+
   ngOnInit() {
-    this.dropdownList = [
-      { item_id: 1, item_text: 'رجالي' },
-      { item_id: 2, item_text: 'حريمي' },
-      { item_id: 3, item_text: 'عام' },
-      { item_id: 4, item_text: 'اطفال' },
-      { item_id: 5, item_text: 'احذية' }
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'عام' },
-      { item_id: 4, item_text: 'اطفال' }
-    ];
+    this.getallcolor();
+    this.getallSize();
+    this.getallcateg();
+    this.selectedItems = [];
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -56,7 +75,60 @@ export class ProductFormComponent implements OnInit {
       itemsShowLimit: 8,
       // allowSearchFilter: true
     }
+
   }
+
+  allcolorSubscription : Subscription | undefined;
+  colorByIdSub : Subscription | undefined;
+  allSizeSubscription : Subscription | undefined;
+  allCategSubscription : Subscription | undefined;
+
+  getallcolor(){
+    this.allcolorSubscription = this.clrServ.getAllColor().subscribe({
+      next: (data) => {
+        this.colorList =data;
+      },
+      error : (e) => {
+        console.log("error");
+        console.log(e);
+      }
+    })
+  }
+
+  getColorById(id: number){
+    this.colorByIdSub = this.clrServ.getcolorByID(id).subscribe({
+      next: (data) => {return data}
+    })
+  }
+  getallSize(){
+    this.allcolorSubscription = this.sizeServ.getAllSize().subscribe({
+      next: (data) => {
+        this.sizeList =data;
+      },
+      error : (e) => {
+        console.log("error");
+        console.log(e);
+      }
+    })
+  }
+
+  getallcateg(){
+    this.allcolorSubscription = this.categServ.getAllCategs().subscribe({
+      next: (data) => {
+        this.dropdownList = data.map(category => {
+          return {
+            item_id: category.id,
+            item_text: category.name
+          };}
+        )
+      },
+      error : (e) => {
+        console.log("error");
+        console.log(e);
+      }
+    })
+  }
+  
   onItemSelect(item: any) {
     console.log(item);
   }
@@ -64,20 +136,43 @@ export class ProductFormComponent implements OnInit {
     console.log(items);
   }
 
-  handleFileInput(event: any) {
-    this.uploadedImages = [];
-    const files: FileList = event.target.files;
-    if (files && files.length > 0) {
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.uploadedImages.push(e.target.result);
-        };
-        reader.readAsDataURL(files[i]);
-      }
+ 
+  getColorNameById(colorId: number): string {
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+    console.log(this.colorList);
+    for (let i = 0; i < this.colorList.length; i++) {
+        const clr = this.colorList[i];
+        console.log(clr);
+        console.log(clr.id);
+        console.log(colorId);
+        if (clr.id == colorId) {
+            console.log(clr);
+            console.log("done");
+            return clr.name;
+        }
     }
+    return 'Unknown Color';
+}
+getSizeNameById(sizeId: number): string {
+  console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+  console.log(this.colorList);
+  for (let i = 0; i < this.sizeList.length; i++) {
+      const siz = this.sizeList[i];
+      if (siz.id == sizeId) {
+          
+          return siz.size;
+      }
+  }
+  return 'Unknown Color';
+}
+
+  getColorCodeById(colorId: number): string {
+    const color = this.colorList.find(c => c.id == colorId);
+    return color ? color.code : 'Unknown Color';
   }
 
+
+  
   productForm : FormGroup = new FormGroup({
     nameproduct: new FormControl('',[Validators.required,Validators.pattern('[\u0600-\u06FF ,]+'),Validators.minLength(5)]),
     categoryproduct: new FormControl('',[Validators.required]),
@@ -95,11 +190,19 @@ export class ProductFormComponent implements OnInit {
     return this.productForm.get('descriptionProduct')
   }
 
+
   picForm: FormGroup = new FormGroup({
-    Colorname: new FormControl('', [Validators.required]),
-    colorCode: new FormControl('', [Validators.required]),
-    imgSrcs: new FormArray([], Validators.required),
+    colorId : new FormControl('', Validators.required),
+    image:new FormControl ('', [Validators.required, Validators.pattern(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i)])
   });
+
+  get colorPicFormcontrol (){
+    return this.picForm.get('colorId')
+  }
+
+  get imagePicFormcontrol (){
+    return this.picForm.get('image')
+  }
 
   productVariantForm: FormGroup = new FormGroup({
     color: new FormControl('',[Validators.required]),
@@ -135,55 +238,110 @@ export class ProductFormComponent implements OnInit {
   
   addPhoto(e: Event) {
     e.preventDefault();
-    console.log(this.uploadedImages);
-    console.log(this.picForm.get('imgSrcs')?.value);
+    if (this.picForm.valid){
+      const imageColor :ColoredProduct = {
+        colorId: this.picForm.get('colorId')?.value,
+        image: this.picForm.get('image')?.value
+      }
 
-    // Clear the existing values in the imgSrcs FormArray
-    const imgSrcsArray = this.picForm.get('imgSrcs') as FormArray;
-    while (imgSrcsArray.length !== 0) {
-      imgSrcsArray.removeAt(0);
+      this.imagesColor.push(imageColor);
+      const colornameCode : coloryy = {
+        name: this.getColorNameById(this.picForm.get('colorId')?.value),
+        code: this.getColorCodeById(this.picForm.get('colorId')?.value,)
+      } 
+      this.nameofColorforImage.push(colornameCode);
+
+      this.picForm.reset();
+      this.closePhoto()
+
+    }else{
+      this.showerroC = true
     }
-
-    // Push each uploaded image URL into the FormArray
-    this.uploadedImages.forEach((image) => {
-      imgSrcsArray.push(new FormControl(image));
-    });
-
-    // Create a coloredProduct object with form values
-    const colorProd: coloredProduct = {
-      Colorname: this.picForm.get('Colorname')?.value,
-      colorCode: this.picForm.get('colorCode')?.value,
-      imgSrcs: this.picForm.get('imgSrcs')?.value,
-    };
-
-    console.log(colorProd);
-    this.imagesColor.push(colorProd);
-    console.log(this.imagesColor);
-    // Reset the form and uploadedImages array
-    this.picForm.reset();
-    this.uploadedImages = [];
-    this.closePhoto();
 
   }
 
   closePhoto(){
     var form = document.getElementById("photoForm");
     form?.classList.remove('model-show');
+    this.showerroC =false;
   }
+
   toggleVarient(){
     var form = document.getElementById("VariantForm");
     form?.classList.add('model-show2');
   }
   closeVarient(){
     this.productVariantForm.reset();
+    this.showerroS = true;
     var form = document.getElementById("VariantForm");
     form?.classList.remove('model-show2');
   }
   
   addVariant(e :Event ){
     e.preventDefault();
-    this.productVariants.push(this.productVariantForm.value);
-    console.log(this.productVariants);
-    this.closeVarient();
+    if (this.productVariantForm.valid){
+
+      const vary : IProductVariant = {
+        colorId: this.productVariantForm.get('color')?.value,
+        unitPrice: this.productVariantForm.get('price')?.value,
+        discount: this.productVariantForm.get('disceount')?.value / 100,
+        quantity: this.productVariantForm.get('quantiy')?.value,
+        sizeId: this.productVariantForm.get('size')?.value
+      }
+
+      this.productVariants.push(vary);
+      const data:varienty = {
+        colorname: this.getColorNameById(this.productVariantForm.get('color')?.value),
+        colorcode: this.getColorCodeById(this.productVariantForm.get('color')?.value),
+        sizename: this.getSizeNameById(this.productVariantForm.get('size')?.value)
+      }
+
+      this.datafColorandSizeCari.push(data)
+        this.closeVarient();
+    }else{
+      this.showerroS = true;
+    }
+    
   }
+
+  deleteRow(index: number) {
+    this.productVariants.splice(index, 1); // Remove item from productVariants list
+  this.datafColorandSizeCari.splice(index, 1); 
+  }
+
+  deleteImage (index : number){
+    this.imagesColor.splice(index,1);
+    this.nameofColorforImage.splice(index,1);
+  }
+  onsumbit(){
+    if (this.productForm.valid && this.imagesColor.length > 0 && this.productVariants.length > 0){
+
+      console.log(this.selectedItems);
+      console.log(this.selectedItems.map(item => item.item_id));
+      const newProduct  = {
+        sallerId: 1,
+        name: this.productForm.get('nameproduct')?.value ,
+        description: this.productForm.get('descriptionProduct')?.value ,
+        categories: this.selectedItems.map(item => item.item_id),
+        images: this.imagesColor,
+        productVariants: this.productVariants
+      } 
+  
+  
+      this.addproductServ.addProduct(newProduct).subscribe({
+        next: (e) => {
+          console.log("Donnnne",e),
+          this.myRouter.navigate(['/admin/product']);
+        },
+        error: (e) => console.log(e),
+        
+      })
+    }else{
+      this.showerroM = true;
+    }
+    
+
+  }
+
+  
 }

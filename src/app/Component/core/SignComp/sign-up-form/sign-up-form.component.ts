@@ -56,7 +56,6 @@ export class SignUpFormComponent {
     }
     );
   }
-  // Custom validator function to compare password and confirm password
   passwordMatchValidator(control: AbstractControl) {
     return control.get('password')?.value ===
     control.get('confirmpassword')?.value
@@ -64,11 +63,7 @@ export class SignUpFormComponent {
     : { mismatch : true };
    }
 
-   enter(e:Event){
-    console.log(this.signupform.valid);
-    console.log(this.signupform.hasError('mismatch'));
-    console.log(this.confirmpasswordcontrol?.valid);
-   }
+
 
   get firstnamecontrol(){
     return this.signupform.get('name')
@@ -85,7 +80,6 @@ export class SignUpFormComponent {
   get confirmpasswordcontrol(){
     return this.signupform.get('confirmpassword')
   }
-  errorMessage:string="";
   submitRegisterForm(e : Event){
     e.preventDefault();
     if (this.signupform.valid){
@@ -94,7 +88,7 @@ export class SignUpFormComponent {
       next:(response)=>{
         console.log("ffff",response)
         this._Router.navigate(['/main/signin']);
-       
+
       },
       error : (e) => {
         console.log(e);
@@ -104,7 +98,7 @@ export class SignUpFormComponent {
     else{
       this.showerror = true
     }
-    
+
 
   }
 }

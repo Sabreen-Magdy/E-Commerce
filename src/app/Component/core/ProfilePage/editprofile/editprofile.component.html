@@ -1,4 +1,4 @@
-<form [formGroup]="editProfileForm">
+<form [formGroup]="editProfileForm" (ngSubmit)="editForm($event)">
   <div
     class="mb-3 form-control-div"
     [ngClass]="{
@@ -126,43 +126,6 @@
       </ng-container>
       <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
         يجب علي كلمة المرور ان تكون اطول من 5 حروف
-      </ng-container>
-    </div>
-  </div>
-  <div
-    class="mb-3 form-control-div"
-    [ngClass]="{
-      sucess: addresscontrol?.valid && addresscontrol?.touched,
-      danger: addresscontrol?.errors && addresscontrol?.touched
-    }"
-  >
-    <label for="useraddress" class="form-label"> العنوان</label>
-    <input
-      formControlName="address"
-      type="text"
-      class="form-control"
-      id="useraddress"
-    />
-    <i
-      *ngIf="addresscontrol?.valid && addresscontrol?.touched"
-      class="bi bi-check-circle-fill"
-    ></i>
-    <i
-      *ngIf="addresscontrol?.errors && addresscontrol?.touched"
-      class="bi bi-exclamation-circle-fill"
-    ></i>
-    <div
-      *ngIf="addresscontrol?.errors && addresscontrol?.touched"
-      class="alert p-1 mt-3 alert-danger"
-    >
-      <ng-container *ngIf="addresscontrol?.hasError('required')">
-        يجب عليك ادخال العنوان
-      </ng-container>
-      <ng-container *ngIf="addresscontrol?.hasError('minlength')">
-        هذا العنوان قصير
-      </ng-container>
-      <ng-container *ngIf="addresscontrol?.hasError('pattern')">
-        ادخل العنوان باللغة العربية
       </ng-container>
     </div>
   </div>

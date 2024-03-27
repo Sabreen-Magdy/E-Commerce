@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="items row">
-    <div class="element col-lg-3 col-md-6">
+    <div *ngFor="let x of ProductList" class="element col-lg-4 col-md-6">
       <div class="element-img">
         <span class="material-symbols-outlined cart"> shopping_cart </span>
         <span class="msg cart">اضف للعربة</span>
@@ -35,83 +35,15 @@
         <span class="material-symbols-outlined show"> visibility </span>
         <span class="msg show">عرض المنتج</span>
         <img
-          src="https://websitedemos.net/office-furniture-store-04/wp-content/uploads/sites/913/2021/07/office-furniture-store-product-img-27.jpg"
+          [src]="x.image"
         />
       </div>
       <div class="element-detials">
-        <h4>اسم المنتج</h4>
-        <p>300 <span>جنيه</span></p>
+        <h4>{{x.name}}</h4>
+        <p>{{x.price}} <span>جنيه</span></p>
       </div>
     </div>
-    <div class="element col-lg-3 col-md-6">
-      <div class="element-img">
-        <span class="material-symbols-outlined cart"> shopping_cart </span>
-        <span class="msg cart">اضف للعربة</span>
-        <span class="material-symbols-outlined fav"> favorite </span>
-        <span class="msg fav">اضف للمفضلة</span>
-        <span class="material-symbols-outlined show"> visibility </span>
-        <span class="msg show">عرض المنتج</span>
-        <img
-          src="https://websitedemos.net/office-furniture-store-04/wp-content/uploads/sites/913/2021/07/office-furniture-store-product-img-27.jpg"
-        />
-      </div>
-      <div class="element-detials">
-        <h4>اسم المنتج</h4>
-        <p>300 <span>جنيه</span></p>
-      </div>
-    </div>
-    <div class="element col-lg-3 col-md-6">
-      <div class="element-img">
-        <span class="material-symbols-outlined cart"> shopping_cart </span>
-        <span class="msg cart">اضف للعربة</span>
-        <span class="material-symbols-outlined fav"> favorite </span>
-        <span class="msg fav">اضف للمفضلة</span>
-        <span class="material-symbols-outlined show"> visibility </span>
-        <span class="msg show">عرض المنتج</span>
-        <img
-          src="https://websitedemos.net/office-furniture-store-04/wp-content/uploads/sites/913/2021/07/office-furniture-store-product-img-27.jpg"
-        />
-      </div>
-      <div class="element-detials">
-        <h4>اسم المنتج</h4>
-        <p>300 <span>جنيه</span></p>
-      </div>
-    </div>
-    <div class="element col-lg-3 col-md-6">
-      <div class="element-img">
-        <span class="material-symbols-outlined cart"> shopping_cart </span>
-        <span class="msg cart">اضف للعربة</span>
-        <span class="material-symbols-outlined fav"> favorite </span>
-        <span class="msg fav">اضف للمفضلة</span>
-        <span class="material-symbols-outlined show"> visibility </span>
-        <span class="msg show">عرض المنتج</span>
-        <img
-          src="https://websitedemos.net/office-furniture-store-04/wp-content/uploads/sites/913/2021/07/office-furniture-store-product-img-27.jpg"
-        />
-      </div>
-      <div class="element-detials">
-        <h4>اسم المنتج</h4>
-        <p>300 <span>جنيه</span></p>
-      </div>
-    </div>
-    <div class="element col-lg-3 col-md-6">
-      <div class="element-img">
-        <span class="material-symbols-outlined cart"> shopping_cart </span>
-        <span class="msg cart">اضف للعربة</span>
-        <span class="material-symbols-outlined fav"> favorite </span>
-        <span class="msg fav">اضف للمفضلة</span>
-        <span class="material-symbols-outlined show"> visibility </span>
-        <span class="msg show">عرض المنتج</span>
-        <img
-          src="https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp"
-        />
-      </div>
-      <div class="element-detials">
-        <h4>اسم المنتج</h4>
-        <p>300 <span>جنيه</span></p>
-      </div>
-    </div>
-  </div>
+    
 </div>
 <div class="filterlist col-md-3" id="popup">
   <div class="close">
