@@ -1,61 +1,95 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { IProductVariant } from 'src/app/models/i-product-variant';
+import { IproductDTo } from 'src/app/models/iproduct-dto';
+import { IproductVarDet } from 'src/app/models/iproduct-var-det';
+import { ProductDetailsService } from 'src/app/services/product-details.service';
 
 @Component({
   selector: 'app-product-details-main',
   templateUrl: './product-details-main.component.html',
   styleUrls: ['./product-details-main.component.css']
 })
-export class ProductDetailsmainComponent {
+export class ProductDetailsmainComponent implements OnInit {
+
+  constructor(private prodDetApi : ProductDetailsService){}
+  prodVariantList : IproductVarDet [] =[] ;
+  prodDet : IproductDTo  = { "id": 0,
+  "name": "no name",
+  "avgRating": 0,
+  "numberReviews": 0,
+  "description": "undefine"} ;
+  // sizeIndexMap: { [size: string]: number } = {};
+  ngOnInit(): void {
+    this.prodDetApi.getAll().subscribe({
+      next:(data) =>{
+        this.prodVariantList =  data.filter(item => item.quantity > 0);
+        console.log(this.prodVariantList);
+        this.selectedImage = "http://localhost:5058/Images/"+this.prodVariantList[0].coloredimage;
+        this.selectedColor = this.prodVariantList[0].colorName;
+        this.selectedSize = this.prodVariantList[0].size+0;    
+      }    
+    });
+    this.prodDetApi.getProd().subscribe({
+      next:(data) =>{
+        this.prodDet =  data;
+        console.log(this.prodDet); 
+      }    
+    });
+
+     
+  }
+
   list: string[] = [
     "https://media.istockphoto.com/id/955641488/photo/clothes-shop-costume-dress-fashion-store-style-concept.jpg?s=612x612&w=0&k=20&c=ZouECh5-XOCuBzvKBQfxgyw0RIGEUg9u5F0sJiZV86s=",
-    "https://st3.depositphotos.com/9747634/32010/i/450/depositphotos_320104748-stock-photo-hangers-with-different-clothes-in.jpg",
-    "https://media.istockphoto.com/id/1257563298/photo/fashion-clothes-on-a-rack-in-a-light-background-indoors-place-for-text.webp?b=1&s=612x612&w=0&k=20&c=2pLpczTxtUjys6Y33OKehWyqy8g98FlyCbJuUZVUv5k=",
-    "https://media.istockphoto.com/id/533833660/photo/clothing-on-hanger-at-the-modern-shop-boutique.webp?b=1&s=612x612&w=0&k=20&c=VVcA-de6aZvP3H5MfOF1aXn19WTXOV-eS6AnMOjUrvI=",
-    "https://st.depositphotos.com/2209782/2833/i/450/depositphotos_28336025-stock-photo-clothes-on-a-rack.jpg",
-    "https://www.shutterstock.com/image-photo/vintage-red-shoes-on-white-260nw-92008067.jpg",
-    "https://i.pinimg.com/736x/c9/0d/91/c90d91426ae3384073474a42ab38f695.jpg"
+    // "https://st3.depositphotos.com/9747634/32010/i/450/depositphotos_320104748-stock-photo-hangers-with-different-clothes-in.jpg",
+    // "https://media.istockphoto.com/id/1257563298/photo/fashion-clothes-on-a-rack-in-a-light-background-indoors-place-for-text.webp?b=1&s=612x612&w=0&k=20&c=2pLpczTxtUjys6Y33OKehWyqy8g98FlyCbJuUZVUv5k=",
+    // "https://media.istockphoto.com/id/533833660/photo/clothing-on-hanger-at-the-modern-shop-boutique.webp?b=1&s=612x612&w=0&k=20&c=VVcA-de6aZvP3H5MfOF1aXn19WTXOV-eS6AnMOjUrvI=",
+    // "https://st.depositphotos.com/2209782/2833/i/450/depositphotos_28336025-stock-photo-clothes-on-a-rack.jpg",
+    // "https://www.shutterstock.com/image-photo/vintage-red-shoes-on-white-260nw-92008067.jpg",
+    // "https://i.pinimg.com/736x/c9/0d/91/c90d91426ae3384073474a42ab38f695.jpg"
   ];
+  
   color =[
     {
       name: "الاسود",
       code: "#000000"
     },
-    {
-      name: "الابيض",
-      code: "#FFFFFF"
-    },
-    {
-      name: "زيتون",
-      code: "#808000"
-    },
-    {
-      name: "تركواز",
-      code: "#008080"
-    },
-    {
-      name: "أرجواني",
-      code: "#800080"
-    },
-    {
-      name: "الأزرق الداكن",
-      code: "#000080"
-    },
+    // {
+    //   name: "الابيض",
+    //   code: "#FFFFFF"
+    // },
+    // {
+    //   name: "زيتون",
+    //   code: "#808000"
+    // },
+    // {
+    //   name: "تركواز",
+    //   code: "#008080"
+    // },
+    // {
+    //   name: "أرجواني",
+    //   code: "#800080"
+    // },
+    // {
+    //   name: "الأزرق الداكن",
+    //   code: "#000080"
+    // },
   ];
   size =[
-    "S","L","XL","M"
+    "S"
+    // ,"L","XL","M"
   ]
   showUpArrow: boolean = false;
   showDownArrow: boolean = true;
   open:boolean =false;
-  selectedImage: string = this.list[0];
+  selectedindex : number = 0;
+  selectedImage: string = this.list[0]
   selectedColor: string = this.color[0].name;
   selectedSize: string = this.size[0];
   quantityNumber : number = 1;
   currentPage: number = 1;
   itemsPerPage: number = 3;
   @ViewChild('smallImgs') smallImgs!: ElementRef;
-
-  
 
   scroll(direction: 'up' | 'down'): void {
     const smallImgsElement = this.smallImgs.nativeElement as HTMLElement;
@@ -80,21 +114,32 @@ export class ProductDetailsmainComponent {
     this.checkArrowsVisibility();
   }
 
-  showImage(event: any): void {
+  showImage(event: any , index:number): void {
     if (event.target.tagName === 'IMG') {
       this.selectedImage = event.target.src;
+      this.selectedindex = index
+      this.selectedColor = this.prodVariantList[this.selectedindex].colorName
+      this.selectedSize = this.prodVariantList[this.selectedindex].size+index
     }
   }
-  selectColor(colorName: string): void {
+  selectColor(colorName: string , index :number): void {
     
     this.selectedColor = colorName;
+    this.selectedindex = index
+    this.selectedImage = "http://localhost:5058/Images/"+this.prodVariantList[this.selectedindex].coloredimage
+    this.selectedSize = this.prodVariantList[this.selectedindex].size+index
   }
-  selectSize(sizename: string): void {
+  selectSize(sizename: string , index:number): void {
     
-    this.selectedSize = sizename;
+    this.selectedSize = sizename+index;
+    this.selectedindex = index
+    this.selectedImage = "http://localhost:5058/Images/"+this.prodVariantList[this.selectedindex].coloredimage
+    // this.selectedSize = this.prodVariantList[this.selectedindex].size+index
+    this.selectedColor = this.prodVariantList[this.selectedindex].colorName
   }
   plus(){
-    this.quantityNumber++;
+    if(this.quantityNumber <= this.prodVariantList[this.selectedindex].quantity){
+    this.quantityNumber++;}
   }
   minus(){
     if (this.quantityNumber>1){
