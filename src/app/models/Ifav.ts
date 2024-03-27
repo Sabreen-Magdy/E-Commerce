@@ -1,6 +1,6 @@
 export interface Ifav{
-  Id:number;
-CustomerId:number
+ Id:number;
+ CustomerId:number
  ProductId :number
  Image :string;
  Name:string;

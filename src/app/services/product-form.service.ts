@@ -29,6 +29,6 @@ export class ProductFormService {
 
   deleteProduct (id : number) {
     return this.http.delete(`${this.baseURL}DeleteProduct?id=${id}`)
-  } 
-  
+  }
+
 }
