@@ -25,22 +25,31 @@ namespace Persistence.Repositories
 
         public Order? Get(int id)
         {
-            return _context.Orders.FirstOrDefault(o => o.Id == id);
+            return GetAll().FirstOrDefault(o => o.Id == id);
         }
 
         public List<Order> Get(string name)
         {
-            return _context.Orders.Where(o => o.Customer.Name == name).Select(O=>O).ToList() ;
+            return GetAll().Where(o => o.Customer.Name == name).Select(O=>O).ToList() ;
         }
 
         public List<Order> GetAll()
         {
-            return  _context.Orders.ToList();
+            return  _context.Orders
+                .Include(o => o.Customer)   
+                .Include(o => o.ProductBelongToOrders)
+                    .ThenInclude(o => o.ProductVarient)
+                        .ThenInclude(pv => pv.ColoredProduct)
+                            .ThenInclude(cp => cp.Color)
+                 .Include(o => o.ProductBelongToOrders)
+                    .ThenInclude(o => o.ProductVarient)
+                        .ThenInclude(pv => pv.Size)
+                   .ToList();
         }
 
         public List<Order> GetByCustomer(int customerID)
         {
-            return _context.Orders.Where(o=> o.CustomerId == customerID).ToList();
+            return GetAll().Where(o=> o.CustomerId == customerID).ToList();
         }
 
         //public List<Order> GetByProduct(int productID)

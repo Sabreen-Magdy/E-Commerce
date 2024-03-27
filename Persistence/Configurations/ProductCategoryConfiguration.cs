@@ -11,8 +11,8 @@ namespace Persistence.Configurations
             builder.HasKey(e => new { e.ProductId, e.CategoryId });
 
             builder.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-            builder.HasIndex(e => e.ProductId)
+                .ValueGeneratedOnAddOrUpdate();
+            builder.HasIndex(e => e.Id)
                 .IsUnique();
 
             builder.HasOne(pc => pc.Product)
