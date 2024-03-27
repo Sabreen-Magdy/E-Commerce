@@ -52,9 +52,9 @@ public class CustomerService : ICustomerService
         _repository.SaveChanges();
     }
 
-    public void Update(CustomerAddDto customer)
+    public void Update(int id, CustomerAddDto customer)
     {
-        _repository.CustomerRepository.Update(customer.ToCustomerEntity());
+        _repository.CustomerRepository.Updatecust(id,customer.ToCustomerEntity());
 
         _repository.SaveChanges();
     }

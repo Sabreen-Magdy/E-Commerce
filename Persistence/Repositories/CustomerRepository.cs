@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Domain.Entities;
+using Domain.Repositories;
 using Persistence.Context;
 
 namespace Persistence.Repositories;
@@ -31,4 +32,22 @@ public class CustomerRepository : ICustomerRepository
     public void Update(Domain.Entities.Customer customer) =>
       _context.Customers.Update(customer);
 
+    public void Updatecust(int id, Customer customer)
+    {
+            var existingCustomer = _context.Customers.Find(id);
+
+            if (existingCustomer != null)
+            {
+                existingCustomer.Name = customer.Name; 
+                existingCustomer.Email = customer.Email;
+                existingCustomer.Phone = customer.Phone;
+                existingCustomer.Password = customer.Password;
+            }
+            else
+            {
+                throw new Exception("Customer not found");
+            }
+        
+
+    }
 }

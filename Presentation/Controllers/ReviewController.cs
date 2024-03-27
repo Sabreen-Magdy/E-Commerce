@@ -24,16 +24,7 @@ namespace Presentation.Controllers
             _adminService.ReviewService.Add(review);
             return Ok();
         }
-        //[HttpGet("customer")]
-        //public IActionResult GetByCustomerId(int customerId)
-        //{
-        //    var reviews = _adminService.ReviewService.GetAllReviewsOfCustomer(customerId);
-        //    if (reviews == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(reviews);
-        //}
+      
         [HttpGet("product")]
         public IActionResult GetByProductId(int productId)
         {
@@ -44,17 +35,6 @@ namespace Presentation.Controllers
             }
             return Ok(reviews);
         }
-        //[HttpPut]
-        //public IActionResult UpdateReview(int customerId, int productId, Dictionary<Properties, object> newValues)
-        //{
-        //    _adminService.ReviewService.Update_Review(customerId, productId, newValues);
-        //    return NoContent();
-        //}
-        //[HttpDelete]
-        //public IActionResult DeleteReview(Review review)
-        //{
-        //    _adminService.ReviewService.Delete_Review(review.CustomerId, review.ProductId);
-        //    return NoContent();
-        //}
+       
     }
 }

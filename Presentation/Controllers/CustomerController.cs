@@ -105,9 +105,9 @@ public class CustomerController : ControllerBase
 
 
     [HttpPut("UpdateCustomers")]
-    public IActionResult Update(int id, Dictionary<Properties, string> newValues)
+    public IActionResult Update(int id,CustomerAddDto customer)
     {
-        _adminService.CustomerService.Update(id, newValues);
+        _adminService.CustomerService.Update(id,customer);
 
         return Ok();
     }
