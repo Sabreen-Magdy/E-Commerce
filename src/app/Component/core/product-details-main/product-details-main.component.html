@@ -140,34 +140,31 @@
     <div class="averageRate">
       <h6>متوسط التقييم</h6>
       <div class="rowe">
-        <span class="num">{{prodDet.avgRating}}</span>
-        <span class="star" *ngIf="let r in prodDet.numberReviews">
+        <span class="num">{{prodDet.avgRating+2}}</span>
+        <span class="star" *ngFor="let _ of getStarArray(prodDet.numberReviews + 2)">
+          <span class="material-symbols-outlined"> star </span>
+          <!-- <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
-          <span class="material-symbols-outlined"> star </span>
+          <span class="material-symbols-outlined"> star </span> -->
         </span>
       </div>
     </div>
     <div class="Comments">
       <h5>جميع التقييمات</h5>
       <div class="line3"><div></div></div>
-      <div *ngFor="let x of getPaginatedList()" class="coment row">
+      <div *ngFor="let x of prodDetrev" class="coment row">
         <div class="user col-md-3">
-          <p class="name">اسم المستخدم</p>
+          <p class="name">{{x.customerName}}</p>
           <div class="space"></div>
-          <p class="date">2024/2/1</p>
+          <p class="date">{{x.date.split('T')}}</p>
         </div>
         <div class="text col-md-9">
-          <span class="stars">
-            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i
-            ><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i
-            ><i class="bi bi-star-fill"></i>
+          <span class="stars" *ngFor="let _ of getStarArray(x.rate)">
+            <i class="bi bi-star-fill"></i> 
           </span>
           <p>
-            جميل جميل جدا ورائع ... المنتج يطابق الصورة المعروضة عالموقع بالضبط
-            ونفس القياسات وجودة
+            {{x.review}}
           </p>
         </div>
       </div>
@@ -188,7 +185,7 @@
     </div>
   </div>
 
-  <div class="relatedProduct">
+  <!-- <div class="relatedProduct">
     <h3 class="mb-3">ما ينظر إليه الاخرون</h3>
     
     <div class="items row ">
@@ -214,5 +211,5 @@
             
     </div>
       
-  </div>
+  </div> -->
 </div>
