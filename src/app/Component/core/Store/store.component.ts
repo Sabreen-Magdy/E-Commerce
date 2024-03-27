@@ -4,7 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import { ComponentUrl } from 'src/app/models/unit';
 import { Subscription } from 'rxjs';
 import { ProductFormService } from 'src/app/services/product-form.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryService } from 'src/app/services/category.service';
+import { ICategory } from 'src/app/models/i-category';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-store',
@@ -23,22 +26,65 @@ export class StoreComponent implements OnInit {
   /**fetch data */
 
   ProductList:IproductShow[] = [];
+  categoryList : ICategory [] = [];
   categoryName : string = "";
+  productName : string = "";
 
-  constructor( private prodServ:ProductFormService, private activeRoute:ActivatedRoute ){}
+  constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ){}
   ngOnInit(): void {
+    this.getAllCategory();
+    console.log("start");
     this.activeRoute.params.subscribe(params => {
-      this.categoryName = params['productDetials']; // Convert the parameter to a number
-      if (this.categoryName != ""){
-        this.allProdbyCatSub
-      }else(this.getAllProduct)
+      this.categoryName = params['catgoryname'];
+      this.productName = params ['productname']
+      console.log(this.categoryName); // Convert the parameter to a number
+      if (this.categoryName)
+      {
+        console.log("cate");
+        this.getAllproductByCat()
+      } else if (this.productName){
+        console.log("product");
+        this.getproductByName();      }
+      else{
+        console.log('all');
+        this.getAllProduct();
+        
+      }
+    })
+
+    // this.getAllProduct();
+  }
+
+  nameSearchForm :FormGroup = new FormGroup ({
+    name : new FormControl("",[Validators.required])
+  })
+
+  get nameControl(){
+    return this.nameSearchForm.get('name')
+  }
+
+  enterName (e: Event) {
+    e.preventDefault();
+    if (this.nameSearchForm.valid){
+      this._Router.navigate(['/home']);
+    }
+  }
+  allProductSub : Subscription | undefined;
+  allProdbyCatSub : Subscription | undefined;
+  prodByNameSub : Subscription | undefined;
+  allCategorySub : Subscription | undefined;
+
+  getAllCategory(){
+    this.allCategorySub = this.cateServ.getAllCategs().subscribe({
+      next : (data) => {
+        this.categoryList =data;
+      },
+      error : (e) => {
+        console.log("ERROR when fetch Category :" + e);
+      }
     })
   }
 
-  allProductSub : Subscription | undefined;
-  allProdbyCatSub : Subscription | undefined;
-
-  
   getAllProduct(){
     this.allProductSub = this.prodServ.getAllProduct().subscribe({
       next: (data) => {
@@ -58,6 +104,18 @@ export class StoreComponent implements OnInit {
       },
       error : (e) => {
         console.log("error when fetch product BY Category" + e);
+      }
+    })
+  }
+
+  getproductByName (){
+    this.prodByNameSub = this.prodServ.getProductByName(this.productName).subscribe({
+      next : (data) => {
+        console.log(data);
+        this.ProductList.push(data)
+      },
+      error : (e) => {
+        console.log("ERROR when fetch DataByName"+e);
       }
     })
   }

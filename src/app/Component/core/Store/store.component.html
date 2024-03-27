@@ -48,7 +48,7 @@
     <button class="btn" (click)="toggle()">x</button>
   </div>
   <div class="nameSearch">
-    <form>
+    <form  >
       <input type="text" placeholder="البحث باسم المنتج ..." />
       <button>
         <span class="material-symbols-outlined"> chevron_left </span>
@@ -71,18 +71,10 @@
   <div class="categSearch">
     <h5 class="mb-3">الفئات</h5>
     <ul class="catList">
-      <li class="catItem">
-        <a href="">الكل</a>
-        <span>(2)</span>
+      <li *ngFor="let x of categoryList" class="catItem">
+        <a [routerLink]="['/store',x.name]">{{x.name}}</a>
       </li>
-      <li class="catItem">
-        <a href="">الملابس</a>
-        <span>(2)</span>
-      </li>
-      <li class="catItem">
-        <a href="">الاحذية</a>
-        <span>(2)</span>
-      </li>
+      
     </ul>
   </div>
 </div>

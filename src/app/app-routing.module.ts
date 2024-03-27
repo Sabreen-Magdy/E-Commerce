@@ -56,6 +56,7 @@ const routes: Routes = [
     {path:"home",canActivate:[AuthGuard],component:HomePageComponent, },
     {path:"store",canActivate:[AuthGuard],component:StoreComponent, },
     {path:"store/:catgoryname",canActivate:[AuthGuard],component:StoreComponent, },
+    {path:"store/products/:productname",canActivate:[AuthGuard],component:StoreComponent, },
     {path:"store/productDetials/:id",canActivate:[AuthGuard],component:ProductDetailsmainComponent, },
     {path:"cart",canActivate:[AuthGuard],component:CartComponent, },
     {path:"favorite",canActivate:[AuthGuard],component:FavoriteComponent, },
