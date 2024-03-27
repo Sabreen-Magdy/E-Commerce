@@ -11,13 +11,13 @@ public static class FavouriteExtenstion
     {
         if (fav == null)
             throw new ArgumentNullException(nameof(fav));
-        string? image = fav.Product?.ColoredProducts?.FirstOrDefault()?.Image;
+        //string? image = fav.Product.ColoredProducts.FirstOrDefault()?.Image;
         return new()
         {
             Id = fav.Id,
             CustomerId= fav.CustomerId,
             ProductId = fav.ProductId,
-            Image = image,
+            Image = null,
             Name = fav.Product.Name,
             Description=fav.Product.Description,
             Price=fav.Product.TotalPrice
@@ -34,14 +34,14 @@ public static class FavouriteExtenstion
 
         return ItemDtos;
     }
-    public static Favourite ToFavoriteEntity(this FavoriteDto favDto)
+    public static Favourite ToFavoriteEntity(this FavoriteNewDto favDto)
     {
         if (favDto == null)
             throw new ArgumentNullException(nameof(favDto));
         return new()
         {
             CustomerId = favDto.CustomerId,
-            ProductId = favDto.ProductId,
+            ProductId = favDto.ProductId      
         };
 }
 

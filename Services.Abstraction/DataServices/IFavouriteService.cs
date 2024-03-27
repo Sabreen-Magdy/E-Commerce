@@ -15,7 +15,7 @@ namespace Services.Abstraction.DataServices
         List<FavoriteDto> GetAll();
         List<FavoriteDto> GetAllByCustomerId(int customerId);
         FavoriteDto GetById(int customerId, int productId);
-        void AddFavorite(FavoriteDto FavDto);
+        void AddFavorite(FavoriteNewDto FavDto);
         Favourite UpdateFav(Favourite favourite, Dictionary<Properties, int> newValues);
         void Update(int customerId, int productId, Dictionary<Properties, int> newValues);
         void DeleteItem(int customerId, int productId);

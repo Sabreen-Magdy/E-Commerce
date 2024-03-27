@@ -21,7 +21,7 @@ namespace Services.DataServices
         public FavouriteService(IAdminRepository repository)
             => _repository = repository;
 
-        public void AddFavorite(FavoriteDto FavDto)
+        public void AddFavorite(FavoriteNewDto FavDto)
         {
             _repository.FavouriteRepository.Add(FavDto.ToFavoriteEntity());
             _repository.SaveChanges();
@@ -76,12 +76,28 @@ namespace Services.DataServices
 
         public List<FavoriteDto> GetAllByCustomerId(int customerId)
         {
-            return _repository.FavouriteRepository.GetByCustomer(customerId).ToFavoriteDto();
+            var favs = _repository.FavouriteRepository.GetByCustomer(customerId);
+            var dtos = favs.ToFavoriteDto();
+            FillImage(dtos);
+            return dtos; 
         }
 
         public  FavoriteDto GetById(int customerId, int productId)
         {
-            return _repository.FavouriteRepository.GetByCustomerProduct(customerId,productId).ToFavoriteDto();
+            var fav =  _repository.FavouriteRepository.GetByCustomerProduct(customerId, productId);
+            if (fav == null)
+                throw new NotFoundException("Fav");
+            var dto = fav.ToFavoriteDto();
+            FillImage(dto); 
+            return dto;
         }
+
+        private void FillImage(FavoriteDto favorite) =>
+            favorite.Image = _repository.ProductColerdRepository
+            .GetByProduct(favorite.ProductId).FirstOrDefault()?.Image;
+
+        private void FillImage(List<FavoriteDto> favorites) {
+            foreach (var item in favorites) FillImage(item);
+        }        
     }
 }

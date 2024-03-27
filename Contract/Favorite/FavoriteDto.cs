@@ -16,4 +16,9 @@ namespace Contract.Favorite
         public string? Description { get; set; } = null!;
         public double Price { get; set; }
     }
+    public record FavoriteNewDto
+    {
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
+    }
 }

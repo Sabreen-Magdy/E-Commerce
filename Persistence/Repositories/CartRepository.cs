@@ -50,8 +50,12 @@ namespace Persistence.Repositories
         public List<Cart> GetAll() =>
             _dbContext.Carts
             .Include(ic => ic.ProductVarients)
-                .ThenInclude(pv => pv.ColoredProduct) 
+                .ThenInclude(pv => pv.ColoredProduct).ThenInclude(pv => pv.Product) //ProductVarient
             .Include(ic => ic.CartItems)
+                .ThenInclude(ci => ci.ProductVarient)
+                    .ThenInclude(ic => ic.ColoredProduct)
+                        .ThenInclude(ci => ci.Product)
+
             .Include(ic => ic.Customer).ToList();
 
         public Cart? GetByCustomerId(int customerId)

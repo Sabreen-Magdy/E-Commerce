@@ -29,7 +29,7 @@ namespace Services.DataServices
 
                 var cartitem = new CartItem
                 {
-                    ProductId = existProduct.Id,
+                    ProductId = existProduct.ProductId,
                     ColorId = existProduct.ColorId,
                     Quantity = item.Quantity,
                     SizeId = existProduct.SizeId,
@@ -83,8 +83,16 @@ namespace Services.DataServices
                 switch (item.Key)
                 {
                     case Properties.Quantity:
-                        cartItem.Quantity = item.Value;
-                        break;
+                        {
+                            int newQ = cartItem.Quantity - item.Value; 
+                            var varient = _repository.ProductVarientRepository.Get(cartItem.ProductVarient.Id);
+                            _repository.ProductVarientRepository.UpdateQuntity(
+                                varient ?? throw new NotFoundException("Product Varient"),
+                                newQ
+                                );
+                            cartItem.Quantity = item.Value;
+                            break;
+                        }
                     case Properties.ColorId:
                         cartItem.ColorId = item.Value;
                         break;
