@@ -42,11 +42,20 @@ namespace Services.DataServices
             _repository.ProductRepository.Add(productEntity);
             _repository.SaveChanges();
 
+            // Assign Product To Category
+            foreach (int id in product.Categories)
+            {
+                _repository.ProductCategoryRepository.Add(new()
+                {
+                    CategoryId = id,
+                    ProductId = productEntity.Id
+                });
+            }
+           
+
             // Save Product Images
             var productColoredLis = product.Images
                 .ToColoredProductEntity(productEntity.Id);
-
-
             _repository.ProductColerdRepository
                 .AddRange(productColoredLis);
             _repository.SaveChanges();
