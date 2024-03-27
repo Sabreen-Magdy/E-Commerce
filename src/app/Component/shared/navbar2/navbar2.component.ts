@@ -8,11 +8,27 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class Navbar2Component {
   showMenu: boolean = false;
-  constructor(private _AuthService:AuthService){}
+  isCustomer: boolean = false;
+  constructor(private _AuthService:AuthService){
+  }
+  ngOnInit():void{
+    this._AuthService.userData.subscribe({
+      next:()=>{
+        if(this._AuthService.userData.getValue()!=null){
+          this.isCustomer=true;
+        }else{
+          this.isCustomer=false;
+        }
+      }
+    });
+  }
+
   toggleMenu(): void {
     this.showMenu = !this.showMenu;
   }
-  IsLogin(){
-    return this._AuthService.IsLogin();
+
+  logOut(){
+    this._AuthService.signOut()
   }
+
 }

@@ -27,20 +27,21 @@ import { AboutComponent } from './Component/core/about/about.component';
 import { ComponentUrl } from './models/unit';
 import { ReviewsComponent } from './Component/core/anonymous-page/reviews/reviews.component';
 import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
   {path:"",redirectTo:"main",pathMatch:"full"},
-  {path:"admin",component:SidebarAdminComponent, children:[
-    {path:"dashboard",component:DashboardAdminPageComponent, },
-    {path:"product",component:ProductTabelComponent, },
-    {path:"product/add",component:ProductFormComponent, },
-    {path:"product/edit/:id",component:ProductFormComponent, },
-    {path:"order",component:AdminOrderComponent, },
-    {path:"category",component:CategoryTableComponent, },
-    {path:"category/add",component:CategoryFormComponent, },
-    {path:"category/edit/:id",component:CategoryFormComponent, },
-    {path:"Settings",component:TableComponent, },
+  {path:"admin",canActivate:[AuthGuard],component:SidebarAdminComponent, children:[
+    {path:"dashboard",canActivate:[AuthGuard],component:DashboardAdminPageComponent, },
+    {path:"product",canActivate:[AuthGuard],component:ProductTabelComponent, },
+    {path:"product/add",canActivate:[AuthGuard],component:ProductFormComponent, },
+    {path:"product/edit/:id",canActivate:[AuthGuard],component:ProductFormComponent, },
+    {path:"order",canActivate:[AuthGuard],component:AdminOrderComponent, },
+    {path:"category",canActivate:[AuthGuard],component:CategoryTableComponent, },
+    {path:"category/add",canActivate:[AuthGuard],component:CategoryFormComponent, },
+    {path:"category/edit/:id",canActivate:[AuthGuard],component:CategoryFormComponent, },
+    {path:"Settings",canActivate:[AuthGuard],component:TableComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
     {path:"main",component:AnonymousPageComponent, },
@@ -51,30 +52,21 @@ const routes: Routes = [
       {path:"signup",component:SignUpFormComponent, },
       {path:"forgetpassword",component:ForgetPasswordComponent, },
     ]},
-    {path:"home",component:HomePageComponent, },
-    {path:"store",component:StoreComponent, },
-    {path:"store/:catgoryname",component:StoreComponent, },
-    {path:"store/productDetials/:id",component:ProductDetailsComponent, },
-    {path:"cart",component:CartComponent, },
-    {path:"favorite",component:FavoriteComponent, },
-    {path:"checkout",component:CheckoutComponent, },
-    {path:"profile",component:ProfileComponent, children:[
-      {path:"profiledetails",component:ProfiledetaileComponent, },
-      {path:"editprofile",component:EditprofileComponent, },
-      {path:"activity",component:ActivityComponent, },
+    {path:"home",canActivate:[AuthGuard],component:HomePageComponent, },
+    {path:"store",canActivate:[AuthGuard],component:StoreComponent, },
+    {path:"store/{catgoryname}",canActivate:[AuthGuard],component:StoreComponent, },
+    {path:"store/productDetials/:id",canActivate:[AuthGuard],component:ProductDetailsComponent, },
+    {path:"cart",canActivate:[AuthGuard],component:CartComponent, },
+    {path:"favorite",canActivate:[AuthGuard],component:FavoriteComponent, },
+    {path:"checkout",canActivate:[AuthGuard],component:CheckoutComponent, },
+    {path:"profile",canActivate:[AuthGuard],component:ProfileComponent, children:[
+      {path:"profiledetails",canActivate:[AuthGuard],component:ProfiledetaileComponent, },
+      {path:"editprofile",canActivate:[AuthGuard],component:EditprofileComponent, },
+      {path:"activity",canActivate:[AuthGuard],component:ActivityComponent, },
     ] },
-    
+
   ]},
-  // {path:"products",component:, canActivate:  },
-  // {path:"products/details/:id",component:, },
-  // {path:"products/add",component:ProductFormComponent, canActivate: [authenticationGuard, adminGuard]},
-  // {path:"products/edit/:id",component:ProductFormComponent, canActivate: [authenticationGuard, adminGuard]},
-  // {path:"login",component:LoginComponent},
-  // {path:"contacts",component:ContactsComponent},
-  // {path:"accounts", component:AccountsComponent, canActivate:[authenticationGuard, adminGuard]},
-  // {path:"accounts/add", component:AddAccountComponent, canActivate:[authenticationGuard, adminGuard]},
-  // {path:"accounts/edit/:id", component:AddAccountComponent, canActivate:[authenticationGuard, adminGuard]},
-  // {path:"**",component:NotFoundComponent},
+
 
 ];
 @NgModule({
