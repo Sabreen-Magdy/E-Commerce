@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction.DataServices;
 using Contract.Favorite;
+using Domain.Exceptions;
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
@@ -12,40 +13,81 @@ namespace Presentation.Controllers
         public FavouriteController(IAdminService adminService) =>
             _adminService = adminService;
 
-        //[HttpGet("{Id}")]
         [HttpGet("GetByProductCustomer")]
         public IActionResult GetByProductCustomer(int customerId, int productId)
         {
-            var fav = _adminService.FavouriteService.GetById(customerId, productId);
-            if (fav == null)
+            try
             {
-                return NotFound();
+                var fav = _adminService.FavouriteService.GetById(customerId, productId);
+                if (fav == null)
+                {
+                    return NotFound();
+                }
+                return Ok(fav);
             }
-            return Ok(fav);
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
-        //[HttpGet("customer/{customerId}")]
+       
+
         [HttpGet("GetByCustomerId")]
         public IActionResult GetByCustomerId(int customerId)
         {
-            var fav = _adminService.FavouriteService.GetAllByCustomerId(customerId);
-            if (fav == null)
+            try
             {
-                return NotFound();
+                var fav = _adminService.FavouriteService.GetAllByCustomerId(customerId);
+                if (fav == null)
+                {
+                    return NotFound();
+                }
+                return Ok(fav);
             }
-            return Ok(fav);
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         [HttpPost("AddFavorite")]
-        public IActionResult AddFavorite(FavoriteDto favourite)
+        public IActionResult AddFavorite(FavoriteNewDto favourite)
         {
-            _adminService.FavouriteService.AddFavorite(favourite);
-            return Ok();
+            try
+            {
+                _adminService.FavouriteService.AddFavorite(favourite);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
-        //[HttpDelete("{id}")]
+
+
         [HttpDelete("DeleteFavorite")]
         public IActionResult DeleteFavorite(int customerId, int productId)
         {
-            _adminService.FavouriteService.DeleteItem(customerId, productId);
-            return Ok();
+            try
+            {
+                _adminService.FavouriteService.DeleteItem(customerId, productId);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

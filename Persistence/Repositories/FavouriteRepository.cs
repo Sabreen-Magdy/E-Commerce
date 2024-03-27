@@ -50,22 +50,24 @@ namespace Persistence.Repositories
 
         public List<Favourite> GetAll()
         {
-            return _dbContext.Favourites.ToList();
+            return _dbContext.Favourites
+                .Include(f => f.Product).ThenInclude(p => p.ColoredProducts)
+                .Include(f => f.Customer).ToList();
         }
 
         public List<Favourite> GetByCustomer(int customerID)
         {
-            return _dbContext.Favourites.Where(f => f.CustomerId == customerID).ToList();
+            return GetAll().Where(f => f.CustomerId == customerID).ToList();
         }
 
         public Favourite? GetByCustomerProduct(int customerId,int productId)
         {
-            return _dbContext.Favourites.FirstOrDefault(f => f.CustomerId == customerId&&f.ProductId==productId);
+            return GetAll().FirstOrDefault(f => f.CustomerId == customerId&&f.ProductId==productId);
         }
 
         public List<Favourite> GetByProduct(int productID)
         {
-            return _dbContext.Favourites.Where(f => f.ProductId == productID).ToList();
+            return GetAll().Where(f => f.ProductId == productID).ToList();
         }
 
         public void Update(Favourite fav)
