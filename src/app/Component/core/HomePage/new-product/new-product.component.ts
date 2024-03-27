@@ -21,6 +21,7 @@ export class NewProductComponent implements OnInit {
   AllProductSub : Subscription | undefined;
 
   getallproduct(){
+    console.log("doooone");
     this.AllProductSub = this.prodServ.getAllProduct().subscribe({
       next : (data) => {
         console.log("doooone");
@@ -32,5 +33,5 @@ export class NewProductComponent implements OnInit {
     })
   }
 
-  
+
 }

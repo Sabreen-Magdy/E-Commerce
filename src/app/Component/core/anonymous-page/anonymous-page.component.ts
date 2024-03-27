@@ -7,6 +7,18 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./anonymous-page.component.css']
 })
 export class AnonymousPageComponent {
-  constructor(private _AuthService:AuthService){}
+  isCustomer: boolean = false;
 
+  constructor(private _AuthService:AuthService){}
+  ngOnInit():void{
+    this._AuthService.userData.subscribe({
+      next:()=>{
+        if(this._AuthService.userData.getValue()!=null){
+          this.isCustomer=true;
+        }else{
+          this.isCustomer=false;
+        }
+      }
+    });
+  }
 }
