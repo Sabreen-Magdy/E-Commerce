@@ -65,6 +65,9 @@ namespace Services.DataServices
                     case Properties.Description:
                         category.Description = item.Value;
                         break;
+                    case Properties.Icon:
+                        category.Icon = item.Value;
+                        break;
 
                     default:
                         throw new PropertyException(item.Key.ToString());
