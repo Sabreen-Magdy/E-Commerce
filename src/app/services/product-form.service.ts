@@ -27,8 +27,8 @@ export class ProductFormService {
     return this.http.get<IproductShow[]>(`${this.baseURL2}GetByGetegory?gategory=${catName}`)
   }
 
-  getProductByName (prodName : string) : Observable<IproductShow> {
-    return this.http.get<IproductShow>(`${this.baseURL2}GetByName?name=${prodName}`)
+  getProductByName (prodName : string) : Observable<IproductShow[]> {
+    return this.http.get<IproductShow[]>(`${this.baseURL2}GetByName?name=${prodName}`)
   }
 
   deleteProduct (id : number) {

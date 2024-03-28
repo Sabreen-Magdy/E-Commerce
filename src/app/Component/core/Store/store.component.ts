@@ -44,7 +44,8 @@ export class StoreComponent implements OnInit {
         this.getAllproductByCat()
       } else if (this.productName){
         console.log("product");
-        this.getproductByName();      }
+        this.getproductByName();    
+      }
       else{
         console.log('all');
         this.getAllProduct();
@@ -66,8 +67,11 @@ export class StoreComponent implements OnInit {
   enterName (e: Event) {
     e.preventDefault();
     if (this.nameSearchForm.valid){
-      this._Router.navigate(['/home']);
+      var name= this.nameSearchForm.get('name')?.value;
+      this._Router.navigate([`store/products`,name]);
+      this.toggle();
     }
+
   }
   allProductSub : Subscription | undefined;
   allProdbyCatSub : Subscription | undefined;
@@ -112,7 +116,8 @@ export class StoreComponent implements OnInit {
     this.prodByNameSub = this.prodServ.getProductByName(this.productName).subscribe({
       next : (data) => {
         console.log(data);
-        this.ProductList.push(data)
+        this.ProductList = data;
+        console.log("producrLisr" + this.ProductList);
       },
       error : (e) => {
         console.log("ERROR when fetch DataByName"+e);

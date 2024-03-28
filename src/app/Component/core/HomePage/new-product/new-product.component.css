@@ -53,17 +53,14 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.662);
 }
 
-.element-img span.material-symbols-outlined.cart{
-    top: 10px;
-    right: 10px;
-}
+
 .element-img span.material-symbols-outlined.fav{
-    top: 55px;
+    top: 10px;
     right: 10px;
 }
 
 .element-img span.material-symbols-outlined.show{
-    top: 100px;
+    top: 55px;
     right: 10px;
 }
 
@@ -78,25 +75,19 @@
     padding: 5px;
 }
 
-.element-img span.material-symbols-outlined.cart:hover ~span.msg.cart{
-    visibility: visible;
-}
-span.msg.cart {
-    top:10px;
-}
 
 .element-img span.material-symbols-outlined.fav:hover ~span.msg.fav{
     visibility: visible;
 }
 span.msg.fav {
-    top:55px;
+    top:10px;
 }
 
 .element-img span.material-symbols-outlined.show:hover ~span.msg.show{
     visibility: visible;
 }
 span.msg.show {
-    top:100px;
+    top:55px;
 }
 
 .element-detials{

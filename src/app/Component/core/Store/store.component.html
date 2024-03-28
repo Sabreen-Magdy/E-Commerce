@@ -25,12 +25,16 @@
       </select>
     </div>
   </div>
+
+  <div *ngIf="ProductList.length == 0">
+    <div class="alert alert-danger">لا يوجد منتجات متوفرة</div>
+  </div>
   <div class="items row">
     <div *ngFor="let x of ProductList" class="element col-lg-4 col-md-6">
       <div class="element-img">
         <span class="material-symbols-outlined fav"> favorite </span>
         <span class="msg fav">اضف للمفضلة</span>
-        <span class="material-symbols-outlined show"> visibility </span>
+        <span [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
         <span class="msg show">عرض المنتج</span>
         <img
           [src]="x.image"
@@ -47,9 +51,9 @@
   <div class="close">
     <button class="btn" (click)="toggle()">x</button>
   </div>
-  <div class="nameSearch">
-    <form  >
-      <input type="text" placeholder="البحث باسم المنتج ..." />
+  <div class="nameSearch" >
+    <form  [formGroup]="nameSearchForm" (submit)="enterName($event)">
+      <input formControlName="name" type="text" placeholder="البحث باسم المنتج ..." />
       <button>
         <span class="material-symbols-outlined"> chevron_left </span>
       </button>
