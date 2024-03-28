@@ -1,5 +1,4 @@
 export interface Ifav{
- Id:number;
  CustomerId:number
  ProductId :number
  Image :string;

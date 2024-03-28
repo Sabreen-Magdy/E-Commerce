@@ -7,9 +7,19 @@
       class="element col-lg-3 col-md-6"
     >
       <div class="element-img">
-        <span class="material-symbols-outlined fav"> favorite </span>
+        <span
+          (click)="pushItemToFavCart(x.id, x.image, x.name, x.price)"
+          class="material-symbols-outlined fav"
+        >
+          favorite
+        </span>
         <span class="msg fav">اضف للمفضلة</span>
-        <span [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
+        <span
+          [routerLink]="['/store/productDetials', x.id]"
+          class="material-symbols-outlined show"
+        >
+          visibility
+        </span>
         <span class="msg show">عرض المنتج</span>
         <img [src]="x.image" />
       </div>

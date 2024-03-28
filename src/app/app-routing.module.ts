@@ -33,16 +33,16 @@ import { ProductDetailsmainComponent } from './Component/core/product-details-ma
 
 const routes: Routes = [
   {path:"",redirectTo:"main",pathMatch:"full"},
-  {path:"admin",canActivate:[AuthGuard],component:SidebarAdminComponent, children:[
-    {path:"dashboard",canActivate:[AuthGuard],component:DashboardAdminPageComponent, },
-    {path:"product",canActivate:[AuthGuard],component:ProductTabelComponent, },
-    {path:"product/add",canActivate:[AuthGuard],component:ProductFormComponent, },
-    {path:"product/edit/:id",canActivate:[AuthGuard],component:ProductFormComponent, },
-    {path:"order",canActivate:[AuthGuard],component:AdminOrderComponent, },
-    {path:"category",canActivate:[AuthGuard],component:CategoryTableComponent, },
-    {path:"category/add",canActivate:[AuthGuard],component:CategoryFormComponent, },
-    {path:"category/edit/:id",canActivate:[AuthGuard],component:CategoryFormComponent, },
-    {path:"Settings",canActivate:[AuthGuard],component:TableComponent, },
+  {path:"admin",component:SidebarAdminComponent, children:[
+    {path:"dashboard",component:DashboardAdminPageComponent, },
+    {path:"product",component:ProductTabelComponent, },
+    {path:"product/add",component:ProductFormComponent, },
+    {path:"product/edit/:id",component:ProductFormComponent, },
+    {path:"order",component:AdminOrderComponent, },
+    {path:"category",component:CategoryTableComponent, },
+    {path:"category/add",component:CategoryFormComponent, },
+    {path:"category/edit/:id",component:CategoryFormComponent, },
+    {path:"Settings",component:TableComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
     {path:"main",component:AnonymousPageComponent, },
