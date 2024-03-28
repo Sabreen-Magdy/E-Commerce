@@ -17,13 +17,16 @@ namespace Services.DataServices
     
         private ProductDto Map(Product product)
         {
-            var varients = GetVarients(product.Id);
-            double price = varients is null || varients.Count == 0 ? 
-                    0 : varients.Sum(v => v.Price) / varients.Count;
-            var coloresImages = GetColoresImages(product.Id);
+            //var varients = GetVarients(product.Id);
+            var coloredProducts = _repository.ProductColerdRepository.GetByProduct(product.Id);
+            
+            double price = coloredProducts is null || coloredProducts.Count == 0 ? 
+                    0 : coloredProducts.SelectMany(
+                        c => c.Varients, (c, v) => v.Price / c.Varients.Count).Sum();
+            //var coloresImages = GetColoresImages(product.Id);
 
-            var image = coloresImages is null || coloresImages.Count == 0 ?
-                    null : coloresImages[0].Image;
+            var image = coloredProducts is null || coloredProducts.Count == 0 ?
+                    null : coloredProducts[0].Image;
             return new()
             {
                 Id = product.Id,

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction.DataServices;
+using System.Linq;
 
 
 namespace Presentation.Controllers
@@ -12,6 +13,14 @@ namespace Presentation.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IAdminService _adminService;
+
+        private const int lenProducts = 6;
+
+        private Range GetPage(int pageNumber, int lenProducts)
+        {
+            int start = pageNumber * lenProducts;
+            return new(start, start + lenProducts);
+        }
 
         public ProductController(IAdminService adminService) =>
             _adminService = adminService;
@@ -33,7 +42,22 @@ namespace Presentation.Controllers
             }
         }
 
-       
+        [HttpGet("GetAllByPage")]
+        public IActionResult GetAll(int pageNumber)
+        {
+            try
+            {
+                var result = _adminService.ProductService.GetAll();
+                if (result == null) return NotFound();
+
+                return Ok(result.Take(GetPage(pageNumber, lenProducts)));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         //[HttpGet("GetAllNew")]
         //public IActionResult GetAllNew()
         //{
