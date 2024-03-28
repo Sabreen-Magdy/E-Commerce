@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface ICardRepositry : IBaseRepository<Cart>
+    public interface ICardRepositry : IBaseRepository<CartItem>
     {
-        public void AddItem(CartItem item);
-        public void DeletItem(CartItem item);
-        public CartItem? GetItem(int cardId, int productVarientId);
-        public void UpdateItem(CartItem item);
-        public Cart? GetByCustomerId(int customerId);
+        //public void AddItem(CartItem item);
+        //public void DeletItem(CartItem item);
+        CartItem? GetItem(int customerID, int productVarientId);
+        //public void UpdateItem(CartItem item);
+        List<CartItem> GetByCustomerId(int customerId);
+
+        void AddRange(List<CartItem> items);
     }
 }

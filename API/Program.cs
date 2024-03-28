@@ -10,7 +10,6 @@ using Persistence.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Services.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +35,7 @@ builder.Services.AddCors(options =>
 var connection = builder.Configuration.GetConnectionString("online");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
+    options/*.UseLazyLoadingProxies()*/.UseSqlServer(
         connection, b => b.MigrationsAssembly("Persistence")));
 
 // Add Controllers 

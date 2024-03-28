@@ -6,7 +6,7 @@ namespace Services.Extenstions;
 public static class ProductVarientExtenstion
 {
     public static void FillIds(this List<ProductVariantNewDto> productVariants
-    , List<int> ids)
+                                , List<int> ids)
     {
         if (productVariants == null)
             throw new ArgumentNullException(nameof(productVariants));

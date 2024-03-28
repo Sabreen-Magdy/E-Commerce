@@ -21,7 +21,7 @@ namespace Presentation.Controllers
             _adminService = adminService;
         }
 
-        [HttpGet]
+        [HttpGet("CartItem")]
         public IActionResult GetById(int id)
         {
             try
@@ -43,10 +43,11 @@ namespace Presentation.Controllers
         [HttpGet("GetByCustomerId")]
         public IActionResult GetByCustomerId(int customerId)
         {
-            try { 
-            var cart = _adminService.CartService.GetByCustomerId(customerId);
+            try
+            {
+                var cart = _adminService.CartService.GetByCustomerId(customerId);
 
-            return Ok(cart);
+                return Ok(cart);
             }
             catch (NotFoundException ex)
             {
@@ -59,12 +60,29 @@ namespace Presentation.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult AddItemToCart(ItemNewDto itemDto)
+        [HttpPost("AddItem")]
+        public IActionResult AddItem(int customerId, ItemNewDto itemDto)
         {
             try
             {
-                _adminService.CartService.AddItemToCart(itemDto);
+                _adminService.CartService.AddItem(customerId, itemDto);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost("AddItems")]
+        public IActionResult AddItem(int customerId, List<ItemNewDto> itemDto)
+        {
+            try
+            {
+                _adminService.CartService.AddCart(customerId, itemDto);
                 return Ok();
             }
             catch (NotFoundException ex)
@@ -77,12 +95,13 @@ namespace Presentation.Controllers
             }
         }
 
+
         [HttpPut("UpdateItem")]
-        public IActionResult UpdateCartItem(int cartId, int productId, Dictionary<Properties, int> newValues)
+        public IActionResult UpdateCartItem(int costomerId, int productId, Dictionary<Properties, int> newValues)
         {
             try
             {
-                _adminService.CartService.UpdateItem(cartId, productId, newValues); return Ok();
+                _adminService.CartService.Update(costomerId, productId, newValues); return Ok();
             }
             catch (NotFoundException ex)
             {
@@ -95,11 +114,29 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("DeleteItem")]
-        public IActionResult DeleteCartItem(int cartId, int productId)
+        public IActionResult DeleteCartItem(int costomerId, int productVarientId)
         {
             try
             {
-                _adminService.CartService.DeleteItem(productId, cartId);
+                _adminService.CartService.DeleteItem(costomerId, productVarientId);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteItemById")]
+        public IActionResult DeleteCartItem(int id)
+        {
+            try
+            {
+                _adminService.CartService.DeleteItem(id);
                 return Ok();
             }
             catch (NotFoundException ex)

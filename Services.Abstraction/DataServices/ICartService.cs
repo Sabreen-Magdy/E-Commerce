@@ -1,25 +1,20 @@
 ﻿using Contract;
 using Contract.OrderItem;
-using Domain.Entities;
 using Domain.Enums;
-using Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Services.Abstraction.DataServices
 {
     public interface ICartService
     {
-        CartDto Get(int id);
-        CartDto GetByCustomerId(int id);
-        // void Update(int customerId);
-        void UpdateItem(int cartId,int productVarientId, Dictionary<Properties, int> newValues);
-        void DeleteItem(int productVarientId, int cartId);
-        void AddItemToCart(ItemNewDto itemDto);
-        CartItem Update_Item(CartItem cartItem, Dictionary<Properties, int> newValues);     
-         
+        CartItemDto Get(int id);
+      
+        void AddCart(int customerId, List<ItemNewDto> items);
+        void AddItem(int customerId, ItemNewDto item);
+        void DeleteItem(int id);
+        void DeleteItem(int customerId, int productVarientId);
+        CartDto GetByCustomerId(int customerId);
+        CartItemDto Get(int customerId, int productVarientId);
+        void Update(int customerId, int productVarientId, Dictionary<Properties, int> newValues);
     }
 }

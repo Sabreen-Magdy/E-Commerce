@@ -5,6 +5,6 @@
         public string Name { get; set; } = null!;
         
         // Reduce Join
-        public ICollection<ProductVarient> Varients { get; set; } = null!;
+        public virtual ICollection<ProductVarient> Varients { get; set; } = null!;
     }
 }
