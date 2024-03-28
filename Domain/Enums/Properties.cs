@@ -2,7 +2,7 @@
 
 public enum Properties
 {
-    Id,
+    Id, Icon,
     Name   ,
     Image  ,
     Phone, orders,
