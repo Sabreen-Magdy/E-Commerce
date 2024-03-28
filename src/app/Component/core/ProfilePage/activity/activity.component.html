@@ -9,25 +9,70 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of processedData">
+    <tr *ngFor="let item of processedData, let index = index">
       <td>
-        <button type="button" class="btn btn-link btn-sm btn-rounded">
+        <button type="button" (click)="toggleModel(index)" class="btn btn-link btn-sm btn-rounded">
           {{ item.orderId }}
         </button>
       </td>
       <td>
         <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
-        {{ item.status }}
+        {{ stringState( item.state) }}
       </td>
-      <td>{{ item.date }}</td>
+      <td>{{ item.orderDate }}</td>
       <td>
-        <p class="fw-normal mb-1">{{ item.address }}</p>
+        <p class="fw-normal mb-1">{{ item.customerAddress }}</p>
       </td>
       <td>
         <p class="text-success fw-normal mb-1 fa-light fa-dollar-sign">
-          {{ item.totalCost }}
+          {{ item.orderTotalCost }}
         </p>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div id="orderForm" class="add-model model-wrapper">
+  <div class="model">
+    <div class="model-header">
+      <i (click)="closeModel()" class="bi bi-x-square-fill"></i>
+      <h3>تفاصيل الطلب </h3>
+      <h6 class="mt-3 text-secondary">{{processedData[selectedIndex].orderId}}</h6>
+    </div>
+    <div class="model-body">
+      <div class="customerDetilas detilas">
+          <p> <span>اسم العميل </span> {{processedData[selectedIndex].customerName}}</p>
+          <p><span>عنوان الشحن </span>  {{processedData[selectedIndex].customerAddress}}</p>
+          <p><span>تاريخ الطلب </span>{{processedData[selectedIndex].orderDate.split('T')}} </p>
+      </div>
+      <table class="table">
+          <thead class="table-success">
+            <tr>
+              <th scope="col">المنتج</th>
+              <th scope="col">الصورة</th>
+              <th scope="col">العدد</th>
+              <th scope="col">السعر</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of processedData[selectedIndex].productsperOrders">
+              <th scope="row">{{item.productName}}</th>
+              <td>
+                  <img class="img-product-order-D" [src]="item.image">
+              </td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.totalCost}} جنيه</td>
+            </tr>
+           
+          </tbody>
+        </table>
+      <div class="PriceDetilas detilas">
+          <p><span>سعر المنتجات </span>  {{processedData[selectedIndex].orderTotalCost}} جنيه </p>
+          <p><span>سعر الشحن  </span>لم يتم تعينه بعض </p>
+          <p><span>سعر الكلي </span> {{processedData[selectedIndex].orderTotalCost}} جنيه+ سعر الشحن  </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

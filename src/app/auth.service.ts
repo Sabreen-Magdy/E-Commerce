@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { customerOrder } from './models/customerOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -64,9 +65,9 @@ export class AuthService {
     return this._HttpClient.put<any>(`http://localhost:5058/api/Customer/UpdateCustomers?id=${this.id}`,data);
    }
 
- getOrderOfUser():Observable<any>{
+ getOrderOfUser():Observable<customerOrder[]>{
   // return this._HttpClient.get<any>(`http://localhost:5058/api/Customer/GetOrders?id=${this.id}`);
-  return this._HttpClient.get<any>("http://localhost:5058/api/Customer/GetOrders?id=2");
+  return this._HttpClient.get<customerOrder[]>(`http://localhost:5058/api/Customer/GetOrders?id=${this.id}`);
  }
 
 }
