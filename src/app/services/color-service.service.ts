@@ -25,6 +25,10 @@ export class ColorServiceService {
    addcolor(name: string, code: string) {
     return this.http.post(`${this.baseURL}/AddColor?name=${encodeURIComponent(name)}&code=${encodeURIComponent(code)}`, {});
   }
+
+  editcolor (color:Icolor ){
+    return this.http.put(`${this.baseURL}/UpdateColor`,color)
+  }
   
   deletecolor(id: number){
     return this.http.delete(`${this.baseURL}/DeleteColor?id=${id}`)

@@ -15,7 +15,7 @@ export class CategoryFormComponent implements OnInit {
   categoryForm : FormGroup;
   id : number = 0 ;
   showerror : boolean = false;
-
+  isedit : boolean = false;
   constructor( 
     private cateService : CategoryService,
     private myRouter: Router,
@@ -42,12 +42,14 @@ export class CategoryFormComponent implements OnInit {
 
   getCategIdSub : Subscription | undefined;
   addCategorySub : Subscription | undefined;
+  editCategorySub : Subscription | undefined;
 
   ngOnInit(): void {
     this.id = this.actRoute.snapshot.params['id'];
     this.getCategIdSub = this.cateService.getById(this.id).subscribe(
       {
         next : (data) => {
+          this.isedit = true;
           this.categoryForm.controls['categoryname'].setValue(data.name);
           this.categoryForm.controls['categoryicon'].setValue(data.icon);
           this.categoryForm.controls['categorydescription'].setValue(data.description);
@@ -63,6 +65,19 @@ export class CategoryFormComponent implements OnInit {
     e.preventDefault();
     if (this.categoryForm.valid) {
       if (this.id) {
+        console.log(this.id);
+        var editCategory  ={
+          name: this.categoryForm.get('categoryname')?.value,
+          description: this.categoryForm.get('categorydescription')?.value
+        }
+        this.editCategorySub = this.cateService.editCategory(this.id,editCategory).subscribe({
+          next: () => {
+            this.myRouter.navigate(['/admin/category']);
+          },
+          error: (error) => {
+            console.error('Error editing category:', error);
+          }
+        })
         console.log("Update Here");
       } else {
         const newCateg = {

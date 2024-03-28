@@ -96,7 +96,7 @@
 <div id="colorForm" class="add-model model-wrapper">
     <div class="model">
       <div class="model-header">
-        <h3>اضافة  لون</h3>
+        <h3>{{titlecolorForm}}</h3>
       </div>
       <div class="model-body">
         <form class="row g-3" [formGroup]="colorForm" (submit)="subColor($event)">
@@ -149,7 +149,7 @@
           
   
           <div class="col-12 center">
-            <button class="btn btn-success m-3" type="submit">اضف</button>
+            <button class="btn btn-success m-3" type="submit">{{btncolorForm}}</button>
             <button
               class="btn btn-danger m-3"
               type="button"
@@ -167,7 +167,7 @@
   <div id="sizeForm" class="add-model model-wrapper">
     <div class="model">
       <div class="model-header">
-        <h3>اضافة  حجم</h3>
+        <h3>{{titlesizeForm}}</h3>
       </div>
       <div class="model-body">
         <form class="row g-3" [formGroup]="sizeForm" (submit)="subSize($event)">
@@ -196,7 +196,7 @@
           
   
           <div class="col-12 center">
-            <button class="btn btn-success m-3" type="submit">اضف</button>
+            <button class="btn btn-success m-3" type="submit">{{btnsizeForm}}</button>
             <button
               class="btn btn-danger m-3"
               type="button"

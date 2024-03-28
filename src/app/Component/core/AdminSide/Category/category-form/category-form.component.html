@@ -38,6 +38,7 @@
           id="cateicon"
           formControlName="categoryicon"
           required
+          [readOnly]="isedit"
         />
         <i *ngIf="categoryiconcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i *ngIf="categoryiconcontrol?.errors && (categoryiconcontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>

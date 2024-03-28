@@ -18,6 +18,11 @@ export class TableComponent implements OnInit{
   selectedSize: Isize | undefined;
   selectedColor: Icolor | undefined;
 
+  btnsizeForm : string = "اضف";
+  titlesizeForm : string = "اضافة حجم";
+  
+  btncolorForm : string = "اضف";
+  titlecolorForm : string = "اضافة لون";
   colorForm : FormGroup = new FormGroup({
     name : new FormControl("",[Validators.required, Validators.minLength(3)]),
     code : new FormControl("",[Validators.required])
@@ -49,8 +54,10 @@ export class TableComponent implements OnInit{
 
   allcolorSubscription : Subscription | undefined;
   addColorSub : Subscription | undefined;
+  editColorSub : Subscription | undefined;
   allSizeSubscription : Subscription | undefined;
   addSizeSub : Subscription | undefined;
+  editSizeSub : Subscription | undefined;
 
   getallcolor(){
     this.allcolorSubscription = this.clrService.getAllColor().subscribe({
@@ -70,6 +77,8 @@ export class TableComponent implements OnInit{
     });
   }
   editColor(Color: Icolor) {
+    this.btncolorForm = "تعديل";
+    this.titlecolorForm = "تعديل لون"
     this.selectedColor = Color;
     this.setColorFormValues(Color);
     this.toggleColorForm();
@@ -82,6 +91,20 @@ export class TableComponent implements OnInit{
       const code = this.colorForm.get('code')?.value;
       const colorString : string = code.toUpperCase();
       if (this.selectedColor){
+        console.log(this.selectedColor.id);
+        var editColor : Icolor = {
+          id: this.selectedColor.id,
+          code: code,
+          name: name
+        }
+        this.editColorSub = this.clrService.editcolor(editColor).subscribe({
+          next: () => {
+            this.getallcolor();
+          },
+          error : (e) =>{
+            console.log("ERROR when edit Color " + e);
+          }
+        })
         console.log("Update Here");
       }
       else{
@@ -114,12 +137,18 @@ export class TableComponent implements OnInit{
   }
 
   toggleColorForm(){
+    console.log("Seleced" + this.selectedColor);
     var form = document.getElementById("colorForm");
     form?.classList.add('model-show');
   }
 
   closeColorForm(){
+    this.btncolorForm = "اضف";
+    this.titlecolorForm = "اضافة لون";
     this.colorForm.reset();
+    if (this.selectedColor) {
+      this.selectedColor = undefined
+    }
     var form = document.getElementById("colorForm");
     form?.classList.remove('model-show');
     this.showerro = false;
@@ -149,6 +178,23 @@ export class TableComponent implements OnInit{
       
       if (this.selectedSize) {
         // If a size is selected, update it instead of adding a new one
+        console.log(this.selectedSize);
+        var editSized :Isize ={
+          id: this.selectedSize.id,
+          size: this.sizeForm.get('size')?.value
+        } 
+        this.editSizeSub = this.sizeServ.editSize(editSized).subscribe({
+          next: () => 
+          {
+            console.log('edit succesful');
+            this.getallSize();
+            this.btnsizeForm = "اضف"
+            this.titlesizeForm = "اضافة حجم"
+          },
+          error : (e) => {
+            console.log("Error When edit Size" + e);
+          }
+        })
         console.log("update herrre");;
       }else{
         this.addSizeSub = this.sizeServ.addsize(size).subscribe(
@@ -180,6 +226,7 @@ export class TableComponent implements OnInit{
     )
   }
   toggleSizeForm(){
+    console.log("selected" + this.selectedSize);
     var form = document.getElementById("sizeForm");
     form?.classList.add('model-show');
   }
@@ -189,6 +236,8 @@ export class TableComponent implements OnInit{
     });
   }
   editSize(size: Isize) {
+    this.titlesizeForm =  "تعديل الحجم";
+    this.btnsizeForm = "تعديل"
     this.selectedSize = size;
     this.setSizeFormValues(size);
     this.toggleSizeForm();
@@ -196,9 +245,14 @@ export class TableComponent implements OnInit{
 
 
   closeSizeForm(){
-    this.colorForm.reset();
+    this.sizeForm.reset();
     var form = document.getElementById("sizeForm");
     form?.classList.remove('model-show');
     this.showerro = false;
+    if(this.selectedSize){
+      this.selectedSize = undefined;
+    }
+    this.btnsizeForm = "اضف"
+    this.titlesizeForm = "اضافة حجم"
   }
 }

@@ -18,6 +18,10 @@ export class SizeService {
    addsize(name: string) {
     return this.http.post(`${this.baseURL}/AddSize?name=${encodeURIComponent(name)}`, {});
   }
+
+  editSize(size : Isize){
+    return this.http.put(`${this.baseURL}/UpdateSize`,size)
+  }
   
   deletesize(id: number){
     return this.http.delete(`${this.baseURL}/DeleteSize?id=${id}`)
