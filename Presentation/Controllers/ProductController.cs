@@ -58,6 +58,22 @@ namespace Presentation.Controllers
             }
         }
 
+        [HttpGet("GetNumberProducts")]
+        public IActionResult GetNumberProducts()
+        {
+            try
+            {
+                var result = _adminService.ProductService.GetNumberProducts();
+              
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
         //[HttpGet("GetAllNew")]
         //public IActionResult GetAllNew()
         //{

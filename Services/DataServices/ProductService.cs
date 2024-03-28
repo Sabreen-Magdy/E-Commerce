@@ -394,5 +394,7 @@ namespace Services.DataServices
                 _repository.SaveChanges();
             }
         }
+
+        public int GetNumberProducts() => _repository.ProductRepository.GetLength();
     }
 }
