@@ -32,6 +32,11 @@ namespace Persistence.Repositories
             .ThenInclude(cp => cp.Product)
             .ToList();
 
+        public int NumProduct(int categoryId) =>
+            _dbContext.Categories
+            .SelectMany(c => c.ProductCategories,  (c, pc) => pc)
+            .Count(pc => pc.CategoryId ==  categoryId);
+          
         public void Update(Category entity) =>
             _dbContext.Categories.Update(entity);
        
