@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { customerOrder } from './models/customerOrder';
+import { IproductShow } from './models/i-product-variant';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,9 @@ export class AuthService {
   sharedVariable: any;
   idMatch:any;
   id:any;
- userDataSubscription: Subscription|undefined;
+
+  allProducts : IproductShow [] = [];
+  userDataSubscription: Subscription|undefined;
   saveUserData(){
       let encodedToken=JSON.stringify(localStorage.getItem('loginToken')) ;
       let decodedToken=jwtDecode(encodedToken);
@@ -68,6 +71,16 @@ export class AuthService {
  getOrderOfUser():Observable<customerOrder[]>{
   // return this._HttpClient.get<any>(`http://localhost:5058/api/Customer/GetOrders?id=${this.id}`);
   return this._HttpClient.get<customerOrder[]>(`http://localhost:5058/api/Customer/GetOrders?id=${this.id}`);
+ }
+
+ getallProduct() {
+  return this._HttpClient.get<IproductShow[]>("http://localhost:5058/api/Product/GetAll").subscribe({
+    next: (data) => {
+      console.log("hiiii");
+      console.log(data[0]);
+      this.allProducts = data;
+    }
+  });
  }
 
 }

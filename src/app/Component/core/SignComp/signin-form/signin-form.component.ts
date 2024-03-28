@@ -2,6 +2,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
+import { Iproduct } from 'src/app/models/iproduct';
+import { IproductShow } from 'src/app/models/i-product-variant';
 @Component({
   selector: 'app-signin-form',
   templateUrl: './signin-form.component.html',
@@ -11,6 +13,7 @@ export class SigninFormComponent {
   signinform : FormGroup;
   showerror : boolean =false;
   unauthorized : boolean = false;
+  signAllproduct : IproductShow[] = []; 
 
   constructor(private _AuthService:AuthService , private _Router:Router){
     this.signinform = new FormGroup({
@@ -35,7 +38,12 @@ ngOnInit():void{
   if(this._AuthService.userData.getValue() != null){
     this._Router.navigate(['/home']);
   }
+  this._AuthService.getallProduct();
 }
+
+
+
+
 
   get emailcontrol(){
     return this.signinform.get('email')
@@ -63,4 +71,6 @@ ngOnInit():void{
         this.showerror = true;
       }
   }
+
+  
 }

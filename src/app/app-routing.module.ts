@@ -28,7 +28,7 @@ import { ComponentUrl } from './models/unit';
 import { ReviewsComponent } from './Component/core/anonymous-page/reviews/reviews.component';
 import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
 import { AuthGuard } from './auth.guard';
-import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
+import { ProductDetailsmainComponent } from './Component/core/product-details-main/ProductDetailsmainComponent';
 
 
 const routes: Routes = [

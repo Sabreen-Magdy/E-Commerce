@@ -3,7 +3,7 @@
         <span>
             <a href="">الرئيسية</a>   / 
             
-            اسم المنتج
+            {{prodDet.name}}
         </span>
         
       </div>
@@ -41,7 +41,7 @@
           <span>({{prodDet.numberReviews}} تعليقات)</span>
         </div>
         <div class="price">
-          <div class="rowe">
+          <div class="rowe" *ngIf="prodVariantList[selectedindex].discount>0">
             <div class="title">قبل:</div>
             <div class="before">{{prodVariantList[selectedindex].price/prodVariantList[selectedindex].quantity}} جنيه</div>
           </div>
@@ -49,13 +49,13 @@
             <div class="title">الان:</div>
             <div class="now">{{prodVariantList[selectedindex].priceAfter/prodVariantList[selectedindex].quantity}} جنيه</div>
           </div>
-          <div class="rowe">
+          <div class="rowe" *ngIf="prodVariantList[selectedindex].discount>0">
             <div class="title">وفرت:</div>
             <div class="sale">{{prodVariantList[selectedindex].offerPrice}} جنيه</div>
             <div class="precent">خصم {{prodVariantList[selectedindex].discount*100}}%</div>
           </div>
         </div>
-        <div class="comment">اي تعليق جديد</div>
+        <div *ngIf="prodVariantList[selectedindex].discount>0"  class="comment">اي تعليق جديد</div>
       </div>
       <div class="line"></div>
       <div class="design">
@@ -64,6 +64,13 @@
             <div class="title">لون:</div>
             <div class="before">{{ selectedColor }}</div>
           </div>
+          <!-- <div class="clrs">
+            <div *ngFor="let color of getUniqueColors(); let index = index" class="box"
+                 [class.selected]="color === selectedColor" (click)="selectColor(color, index)">
+              <div class="circle"></div>
+            </div>
+          </div> -->
+          
           <div class="clrs">
             <div
               *ngFor="let c of prodVariantList ; let index = index"
