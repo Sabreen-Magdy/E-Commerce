@@ -1,5 +1,6 @@
 ﻿using Contract;
 using Domain.Entities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Services.Extenstions
 {
@@ -56,7 +57,8 @@ namespace Services.Extenstions
             return new()
             {
                 ColorId = productColored.ColorId,
-                Image = productColored.Image,
+                Image = productColored.Image.FileName,
+                
             };
         }
         public static List<ColoredProduct> ToColoredProductEntity
@@ -71,7 +73,7 @@ namespace Services.Extenstions
                 coloredProducts.Add(new()
                 {
                     ColorId = image.ColorId,
-                    Image = image.Image,
+                    Image =productId+"_"+image.ColorId+"."+image.Image.FileName.Split('.').Last(),
                     ProductId = productId
                 });
 

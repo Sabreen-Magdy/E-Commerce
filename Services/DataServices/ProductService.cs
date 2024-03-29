@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Repositories;
+using Microsoft.AspNetCore.Http;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
 
@@ -53,9 +54,12 @@ namespace Services.DataServices
                     CategoryId = id,
                     ProductId = productEntity.Id
                 });
+                _repository.SaveChanges();
             }
-           
-
+            //for (int i = 0; i < product.ProductVariants.Count; i++)
+            //{
+            //   product.Images[i] .Image.FileName = productEntity.Id.ToString() + "_" + product.ProductVariants[i].ColorId + "." + product.Images[i].Image.FileName.Split('.').Last();
+            //}
             // Save Product Images
             var productColoredLis = product.Images
                 .ToColoredProductEntity(productEntity.Id);
@@ -68,8 +72,29 @@ namespace Services.DataServices
                 .AddRange(product.ProductVariants
                 .ToProductVariantEntity(productEntity.Id));
             _repository.SaveChanges();
-        }
 
+        string UploadDirectory = "wwwroot/images";
+
+
+        
+
+            for (int i =0; i<product.Images.Count; i++)
+            {
+                var file = product.Images[i].Image;
+                var fileName = $"{productEntity.Id}_{product.ProductVariants[i].ColorId}.{file.FileName.Split('.').Last()}";
+                var filePath = Path.Combine(UploadDirectory, fileName);
+                 SaveFileAsync(file, filePath);
+
+            }
+        }
+        private  void SaveFileAsync(IFormFile file, string filePath)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                 file.CopyTo(stream);
+            }
+        }
         public void AddColor(ProductColoredNewDto productColored)
         {
             _repository.ProductColerdRepository
@@ -396,5 +421,7 @@ namespace Services.DataServices
         }
 
         public int GetNumberProducts() => _repository.ProductRepository.GetLength();
+
+        
     }
 }
