@@ -12,7 +12,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ProductFormService } from 'src/app/services/product-form.service';
-import { HttpClient, HttpEventType, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -20,20 +20,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 interface option {
-  item_id:number,
-  item_text:string
+  item_id: number,
+  item_text: string
 
 }
 
 interface varienty {
-  colorname : string,
-  colorcode : string,
-  sizename :string
+  colorname: string,
+  colorcode: string,
+  sizename: string
 }
 
 interface coloryy {
   name: string,
-  code : string,
+  code: string,
 }
 @Component({
   selector: 'app-product-form',
@@ -43,23 +43,24 @@ interface coloryy {
 })
 export class ProductFormComponent implements OnInit {
 
-  
 
-  showerroM : boolean = false;
-  showerroC : boolean = false;
-  showerroS : boolean = false;
-  colorList:Icolor[] =[];
-  sizeList:Isize[] =[];
-  categoryList:ICategory[] =[];
+  selectedimgUrl: string[] = []
+  showerroM: boolean = false;
+  showerroC: boolean = false;
+  showerroS: boolean = false;
+  selectedFile!: File
+  colorList: Icolor[] = [];
+  sizeList: Isize[] = [];
+  categoryList: ICategory[] = [];
   imagesColor: ColoredProduct[] = [];
   uploadedImage: string = "";
-  nameofColorforImage : coloryy[] = [];
-  datafColorandSizeCari : varienty [] =[];
+  nameofColorforImage: coloryy[] = [];
+  datafColorandSizeCari: varienty[] = [];
   productVariants: IProductVariant[] = [];
-  dropdownList:option[] = [];
-  selectedItems:option[] = [];
-  dropdownSettings:IDropdownSettings = {};
-  constructor( private http: HttpClient, private sanitizer: DomSanitizer, private clrServ : ColorServiceService, private sizeServ:SizeService, private categServ :CategoryService , private addproductServ:ProductFormService,  private myRouter: Router,private actRoute: ActivatedRoute ) {}
+  dropdownList: option[] = [];
+  selectedItems: option[] = [];
+  dropdownSettings: IDropdownSettings = {};
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private clrServ: ColorServiceService, private sizeServ: SizeService, private categServ: CategoryService, private addproductServ: ProductFormService, private myRouter: Router, private actRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.getallcolor();
@@ -78,57 +79,58 @@ export class ProductFormComponent implements OnInit {
 
   }
 
-  allcolorSubscription : Subscription | undefined;
-  colorByIdSub : Subscription | undefined;
-  allSizeSubscription : Subscription | undefined;
-  allCategSubscription : Subscription | undefined;
+  allcolorSubscription: Subscription | undefined;
+  colorByIdSub: Subscription | undefined;
+  allSizeSubscription: Subscription | undefined;
+  allCategSubscription: Subscription | undefined;
 
-  getallcolor(){
+  getallcolor() {
     this.allcolorSubscription = this.clrServ.getAllColor().subscribe({
       next: (data) => {
-        this.colorList =data;
+        this.colorList = data;
       },
-      error : (e) => {
+      error: (e) => {
         console.log("error");
         console.log(e);
       }
     })
   }
 
-  getColorById(id: number){
+  getColorById(id: number) {
     this.colorByIdSub = this.clrServ.getcolorByID(id).subscribe({
-      next: (data) => {return data}
+      next: (data) => { return data }
     })
   }
-  getallSize(){
+  getallSize() {
     this.allcolorSubscription = this.sizeServ.getAllSize().subscribe({
       next: (data) => {
-        this.sizeList =data;
+        this.sizeList = data;
       },
-      error : (e) => {
+      error: (e) => {
         console.log("error");
         console.log(e);
       }
     })
   }
 
-  getallcateg(){
+  getallcateg() {
     this.allcolorSubscription = this.categServ.getAllCategs().subscribe({
       next: (data) => {
         this.dropdownList = data.map(category => {
           return {
             item_id: category.id,
             item_text: category.name
-          };}
+          };
+        }
         )
       },
-      error : (e) => {
+      error: (e) => {
         console.log("error");
         console.log(e);
       }
     })
   }
-  
+
   onItemSelect(item: any) {
     console.log(item);
   }
@@ -136,35 +138,35 @@ export class ProductFormComponent implements OnInit {
     console.log(items);
   }
 
- 
+
   getColorNameById(colorId: number): string {
     console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiii");
     console.log(this.colorList);
     for (let i = 0; i < this.colorList.length; i++) {
-        const clr = this.colorList[i];
+      const clr = this.colorList[i];
+      console.log(clr);
+      console.log(clr.id);
+      console.log(colorId);
+      if (clr.id == colorId) {
         console.log(clr);
-        console.log(clr.id);
-        console.log(colorId);
-        if (clr.id == colorId) {
-            console.log(clr);
-            console.log("done");
-            return clr.name;
-        }
+        console.log("done");
+        return clr.name;
+      }
     }
     return 'Unknown Color';
-}
-getSizeNameById(sizeId: number): string {
-  console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-  console.log(this.colorList);
-  for (let i = 0; i < this.sizeList.length; i++) {
+  }
+  getSizeNameById(sizeId: number): string {
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+    console.log(this.colorList);
+    for (let i = 0; i < this.sizeList.length; i++) {
       const siz = this.sizeList[i];
       if (siz.id == sizeId) {
-          
-          return siz.size;
+
+        return siz.size;
       }
+    }
+    return 'Unknown Color';
   }
-  return 'Unknown Color';
-}
 
   getColorCodeById(colorId: number): string {
     const color = this.colorList.find(c => c.id == colorId);
@@ -172,116 +174,137 @@ getSizeNameById(sizeId: number): string {
   }
 
 
-  
-  productForm : FormGroup = new FormGroup({
-    nameproduct: new FormControl('',[Validators.required,Validators.pattern('[\u0600-\u06FF ,]+'),Validators.minLength(5)]),
-    categoryproduct: new FormControl('',[Validators.required]),
-    descriptionProduct : new FormControl('',[Validators.required, Validators.minLength(7),Validators.pattern('[\u0600-\u06FF ,\n]+')
-  ])
+
+  productForm: FormGroup = new FormGroup({
+    nameproduct: new FormControl('', [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+'), Validators.minLength(5)]),
+    categoryproduct: new FormControl('', [Validators.required]),
+    descriptionProduct: new FormControl('', [Validators.required, Validators.minLength(7), Validators.pattern('[\u0600-\u06FF ,\n]+')
+    ])
   })
 
-  get nameproductcontrol (){
+  get nameproductcontrol() {
     return this.productForm.get('nameproduct')
   }
-  get categoryproductcontrol (){
+  get categoryproductcontrol() {
     return this.productForm.get('categoryproduct')
   }
-  get descriptionProductcontrol (){
+  get descriptionProductcontrol() {
     return this.productForm.get('descriptionProduct')
   }
 
 
   picForm: FormGroup = new FormGroup({
-    colorId : new FormControl('', Validators.required),
-    image:new FormControl ('', [Validators.required, Validators.pattern(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i)])
+    colorId: new FormControl('', Validators.required),
+    image: new FormControl(null, Validators.required)
   });
 
-  get colorPicFormcontrol (){
+  get colorPicFormcontrol() {
     return this.picForm.get('colorId')
   }
 
-  get imagePicFormcontrol (){
+  get imagePicFormcontrol() {
     return this.picForm.get('image')
   }
 
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement && inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+      this.picForm.patchValue({ image: file });
+      const imageControl = this.picForm.get('image');
+      if (imageControl) {
+        imageControl.updateValueAndValidity();
+      }
+    }
+  }
+
   productVariantForm: FormGroup = new FormGroup({
-    color: new FormControl('',[Validators.required]),
-    size: new FormControl('',[Validators.required]),
-    price: new FormControl('',[Validators.required, Validators.min(70)]),
-    quantiy: new FormControl('',[Validators.required,Validators.min(5) ]),
-    disceount: new FormControl('',[Validators.max(25),Validators.min(0)]),
+    color: new FormControl('', [Validators.required]),
+    size: new FormControl('', [Validators.required]),
+    price: new FormControl('', [Validators.required, Validators.min(70)]),
+    quantiy: new FormControl('', [Validators.required, Validators.min(5)]),
+    disceount: new FormControl('', [Validators.max(25), Validators.min(0)]),
   });
 
-  get  colorvariantcontrol (){
+  get colorvariantcontrol() {
     return this.productVariantForm.get('color')
   }
-  get sizevariantcontrol (){
-    return this.productVariantForm.get('size') 
+  get sizevariantcontrol() {
+    return this.productVariantForm.get('size')
   }
-  get pricevariantcontrol (){
-    return this.productVariantForm.get('price') 
+  get pricevariantcontrol() {
+    return this.productVariantForm.get('price')
   }
-  get quantiyVariantcontrol (){
-    return this.productVariantForm.get('quantiy') 
+  get quantiyVariantcontrol() {
+    return this.productVariantForm.get('quantiy')
   }
-  get disceountvariantcontrol (){
-    return this.productVariantForm.get('disceount') 
+  get disceountvariantcontrol() {
+    return this.productVariantForm.get('disceount')
   }
 
 
   /* Toggle */
-  togglePhoto(){
+  togglePhoto() {
     var form = document.getElementById("photoForm");
     form?.classList.add('model-show');
-    
+
   }
-  
+
   addPhoto(e: Event) {
     e.preventDefault();
-    if (this.picForm.valid){
-      const imageColor :ColoredProduct = {
+    if (this.picForm.valid) {
+      const imageColor: ColoredProduct = {
         colorId: this.picForm.get('colorId')?.value,
         image: this.picForm.get('image')?.value
       }
 
       this.imagesColor.push(imageColor);
-      const colornameCode : coloryy = {
+      const colornameCode: coloryy = {
         name: this.getColorNameById(this.picForm.get('colorId')?.value),
         code: this.getColorCodeById(this.picForm.get('colorId')?.value,)
-      } 
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Assign the data URL to a property in your component
+        if (typeof reader.result === 'string') {
+        this.selectedimgUrl.push(reader.result);}
+      };
+      // Read the file as a data URL
+      reader.readAsDataURL(imageColor.image);
+
       this.nameofColorforImage.push(colornameCode);
 
       this.picForm.reset();
       this.closePhoto()
 
-    }else{
+    } else {
       this.showerroC = true
     }
 
   }
 
-  closePhoto(){
+  closePhoto() {
     var form = document.getElementById("photoForm");
     form?.classList.remove('model-show');
-    this.showerroC =false;
+    this.showerroC = false;
   }
 
-  toggleVarient(){
+  toggleVarient() {
     var form = document.getElementById("VariantForm");
     form?.classList.add('model-show2');
   }
-  closeVarient(){
+  closeVarient() {
     this.productVariantForm.reset();
     this.showerroS = true;
     var form = document.getElementById("VariantForm");
     form?.classList.remove('model-show2');
   }
-  
-  addVariant(e :Event ){
-    e.preventDefault();
-    if (this.productVariantForm.valid){
 
-      const vary : IProductVariant = {
+  addVariant(e: Event) {
+    e.preventDefault();
+    if (this.productVariantForm.valid) {
+
+      const vary: IProductVariant = {
         colorId: this.productVariantForm.get('color')?.value,
         unitPrice: this.productVariantForm.get('price')?.value,
         discount: this.productVariantForm.get('disceount')?.value / 100,
@@ -290,58 +313,87 @@ getSizeNameById(sizeId: number): string {
       }
 
       this.productVariants.push(vary);
-      const data:varienty = {
+      const data: varienty = {
         colorname: this.getColorNameById(this.productVariantForm.get('color')?.value),
         colorcode: this.getColorCodeById(this.productVariantForm.get('color')?.value),
         sizename: this.getSizeNameById(this.productVariantForm.get('size')?.value)
       }
 
       this.datafColorandSizeCari.push(data)
-        this.closeVarient();
-    }else{
+      this.closeVarient();
+    } else {
       this.showerroS = true;
     }
-    
+
   }
 
   deleteRow(index: number) {
     this.productVariants.splice(index, 1); // Remove item from productVariants list
-  this.datafColorandSizeCari.splice(index, 1); 
+    this.datafColorandSizeCari.splice(index, 1);
   }
 
-  deleteImage (index : number){
-    this.imagesColor.splice(index,1);
-    this.nameofColorforImage.splice(index,1);
+  deleteImage(index: number) {
+    this.imagesColor.splice(index, 1);
+    this.nameofColorforImage.splice(index, 1);
   }
-  onsumbit(){
-    if (this.productForm.valid && this.imagesColor.length > 0 && this.productVariants.length > 0){
+  onsumbit() {
+    if (this.productForm.valid && this.imagesColor.length > 0 && this.productVariants.length > 0) {
 
       console.log(this.selectedItems);
       console.log(this.selectedItems.map(item => item.item_id));
-      const newProduct  = {
+      const formData = new FormData();
+      const newProduct = {
         sallerId: 1,
-        name: this.productForm.get('nameproduct')?.value ,
-        description: this.productForm.get('descriptionProduct')?.value ,
+        name: this.productForm.get('nameproduct')?.value,
+        description: this.productForm.get('descriptionProduct')?.value,
         categories: this.selectedItems.map(item => item.item_id),
         images: this.imagesColor,
         productVariants: this.productVariants
-      } 
-  
-  
-      this.addproductServ.addProduct(newProduct).subscribe({
+      }
+      formData.append('SallerId', '1');
+      formData.append('Name', this.productForm.get('nameproduct')?.value);
+      formData.append('Description', this.productForm.get('descriptionProduct')?.value);
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        formData.append('Categories', this.selectedItems[i].item_id.toString());
+      }
+      for (let i = 0; i < this.imagesColor.length; i++) {
+        formData.append('Image', this.imagesColor[i].image);
+      }
+      for (let i = 0; i < this.imagesColor.length; i++) {
+        formData.append('ColorId', this.imagesColor[i].colorId.toString());
+      }
+      // formData.append('Categories', this.selectedItems.map(item => item.item_id));
+      // formData.append('Image', this.imagesColor.map(item => item.image));
+      for (let i = 0; i < this.productVariants.length; i++) {
+        formData.append('ProductVariants_ColorId', this.productVariants[i].colorId.toString());
+      }
+      for (let i = 0; i < this.productVariants.length; i++) {
+        formData.append('ProductVariants_UnitPrice', this.productVariants[i].unitPrice.toString());
+      }
+      for (let i = 0; i < this.productVariants.length; i++) {
+        formData.append('ProductVariants_Discount', this.productVariants[i].discount.toString());
+      }
+      for (let i = 0; i < this.productVariants.length; i++) {
+        formData.append('ProductVariants_Quantity', this.productVariants[i].quantity.toString());
+      }
+      for (let i = 0; i < this.productVariants.length; i++) {
+        formData.append('ProductVariants_SizeId', this.productVariants[i].sizeId.toString());
+      }
+
+      this.addproductServ.addProduct(formData).subscribe({
         next: (e) => {
-          console.log("Donnnne",e),
-          this.myRouter.navigate(['/admin/product']);
+          console.log("Donnnne", e)
+
         },
-        error: (e) => console.log(e),
-        
+        //error: (e) => console.log(e), 
       })
-    }else{
+      this.myRouter.navigate(['/admin/product']);
+    } else {
       this.showerroM = true;
     }
-    
+
 
   }
 
-  
+
 }

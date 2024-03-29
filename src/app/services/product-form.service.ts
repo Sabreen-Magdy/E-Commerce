@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IProductAddForm, IproductShow } from '../models/i-product-variant';
 import { TagContentType } from '@angular/compiler';
@@ -13,11 +13,20 @@ export class ProductFormService {
   baseURL2 : string = "http://localhost:5058/api/Product/";
   constructor( private http:HttpClient) { }
 
-  addProduct (product:IProductAddForm){
-    this.http.head
-     return  this.http.post(`${this.baseURL}Add`,product)
-  }
+  // addProduct (product:IProductAddForm){
+  //   this.http.head
+  //    return  this.http.post(`${this.baseURL}AddProduct`,product)
+  // }
+  addProduct(formData: FormData): Observable<any> {
+    // Define headers if needed (for example, if you have custom headers)
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
 
+    return this.http.post<any>(`${this.baseURL}AddProduct`, formData, { headers: headers })
+      // .pipe(
+      //   catchError(this.handleError)
+      // );
+  }
   getAllProduct () : Observable <IproductShow[]> {
     return this.http.get<IproductShow[]>(`${this.baseURL2}GetAll`)
   }

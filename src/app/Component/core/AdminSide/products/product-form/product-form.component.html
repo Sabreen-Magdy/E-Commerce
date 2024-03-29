@@ -8,8 +8,10 @@
       <label for="nameProduct" class="form-label">اسم المنتج</label>
       <input type="text" class="form-control our-is-valid" id="nameProduct" formControlName="nameproduct" required />
       <i *ngIf="nameproductcontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="nameproductcontrol?.errors && (nameproductcontrol?.touched || showerroM)" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="nameproductcontrol?.errors && (nameproductcontrol?.touched || showerroM)" class="alert p-1 mt-2 alert-danger">
+      <i *ngIf="nameproductcontrol?.errors && (nameproductcontrol?.touched || showerroM)"
+        class="bi bi-exclamation-circle-fill"></i>
+      <div *ngIf="nameproductcontrol?.errors && (nameproductcontrol?.touched || showerroM)"
+        class="alert p-1 mt-2 alert-danger">
         <ng-container *ngIf="nameproductcontrol?.hasError('required')">
           يجب عليك ادخال الاسم
         </ng-container>
@@ -68,6 +70,7 @@
       <button class="btn btn-success rounded-1  px-5" type="submit">اضف</button>
     </div> -->
   </form>
+  
   <div class="mt-3">
     <div class="col-md-10 text-start">
       <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" (click)="togglePhoto()">الصور <i
@@ -80,13 +83,14 @@
       <div *ngFor="let x of imagesColor; let i = index" class="col">
         <div class="card">
           <div class="card-img-top">
-            
+
             <div class="">
-              <img [src]="x.image" class="d-block w-100" style="aspect-ratio: 1; object-fit: cover;">
+              <img [src]="selectedimgUrl[i]" class="d-block w-100" style="aspect-ratio: 1; object-fit: cover;">
             </div>
           </div>
           <div class="card-body">
-            <h5 class="card-title" [style.color]="nameofColorforImage[i].code"> {{nameofColorforImage[i].name}} <i (click)="deleteImage(i)" class="me-2 bi bi-x-square text-danger"></i></h5>
+            <h5 class="card-title" [style.color]="nameofColorforImage[i].code"> {{nameofColorforImage[i].name}} <i
+                (click)="deleteImage(i)" class="me-2 bi bi-x-square text-danger"></i></h5>
           </div>
         </div>
       </div>
@@ -128,19 +132,42 @@
     </table>
 
 
-  </div >
+  </div>
   <div class="col-12 text-center mt-3">
     <button (click)="onsumbit()" class="btn btn-success rounded-1  px-5">اضف</button>
   </div>
-  
+
 </div>
+<!-- <div id="photoForm" class="add-model model-wrapper">
+ <div class="model">
+    <div class="model-header">
+      <h3>اضافة صور للون</h3>
+      <div class="model-body2">
+        <form class="row g-3" [formGroup]="picForm" (submit)="addPhoto($event)">
+          <div class="col-md-6 form-control-div" [ngClass]="{
+            sucess: colorPicFormcontrol?.valid,
+            danger: colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)
+          }">
+      <input type="file">
+          
+        </div>
+        </form>
+        
+      </div>
+
+    </div>
+    
+ </div>
+
+
+</div > -->
 
 <div id="photoForm" class="add-model model-wrapper">
   <div class="model">
     <div class="model-header">
       <h3>اضافة صور للون</h3>
     </div>
-    <div class="model-body">
+    <div class="model-body2">
       <form class="row g-3" [formGroup]="picForm" (submit)="addPhoto($event)">
         <div class="col-md-6 form-control-div" [ngClass]="{
           sucess: colorPicFormcontrol?.valid,
@@ -153,19 +180,23 @@
           <i *ngIf="colorPicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)"
             class="bi bi-exclamation-circle-fill"></i>
-          <div *ngIf="colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)" class="alert p-1 mt-2 alert-danger">
+          <div *ngIf="colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)"
+            class="alert p-1 mt-2 alert-danger">
             <ng-container *ngIf="colorPicFormcontrol?.hasError('required')">
               يجب عليك اختيار لون
             </ng-container>
 
           </div>
         </div>
-        <div class="col-md-6 form-control-div " [ngClass]="{
+        <div class="col-md-6 form-control-div " 
+        [ngClass]="{
           sucess: imagePicFormcontrol?.valid,
           danger: imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)
         }">
-          <label for="nameProduct" class="form-label"> لينك الصورة</label>
-          <input type="text" class="form-control our-is-valid" id="nameProduct" formControlName="image" required />
+         
+
+          <!-- <label for="nameProduct" class="form-label"> لينك الصورة</label>
+          <input type="file" class="form-control our-is-valid" id="nameProduct" formControlName="image" required />
           <i *ngIf="imagePicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="imagePicFormcontrol?.errors && ( imagePicFormcontrol?.touched || showerroC)" class="bi bi-exclamation-circle-fill"></i>
           <div *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)" class="alert p-1 mt-2 alert-danger">
@@ -176,10 +207,23 @@
               ادخل لينك صحيح
             </ng-container>
             
-          </div>
+          </div> -->
+          <label for="image" class="form-label">صورة المنتج</label>
+          <input  type="file" class="form-control" id="nameProduct" formControlName="image" (change)="onFileSelected($event)" required />
+          <i *ngIf="imagePicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
+          <i *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
+            class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
+            class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="imagePicFormcontrol?.hasError('required')">
+              يجب عليك اختيار صورة
+            </ng-container> =
+            <!-- Add more error messages if needed -->
+           </div> 
         </div>
 
         <div class="col-12 center">
+          
           <button class="btn btn-success m-3" type="submit">اضف</button>
           <button class="btn btn-danger m-3" type="button" (click)="closePhoto()">
             تجاهل
@@ -199,10 +243,12 @@
     </div>
     <div class="model-body2">
       <form class="row g-3" [formGroup]="productVariantForm" (submit)="addVariant($event)">
+        
         <div class="col-6 form-control-div" [ngClass]="{
           sucess: colorvariantcontrol?.valid,
           danger: colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)
         }">
+        
           <label for="colorSelect" class="form-label">اللون</label>
           <select formControlName="color" class="form-select" id="colorSelect" required>
             <option *ngFor="let x of colorList" value="{{x.id}}">{{x.name}}</option>
@@ -210,7 +256,8 @@
           <i *ngIf="colorvariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)"
             class="bi bi-exclamation-circle-fill"></i>
-          <div *ngIf="colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)" class="alert p-1 mt-2 alert-danger">
+          <div *ngIf="colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
             <ng-container *ngIf="colorvariantcontrol?.hasError('required')">
               يجب عليك اختيار لون
             </ng-container>
@@ -224,12 +271,13 @@
           <label for="colorSelect" class="form-label">الحجم</label>
           <select formControlName="size" class="form-select" id="colorSelect" required>
             <option *ngFor="let x of sizeList" value="{{x.id}}">{{x.size}}</option>
-           
+
           </select>
           <i *ngIf="sizevariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="sizevariantcontrol?.errors && ( sizevariantcontrol?.touched || showerroS)"
             class="bi bi-exclamation-circle-fill"></i>
-          <div *ngIf="sizevariantcontrol?.errors && ( sizevariantcontrol?.touched || showerroS)" class="alert p-1 mt-2 alert-danger">
+          <div *ngIf="sizevariantcontrol?.errors && ( sizevariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
             <ng-container *ngIf="sizevariantcontrol?.hasError('required')">
               يجب عليك اختيار حجم
             </ng-container>
@@ -245,7 +293,8 @@
           <i *ngIf="pricevariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="pricevariantcontrol?.errors && ( pricevariantcontrol?.touched || showerroS)"
             class="bi bi-exclamation-circle-fill"></i>
-          <div *ngIf="pricevariantcontrol?.errors && (pricevariantcontrol?.touched || showerroS)" class="alert p-1 mt-2 alert-danger">
+          <div *ngIf="pricevariantcontrol?.errors && (pricevariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
             <ng-container *ngIf="pricevariantcontrol?.hasError('required')">
               يجب عليك ادخال السعر
             </ng-container>
