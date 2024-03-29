@@ -15,7 +15,7 @@ namespace Services.DataServices
 
         public ProductService(IAdminRepository repository)
             => _repository = repository;
-    
+
         private ProductDto Map(Product product)
         {
             //var varients = GetVarients(product.Id);
@@ -73,28 +73,24 @@ namespace Services.DataServices
                 .ToProductVariantEntity(productEntity.Id));
             _repository.SaveChanges();
 
-        string UploadDirectory = "wwwroot/images";
+        //string UploadDirectory = "wwwroot/images";
+        //    for (int i =0; i<product.Images.Count; i++)
+        //    {
+        //        var file = product.Images[i].Image;
+        //        var fileName = $"{productEntity.Id}_{product.ProductVariants[i].ColorId}.{file.FileName.Split('.').Last()}";
+        //        var filePath = Path.Combine(UploadDirectory, fileName);
+        //         SaveFileAsync(file, filePath);
 
-
-        
-
-            for (int i =0; i<product.Images.Count; i++)
-            {
-                var file = product.Images[i].Image;
-                var fileName = $"{productEntity.Id}_{product.ProductVariants[i].ColorId}.{file.FileName.Split('.').Last()}";
-                var filePath = Path.Combine(UploadDirectory, fileName);
-                 SaveFileAsync(file, filePath);
-
-            }
+        //    }
         }
-        private  void SaveFileAsync(IFormFile file, string filePath)
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                 file.CopyTo(stream);
-            }
-        }
+        //private  void SaveFileAsync(IFormFile file, string filePath)
+        //{
+        //    Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+        //    using (var stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //         file.CopyTo(stream);
+        //    }
+        //}
         public void AddColor(ProductColoredNewDto productColored)
         {
             _repository.ProductColerdRepository

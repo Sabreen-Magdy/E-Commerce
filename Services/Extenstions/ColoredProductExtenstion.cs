@@ -1,11 +1,18 @@
 ﻿using Contract;
 using Domain.Entities;
-using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace Services.Extenstions
 {
+
     public static class ColoredProductExtenstion
     {
+        private static string SaveProductImage(int productId, int colorId, string imageBase64)
+        {
+            string path = "product_" + productId.ToString() + "_" + colorId.ToString() + "";
+            Static.SaveImage(path, imageBase64);
+            return path;
+        }
         public static List<int> GetIds(this List<ProductColoredAddDto> coloredProducts)
         {
             if (coloredProducts == null)
@@ -22,44 +29,45 @@ namespace Services.Extenstions
         {
             if (productColored == null)
                 throw new ArgumentNullException(nameof(productColored));
-
+           
+            string path = productColored.ProductId.ToString() + "_" + productColored.ColorId.ToString() + "";
+            try
+            {
+                Static.SaveImage(path, productColored.Image);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Can not save Image");
+            }
             return new()
             {
                 ColorId = productColored.ColorId,
-                Image = productColored.Image,
+                Image = path,
                 ProductId = productColored.ProductId
             };
         }
-        public static List<ColoredProduct> ToColoredProductEntity
-            (this List<KeyValuePair<int, string>> images, int productId)
-        {
-            if (images == null)
-                throw new ArgumentNullException(nameof(images));
 
-            var coloredProducts = new List<ColoredProduct>();
 
-            foreach (var image in images)
-                coloredProducts.Add(new()
-                {
-                    ColorId = image.Key,
-                    Image = image.Value,
-                    ProductId = productId
-                });
-
-            return coloredProducts;
-        }
-
-        public static ColoredProduct ToColoredProductEntity(this ProductColoredAddDto productColored)
+        public static ColoredProduct ToColoredProductEntity(this ProductColoredAddDto productColored, int productId)
         {
             if (productColored == null)
                 throw new ArgumentNullException(nameof(productColored));
 
-            return new()
+            try
             {
-                ColorId = productColored.ColorId,
-                Image = productColored.Image.FileName,
-                
-            };
+                string path = SaveProductImage(productId, productColored.ColorId, productColored.Image);
+                return new()
+                {
+                    ProductId = productId,
+                    ColorId = productColored.ColorId,
+                    Image = path,
+                };
+            }
+            catch (Exception)
+            {
+                throw new Exception("Can not save Image");
+            }
+          
         }
         public static List<ColoredProduct> ToColoredProductEntity
             (this List<ProductColoredAddDto> images, int productId)
@@ -70,28 +78,34 @@ namespace Services.Extenstions
             var coloredProducts = new List<ColoredProduct>();
 
             foreach (var image in images)
-                coloredProducts.Add(new()
-                {
-                    ColorId = image.ColorId,
-                    Image =productId+"_"+image.ColorId+"."+image.Image.FileName.Split('.').Last(),
-                    ProductId = productId
-                });
+                coloredProducts.Add(image.ToColoredProductEntity(productId)); ;
 
             return coloredProducts;
         }
+
+
 
         public static ColoredProuctDto ToColoredProductDto(this ColoredProduct productColored)
         {
             if (productColored == null)
                 throw new ArgumentNullException(nameof(productColored));
 
-            return new
-            (
-                Id: productColored.Id,
-                ColorCode: productColored.Color.Code,
-                ColorName: productColored.Color.Name,
-                Image: productColored.Image
-            );
+            try
+            {
+                string path = "";
+                if (productColored.Image != null)
+                    path = SaveProductImage(productColored.ProductId, productColored.ColorId, productColored.Image);
+                return new(
+               Id: productColored.Id,
+               ColorCode: productColored.Color.Code,
+               ColorName: productColored.Color.Name,
+               Image: path);
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("Can not save Image");
+            }
         }
         public static List<ColoredProuctDto> ToColoredProductDto
             (this List<ColoredProduct> productColoreds)
