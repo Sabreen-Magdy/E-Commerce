@@ -16,6 +16,9 @@ public class CustomerService : ICustomerService
     public CustomerService(IAdminRepository repository)
         => _repository = repository;
 
+    public int GetNumberCustomers() => 
+        _repository.CustomerRepository
+        .GetNumberCustomers();
     public List<CustomerDto> GetAll() =>
         _repository.CustomerRepository.GetAll().ToCustomerDto();
 
@@ -131,6 +134,11 @@ public class CustomerService : ICustomerService
 
     public void AddReview(int customerId, int productId, string comment, int rate)
     {
+        if (_repository.CustomerRepository.Get(customerId) == null)
+            throw new NotFoundException("Customer");
+        if (_repository.ProductRepository.Get(productId) == null)
+            throw new NotFoundException("Product");
+
         _repository.ReviewRepository.Add(
             new()
             {

@@ -1,11 +1,11 @@
 ﻿using Contract;
 using Contract.Favorite;
-using Domain.Enums;
 
 namespace Services.Abstraction.DataServices;
 
 public interface ICustomerService
 {
+    int GetNumberCustomers();
     List<CustomerDto> GetAll();
   
     CustomerDto? Get(int id);

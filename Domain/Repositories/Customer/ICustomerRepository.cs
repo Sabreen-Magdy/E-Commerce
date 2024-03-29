@@ -6,5 +6,5 @@ public interface ICustomerRepository :
     IBaseRepository<Customer>
 {
     void Updatecust(int id , Customer customer);
-
+    int GetNumberCustomers();
 }

@@ -155,7 +155,24 @@ public class CustomerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+    [HttpPost("AddReview")]
+    public IActionResult AddReview(int customerId, int productId, string comment, int rate )
+    {
+        try
+        {
+            _adminService.CustomerService.AddReview(customerId, productId, comment, rate);
+            return Ok();
 
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 
     [HttpPost("AddCustomers")]
     public IActionResult Add(CustomerAddDto customer)

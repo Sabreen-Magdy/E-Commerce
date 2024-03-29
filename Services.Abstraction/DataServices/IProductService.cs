@@ -8,6 +8,8 @@ public interface IProductService
     #region Retrive Operations 
    
     List<ProductDto> GetAll();
+    List<ProductDto> GetNew(DateTime date, int len);
+
     ProductDto? Get(int id);
     ProductDetailsDto GetDetails(int productId);
 
@@ -16,6 +18,8 @@ public interface IProductService
     List<ProductDto> Get(string name);
     List<ProductDto> GetByRate(float rate);
     List<ProductDto> GetByPrice(double price);
+    List<ProductDto> GetByPriceRange(double lowerPrice, double upperPrice);
+
     List<ProductDto> GetByQuantity(int quantity);
     List<ProductDto> GetByColor(int id);
     List<ProductDto> GetByColorCode(string color);

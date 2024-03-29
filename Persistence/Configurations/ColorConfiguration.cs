@@ -15,6 +15,9 @@ public class ColorConfiguration : IEntityTypeConfiguration<Color>
         builder.Property(p => p.Name)
             .HasMaxLength(50);
 
+        builder.HasIndex(b => b.Code)
+            .IsUnique();
+
         #endregion
     }
 }

@@ -21,6 +21,17 @@ namespace Services.Extenstions
         //    };
         //}
 
+        public static List<ProfitDto> ToProfitDto(this List<KeyValuePair<int, double>> valuePairs)
+        {
+            var profit = new List<ProfitDto>();
+            foreach (var item in valuePairs) profit.Add(new()
+            {
+                Profit = item.Value,
+                TimeInterval = item.Key
+            });
+            return profit;
+        }
+
         public static Order ToOrderEntity(this OrderDto order)
         {
             if (order == null)
