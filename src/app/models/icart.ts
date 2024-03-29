@@ -1,16 +1,30 @@
-export interface Icart {
-  Id:number;
-TotalPrice :number
- TotalQuantity :Number
- ITem:Item[]
+export interface CartDto {
+  totalPrice: number;
+  totalQuantity: number;
+  items: CartItemDto[];
 }
-export interface Item {
-  
-  id:Number;
-  img:string;
-  Name:string;
-  Description:String;
-  Quantitiy:number;
-  price:number
 
+
+export interface CartItemDto {
+  id: number;
+  productVarientId: number;
+  image: string;
+  name: string;
+  size: string;
+  color: string;
+  unitPrice: number;
+  state: number;
+  quantity: number;
+}
+
+export interface AddCart{
+  productVarientId:number,
+  state:number,
+  quantity: number,
+}
+export interface Uppdatecart{
+  
+    state: number,
+    quantity: number
+  
 }

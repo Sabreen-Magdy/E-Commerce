@@ -6,27 +6,28 @@
           <h3 class="fw-normal mb-0 text-black">قائمة المشتريات</h3>
         </div>
 
-        <div class="card rounded-3 mb-4">
+        <div *ngFor="let item of cart.items" class="card rounded-3 mb-4">
           <div class="card-body p-4">
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                  [src]="item.image"
                   class="img-fluid rounded-3"
                   alt="Cotton T-shirt"
                 />
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">تيشرت</p>
+                <p class="lead fw-normal mb-2">{{item.name}}</p>
                 <p>
-                  <span class="text-muted">الحجم: </span>M
-                  <span class="text-muted">اللون: </span>رصاصي
+                  <span class="text-muted">الحجم: </span>{{item.size}}
+                  <span class="text-muted">اللون: </span>{{item.color}}
                 </p>
               </div>
               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                 <button
                   class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                  
+                  (click)="decreasecartItem(item.productVarientId, item.quantity)"
                 >
                   <i class="fas fa-minus" style="color: green"></i>
                 </button>
@@ -35,23 +36,24 @@
                   id="form1"
                   min="0"
                   name="quantity"
-                  value="2"
+                  value={{item.quantity}}
                   type="number"
                   class="form-control form-control-sm"
                 />
 
                 <button
                   class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                  
+                  (click)="increasecartItem(item.productVarientId, item.quantity)"
                 >
                   <i class="fas fa-plus" style="color: green"></i>
                 </button>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">ُ499.00ج.م.</h5>
+                <h5 class="mb-0">{{item.unitPrice}}</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"
+                <a (click)="deleteByItemId(item.id)" class="text-danger del"
                   ><i class="fas fa-trash fa-lg"></i
                 ></a>
               </div>
@@ -59,164 +61,6 @@
           </div>
         </div>
 
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3"
-                  alt="Cotton T-shirt"
-                />
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">تيشرت</p>
-                <p>
-                  <span class="text-muted">الحجم: </span>M
-                  <span class="text-muted">اللون: </span>رصاصي
-                </p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button
-                  class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                >
-                  <i class="fas fa-minus" style="color: green"></i>
-                </button>
-
-                <input
-                  id="form1"
-                  min="0"
-                  name="quantity"
-                  value="2"
-                  type="number"
-                  class="form-control form-control-sm"
-                />
-
-                <button
-                  class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                >
-                  <i class="fas fa-plus" style="color: green"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">ج.م.499.00</h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"
-                  ><i class="fas fa-trash fa-lg"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3"
-                  alt="Cotton T-shirt"
-                />
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">تيشرت</p>
-                <p>
-                  <span class="text-muted">الحجم: </span>M
-                  <span class="text-muted">اللون: </span>رصاصي
-                </p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button
-                  class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                >
-                  <i class="fas fa-minus" style="color: green"></i>
-                </button>
-
-                <input
-                  id="form1"
-                  min="0"
-                  name="quantity"
-                  value="2"
-                  type="number"
-                  class="form-control form-control-sm"
-                />
-
-                <button
-                  class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                >
-                  <i class="fas fa-plus" style="color: green"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">ج.م.499.00</h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"
-                  ><i class="fas fa-trash fa-lg"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3"
-                  alt="Cotton T-shirt"
-                />
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">تيشرت</p>
-                <p>
-                  <span class="text-muted">الحجم: </span>M
-                  <span class="text-muted">اللون: </span>رصاصي
-                </p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button
-                  class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                >
-                  <i class="fas fa-minus" style="color: green"></i>
-                </button>
-
-                <input
-                  id="form1"
-                  min="0"
-                  name="quantity"
-                  value="2"
-                  type="number"
-                  class="form-control form-control-sm"
-                />
-
-                <button
-                  class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                >
-                  <i class="fas fa-plus" style="color: green"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">ج.م.499.00</h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"
-                  ><i class="fas fa-trash fa-lg"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="">
           <div class="container-fluid">
             <div class="row justify-content-start">
@@ -226,20 +70,8 @@
                     <li
                       class="d-flex justify-content-between align-items-center"
                     >
-                      <span class="text-start">المجموع</span>
-                      <span class="subTotal">ج.م.430.00</span>
-                    </li>
-                    <li
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <span class="text-start">مصاريف الشحن</span>
-                      <span>ج.م.50.00</span>
-                    </li>
-                    <li
-                      class="d-flex justify-content-between align-items-center"
-                    >
                       <span class="text-start">المجموع الكلي</span>
-                      <span class="total">ج.م.480.00</span>
+                      <span class="total">{{cart.totalPrice}} ج.م.</span>
                     </li>
                   </ul>
                   <a
@@ -251,6 +83,7 @@
               </div>
             </div>
           </div>
+        
         </div>
       </div>
     </div>

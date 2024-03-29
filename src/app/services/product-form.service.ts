@@ -1,6 +1,8 @@
 
+// import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IProductAddForm, IproductShow } from '../models/i-product-variant';
@@ -17,9 +19,20 @@ export class ProductFormService {
 
   constructor( private http:HttpClient) { }
 
-  addProduct (product:IProductAddForm){
-    this.http.head
-     return  this.http.post(`${this.baseURL}Add`,product)
+  // addProduct (product:IProductAddForm){
+  //   this.http.head
+  //    return  this.http.post(`${this.baseURL}AddProduct`,product)
+  // }
+  addProduct(formData: FormData): Observable<any> {
+    // Define headers if needed (for example, if you have custom headers)
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+
+    return this.http.post<any>(`${this.baseURL}AddProduct`, formData, { headers: headers })
+      // .pipe(
+      //   catchError(this.handleError)
+      // );
   }
 
   fetchAndCacheProducts(): Observable<IproductShow[]> {
@@ -52,6 +65,7 @@ export class ProductFormService {
 
   //   }
   // }
+
 
   getAllProduct () : Observable <IproductShow[]> {
     return this.http.get<IproductShow[]>(`${this.baseURL2}GetAll`)

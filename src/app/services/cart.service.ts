@@ -1,5 +1,6 @@
+import { CartItemDto, Uppdatecart } from './../models/icart';
 import { Injectable } from '@angular/core';
-import { Icart } from '../models/icart';
+import { AddCart, CartDto } from '../models/icart';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,24 +11,25 @@ import { HttpClient } from '@angular/common/http';
 export class CartService {
   baseURL :string ="http://localhost:5058/api/Cart";
   constructor( private http: HttpClient) { }
+
+  // getCartItem(): Observable<CartDto[]> {
+  //   return this.http.get<CartDto[]>(`${this.baseURL}/GetAll`);
+  // }
+
   
-  getAllCart() : Observable<Icart[]>{
-
-    return this.http.get<Icart[]>(`${this.baseURL}GetAll`)
-  } 
-  getCartById(id: number): Observable<Icart> {
-    return this.http.get<Icart>(`${this.baseURL}/GetById/${id}`);
+  getCartBycstId(id: number): Observable<CartDto> {
+    return this.http.get<CartDto>(`${this.baseURL}/GetByCustomerId?customerId=${id}`);
   }
 
-  addCart(cart: Icart): Observable<Icart> {
-    return this.http.post<Icart>(`${this.baseURL}/Add`, cart);
+  addCartItem(Customerid: number,cartitem:AddCart)  {
+    return this.http.post(`${this.baseURL}/AddItem?customerId=${Customerid}`, cartitem );
   }
 
-  updateCart(cart: Icart): Observable<Icart> {
-    return this.http.put<Icart>(`${this.baseURL}/Update`, cart);
+  updateCartItem(customerid: number,productId:number,Cartitem: Uppdatecart) {
+    return this.http.put(`${this.baseURL}/UpdateItem?costomerId=${customerid}&productId=${productId}`, Cartitem);
   }
 
-  deleteCart(id: number): Observable<any> {
-    return this.http.delete(`${this.baseURL}/Delete/${id}`);
+  deleteCartitem(id: number) {
+    return this.http.delete(`${this.baseURL}/DeleteItemById?id=${id}`);
   }
 }
