@@ -138,20 +138,20 @@ public class SallerController : ControllerBase
 
     #region Add
 
-    //[HttpPost("Add")]
-    //public IActionResult Add(ProductNewDto product)
-    //{
-    //    try
-    //    {
-    //        _adminService.ProductService.Add(product);
+    [HttpPost("Add")]
+    public IActionResult Add(ProductNewDto product)
+    {
+        try
+        {
+            _adminService.ProductService.Add(product);
 
-    //        return Ok();
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        return StatusCode(500, ex.Message);
-    //    }
-    //}
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 
     [HttpPost("AddVarient")]
     public IActionResult Add(ProductVariantNewDto productVarient)
@@ -350,75 +350,75 @@ public class SallerController : ControllerBase
 
 
 
-    [HttpPost("AddProduct")]
-    [Consumes("multipart/form-data")]
-    public IActionResult Add(
-     [FromForm] int SallerId,
-     [FromForm] string Name,
-     [FromForm] string Description,
-     [FromForm] List<int> Categories,
-     [FromForm] List<IFormFile> Image,
-     [FromForm] List<int> ColorId,
-     [FromForm] int[] ProductVariants_ColorId,
-     [FromForm] double[] ProductVariants_UnitPrice,
-     [FromForm] double[] ProductVariants_Discount,
-     [FromForm] int[] ProductVariants_Quantity,
-     [FromForm] int[] ProductVariants_SizeId
- )
-    {
-        List<ProductColoredAddDto> Images = new List<ProductColoredAddDto>();
-        if (Image.Count == ColorId.Count && Image.Count > 0 && ColorId.Count > 0)
-        {
-            for (int i = 0; i < Image.Count; i++)
-            {
-                Images.Add(new(ColorId[i], Image[i]));
-            }
-        }
+ //   [HttpPost("AddProduct")]
+ //   [Consumes("multipart/form-data")]
+ //   public IActionResult Add(
+ //    [FromForm] int SallerId,
+ //    [FromForm] string Name,
+ //    [FromForm] string Description,
+ //    [FromForm] List<int> Categories,
+ //    [FromForm] List<IFormFile> Image,
+ //    [FromForm] List<int> ColorId,
+ //    [FromForm] int[] ProductVariants_ColorId,
+ //    [FromForm] double[] ProductVariants_UnitPrice,
+ //    [FromForm] double[] ProductVariants_Discount,
+ //    [FromForm] int[] ProductVariants_Quantity,
+ //    [FromForm] int[] ProductVariants_SizeId
+ //)
+ //   {
+ //       List<ProductColoredAddDto> Images = new List<ProductColoredAddDto>();
+ //       if (Image.Count == ColorId.Count && Image.Count > 0 && ColorId.Count > 0)
+ //       {
+ //           for (int i = 0; i < Image.Count; i++)
+ //           {
+ //               Images.Add(new(ColorId[i], Image[i]));
+ //           }
+ //       }
 
-        List<ProductVarientAddDto> ProductVariants = new List<ProductVarientAddDto>();
-        if ((ProductVariants_ColorId.Length == ProductVariants_UnitPrice.Length)&&(ProductVariants_ColorId.Length == ProductVariants_Discount.Length)
-            && (ProductVariants_ColorId.Length== ProductVariants_Quantity.Length)&&(ProductVariants_ColorId.Length == ProductVariants_SizeId.Length)
-            &&ProductVariants_ColorId.Length > 0)
-        {
-            for (int i = 0; i < ProductVariants_ColorId.Length; i++)
-            {
-                ProductVariants.Add(new ProductVarientAddDto
-                {
-                    ColorId = ProductVariants_ColorId[i],
-                    UnitPrice = ProductVariants_UnitPrice[i],
-                    Discount = ProductVariants_Discount[i],
-                    Quantity = ProductVariants_Quantity[i],
-                    SizeId = ProductVariants_SizeId[i]
-                });
-            }
-        }
+ //       List<ProductVarientAddDto> ProductVariants = new List<ProductVarientAddDto>();
+ //       if ((ProductVariants_ColorId.Length == ProductVariants_UnitPrice.Length)&&(ProductVariants_ColorId.Length == ProductVariants_Discount.Length)
+ //           && (ProductVariants_ColorId.Length== ProductVariants_Quantity.Length)&&(ProductVariants_ColorId.Length == ProductVariants_SizeId.Length)
+ //           &&ProductVariants_ColorId.Length > 0)
+ //       {
+ //           for (int i = 0; i < ProductVariants_ColorId.Length; i++)
+ //           {
+ //               ProductVariants.Add(new ProductVarientAddDto
+ //               {
+ //                   ColorId = ProductVariants_ColorId[i],
+ //                   UnitPrice = ProductVariants_UnitPrice[i],
+ //                   Discount = ProductVariants_Discount[i],
+ //                   Quantity = ProductVariants_Quantity[i],
+ //                   SizeId = ProductVariants_SizeId[i]
+ //               });
+ //           }
+ //       }
 
-        ProductNewDto productDto = new()
-        {
-            Name = Name,
-            Description = Description,
-            Categories = Categories,
-            Images = Images,
-            SallerId = SallerId,
-            ProductVariants = ProductVariants
-        };
+ //       ProductNewDto productDto = new()
+ //       {
+ //           Name = Name,
+ //           Description = Description,
+ //           Categories = Categories,
+ //           Images = Images,
+ //           SallerId = SallerId,
+ //           ProductVariants = ProductVariants
+ //       };
 
-        try
-        {
-            if (productDto == null || productDto.Images == null || productDto.Images.Count == 0)
-                return BadRequest("Images not provided");
+ //       try
+ //       {
+ //           if (productDto == null || productDto.Images == null || productDto.Images.Count == 0)
+ //               return BadRequest("Images not provided");
 
-            // Ensure the directory exists
+ //           // Ensure the directory exists
             
-            _adminService.ProductService.Add(productDto);
+ //           _adminService.ProductService.Add(productDto);
 
-            return Ok("product saved successfully");
-            //return Ok("Images uploaded successfully");
-        }
-        catch (System.Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex}");
-        }
-    }
+ //           return Ok("product saved successfully");
+ //           //return Ok("Images uploaded successfully");
+ //       }
+ //       catch (System.Exception ex)
+ //       {
+ //           return StatusCode(500, $"Internal server error: {ex}");
+ //       }
+ //   }
 
 }
