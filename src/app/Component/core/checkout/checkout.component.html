@@ -6,54 +6,56 @@
     <div class="col-md-4 col-lg-3 order-md-last">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-success">مشترياتك</span>
-        <span class="badge bg-success rounded-pill">3</span>
+        <span class="badge bg-success rounded-pill">{{ numOfItemInCart }}</span>
       </h4>
 
       <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between lh-sm p-3">
+        <li
+          *ngFor="let item of cart.items"
+          class="list-group-item d-flex justify-content-between lh-sm p-3"
+        >
           <div>
-            <h6 class="my-0">Nike jeans</h6>
-            <small class="text-muted">Best Quality</small>
+            <h6 class="my-0">{{ item.name }}</h6>
+            <small class="text-muted">
+              <span class="text-muted">الحجم: </span>{{ item.size }} |<span
+                class="text-muted"
+                >اللون: </span
+              >{{ item.color }} |<span class="text-muted">الكمية: </span
+              >{{ item.quantity }}
+            </small>
           </div>
-          <span class="text-muted">500 EGY</span>
+          <span class="text-muted"
+            >{{ item.unitPrice * item.quantity }} ج.م.</span
+          >
         </li>
-        <li class="list-group-item d-flex justify-content-between lh-sm p-3">
-          <div>
-            <h6 class="my-0">Shoe from bata</h6>
-            <small class="text-muted">Best product</small>
-          </div>
-          <span class="text-muted">1000 EGY</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between lh-sm p-3">
-          <div>
-            <h6 class="my-0">Focut shirt</h6>
-            <small class="text-muted">Ladki pat jayegi</small>
-          </div>
-          <span class="text-muted">500 EGY</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between bg-light p-3">
+        <!-- <li class="list-group-item d-flex justify-content-between bg-light p-3">
           <div class="text-success">
             <h6 class="my-0">Promo code</h6>
             <small>SALE500</small>
           </div>
           <span class="text-success">500 EGY</span>
-        </li>
+        </li> -->
         <li class="list-group-item d-flex justify-content-between p-3">
           <span>المجموع</span>
-          <strong>1500 EGY</strong>
+          <strong>{{ cart.totalPrice }} ج.م.</strong>
         </li>
       </ul>
 
-      <form class="card p-2">
+      <!-- <form class="card p-2">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="كود الخصم" />
           <button type="submit" class="btn btn-success">خصم</button>
         </div>
-      </form>
+      </form> -->
     </div>
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3 text-success">عنوان العميل</h4>
-      <form class="needs-validation" novalidate [formGroup]="checkoutForm" (submit)="SendOrder($event)">
+      <form
+        class="needs-validation"
+        novalidate
+        [formGroup]="checkoutForm"
+        (submit)="SendOrder($event)"
+      >
         <div class="row g-3">
           <!-- <div
             class="col-sm-6 form-control-div"
@@ -144,7 +146,7 @@
             ></i>
             <i *ngIf="emailcontrol?.errors && emailcontrol?.touched" class="bi bi-exclamation-circle-fill"></i>
             <div *ngIf="emailcontrol?.errors && emailcontrol?.touched" class="alert p-1 mt-3 alert-danger">
-              
+
               <ng-container *ngIf="emailcontrol?.hasError('pattern')">
                 ادخل بريد الكتروني صالح
               </ng-container>
@@ -182,7 +184,9 @@
             class="col-12 form-control-div"
             [ngClass]="{
               sucess: mainaddresscontrol?.valid,
-              danger: mainaddresscontrol?.errors && (mainaddresscontrol?.touched || showerror)
+              danger:
+                mainaddresscontrol?.errors &&
+                (mainaddresscontrol?.touched || showerror)
             }"
           >
             <label for="address" class="form-label">العنوان</label>
@@ -198,8 +202,20 @@
               *ngIf="mainaddresscontrol?.valid"
               class="bi bi-check-circle-fill"
             ></i>
-            <i *ngIf="mainaddresscontrol?.errors && (mainaddresscontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>
-            <div *ngIf="mainaddresscontrol?.errors && (mainaddresscontrol?.touched || showerror)" class="alert p-1 mt-3 alert-danger">
+            <i
+              *ngIf="
+                mainaddresscontrol?.errors &&
+                (mainaddresscontrol?.touched || showerror)
+              "
+              class="bi bi-exclamation-circle-fill"
+            ></i>
+            <div
+              *ngIf="
+                mainaddresscontrol?.errors &&
+                (mainaddresscontrol?.touched || showerror)
+              "
+              class="alert p-1 mt-3 alert-danger"
+            >
               <ng-container *ngIf="mainaddresscontrol?.hasError('required')">
                 يجب عليك ادخال العنوان
               </ng-container>
@@ -251,7 +267,7 @@
           class="w-100 btn bg-success btn-lg mb-3 text-light"
           type="submit"
         >
-          الاستمرار في تأكيد الطلب
+          {{ buttonText }}
         </button>
       </form>
     </div>

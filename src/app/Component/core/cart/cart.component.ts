@@ -18,14 +18,15 @@ export class CartComponent implements OnInit {
     totalPrice: 0,
     totalQuantity: 0,
     items: []
-  }; 
+  };
 
   constructor( private CartService: CartService, private authServ : AuthService ){}
   ngOnInit(): void {
     this.customerID = this.authServ.id;
     this.getcartbyId()
+    this.CartService.getNumberOfitemInCart();
   }
- 
+
   cartByIDsub : Subscription | undefined;
   delCartItemsub : Subscription | undefined;
   updateCartItemsub : Subscription | undefined;
@@ -36,7 +37,7 @@ export class CartComponent implements OnInit {
     this.cartByIDsub = this.CartService.getCartBycstId(this.customerID).subscribe({
       next : (data) =>{
         let filterdata = data.items.filter((item)=>item.state==0);
-        let totalPriceS : number = 0; 
+        let totalPriceS : number = 0;
         // this.cart.items = this.cart.items.filter((item)=>item.state==0)
         for (var item of filterdata){
           totalPriceS += item.unitPrice * item.quantity
@@ -56,6 +57,7 @@ export class CartComponent implements OnInit {
     this.delCartItemsub = this.CartService.deleteCartitem(id).subscribe({
       next : (data) => {
         console.log("delete succesful" + data);
+        this.CartService.getNumberOfitemInCart();
         this.getcartbyId()
       },
 
@@ -71,7 +73,8 @@ export class CartComponent implements OnInit {
     const updatecart :Uppdatecart = {
       state: 0,
       quantity: quantity - 1
-    } 
+    }
+    this.CartService.getNumberOfitemInCart();
     console.log(this.customerID);
     console.log(productId);
     console.log(updatecart);
@@ -92,7 +95,8 @@ export class CartComponent implements OnInit {
     const updatecart :Uppdatecart = {
       state: 0,
       quantity: quantity +1
-    } 
+    }
+    this.CartService.getNumberOfitemInCart();
     console.log(this.customerID);
     console.log(productId);
     console.log(updatecart);
@@ -109,6 +113,6 @@ export class CartComponent implements OnInit {
     })
   }
 
-  
+
 
 }

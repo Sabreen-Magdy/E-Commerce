@@ -88,7 +88,9 @@
               [routerLinkActive]="'active'"
               [routerLinkActiveOptions]="{ exact: true }"
             >
-              <span class="badge badge-pill bg-danger">1</span>
+              <span class="badge badge-pill bg-success">{{
+                numOfItemInCart
+              }}</span>
               <span><i class="fas fa-shopping-cart"></i></span>
             </a>
           </li>
@@ -100,7 +102,7 @@
               [routerLinkActive]="'active'"
               [routerLinkActiveOptions]="{ exact: true }"
             >
-              <span class="badge badge-pill bg-danger">{{
+              <span class="badge badge-pill bg-success">{{
                 numOfItemInFavCart
               }}</span>
               <span><i class="fa-solid fa-heart-circle-check"></i></span>

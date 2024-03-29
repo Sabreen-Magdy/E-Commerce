@@ -17,17 +17,18 @@
                 />
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">{{item.name}}</p>
+                <p class="lead fw-normal mb-2">{{ item.name }}</p>
                 <p>
-                  <span class="text-muted">الحجم: </span>{{item.size}}
-                  <span class="text-muted">اللون: </span>{{item.color}}
+                  <span class="text-muted">الحجم: </span>{{ item.size }}
+                  <span class="text-muted">اللون: </span>{{ item.color }}
                 </p>
               </div>
               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                 <button
                   class="btn btn-link px-2"
-                  
-                  (click)="decreasecartItem(item.productVarientId, item.quantity)"
+                  (click)="
+                    decreasecartItem(item.productVarientId, item.quantity)
+                  "
                 >
                   <i class="fas fa-minus" style="color: green"></i>
                 </button>
@@ -36,21 +37,22 @@
                   id="form1"
                   min="0"
                   name="quantity"
-                  value={{item.quantity}}
+                  value="{{ item.quantity }}"
                   type="number"
                   class="form-control form-control-sm"
                 />
 
                 <button
                   class="btn btn-link px-2"
-                  
-                  (click)="increasecartItem(item.productVarientId, item.quantity)"
+                  (click)="
+                    increasecartItem(item.productVarientId, item.quantity)
+                  "
                 >
                   <i class="fas fa-plus" style="color: green"></i>
                 </button>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">{{item.unitPrice}}</h5>
+                <h5 class="mb-0">{{ item.unitPrice }} ج.م.</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                 <a (click)="deleteByItemId(item.id)" class="text-danger del"
@@ -71,7 +73,7 @@
                       class="d-flex justify-content-between align-items-center"
                     >
                       <span class="text-start">المجموع الكلي</span>
-                      <span class="total">{{cart.totalPrice}} ج.م.</span>
+                      <span class="total">{{ cart.totalPrice }} ج.م.</span>
                     </li>
                   </ul>
                   <a
@@ -83,7 +85,6 @@
               </div>
             </div>
           </div>
-        
         </div>
       </div>
     </div>

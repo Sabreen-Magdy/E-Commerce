@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
+import { CartDto } from 'src/app/models/icart';
 import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
 import { addorderService } from 'src/app/services/AddOrder.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -10,10 +13,19 @@ import { addorderService } from 'src/app/services/AddOrder.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent {
+  buttonText:string="الاستمرار في تأكيد الطلب"
   showerror : boolean = false;
   checkoutForm : FormGroup;
+  numOfItemInCart:number=0;
+  customerID : number = 0;
+  cart : CartDto = {
+    totalPrice: 0,
+    totalQuantity: 0,
+    items: []
+  };
+  cartByIDsub : Subscription | undefined;
   productVarientperOrder : IproductforOrderadd[] = [];
-  constructor( private auth: AuthService, private orderSer:addorderService ){
+  constructor( private auth: AuthService, private orderSer:addorderService ,private cartService:CartService){
     this.checkoutForm = new FormGroup({
       // firstname: new FormControl(
       //   "",
@@ -64,30 +76,38 @@ export class CheckoutComponent {
     }
     );
   }
- 
-  
-
-  // get firstnamecontrol(){
-  //   return this.checkoutForm.get('firstname')
-  // }
-  // get lastnamecontrol(){
-  //   return this.checkoutForm.get('lastname')
-  // }
-  // get emailcontrol(){
-  //   return this.checkoutForm.get('email')
-  // }
-  // get phonecontrol(){
-  //   return this.checkoutForm.get('phone')
-  // }
-  
-  // get address2control(){
-  //   return this.checkoutForm.get('address2')
-  // }
-
+ngOnInit(){
+  this.customerID = this.auth.id;
+  this.getcartbyId()
+  this.cartService.numberOfitemInCart.subscribe({
+    next:()=>{
+       this.numOfItemInCart=this.cartService.numberOfitemInCart.getValue();
+    }
+  });
+}
   get mainaddresscontrol(){
     return this.checkoutForm.get('mainaddress')
   }
-
+  getcartbyId(){
+    console.log(this.customerID);
+    this.cartByIDsub = this.cartService.getCartBycstId(this.customerID).subscribe({
+      next : (data) =>{
+        let filterdata = data.items.filter((item)=>item.state==0);
+        let totalPriceS : number = 0;
+        // this.cart.items = this.cart.items.filter((item)=>item.state==0)
+        for (var item of filterdata){
+          totalPriceS += item.unitPrice * item.quantity
+        }
+        this.cart = data;
+        this.cart.items = this.cart.items.filter((item)=>item.state==0);
+        this.cart.totalPrice = totalPriceS;
+        console.log("cart" ,this.cart);
+      },
+      error : (e) =>{
+        console.log("ERROR when fetch Data of CartItem" + e);
+      }
+    })
+  }
   enter(e:Event){
     console.log(this.checkoutForm.valid);
    }
@@ -95,7 +115,7 @@ export class CheckoutComponent {
    SendOrder(e:Event){
     console.log(new Date().toISOString());
       if (this.checkoutForm.valid){
-        
+
         const order : IorderAdd = {
           customerId: this.auth.id,
           orderDate: new Date().toISOString(),
@@ -106,6 +126,7 @@ export class CheckoutComponent {
             totalCost: 1680
           }]
         }
+        this.buttonText = 'تم ارسال طلبك...';
         console.log(order);
         this.orderSer.addorder(order).subscribe({
           next: (data) => {
@@ -118,7 +139,7 @@ export class CheckoutComponent {
       }else{
         this.showerror=true;
       }
-      
+
    }
 
 }
