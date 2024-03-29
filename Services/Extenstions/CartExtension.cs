@@ -20,7 +20,8 @@ namespace Services.Extenstions
                 Image = varient.ColoredProduct.Image,
                 Color = varient.ColoredProduct.Color.Name,
                 Size = varient.Size.Name,
-               UnitPrice = varient.Price
+                UnitPrice = varient.Price,
+                ProductVarientId = varient.Id
             };
         }
         public static List<CartItemDto> ToCartItemDto(this List<CartItem> cartItems)

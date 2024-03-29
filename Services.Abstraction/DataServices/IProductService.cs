@@ -57,6 +57,7 @@ public interface IProductService
 
     void DeleteCategory(int id);
     void DeleteCategory(int productId, int categoryId);
+    int GetNumberProducts();
 
     #endregion
 }
