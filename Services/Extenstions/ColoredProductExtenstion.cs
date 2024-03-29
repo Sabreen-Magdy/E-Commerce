@@ -1,5 +1,6 @@
 ﻿using Contract;
 using Domain.Entities;
+using System;
 using System.IO;
 
 namespace Services.Extenstions
@@ -9,7 +10,7 @@ namespace Services.Extenstions
     {
         private static string SaveProductImage(int productId, int colorId, string imageBase64)
         {
-            string path = "product_" + productId.ToString() + "_" + colorId.ToString() + "";
+            string path = "product_" + productId.ToString() + "_" + colorId.ToString() + ".png";
             Static.SaveImage(path, imageBase64);
             return path;
         }
@@ -90,22 +91,11 @@ namespace Services.Extenstions
             if (productColored == null)
                 throw new ArgumentNullException(nameof(productColored));
 
-            try
-            {
-                string path = "";
-                if (productColored.Image != null)
-                    path = SaveProductImage(productColored.ProductId, productColored.ColorId, productColored.Image);
-                return new(
-               Id: productColored.Id,
-               ColorCode: productColored.Color.Code,
-               ColorName: productColored.Color.Name,
-               Image: path);
-
-            }
-            catch (Exception)
-            {
-                throw new Exception("Can not save Image");
-            }
+            return new(
+Id: productColored.Id,
+ColorCode: productColored.Color.Code,
+ColorName: productColored.Color.Name,
+Image: productColored.Image);
         }
         public static List<ColoredProuctDto> ToColoredProductDto
             (this List<ColoredProduct> productColoreds)

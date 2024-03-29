@@ -73,23 +73,6 @@ namespace Presentation.Controllers
             }
         }
 
-
-        //[HttpGet("GetAllNew")]
-        //public IActionResult GetAllNew()
-        //{
-        //    try
-        //    {
-        //        var result = null;//_adminService.ProductService.GetAll().OrderBy(p=> p.;
-        //        if (result == null) return NotFound();
-
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
-
         #region Filtering
         [HttpGet("GetDetailsById")]
         public IActionResult GetDetails(int id)
