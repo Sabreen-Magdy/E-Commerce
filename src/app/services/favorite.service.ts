@@ -2,27 +2,37 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Ifav } from '../models/Ifav';
+import { favitem, IaddFavorite, Ifav } from '../models/Ifav';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class FavoriteService {
   baseURL :string ="http://localhost:5058/api/Favourite/";
-  secondBaseUrl:string="http://localhost:5058/api/Customer/";
-  constructor(private _HttpClient:HttpClient,private _Router:Router) {
-    if(localStorage.getItem('loginToken') != null){
-      // this.saveUserData();
-    }
+ 
+  constructor(private _HttpClient:HttpClient) {}
+
+  
+  getallFavbycustomr(id : number): Observable<favitem[]>{
+    return this._HttpClient.get<favitem[]>(`${this.baseURL}GetByCustomerId?customerId=${id}`)
   }
 
-addToFavorite(favItem:Ifav):Observable<any>
-{
-  return this._HttpClient.post(`${this.baseURL}AddFavorite/`,favItem);
-}
-getFavoriteByCustomerId(customerId:number):Observable<any>
-{
-  return this._HttpClient.get(`http://localhost:5058/api/Customer/GetFavourites?id=${customerId}`);
-}
+  additemTofav(data :IaddFavorite){
+    return this._HttpClient.post(`${this.baseURL}AddFavorite`,data)
+  }
+
+  getFavProductCustomer (customerId : number, productId : number) : Observable<favitem>
+  {
+    return this._HttpClient.get<favitem>(`${this.baseURL}GetByProductCustomer?customerId=${customerId}&productId=${productId}`)
+  }
+
+  deletefavitem(customerId : number, productId : number )
+  {
+    return this._HttpClient.delete(`${this.baseURL}DeleteFavorite?customerId=${customerId}&productId=${productId}`)
+  }
+
+
 
 }

@@ -6,3 +6,22 @@ export interface Ifav{
  Description :string;
  Price :number;
 }
+
+
+
+export interface favitem {
+
+    id: number,
+    customerId: number,
+    productId: number,
+    image: string,
+    name: string,
+    description: string,
+    price: number
+        
+}
+
+export interface IaddFavorite {
+    customerId: number,
+    productId: number
+}

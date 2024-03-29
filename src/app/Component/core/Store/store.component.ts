@@ -10,6 +10,8 @@ import { ICategory } from 'src/app/models/i-category';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth.service';
 import { SigninFormComponent } from '../SignComp/signin-form/signin-form.component';
+import { FavoriteService } from 'src/app/services/favorite.service';
+import { IaddFavorite } from 'src/app/models/Ifav';
 
 @Component({
   selector: 'app-store',
@@ -31,13 +33,16 @@ export class StoreComponent implements OnInit , OnDestroy{
   categoryList : ICategory [] = [];
   categoryName : string = "";
   productName : string = "";
+  customerId : number = 0;
 
-  constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService){}
+  constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
   
   ngOnDestroy(): void {
     
   }
   ngOnInit(): void {
+    this.customerId=this.auth.id;
+
     // this.getAllCategory();
     console.log("start");
     // this.activeRoute.params.subscribe(params => {
@@ -99,7 +104,7 @@ export class StoreComponent implements OnInit , OnDestroy{
   allProdbyCatSub : Subscription | undefined;
   prodByNameSub : Subscription | undefined;
   allCategorySub : Subscription | undefined;
-
+  addFavSub : Subscription | undefined;
   getAllCategory(){
     this.allCategorySub = this.cateServ.getAllCategs().subscribe({
       next : (data) => {
@@ -145,5 +150,22 @@ export class StoreComponent implements OnInit , OnDestroy{
         console.log("ERROR when fetch DataByName"+e);
       }
     })
+  }
+
+  pushItemToFavCart( prodId : number ){
+    const addFav : IaddFavorite = {
+      customerId: this.customerId,
+      productId: prodId
+    }
+
+   this.addFavSub = this._favService.additemTofav(addFav).subscribe({
+    next : (data) => {
+      console.log("item Add to Fav Succesfully" + data);
+    },
+    error : (e) => {
+      console.log("may bt item in fav already");
+      console.log("ERROR when add fav to item" + e);
+    }
+   }) 
   }
 }

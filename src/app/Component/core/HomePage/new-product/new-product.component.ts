@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
-import { Ifav } from 'src/app/models/Ifav';
+import { IaddFavorite, Ifav } from 'src/app/models/Ifav';
 import { IproductShow } from 'src/app/models/i-product-variant';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductFormService } from 'src/app/services/product-form.service';
@@ -23,6 +23,7 @@ export class NewProductComponent implements OnInit {
   }
 
   AllProductSub : Subscription | undefined;
+  addFavSub : Subscription | undefined;
   getallproduct(){
     console.log("doooone");
     this.AllProductSub = this.prodServ.getAllProduct().subscribe({
@@ -36,17 +37,23 @@ export class NewProductComponent implements OnInit {
     })
   }
 
+  pushItemToFavCart( prodId : number ){
+    const addFav : IaddFavorite = {
+      customerId: this.customerId,
+      productId: prodId
+    }
 
-  pushItemToFavCart(id:number,image:string,name:string,price:number){
-    console.log(image);
-    let favoriteItem : Ifav = {
-      CustomerId:this.customerId,
-      ProductId :id,
-      Image :image,
-      Name:name,
-      Description :"ffff",
-      Price :price
+   this.addFavSub = this._favService.additemTofav(addFav).subscribe({
+    next : (data) => {
+      console.log("item Add to Fav Succesfully" + data);
+    },
+    error : (e) => {
+      console.log("may bt item in fav already");
+      console.log("ERROR when add fav to item" + e);
+    }
+   }) 
   }
-    this._favService.addToFavorite(favoriteItem);
-  }
+
+
+  
 }

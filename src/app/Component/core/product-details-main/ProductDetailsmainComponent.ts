@@ -1,8 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
+import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
 import { IproductVarDet } from 'src/app/models/iproduct-var-det';
+import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductDetailsService } from 'src/app/services/product-details.service';
 
 
@@ -14,7 +18,7 @@ import { ProductDetailsService } from 'src/app/services/product-details.service'
 })
 export class ProductDetailsmainComponent implements OnInit {
 
-  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute) { }
+  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService) { }
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
@@ -27,11 +31,16 @@ export class ProductDetailsmainComponent implements OnInit {
   prodDetrev: IproductReviws[] = [];
   // sizeIndexMap: { [size: string]: number } = {};
   id: number = 0;
+  customerId : number = 0;
+
+  addFavSub : Subscription | undefined;
+
   ngOnInit(): void {
     // this.router.paramMap.subscribe(params => {
     //   this.id = params.get('id');
     //   console.log('ID:', id); // Use the ID as needed
     // });
+    this.customerId = this.authService.id;
     this.id = this.Actrouter.snapshot.params['id'];
     console.log("hiiiiiii" + this.id);
     this.prodDetApi.getAll(this.id).subscribe({
@@ -208,5 +217,21 @@ export class ProductDetailsmainComponent implements OnInit {
   //     return { name: colorName, code: variant ? variant.code : '' }; // Assuming 'code' is the property for color codes in your variant objects
   //   });
   // }
-  
+ 
+  pushItemToFavCart( prodId : number ){
+    const addFav : IaddFavorite = {
+      customerId: this.customerId,
+      productId: prodId
+    }
+
+   this.addFavSub = this.favService.additemTofav(addFav).subscribe({
+    next : (data) => {
+      console.log("item Add to Fav Succesfully" + data);
+    },
+    error : (e) => {
+      console.log("may bt item in fav already");
+      console.log("ERROR when add fav to item" + e);
+    }
+   }) 
+  }
 }
