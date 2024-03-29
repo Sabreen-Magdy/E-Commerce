@@ -1,7 +1,9 @@
+import { CartService } from './../../../services/cart.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
+import { AddCart } from 'src/app/models/icart';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
@@ -18,7 +20,7 @@ import { ProductDetailsService } from 'src/app/services/product-details.service'
 })
 export class ProductDetailsmainComponent implements OnInit {
 
-  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService) { }
+  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService) { }
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
@@ -34,6 +36,7 @@ export class ProductDetailsmainComponent implements OnInit {
   customerId : number = 0;
 
   addFavSub : Subscription | undefined;
+  addcartSub : Subscription | undefined;
 
   ngOnInit(): void {
     // this.router.paramMap.subscribe(params => {
@@ -234,4 +237,24 @@ export class ProductDetailsmainComponent implements OnInit {
     }
    }) 
   }
+
+  pushItemTocart (){
+    console.log(this.prodVariantList[this.selectedindex].id);
+    console.log(this.quantityNumber);
+
+    const addcart : AddCart = {
+      productVarientId: this.prodVariantList[this.selectedindex].id,
+      state: 0,
+      quantity: this.quantityNumber
+    }
+
+    this.addcartSub = this.CartServi.addCartItem(this.customerId,addcart).subscribe({
+      next: (done) => {
+        console.log("Added Succesful" + done);
+      },
+      error : (e) => {
+        console.log("ERROR when delete" + e);
+      }
+    })
+  }  
 }

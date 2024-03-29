@@ -16,16 +16,17 @@ export class CartService {
   //   return this.http.get<CartDto[]>(`${this.baseURL}/GetAll`);
   // }
 
-  getCartBycstId(id: number): Observable<CartDto[]> {
-    return this.http.get<CartDto[]>(`${this.baseURL}/GetByCustomerId?customerId${id}`);
+  
+  getCartBycstId(id: number): Observable<CartDto> {
+    return this.http.get<CartDto>(`${this.baseURL}/GetByCustomerId?customerId=${id}`);
   }
 
-  addCartItem(id: number,cartitem:AddCart)  {
-    return this.http.post<CartDto>(`${this.baseURL} /AddItem?customerId=${id}`, cartitem );
+  addCartItem(Customerid: number,cartitem:AddCart)  {
+    return this.http.post(`${this.baseURL}/AddItem?customerId=${Customerid}`, cartitem );
   }
 
-  updateCartItem(id: number,productId:number,Cartitem: Uppdatecart) {
-    return this.http.put<CartDto>(`${this.baseURL}/UpdateItem?costomerId=${id}&productId=${productId}`, Cartitem);
+  updateCartItem(customerid: number,productId:number,Cartitem: Uppdatecart) {
+    return this.http.put(`${this.baseURL}/UpdateItem?costomerId=${customerid}&productId=${productId}`, Cartitem);
   }
 
   deleteCartitem(id: number) {

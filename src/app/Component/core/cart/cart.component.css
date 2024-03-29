@@ -53,6 +53,10 @@
 .proceed-checkout   a{
     text-decoration: none;
 }
+
+.del {
+	cursor: pointer;
+}
 @media  (max-width:476px) {
   .proceed-checkout .proceed-btn {
     font-size: 14px;
