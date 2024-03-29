@@ -1,6 +1,6 @@
 import { ProductService } from './../../../services/product.service';
 import { IproductShow } from './../../../models/i-product-variant';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ComponentUrl } from 'src/app/models/unit';
 import { Subscription } from 'rxjs';
 import { ProductFormService } from 'src/app/services/product-form.service';
@@ -8,13 +8,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
 import { ICategory } from 'src/app/models/i-category';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth.service';
+import { SigninFormComponent } from '../SignComp/signin-form/signin-form.component';
+import { FavoriteService } from 'src/app/services/favorite.service';
+import { IaddFavorite } from 'src/app/models/Ifav';
 
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css'],
 })
-export class StoreComponent implements OnInit {
+export class StoreComponent implements OnInit , OnDestroy{
   ComponentUrl = ComponentUrl;
   toggle() {
     var blur = document.getElementById('blur');
@@ -29,32 +33,55 @@ export class StoreComponent implements OnInit {
   categoryList : ICategory [] = [];
   categoryName : string = "";
   productName : string = "";
+  customerId : number = 0;
 
-  constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ){}
+  constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
+  
+  ngOnDestroy(): void {
+    
+  }
   ngOnInit(): void {
-    this.getAllCategory();
+    this.customerId=this.auth.id;
+
+    // this.getAllCategory();
     console.log("start");
-    this.activeRoute.params.subscribe(params => {
-      this.categoryName = params['catgoryname'];
-      this.productName = params ['productname']
-      console.log(this.categoryName); // Convert the parameter to a number
-      if (this.categoryName)
-      {
-        console.log("cate");
-        this.getAllproductByCat()
-      } else if (this.productName){
-        console.log("product");
-        this.getproductByName();    
-      }
-      else{
-        console.log('all');
-        this.getAllProduct();
+    // this.activeRoute.params.subscribe(params => {
+    //   this.categoryName = params['catgoryname'];
+    //   this.productName = params ['productname']
+    //   console.log(this.categoryName); // Convert the parameter to a number
+    //   if (this.categoryName)
+    //   {
+    //     console.log("cate");
+    //     this.getAllproductByCat()
+    //   } else if (this.productName){
+    //     console.log("product");
+    //     this.getproductByName();    
+    //   }
+    //   else{
+    //     console.log('all');
+    //     this.getAllProduct();
         
-      }
-    })
+    //   }
+    // })
 
     // this.getAllProduct();
+    // console.log("init")
+    // console.log(this.auth.allProducts);
+    // this.ProductList = this.auth.allProducts;
+
+  // this.prodServ.getAllProduct2();
+  // this.ProductList = this.prodServ.productsCache;
+  this.prodServ.getAllProduct2().subscribe(
+    products => {
+      this.ProductList = products;
+    },
+    error => {
+      console.error('Error fetching products:', error);
+    }
+  );
+    
   }
+
 
   nameSearchForm :FormGroup = new FormGroup ({
     name : new FormControl("",[Validators.required])
@@ -77,7 +104,7 @@ export class StoreComponent implements OnInit {
   allProdbyCatSub : Subscription | undefined;
   prodByNameSub : Subscription | undefined;
   allCategorySub : Subscription | undefined;
-
+  addFavSub : Subscription | undefined;
   getAllCategory(){
     this.allCategorySub = this.cateServ.getAllCategs().subscribe({
       next : (data) => {
@@ -123,5 +150,22 @@ export class StoreComponent implements OnInit {
         console.log("ERROR when fetch DataByName"+e);
       }
     })
+  }
+
+  pushItemToFavCart( prodId : number ){
+    const addFav : IaddFavorite = {
+      customerId: this.customerId,
+      productId: prodId
+    }
+
+   this.addFavSub = this._favService.additemTofav(addFav).subscribe({
+    next : (data) => {
+      console.log("item Add to Fav Succesfully" + data);
+    },
+    error : (e) => {
+      console.log("may bt item in fav already");
+      console.log("ERROR when add fav to item" + e);
+    }
+   }) 
   }
 }

@@ -1,10 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IProductVariant } from 'src/app/models/i-product-variant';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
+import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
 import { IproductVarDet } from 'src/app/models/iproduct-var-det';
+import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductDetailsService } from 'src/app/services/product-details.service';
+
+
 
 @Component({
   selector: 'app-product-details-main',
@@ -13,25 +18,30 @@ import { ProductDetailsService } from 'src/app/services/product-details.service'
 })
 export class ProductDetailsmainComponent implements OnInit {
 
-  constructor(private prodDetApi: ProductDetailsService , private Actrouter:ActivatedRoute) { }
+  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService) { }
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
-    "name": "no name",
+    "name": "waiting",
     "avgRating": 0,
     "numberReviews": 0,
     "description": "undefine"
   };
 
-  prodDetrev: IproductReviws[] = []
+  prodDetrev: IproductReviws[] = [];
   // sizeIndexMap: { [size: string]: number } = {};
-  id : number = 0
+  id: number = 0;
+  customerId : number = 0;
+
+  addFavSub : Subscription | undefined;
+
   ngOnInit(): void {
     // this.router.paramMap.subscribe(params => {
     //   this.id = params.get('id');
     //   console.log('ID:', id); // Use the ID as needed
     // });
-    this.id=this.Actrouter.snapshot.params['id']
+    this.customerId = this.authService.id;
+    this.id = this.Actrouter.snapshot.params['id'];
     console.log("hiiiiiii" + this.id);
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
@@ -56,18 +66,16 @@ export class ProductDetailsmainComponent implements OnInit {
       }
     });
 
+    this.getUniqueColors();
+    this.getUniqueCode
+    // This function extracts unique colors from the prodVariantList
+   
 
   }
 
   list: string[] = [
     "https://cdn1.iconfinder.com/data/icons/loading-icon/100/loading_icon-01-512.png"
-    // "https://media.istockphoto.com/id/955641488/photo/clothes-shop-costume-dress-fashion-store-style-concept.jpg?s=612x612&w=0&k=20&c=ZouECh5-XOCuBzvKBQfxgyw0RIGEUg9u5F0sJiZV86s=",
-    // "https://st3.depositphotos.com/9747634/32010/i/450/depositphotos_320104748-stock-photo-hangers-with-different-clothes-in.jpg",
-    // "https://media.istockphoto.com/id/1257563298/photo/fashion-clothes-on-a-rack-in-a-light-background-indoors-place-for-text.webp?b=1&s=612x612&w=0&k=20&c=2pLpczTxtUjys6Y33OKehWyqy8g98FlyCbJuUZVUv5k=",
-    // "https://media.istockphoto.com/id/533833660/photo/clothing-on-hanger-at-the-modern-shop-boutique.webp?b=1&s=612x612&w=0&k=20&c=VVcA-de6aZvP3H5MfOF1aXn19WTXOV-eS6AnMOjUrvI=",
-    // "https://st.depositphotos.com/2209782/2833/i/450/depositphotos_28336025-stock-photo-clothes-on-a-rack.jpg",
-    // "https://www.shutterstock.com/image-photo/vintage-red-shoes-on-white-260nw-92008067.jpg",
-    // "https://i.pinimg.com/736x/c9/0d/91/c90d91426ae3384073474a42ab38f695.jpg"
+
   ];
 
   color = [
@@ -75,37 +83,17 @@ export class ProductDetailsmainComponent implements OnInit {
       name: "الاسود",
       code: "#000000"
     },
-    // {
-    //   name: "الابيض",
-    //   code: "#FFFFFF"
-    // },
-    // {
-    //   name: "زيتون",
-    //   code: "#808000"
-    // },
-    // {
-    //   name: "تركواز",
-    //   code: "#008080"
-    // },
-    // {
-    //   name: "أرجواني",
-    //   code: "#800080"
-    // },
-    // {
-    //   name: "الأزرق الداكن",
-    //   code: "#000080"
-    // },
+
   ];
   size = [
     "S"
-    // ,"L","XL","M"
-  ]
+  ];
 
   showUpArrow: boolean = false;
   showDownArrow: boolean = true;
   open: boolean = false;
   selectedindex: number = 0;
-  selectedImage: string = this.list[0]
+  selectedImage: string = this.list[0];
   selectedColor: string = this.color[0].name;
   selectedSize: string = this.size[0];
   quantityNumber: number = 1;
@@ -139,27 +127,27 @@ export class ProductDetailsmainComponent implements OnInit {
   showImage(event: any, index: number): void {
     if (event.target.tagName === 'IMG') {
       this.selectedImage = event.target.src;
-      this.selectedindex = index
-      this.selectedColor = this.prodVariantList[this.selectedindex].colorName
-      this.selectedSize = this.prodVariantList[this.selectedindex].size + index
+      this.selectedindex = index;
+      this.selectedColor = this.prodVariantList[this.selectedindex].colorName;
+      this.selectedSize = this.prodVariantList[this.selectedindex].size + index;
       this.quantityNumber = 1; // Reset quantity to 1
     }
   }
   selectColor(colorName: string, index: number): void {
 
     this.selectedColor = colorName;
-    this.selectedindex = index
-    this.selectedImage =  this.prodVariantList[this.selectedindex].coloredimage
-    this.selectedSize = this.prodVariantList[this.selectedindex].size + index
+    this.selectedindex = index;
+    this.selectedImage = this.prodVariantList[this.selectedindex].coloredimage;
+    this.selectedSize = this.prodVariantList[this.selectedindex].size + index;
     this.quantityNumber = 1; // Reset quantity to 1
   }
   selectSize(sizename: string, index: number): void {
 
     this.selectedSize = sizename + index;
-    this.selectedindex = index
-    this.selectedImage =  this.prodVariantList[this.selectedindex].coloredimage
+    this.selectedindex = index;
+    this.selectedImage = this.prodVariantList[this.selectedindex].coloredimage;
     // this.selectedSize = this.prodVariantList[this.selectedindex].size+index
-    this.selectedColor = this.prodVariantList[this.selectedindex].colorName
+    this.selectedColor = this.prodVariantList[this.selectedindex].colorName;
     this.quantityNumber = 1; // Reset quantity to 1
   }
   plus() {
@@ -200,9 +188,9 @@ export class ProductDetailsmainComponent implements OnInit {
       this.currentPage++;
     }
   }
-getStarArray(count: number): any[] {
-  return Array(count).fill(0);
-}
+  getStarArray(count: number): any[] {
+    return Array(count).fill(0);
+  }
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -211,5 +199,39 @@ getStarArray(count: number): any[] {
 
   getTotalPages(): number {
     return Math.ceil(this.list.length / this.itemsPerPage);
+  }
+
+
+  getUniqueColors(): string[] {
+    return Array.from(new Set(this.prodVariantList.map(item => item.colorName)));
+  }
+
+  getUniqueCode() : string[]{
+    return Array.from(new Set(this.prodVariantList.map(item => item.code)));
+  }
+
+  // getUniqueColors(): { name: string, code: string }[] {
+  //   const uniqueColorNames = Array.from(new Set(this.prodVariantList.map(item => item.colorName)));
+  //   return uniqueColorNames.map(colorName => {
+  //     const variant = this.prodVariantList.find(item => item.colorName === colorName);
+  //     return { name: colorName, code: variant ? variant.code : '' }; // Assuming 'code' is the property for color codes in your variant objects
+  //   });
+  // }
+ 
+  pushItemToFavCart( prodId : number ){
+    const addFav : IaddFavorite = {
+      customerId: this.customerId,
+      productId: prodId
+    }
+
+   this.addFavSub = this.favService.additemTofav(addFav).subscribe({
+    next : (data) => {
+      console.log("item Add to Fav Succesfully" + data);
+    },
+    error : (e) => {
+      console.log("may bt item in fav already");
+      console.log("ERROR when add fav to item" + e);
+    }
+   }) 
   }
 }
