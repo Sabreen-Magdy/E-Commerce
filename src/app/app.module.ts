@@ -44,7 +44,7 @@ import { ProfileComponent } from './Component/core/ProfilePage/profile/profile.c
 import { ProfiledetaileComponent } from './Component/core/ProfilePage/profiledetaile/profiledetaile.component';
 import { ActivityComponent } from './Component/core/ProfilePage/activity/activity.component';
 import { EditprofileComponent } from './Component/core/ProfilePage/editprofile/editprofile.component';
-import { ProductDetailsmainComponent } from './Component/core/product-details-main/product-details-main.component';
+import { ProductDetailsmainComponent } from './Component/core/product-details-main/ProductDetailsmainComponent';
 import { RouterModule } from '@angular/router';
 import { AnonymousPageComponent } from './Component/core/anonymous-page/anonymous-page.component';
 import { OrdersComponent } from './Component/core/orders/orders.component';
