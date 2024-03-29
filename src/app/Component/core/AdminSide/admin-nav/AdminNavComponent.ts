@@ -2,6 +2,7 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ComponentUrl } from 'src/app/models/unit';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-admin-nav',
@@ -23,7 +24,8 @@ export class AdminNavComponent {
     location: Location,
     private renderer: Renderer2,
     private element: ElementRef,
-    private router: Router
+    private router: Router,
+    private _AuthService:AuthService
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
@@ -99,4 +101,5 @@ export class AdminNavComponent {
       navbar.classList.remove('bg-white');
     }
   }
+
 }

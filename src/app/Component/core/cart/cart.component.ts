@@ -13,6 +13,7 @@ import { ComponentUrl } from 'src/app/models/unit';
 })
 export class CartComponent implements OnInit {
   ComponentUrl=ComponentUrl;
+  // buttonText:string="تأكيد الطلب"
   customerID : number = 0;
   cart : CartDto = {
     totalPrice: 0,
@@ -112,6 +113,7 @@ export class CartComponent implements OnInit {
   }
 
   gotoCheckout() {
+    this.CartService.getNumberOfitemInCart();
     for (let item of this.cart.items) {
       const updatecart: Uppdatecart = {
         state: 1,

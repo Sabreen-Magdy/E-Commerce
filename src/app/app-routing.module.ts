@@ -34,19 +34,19 @@ import { adminServiceGuard } from './admin-service.guard';
 
 const routes: Routes = [
   {path:"",redirectTo:"main",pathMatch:"full"},
-  {path:"admin",component:SidebarAdminComponent, children:[
-    {path:"dashboard",component:DashboardAdminPageComponent, },
-    {path:"product",component:ProductTabelComponent, },
-    {path:"product/add",component:ProductFormComponent, },
-    {path:"product/edit/:id",component:ProductFormComponent, },
-    {path:"order",component:AdminOrderComponent, },
-    {path:"category",component:CategoryTableComponent, },
-    {path:"category/add",component:CategoryFormComponent, },
-    {path:"category/edit/:id",component:CategoryFormComponent, },
-    {path:"Settings",component:TableComponent, },
+  {path:"admin",canActivate:[adminServiceGuard],component:SidebarAdminComponent, children:[
+    {path:"dashboard",canActivate:[adminServiceGuard],component:DashboardAdminPageComponent, },
+    {path:"product",canActivate:[adminServiceGuard],component:ProductTabelComponent, },
+    {path:"product/add",canActivate:[adminServiceGuard],component:ProductFormComponent, },
+    {path:"product/edit/:id",canActivate:[adminServiceGuard],component:ProductFormComponent, },
+    {path:"order",canActivate:[adminServiceGuard],component:AdminOrderComponent, },
+    {path:"category",canActivate:[adminServiceGuard],component:CategoryTableComponent, },
+    {path:"category/add",canActivate:[adminServiceGuard],component:CategoryFormComponent, },
+    {path:"category/edit/:id",canActivate:[adminServiceGuard],component:CategoryFormComponent, },
+    {path:"Settings",canActivate:[adminServiceGuard],component:TableComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
-    {path:"main",canActivate:[adminServiceGuard],component:AnonymousPageComponent, },
+    {path:"main",component:AnonymousPageComponent, },
     {path:"aboutus",component:AboutComponent, },
     { path: ComponentUrl.Reviews, component: ReviewsComponent },
     {path:"",component:SignFamilyComponent,children:[

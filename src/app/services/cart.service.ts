@@ -38,8 +38,9 @@ export class CartService {
   getNumberOfitemInCart(){
     this.getCartBycstId(this.authservice.id).subscribe({
     next: (data) => {
-      console.log(data.totalQuantity);
-      this.numberOfitemInCart.next(data.totalQuantity);
+      // console.log(data.totalQuantity);
+      let filterdata = data.items.filter((item)=>item.state==0);
+      this.numberOfitemInCart.next(filterdata.length);
       console.log(this.numberOfitemInCart.getValue());
     }
   });

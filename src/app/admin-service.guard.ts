@@ -14,7 +14,7 @@ export class adminServiceGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if(localStorage.getItem('loginToken') == null){
+    if(localStorage.getItem('loginToken') != null && this._AuthService.userRole=="Saller "){
       return true;
     }
     else{
