@@ -1,3 +1,4 @@
+import { IProductAddForm } from './i-product-variant';
 export interface Iproduct {
   id: number;
   img: string;
@@ -14,3 +15,5 @@ export interface Iproduct {
   // numberReviews: number
   // description: string
 }
+
+

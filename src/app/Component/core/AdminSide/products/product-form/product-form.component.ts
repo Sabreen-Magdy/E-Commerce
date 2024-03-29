@@ -1,4 +1,4 @@
-import { ColoredProduct } from './../../../../../models/colored-product';
+import { ColoredProduct, coloredProduct2 } from './../../../../../models/colored-product';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -53,6 +53,7 @@ export class ProductFormComponent implements OnInit {
   sizeList: Isize[] = [];
   categoryList: ICategory[] = [];
   imagesColor: ColoredProduct[] = [];
+  imagesColor2: coloredProduct2 [] = [];
   uploadedImage: string = "";
   nameofColorforImage: coloryy[] = [];
   datafColorandSizeCari: varienty[] = [];
@@ -60,6 +61,8 @@ export class ProductFormComponent implements OnInit {
   dropdownList: option[] = [];
   selectedItems: option[] = [];
   dropdownSettings: IDropdownSettings = {};
+
+  nowuploadImage : string = "";
   constructor(private http: HttpClient, private sanitizer: DomSanitizer, private clrServ: ColorServiceService, private sizeServ: SizeService, private categServ: CategoryService, private addproductServ: ProductFormService, private myRouter: Router, private actRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -206,8 +209,8 @@ export class ProductFormComponent implements OnInit {
     return this.picForm.get('image')
   }
 
-  onFileSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
+  onFileSelected(event: any) {
+    const inputElement = event.target ;
     if (inputElement && inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
       this.picForm.patchValue({ image: file });
@@ -215,6 +218,18 @@ export class ProductFormComponent implements OnInit {
       if (imageControl) {
         imageControl.updateValueAndValidity();
       }
+      const reader = new FileReader();
+      console.log(reader);
+      reader.onloadend = () => {
+        const base64File = reader.result as string;
+        console.log(base64File);
+        this.nowuploadImage = base64File;
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+        console.log(file);
+      }
+
     }
   }
 
@@ -257,8 +272,12 @@ export class ProductFormComponent implements OnInit {
         colorId: this.picForm.get('colorId')?.value,
         image: this.picForm.get('image')?.value
       }
-
+      const imageColor2 : coloredProduct2 = {
+        colorId:  this.picForm.get('colorId')?.value,
+        image: this.nowuploadImage
+      }
       this.imagesColor.push(imageColor);
+      this.imagesColor2.push(imageColor2);
       const colornameCode: coloryy = {
         name: this.getColorNameById(this.picForm.get('colorId')?.value),
         code: this.getColorCodeById(this.picForm.get('colorId')?.value,)
@@ -342,45 +361,46 @@ export class ProductFormComponent implements OnInit {
       console.log(this.selectedItems);
       console.log(this.selectedItems.map(item => item.item_id));
       const formData = new FormData();
-      const newProduct = {
+      const newProduct:IProductAddForm = {
         sallerId: 1,
         name: this.productForm.get('nameproduct')?.value,
         description: this.productForm.get('descriptionProduct')?.value,
         categories: this.selectedItems.map(item => item.item_id),
-        images: this.imagesColor,
+        images: this.imagesColor2,
         productVariants: this.productVariants
       }
-      formData.append('SallerId', '1');
-      formData.append('Name', this.productForm.get('nameproduct')?.value);
-      formData.append('Description', this.productForm.get('descriptionProduct')?.value);
-      for (let i = 0; i < this.selectedItems.length; i++) {
-        formData.append('Categories', this.selectedItems[i].item_id.toString());
-      }
-      for (let i = 0; i < this.imagesColor.length; i++) {
-        formData.append('Image', this.imagesColor[i].image);
-      }
-      for (let i = 0; i < this.imagesColor.length; i++) {
-        formData.append('ColorId', this.imagesColor[i].colorId.toString());
-      }
-      // formData.append('Categories', this.selectedItems.map(item => item.item_id));
-      // formData.append('Image', this.imagesColor.map(item => item.image));
-      for (let i = 0; i < this.productVariants.length; i++) {
-        formData.append('ProductVariants_ColorId', this.productVariants[i].colorId.toString());
-      }
-      for (let i = 0; i < this.productVariants.length; i++) {
-        formData.append('ProductVariants_UnitPrice', this.productVariants[i].unitPrice.toString());
-      }
-      for (let i = 0; i < this.productVariants.length; i++) {
-        formData.append('ProductVariants_Discount', this.productVariants[i].discount.toString());
-      }
-      for (let i = 0; i < this.productVariants.length; i++) {
-        formData.append('ProductVariants_Quantity', this.productVariants[i].quantity.toString());
-      }
-      for (let i = 0; i < this.productVariants.length; i++) {
-        formData.append('ProductVariants_SizeId', this.productVariants[i].sizeId.toString());
-      }
+      console.log(newProduct);
+      // formData.append('SallerId', '1');
+      // formData.append('Name', this.productForm.get('nameproduct')?.value);
+      // formData.append('Description', this.productForm.get('descriptionProduct')?.value);
+      // for (let i = 0; i < this.selectedItems.length; i++) {
+      //   formData.append('Categories', this.selectedItems[i].item_id.toString());
+      // }
+      // for (let i = 0; i < this.imagesColor.length; i++) {
+      //   formData.append('Image', this.imagesColor[i].image);
+      // }
+      // for (let i = 0; i < this.imagesColor.length; i++) {
+      //   formData.append('ColorId', this.imagesColor[i].colorId.toString());
+      // }
+      // // formData.append('Categories', this.selectedItems.map(item => item.item_id));
+      // // formData.append('Image', this.imagesColor.map(item => item.image));
+      // for (let i = 0; i < this.productVariants.length; i++) {
+      //   formData.append('ProductVariants_ColorId', this.productVariants[i].colorId.toString());
+      // }
+      // for (let i = 0; i < this.productVariants.length; i++) {
+      //   formData.append('ProductVariants_UnitPrice', this.productVariants[i].unitPrice.toString());
+      // }
+      // for (let i = 0; i < this.productVariants.length; i++) {
+      //   formData.append('ProductVariants_Discount', this.productVariants[i].discount.toString());
+      // }
+      // for (let i = 0; i < this.productVariants.length; i++) {
+      //   formData.append('ProductVariants_Quantity', this.productVariants[i].quantity.toString());
+      // }
+      // for (let i = 0; i < this.productVariants.length; i++) {
+      //   formData.append('ProductVariants_SizeId', this.productVariants[i].sizeId.toString());
+      // }
 
-      this.addproductServ.addProduct(formData).subscribe({
+      this.addproductServ.addProduct(newProduct).subscribe({
         next: (e) => {
           console.log("Donnnne", e)
           this.myRouter.navigate(['/admin/product']);

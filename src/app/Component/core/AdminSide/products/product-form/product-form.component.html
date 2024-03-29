@@ -209,7 +209,7 @@
             
           </div> -->
           <label for="image" class="form-label">صورة المنتج</label>
-          <input  type="file" class="form-control" id="nameProduct" formControlName="image" (change)="onFileSelected($event)" required />
+          <input  type="file" class="form-control" id="nameProduct"  (change)="onFileSelected($event)" required accept="image/*" />
           <i *ngIf="imagePicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
             class="bi bi-exclamation-circle-fill"></i>

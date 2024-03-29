@@ -32,4 +32,8 @@ export class CartService {
   deleteCartitem(id: number) {
     return this.http.delete(`${this.baseURL}/DeleteItemById?id=${id}`);
   }
+
+  deleteCartItemByCID (customerId : number, productVarient : number){
+    return this.http.delete(`${this.baseURL}/DeleteItem?costomerId=${customerId}&productVarientId=${productVarient}`)
+  }
 }
