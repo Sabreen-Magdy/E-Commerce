@@ -383,11 +383,10 @@ export class ProductFormComponent implements OnInit {
       this.addproductServ.addProduct(formData).subscribe({
         next: (e) => {
           console.log("Donnnne", e)
-
+          this.myRouter.navigate(['/admin/product']);
         },
         //error: (e) => console.log(e), 
       })
-      this.myRouter.navigate(['/admin/product']);
     } else {
       this.showerroM = true;
     }
