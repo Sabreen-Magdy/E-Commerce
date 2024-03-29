@@ -80,7 +80,7 @@
       <div class="alert alert-danger mt-3 p-1"> يجب ادخال صورة </div>
     </div>
     <div class="row row-cols-1 row-cols-md-5 ps-md-5 g-4 ms-md-5 mt-2">
-      <div *ngFor="let x of imagesColor; let i = index" class="col">
+      <div *ngFor="let x of imagesColor2; let i = index" class="col">
         <div class="card">
           <div class="card-img-top">
 
@@ -251,7 +251,7 @@
         
           <label for="colorSelect" class="form-label">اللون</label>
           <select formControlName="color" class="form-select" id="colorSelect" required>
-            <option *ngFor="let x of colorList" value="{{x.id}}">{{x.name}}</option>
+            <option *ngFor="let x of nameofColorforImage" value="{{x.id}}">{{x.name}}</option>
           </select>
           <i *ngIf="colorvariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)"

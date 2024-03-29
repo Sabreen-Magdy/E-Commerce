@@ -32,6 +32,7 @@ interface varienty {
 }
 
 interface coloryy {
+  id :number;
   name: string,
   code: string,
 }
@@ -279,6 +280,7 @@ export class ProductFormComponent implements OnInit {
       this.imagesColor.push(imageColor);
       this.imagesColor2.push(imageColor2);
       const colornameCode: coloryy = {
+        id :this.picForm.get('colorId')?.value,
         name: this.getColorNameById(this.picForm.get('colorId')?.value),
         code: this.getColorCodeById(this.picForm.get('colorId')?.value,)
       }
@@ -314,7 +316,7 @@ export class ProductFormComponent implements OnInit {
   }
   closeVarient() {
     this.productVariantForm.reset();
-    this.showerroS = true;
+    this.showerroS = false;
     var form = document.getElementById("VariantForm");
     form?.classList.remove('model-show2');
   }
@@ -352,8 +354,17 @@ export class ProductFormComponent implements OnInit {
   }
 
   deleteImage(index: number) {
-    this.imagesColor.splice(index, 1);
+    let colorid = this.nameofColorforImage[index].id;
+    this.selectedimgUrl.splice(index, 1);
     this.nameofColorforImage.splice(index, 1);
+    this.imagesColor2.splice(index,1);
+    
+    for (let i = this.productVariants.length - 1; i >= 0; i--) {
+      if (this.productVariants[i].colorId === colorid) {
+        this.productVariants.splice(i, 1);
+        this.datafColorandSizeCari.splice(i,1)
+      }
+    }
   }
   onsumbit() {
     if (this.productForm.valid && this.imagesColor.length > 0 && this.productVariants.length > 0) {
