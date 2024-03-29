@@ -127,4 +127,7 @@ span.msg.show {
 
 
 
-  
+.loader{
+    margin: 50px auto;
+    width: 50px;
+}

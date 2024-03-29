@@ -34,35 +34,59 @@ export class StoreComponent implements OnInit , OnDestroy{
   categoryName : string = "";
   productName : string = "";
   customerId : number = 0;
-
+  noitem : boolean = false;
   constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
 
   ngOnDestroy(): void {
 
   }
   ngOnInit(): void {
+    console.log("length of store",this.ProductList.length);
+    console.log("noitem",this.noitem);
     this.customerId=this.auth.id;
-
-    // this.getAllCategory();
+    this.prodServ.getlength();
+    this.getAllCategory();
     console.log("start");
-    // this.activeRoute.params.subscribe(params => {
-    //   this.categoryName = params['catgoryname'];
-    //   this.productName = params ['productname']
-    //   console.log(this.categoryName); // Convert the parameter to a number
-    //   if (this.categoryName)
-    //   {
-    //     console.log("cate");
-    //     this.getAllproductByCat()
-    //   } else if (this.productName){
-    //     console.log("product");
-    //     this.getproductByName();
-    //   }
-    //   else{
-    //     console.log('all');
-    //     this.getAllProduct();
-
-    //   }
-    // })
+    this.activeRoute.params.subscribe(params => {
+      this.categoryName = params['catgoryname'];
+      this.productName = params ['productname']
+      console.log(this.categoryName); // Convert the parameter to a number
+      if (this.categoryName)
+      {
+        console.log(this.categoryName);
+        this.prodServ.gatProductbyCategoryName2(this.categoryName).subscribe(
+          products => {
+            this.ProductList = products;
+            if(this.ProductList.length == 0){
+              this.noitem = true;
+            }
+          },
+          error => {
+            console.error('Error fetching products:', error);
+            this.noitem = true;
+          }
+        );
+      } else 
+      if (this.productName){
+        console.log("product");
+        this.getproductByName();
+      }
+      else{
+        this.prodServ.getAllProduct2().subscribe(
+          products => {
+            this.ProductList = products;
+            if(this.ProductList.length == 0){
+              this.noitem = true;
+            }
+          },
+          error => {
+            console.error('Error fetching products:', error);
+            this.noitem = true;
+          }
+        );
+      
+      }
+    })
 
     // this.getAllProduct();
     // console.log("init")
@@ -71,15 +95,7 @@ export class StoreComponent implements OnInit , OnDestroy{
 
   // this.prodServ.getAllProduct2();
   // this.ProductList = this.prodServ.productsCache;
-  this.prodServ.getAllProduct2().subscribe(
-    products => {
-      this.ProductList = products;
-    },
-    error => {
-      console.error('Error fetching products:', error);
-    }
-  );
-
+  
   }
 
 
@@ -144,10 +160,14 @@ export class StoreComponent implements OnInit , OnDestroy{
       next : (data) => {
         console.log(data);
         this.ProductList = data;
+        if(this.ProductList.length == 0){
+          this.noitem = true
+        }
         console.log("producrLisr" + this.ProductList);
       },
       error : (e) => {
         console.log("ERROR when fetch DataByName"+e);
+        this.noitem = true;
       }
     })
   }
@@ -169,4 +189,27 @@ export class StoreComponent implements OnInit , OnDestroy{
    })
    this._favService.getNumberOfitemInFavCart();
   }
+  
+  sortProductList(e : any){
+    let option = (e.target as HTMLInputElement).value;
+    switch (option){
+    case '2':
+      this.ProductList.sort((a, b) => b.price - a.price);
+      break;
+    case '3':
+      this.ProductList.sort((a, b) => a.price - b.price);
+      break;
+    case '4':
+      this.ProductList.sort((a,b)=>b.addingDate.localeCompare(a.addingDate))
+      break;
+    case '5':
+      this.ProductList.sort((a,b)=>b.avgRating - a.avgRating)
+      break;
+    default:
+      // Default sorting logic (if no option is selected)
+      break;
+    }
+
+  }
 }
+

@@ -15,9 +15,8 @@
       الفلتر
     </div>
     <div>
-      <select class="sortselect">
+      <select class="sortselect" (change)="sortProductList($event)">
         <option selected="">ترتيب حسب</option>
-        <option value="1">الأكثر رواجاً</option>
         <option value="2">السعر: من الأعلى إلى الأقل</option>
         <option value="3">السعر: من الأقل إلى الأعلى</option>
         <option value="4">جديدنا</option>
@@ -25,8 +24,10 @@
       </select>
     </div>
   </div>
-
-  <div *ngIf="ProductList.length == 0">
+  <div *ngIf="ProductList.length == 0 && !noitem" class="loaddiv">
+    <div class="loader"></div>
+  </div>
+  <div *ngIf="ProductList.length == 0 && noitem">
     <div class="alert alert-danger">لا يوجد منتجات متوفرة</div>
   </div>
   <div class="items row">
