@@ -170,6 +170,22 @@ namespace Presentation.Controllers
             }
         }
 
+        [HttpGet("GetNew")]
+        public IActionResult GetNew(DateTime date, int len)
+        {
+            try
+            {
+                var result = _adminService.ProductService.GetNew(date, len);
+                if (result == null) return NotFound();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("GetByPrice")]
         public IActionResult GetByPrice(double price)
         {

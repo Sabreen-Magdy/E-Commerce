@@ -11,25 +11,25 @@ public class CustomerRepository : ICustomerRepository
     public CustomerRepository(ApplicationDbContext context) =>
         _context = context;
 
-
-    public List<Domain.Entities.Customer> GetAll() =>
+    public int GetNumberCustomers() => _context.Customers.Count();
+    public List<Customer> GetAll() =>
         _context.Customers.ToList();
 
-    public void Add(Domain.Entities.Customer customer) =>
+    public void Add(Customer customer) =>
       _context.Customers.Add(customer);
 
 
-    public void Delete(Domain.Entities.Customer customer) =>
+    public void Delete(Customer customer) =>
       _context.Customers.Remove(customer);
 
-    public Domain.Entities.Customer? Get(int id) =>
+    public Customer? Get(int id) =>
       _context.Customers.Find(id);
 
-    public List<Domain.Entities.Customer> Get(string name) =>
+    public List<Customer> Get(string name) =>
       _context.Customers.Where(c => c.Name == name)
                     .Select(c => c).ToList();
 
-    public void Update(Domain.Entities.Customer customer) =>
+    public void Update(Customer customer) =>
       _context.Customers.Update(customer);
 
     public void Updatecust(int id, Customer customer)

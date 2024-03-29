@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Contract;
+using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -12,7 +13,13 @@ namespace Persistence.Repositories
 
         public OrderRepository(ApplicationDbContext context) =>
             _context = context;
-
+        
+        public double GetProfit(int state) =>
+             _context.Orders.Where(o=> o.State == state)
+                .Sum(o => o.TotalCost);
+       
+        public int GetNumberOrders(int state) => 
+            _context.Orders.Count(o => o.State == state);
         public void Add(Order entity)
         {
             _context.Orders.Add(entity);
@@ -56,14 +63,24 @@ namespace Persistence.Repositories
             return GetAll().Where(o=> o.CustomerId == customerID).ToList();
         }
 
-        //public List<Order> GetByProduct(int productID)
-        //{
-        //    return _context.Orders.Where(o => o. == customerID).ToList();
-        //}
-
         public void Update(Order entity)
         {
             _context.Orders.Update(entity);
         }
+
+        public List<KeyValuePair<int, double>> GetProfitByYear(int state) => _context.Orders
+            .Where(   o => o.State == state
+                   && o.ConfirmDate != null && o.ConfirmDate.Value.Year == DateTime.Now.Year)
+                .GroupBy(o => new { o.ConfirmDate!.Value.Month })
+                .Select(g => new KeyValuePair<int, double>(g.Key.Month, g.Sum(t => t.TotalCost)))
+                    .OrderBy(result => result.Key).AsEnumerable().ToList();
+
+        public List<KeyValuePair<int, double>> GetProfitByWeek(int state) => _context.Orders
+            .Where(o => o.State == state
+                   && o.ConfirmDate != null && o.ConfirmDate.Value.Year == DateTime.Now.Year
+                        && o.ConfirmDate.Value.Month == DateTime.Now.Month &&
+                    (o.ConfirmDate.Value.Day <= DateTime.Now.Day || o.ConfirmDate.Value.Day >= DateTime.Now.Day - 7))
+                .Select(g => new KeyValuePair<int, double>(g.ConfirmDate!.Value.Day, g.TotalCost))
+                    .OrderBy(result => result.Key).AsEnumerable().ToList();
     }
 }

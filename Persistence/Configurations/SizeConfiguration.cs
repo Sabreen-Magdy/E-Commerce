@@ -14,5 +14,8 @@ public class SizeConfiguration : IEntityTypeConfiguration<Size>
         // Properties Constrains
         builder.Property(p => p.Name)
             .HasMaxLength(10);
+
+        builder.HasIndex(b => b.Name)
+            .IsUnique();
     }
 }

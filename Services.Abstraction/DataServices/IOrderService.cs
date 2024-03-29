@@ -1,10 +1,5 @@
 ﻿using Contract;
 using Contract.Order;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Abstraction.DataServices
 {
@@ -17,5 +12,10 @@ namespace Services.Abstraction.DataServices
         public void Update(OrderDto DTO);
         public void Delete(int id);
         public void Updatestatus(int id, int status);
+        int GetNumberOrders(int state);
+        double GetProfit(int state);
+
+        List<ProfitDto> GetProfitByYear(int state);
+        List<ProfitDto> GetProfitByWeek(int state);
     }
 }

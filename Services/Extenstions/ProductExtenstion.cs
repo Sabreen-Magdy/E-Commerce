@@ -41,9 +41,11 @@ public static class ProductExtenstion
         return new()
         {
             Id = product.Id,
-            Image = coloredProduct is null? "" : coloredProduct.Image,
+            Image = coloredProduct is null ? "" : coloredProduct.Image,
             Name = product.Name,
-            Price = product.AvgPrice  
+            Price = product.AvgPrice,
+            AddingDate = product.AddingDate,
+            AvgRating = product.AvgRate,
         };
     }
     public static ProductDetailsDto ToProductDetailsDto(this Product product)

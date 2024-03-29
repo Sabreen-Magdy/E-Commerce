@@ -6,6 +6,7 @@ using Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Services.DataServices
 {
@@ -33,7 +34,9 @@ namespace Services.DataServices
                 Id = product.Id,
                 Name = product.Name,
                 Price = price,
-                Image = image
+                Image = image,
+                AddingDate = product.AddingDate,
+                AvgRating = product.AvgRate,
             };
         }
         private List<ProductDto> Map(List<Product> products) =>
@@ -444,6 +447,15 @@ namespace Services.DataServices
 
         public int GetNumberProducts() => _repository.ProductRepository.GetLength();
 
+        public List<ProductDto> GetNew(DateTime date, int len) =>
+            _repository.ProductRepository.GetAll()
+            .Where(p => p.AddingDate == date).OrderBy(p => p.AddingDate)
+            .Take(len).ToList().ToProductDto();
         
+
+        public List<ProductDto> GetByPriceRange(double lowerPrice, double upperPrice) =>
+        _repository.ProductRepository.GetAll()
+            .Where(p => p.AvgPrice >= lowerPrice && p.AvgPrice <= upperPrice)
+            .ToList().ToProductDto();
     }
 }

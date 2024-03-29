@@ -5,7 +5,6 @@ using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
-using System.Xml.Linq;
 
 namespace Services.DataServices
 {
@@ -129,9 +128,13 @@ namespace Services.DataServices
             if (order == null)
                 throw new NotFoundException("Order");
             order.State = status;
-            order.ConfirmDate = DateTime.Now;
+            if (status == 1)
+            {
+                order.ConfirmDate = DateTime.Now;
+            }
             _repository.OrderReposatory.Update(order);
             _repository.SaveChanges();
+            
             if (status == 2)
             {
                 if (order.ProductBelongToOrders != null)
@@ -147,5 +150,16 @@ namespace Services.DataServices
             }
         }
 
+        public int GetNumberOrders(int state) =>
+            _repository.OrderReposatory.GetNumberOrders(state);
+
+        public double GetProfit(int state) =>
+            _repository.OrderReposatory.GetProfit(state);
+
+        public List<ProfitDto> GetProfitByYear(int state) =>
+            _repository.OrderReposatory.GetProfitByYear(state).ToProfitDto();
+
+        public List<ProfitDto> GetProfitByWeek(int state) =>
+            _repository.OrderReposatory.GetProfitByWeek(state).ToProfitDto();
     }
 }

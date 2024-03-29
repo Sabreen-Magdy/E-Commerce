@@ -23,6 +23,94 @@ public class SallerController : ControllerBase
         _adminService = adminService;
     }
 
+    [HttpGet("GetNumberProducts")]
+    public IActionResult GetNumberProducts()
+    {
+        try
+        {
+            var result = _adminService.ProductService.GetNumberProducts();
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+    
+    [HttpGet("GetNumberCustomers")]
+    public IActionResult GetNumberCustomers()
+    {
+        try
+        {
+            var result = _adminService.CustomerService.GetNumberCustomers();
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+    
+    [HttpGet("GetNumberOrders")]
+    public IActionResult GetNumberOrders(int state)
+    {
+        try
+        {
+            var result = _adminService.OrderService.GetNumberOrders(state);
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+    
+    [HttpGet("GetProfit")]
+    public IActionResult GetProfit(int state)
+    {
+        try
+        {
+            var result = _adminService.OrderService.GetProfit(state);
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("GetProfitByYear")]
+    public IActionResult GetProfitByYear(int state)
+    {
+        try
+        {
+            var result = _adminService.OrderService.GetProfitByYear(state);
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+    [HttpGet("GetProfitByWeek")]
+    public IActionResult GetProfitByWeek(int state)
+    {
+        try
+        {
+            var result = _adminService.OrderService.GetProfitByWeek(state);
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }    
 
     #region Delete
 
