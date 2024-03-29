@@ -23,13 +23,14 @@ export class ProductFormService {
   //   this.http.head
   //    return  this.http.post(`${this.baseURL}AddProduct`,product)
   // }
-  addProduct(formData: FormData): Observable<any> {
+  addProduct(product:IProductAddForm ): Observable<any> {
     // Define headers if needed (for example, if you have custom headers)
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
+    // const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'multipart/form-data');
 
+    
 
-    return this.http.post<any>(`${this.baseURL}AddProduct`, formData, { headers: headers })
+    return this.http.post<any>(`${this.baseURL}Add`, product)
       // .pipe(
       //   catchError(this.handleError)
       // );

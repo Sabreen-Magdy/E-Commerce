@@ -57,7 +57,7 @@ export class CartComponent implements OnInit {
     this.delCartItemsub = this.CartService.deleteCartitem(id).subscribe({
       next : (data) => {
         console.log("delete succesful" + data);
-        this.CartService.getNumberOfitemInCart();
+       this.CartService.getNumberOfitemInCart();
         this.getcartbyId()
       },
 
@@ -74,7 +74,6 @@ export class CartComponent implements OnInit {
       state: 0,
       quantity: quantity - 1
     }
-    this.CartService.getNumberOfitemInCart();
     console.log(this.customerID);
     console.log(productId);
     console.log(updatecart);
@@ -96,7 +95,6 @@ export class CartComponent implements OnInit {
       state: 0,
       quantity: quantity +1
     }
-    this.CartService.getNumberOfitemInCart();
     console.log(this.customerID);
     console.log(productId);
     console.log(updatecart);

@@ -1,11 +1,11 @@
-import { ColoredProduct } from "./colored-product"
+import { ColoredProduct, coloredProduct2 } from "./colored-product"
 
 export interface IProductAddForm {
   sallerId: number,
   name: string,
   description: string,
   categories: number[],
-  images: ColoredProduct[],
+  images: coloredProduct2[],
   productVariants: IProductVariant []
 
 } 

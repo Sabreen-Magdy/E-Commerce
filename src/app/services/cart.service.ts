@@ -45,4 +45,9 @@ export class CartService {
   });
 
  }
+
+  deleteCartItemByCID (customerId : number, productVarient : number){
+    return this.http.delete(`${this.baseURL}/DeleteItem?costomerId=${customerId}&productVarientId=${productVarient}`)
+  }
+
 }

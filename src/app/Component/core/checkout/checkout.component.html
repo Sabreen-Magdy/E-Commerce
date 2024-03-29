@@ -6,38 +6,25 @@
     <div class="col-md-4 col-lg-3 order-md-last">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-success">مشترياتك</span>
-        <span class="badge bg-success rounded-pill">{{ numOfItemInCart }}</span>
+        <span class="badge bg-success rounded-pill">{{
+          productVarientperOrder.length
+        }}</span>
       </h4>
 
       <ul class="list-group mb-3">
         <li
-          *ngFor="let item of cart.items"
+          *ngFor="let item of productVarientperOrder; let i = index"
           class="list-group-item d-flex justify-content-between lh-sm p-3"
         >
           <div>
-            <h6 class="my-0">{{ item.name }}</h6>
-            <small class="text-muted">
-              <span class="text-muted">الحجم: </span>{{ item.size }} |<span
-                class="text-muted"
-                >اللون: </span
-              >{{ item.color }} |<span class="text-muted">الكمية: </span
-              >{{ item.quantity }}
-            </small>
+            <h6 class="my-0">{{ nameProductVarient[i] }}</h6>
+            <small class="text-muted">{{ item.quantity }}</small>
           </div>
-          <span class="text-muted"
-            >{{ item.unitPrice * item.quantity }} ج.م.</span
-          >
+          <span class="text-muted">{{ item.totalCost }} EGY</span>
         </li>
-        <!-- <li class="list-group-item d-flex justify-content-between bg-light p-3">
-          <div class="text-success">
-            <h6 class="my-0">Promo code</h6>
-            <small>SALE500</small>
-          </div>
-          <span class="text-success">500 EGY</span>
-        </li> -->
         <li class="list-group-item d-flex justify-content-between p-3">
           <span>المجموع</span>
-          <strong>{{ cart.totalPrice }} ج.م.</strong>
+          <strong>{{ totalPrice }} EGY</strong>
         </li>
       </ul>
 
