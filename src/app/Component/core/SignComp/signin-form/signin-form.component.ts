@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth.service';
 import { Iproduct } from 'src/app/models/iproduct';
 import { IproductShow } from 'src/app/models/i-product-variant';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-signin-form',
@@ -17,7 +18,7 @@ export class SigninFormComponent {
   unauthorized : boolean = false;
   signAllproduct : IproductShow[] = [];
 
-  constructor(private _AuthService:AuthService , private _Router:Router,private _fav:FavoriteService){
+  constructor(private _AuthService:AuthService , private _Router:Router,private _fav:FavoriteService,private _cart:CartService){
     this.signinform = new FormGroup({
       email: new FormControl(
         "",
@@ -58,19 +59,21 @@ ngOnInit():void{
   submitLoginForm(e:Event){
     console.log("start");
       if (this.signinform.valid){
-        if(this.signinform.value.email=="admin@gmail.com"&&this.signinform.value.password=="admin123"){
-          this._Router.navigate(['/admin/dashboard']);
-        }else{
+
           this._AuthService.signIn(this.signinform.value.email,this.signinform.value.password).subscribe({
             next : (g) => {
-              this._Router.navigate(['/home']);
+              if(this._AuthService.userRole=="Customer "){
+                this._Router.navigate(['/home']);
+              }else if(this._AuthService.userRole=="Saller "){
+                this._Router.navigate(['/admin/dashboard']);
+              }
             },
             error : (e) => {
               console.log(e);
               this.unauthorized= true
             }
           })
-        }
+
 
 
       }else {
@@ -80,5 +83,6 @@ ngOnInit():void{
 
   ngOnDestroy(){
     this._fav.getNumberOfitemInFavCart();
+    this._cart.getNumberOfitemInCart();
   }
 }

@@ -1,8 +1,9 @@
 import { CartItemDto, Uppdatecart } from './../models/icart';
 import { Injectable } from '@angular/core';
 import { AddCart, CartDto } from '../models/icart';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 
 @Injectable({
@@ -10,13 +11,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CartService {
   baseURL :string ="http://localhost:5058/api/Cart";
-  constructor( private http: HttpClient) { }
+  numberOfitemInCart:any=new BehaviorSubject(null);
+
+  constructor( private http: HttpClient,private authservice:AuthService) { }
 
   // getCartItem(): Observable<CartDto[]> {
   //   return this.http.get<CartDto[]>(`${this.baseURL}/GetAll`);
   // }
 
-  
+
   getCartBycstId(id: number): Observable<CartDto> {
     return this.http.get<CartDto>(`${this.baseURL}/GetByCustomerId?customerId=${id}`);
   }
@@ -32,8 +35,20 @@ export class CartService {
   deleteCartitem(id: number) {
     return this.http.delete(`${this.baseURL}/DeleteItemById?id=${id}`);
   }
+  getNumberOfitemInCart(){
+    this.getCartBycstId(this.authservice.id).subscribe({
+    next: (data) => {
+      // console.log(data.totalQuantity);
+      let filterdata = data.items.filter((item)=>item.state==0);
+      this.numberOfitemInCart.next(filterdata.length);
+      console.log(this.numberOfitemInCart.getValue());
+    }
+  });
+
+ }
 
   deleteCartItemByCID (customerId : number, productVarient : number){
     return this.http.delete(`${this.baseURL}/DeleteItem?costomerId=${customerId}&productVarientId=${productVarient}`)
   }
+
 }

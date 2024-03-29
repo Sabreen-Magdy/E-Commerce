@@ -68,10 +68,10 @@ export class CheckoutComponent  implements OnInit {
     this.customerID = this.auth.id;
     this.getcartbyId();
   }
- 
+
   cartByIDsub : Subscription | undefined;
   deletecartAfCheckSub : Subscription | undefined;
-  
+
 
   // get firstnamecontrol(){
   //   return this.checkoutForm.get('firstname')
@@ -85,7 +85,7 @@ export class CheckoutComponent  implements OnInit {
   // get phonecontrol(){
   //   return this.checkoutForm.get('phone')
   // }
-  
+
   // get address2control(){
   //   return this.checkoutForm.get('address2')
   // }
@@ -108,7 +108,7 @@ export class CheckoutComponent  implements OnInit {
           console.log("ERROR when delete",e);
         }
       })
-      
+
     }
   }
 
@@ -122,7 +122,7 @@ export class CheckoutComponent  implements OnInit {
           console.log("ERROR when delete",e);
         }
       })
-      
+
     }
   }
    getcartbyId(){
@@ -131,7 +131,7 @@ export class CheckoutComponent  implements OnInit {
     this.cartByIDsub = this.CartService.getCartBycstId(this.customerID).subscribe({
       next : (data) =>{
         let filterdata = data.items.filter((item)=>item.state==1);
-        let totalPriceS : number = 0; 
+        let totalPriceS : number = 0;
         for (var item of filterdata){
           totalPriceS += item.unitPrice * item.quantity
           let PVI : IproductforOrderadd ={
@@ -141,11 +141,11 @@ export class CheckoutComponent  implements OnInit {
           }
           this.productVarientperOrder.push(PVI);
           this.nameProductVarient.push(item.name)
-          
+
         }
         this.totalPrice = totalPriceS;
         this.cartitemfordelete = filterdata;
-        
+
       },
       error : (e) =>{
         console.log("ERROR when fetch Data of CartItem" + e);
@@ -158,7 +158,7 @@ export class CheckoutComponent  implements OnInit {
    SendOrder(e:Event){
     console.log(new Date().toISOString());
       if (this.checkoutForm.valid){
-        
+
         const order : IorderAdd = {
           customerId: this.customerID,
           orderDate: new Date().toISOString(),
@@ -179,7 +179,7 @@ export class CheckoutComponent  implements OnInit {
       }else{
         this.showerror=true;
       }
-      
+
    }
 
 }

@@ -21,7 +21,7 @@ export class AuthService {
   sharedVariable: any;
   idMatch:any;
   id:any;
-
+  userRole:any;
   allProducts : IproductShow [] = [];
   userDataSubscription: Subscription|undefined;
   saveUserData(){
@@ -33,8 +33,9 @@ export class AuthService {
         // Match the Id value using a regex pattern
         this.idMatch = userData.match(/Id\s*=\s*(\d+)/);
         this.id = this.idMatch ? this.idMatch[1] : null;
-        console.log(this.id);
+        this.userRole=userData.split('=')[2].trim().slice(0, -1);
       });
+
   }
   signUp(userData:object):Observable<any>
   {
@@ -50,6 +51,10 @@ export class AuthService {
              localStorage.setItem('loginToken',response.token);
              this.saveUserData();
         }
+        console.log(this.userRole)
+        // if(this.userRole=="Customer"){
+        //   console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggg")
+        // }
       }
     });
 

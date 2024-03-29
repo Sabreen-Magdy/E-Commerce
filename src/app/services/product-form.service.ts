@@ -32,7 +32,18 @@ export class ProductFormService  implements OnInit{
   }
 
 
+  
+
+  // addProduct (product:IProductAddForm){
+  //   this.http.head
+  //    return  this.http.post(`${this.baseURL}AddProduct`,product)
+  // }
   addProduct(product:IProductAddForm ): Observable<any> {
+    // Define headers if needed (for example, if you have custom headers)
+    // const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'multipart/form-data');
+
+
 
     return this.http.post<any>(`${this.baseURL}Add`, product)
 
@@ -46,7 +57,7 @@ export class ProductFormService  implements OnInit{
       return this.http.get<IproductShow[]>(`${this.baseURL2}GetAll`).pipe(
         tap(products => this.productsCache = products) // Cache the products
       );
-    }  
+    }
     else {
 
       console.log("osjsk");

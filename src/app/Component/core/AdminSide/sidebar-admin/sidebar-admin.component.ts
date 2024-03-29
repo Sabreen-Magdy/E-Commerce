@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-sidebar-admin',
@@ -7,10 +8,10 @@ import { Component } from '@angular/core';
 })
 export class SidebarAdminComponent {
 
-  
-   
- 
- 
+  constructor(private _AuthService:AuthService){}
+
+
+
   // following are the code to change sidebar button(optional)
   menuBtnChange() {
     let sidebar = document.querySelector(".sidebar");
@@ -21,5 +22,8 @@ export class SidebarAdminComponent {
    }else {
      closeBtn?.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
    }
+  }
+  logOut(){
+    this._AuthService.signOut()
   }
 }

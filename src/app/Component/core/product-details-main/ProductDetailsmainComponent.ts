@@ -21,6 +21,7 @@ import { ProductDetailsService } from 'src/app/services/product-details.service'
 export class ProductDetailsmainComponent implements OnInit {
 
   constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService) { }
+  buttonText:string="أضف للعربة"
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
@@ -156,11 +157,13 @@ export class ProductDetailsmainComponent implements OnInit {
   plus() {
     if (this.quantityNumber <= this.prodVariantList[this.selectedindex].quantity) {
       this.quantityNumber++;
+      this.CartServi.getNumberOfitemInCart();
     }
   }
   minus() {
     if (this.quantityNumber > 1) {
       this.quantityNumber--;
+      this.CartServi.getNumberOfitemInCart();
     }
   }
   toggle() {
@@ -230,16 +233,17 @@ export class ProductDetailsmainComponent implements OnInit {
    this.addFavSub = this.favService.additemTofav(addFav).subscribe({
     next : (data) => {
       console.log("item Add to Fav Succesfully" + data);
+      this.favService.getNumberOfitemInFavCart();
     },
     error : (e) => {
       console.log("may bt item in fav already");
       console.log("ERROR when add fav to item" + e);
     }
    })
-   this.favService.getNumberOfitemInFavCart();
   }
 
   pushItemTocart (){
+    this.buttonText="تم إضافة المنتج"
     console.log(this.prodVariantList[this.selectedindex].id);
     console.log(this.quantityNumber);
 
@@ -252,10 +256,11 @@ export class ProductDetailsmainComponent implements OnInit {
     this.addcartSub = this.CartServi.addCartItem(this.customerId,addcart).subscribe({
       next: (done) => {
         console.log("Added Succesful" + done);
+        this.CartServi.getNumberOfitemInCart();
       },
       error : (e) => {
         console.log("ERROR when delete" + e);
       }
     })
-  }  
+  }
 }
