@@ -111,6 +111,27 @@ export class CartComponent implements OnInit {
     })
   }
 
+  gotoCheckout() {
+    for (let item of this.cart.items) {
+      const updatecart: Uppdatecart = {
+        state: 1,
+        quantity: item.quantity,
+      };
+      this.updateCartItemsub = this.CartService.updateCartItem(
+        this.customerID,
+        item.productVarientId,
+        updatecart
+      ).subscribe({
+        next: (data) => {
+          console.log('done go to checkOut');
+        },
 
+        error: (e) => {
+          console.log('Error when go to CheckOut' + e);
+          this.getcartbyId();
+        },
+      });
+    }
+  }
 
 }

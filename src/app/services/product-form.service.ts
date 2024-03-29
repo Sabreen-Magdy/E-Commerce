@@ -28,7 +28,7 @@ export class ProductFormService {
     // const headers = new HttpHeaders();
     // headers.append('Content-Type', 'multipart/form-data');
 
-    
+
 
     return this.http.post<any>(`${this.baseURL}Add`, product)
       // .pipe(
@@ -43,7 +43,7 @@ export class ProductFormService {
       return this.http.get<IproductShow[]>(`${this.baseURL2}GetAll`).pipe(
         tap(products => this.productsCache = products) // Cache the products
       );
-    }  
+    }
     else {
 
       console.log("osjsk");
@@ -54,7 +54,7 @@ export class ProductFormService {
 
 
   get length (){
-    return 0 
+    return 0
   }
   getAllProduct2(): Observable<IproductShow[]> {
     console.log("getAllproduct2");

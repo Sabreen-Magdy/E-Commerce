@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
-import { CartDto, CartItemDto, Uppdatecart } from 'src/app/models/icart';
+import { CartItemDto, Uppdatecart } from 'src/app/models/icart';
 import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
 import { addorderService } from 'src/app/services/AddOrder.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -16,19 +16,41 @@ export class CheckoutComponent  implements OnInit {
   showerror : boolean = false;
   customerID : number = 0;
   checkoutForm : FormGroup;
-  numOfItemInCart:number=0;
-  cart : CartDto = {
-    totalPrice: 0,
-    totalQuantity: 0,
-    items: []
-  };
-  cartByIDsub : Subscription | undefined;
   productVarientperOrder : IproductforOrderadd[] = [];
   nameProductVarient : string[] =[];
   cartitemfordelete : CartItemDto [] = [];
   totalPrice : number =0;
   constructor( private auth: AuthService, private orderSer:addorderService , private CartService:CartService){
     this.checkoutForm = new FormGroup({
+      // firstname: new FormControl(
+      //   "",
+      //   [
+      //     Validators.required,
+      //     Validators.minLength(3),
+      //     Validators.pattern('[\u0600-\u06FF]+')
+      //   ]
+      // ),
+      // lastname: new FormControl(
+      //   "",
+      //   [
+      //     Validators.required,
+      //     Validators.minLength(3),
+      //     Validators.pattern('[\u0600-\u06FF ,]+')
+      //   ]
+      // ),
+      // email: new FormControl(
+      //   "",
+      //   [
+      //     Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+      //   ]
+      // ),
+      // phone : new FormControl(
+      //   "",
+      //   [
+      //     Validators.required,
+      //     Validators.pattern(/^(010|012|015)[0-9]{8}$/)
+      //   ]
+      // ),
       mainaddress : new FormControl (
         "",
         [
@@ -47,7 +69,26 @@ export class CheckoutComponent  implements OnInit {
     this.getcartbyId();
   }
 
+  cartByIDsub : Subscription | undefined;
   deletecartAfCheckSub : Subscription | undefined;
+
+
+  // get firstnamecontrol(){
+  //   return this.checkoutForm.get('firstname')
+  // }
+  // get lastnamecontrol(){
+  //   return this.checkoutForm.get('lastname')
+  // }
+  // get emailcontrol(){
+  //   return this.checkoutForm.get('email')
+  // }
+  // get phonecontrol(){
+  //   return this.checkoutForm.get('phone')
+  // }
+
+  // get address2control(){
+  //   return this.checkoutForm.get('address2')
+  // }
 
   get mainaddresscontrol(){
     return this.checkoutForm.get('mainaddress')
