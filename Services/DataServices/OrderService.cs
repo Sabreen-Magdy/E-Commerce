@@ -128,9 +128,13 @@ namespace Services.DataServices
             if (order == null)
                 throw new NotFoundException("Order");
             order.State = status;
-            order.ConfirmDate = DateTime.Now;
+            if (status == 1)
+            {
+                order.ConfirmDate = DateTime.Now;
+            }
             _repository.OrderReposatory.Update(order);
             _repository.SaveChanges();
+            
             if (status == 2)
             {
                 if (order.ProductBelongToOrders != null)
