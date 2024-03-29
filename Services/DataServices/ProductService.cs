@@ -38,6 +38,18 @@ namespace Services.DataServices
         }
         private List<ProductDto> Map(List<Product> products) =>
             products.Select(p => Map(p)).ToList();
+        private void DeleteImage(string? imgPath)
+        {
+            if (imgPath != null)
+                Static.DeleteImage(imgPath);
+        }
+        private void DeleteImage(List<string?>? imgPaths)
+        {
+            if (imgPaths != null)
+                foreach (var imgPath in imgPaths)
+                    DeleteImage(imgPath);
+            
+        }
 
         public void Add(ProductNewDto product)
         {
@@ -123,9 +135,12 @@ namespace Services.DataServices
             Product? product = _repository.ProductRepository.Get(id);
             if (product is null)
                 throw new NotFoundException("Product");
-            
+            var imgs = product.ColoredProducts.Select(cp => cp.Image).ToList();
+
             _repository.ProductRepository.Delete(product);
             _repository.SaveChanges();
+
+            DeleteImage(imgs);
         }
 
         public void DeleteCategory(int id)
@@ -134,9 +149,12 @@ namespace Services.DataServices
            
             if (prodCat is null)
                 throw new NotFoundException("ProductCategory");
+            var imgs = prodCat.Product.ColoredProducts.Select(cp => cp.Image).ToList();
 
             _repository.ProductCategoryRepository.Delete(prodCat);
             _repository.SaveChanges();
+
+            DeleteImage(imgs);
         }
 
         public void DeleteCategory(int productId, int categoryId)
@@ -146,9 +164,13 @@ namespace Services.DataServices
            
             if (prodCat is null)
                 throw new NotFoundException("ProductCategory");
+            var imgs = prodCat.Product.ColoredProducts.Select(cp => cp.Image).ToList();
 
             _repository.ProductCategoryRepository.Delete(prodCat);
             _repository.SaveChanges();
+
+
+            DeleteImage(imgs);
         }
 
         public void DeleteColor(int id)
@@ -157,9 +179,12 @@ namespace Services.DataServices
            
             if (prodColor is null)
                 throw new NotFoundException("ProductColored");
+            var img = prodColor.Image;
 
             _repository.ProductColerdRepository.Delete(prodColor);
             _repository.SaveChanges();
+
+            DeleteImage(img);
         }
 
         public void DeleteColor(int productId, int colorId)
@@ -170,9 +195,11 @@ namespace Services.DataServices
            
             if (prodColor is null)
                 throw new NotFoundException("ProductColored");
-
+            var img = prodColor.Image;
             _repository.ProductColerdRepository.Delete(prodColor);
             _repository.SaveChanges();
+
+            DeleteImage(img);
         }
 
 
@@ -182,7 +209,6 @@ namespace Services.DataServices
 
             if (prodVarient is null)
                 throw new NotFoundException("ProdectVarient");
-
             _repository.ProductVarientRepository.Delete(prodVarient);
             _repository.SaveChanges();
         }
