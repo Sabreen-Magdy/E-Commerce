@@ -11,6 +11,6 @@ public class  Saller : BaseEntity
     public UserRole Role => UserRole.Saller;
 
     public long NId { get; set; }
-    public List<Product> Products { get; set; } = null!;
+    public ICollection<Product> Products { get; set; } = null!;
     
 }

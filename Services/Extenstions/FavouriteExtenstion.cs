@@ -11,7 +11,6 @@ public static class FavouriteExtenstion
     {
         if (fav == null)
             throw new ArgumentNullException(nameof(fav));
-        //string? image = fav.Product.ColoredProducts.FirstOrDefault()?.Image;
         return new()
         {
             Id = fav.Id,
@@ -20,7 +19,7 @@ public static class FavouriteExtenstion
             Image = null,
             Name = fav.Product.Name,
             Description=fav.Product.Description,
-            Price=fav.Product.TotalPrice
+            Price = fav.Product.AvgPrice
         };
 }
     public static List<FavoriteDto> ToFavoriteDto(this List<Favourite> favourites)

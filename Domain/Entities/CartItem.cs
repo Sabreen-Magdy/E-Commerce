@@ -6,12 +6,14 @@
         public int Quantity { get; set; }
         public double TotalPrice { 
             get {
-                return Quantity * this.ProductVarient.UnitPrice;
+                return Quantity * ProductVarient.UnitPrice;
             } }
 
+        public int State { get; set; }
+
         // Foreign key to reference the cart
-        public int CartId { get; set; }
-        public Cart Cart { get; set; } = null!;
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; } = null!;
         // Foreign key to reference the product
         public int ProductId { get; set; }
         public int ColorId { get; set; }

@@ -65,6 +65,9 @@ namespace Services.DataServices
                     case Properties.Description:
                         category.Description = item.Value;
                         break;
+                    case Properties.Icon:
+                        category.Icon = item.Value;
+                        break;
 
                     default:
                         throw new PropertyException(item.Key.ToString());
@@ -74,10 +77,7 @@ namespace Services.DataServices
         }
         public int NumProduct(int categoryId)
         {
-           var category =  _repositoryAdmin.CategoryRepository.Get(categoryId);
-            if (category == null)
-                throw new NotFoundException("Category");
-            return category.ProductCategories.Count;
+            return _repositoryAdmin.CategoryRepository.NumProduct(categoryId);
         }
         public void Update(int id, Dictionary<Properties, string> newValues)
         {

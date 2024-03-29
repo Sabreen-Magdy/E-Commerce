@@ -41,7 +41,7 @@ public class ColoredProduct : BaseEntity
 
     #endregion
 
-    private bool IsVarientsNull() => Varients != null || !Varients!.Any();
+    private bool IsVarientsNull() => Varients == null || !Varients!.Any();
 
     // Reduce Join
     public ICollection<ProductVarient> Varients { get; set; } = null!;

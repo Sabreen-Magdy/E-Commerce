@@ -6,7 +6,6 @@ public class ApplicationDbContext: DbContext
 {
     public DbSet<Saller> Sallers { get; set; }
     public DbSet<Customer> Customers { get; set; }
-    public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> cartItems { get; set; }
     public DbSet<Favourite> Favourites { get; set; }
     public DbSet<Review> Reviews { get; set; }

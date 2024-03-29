@@ -3,6 +3,7 @@ using Domain.Exceptions;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Configurations;
 using Persistence.Context;
 
 namespace Persistence.Repositories
@@ -14,69 +15,54 @@ namespace Persistence.Repositories
         public CartRepository(ApplicationDbContext dbContext) =>
            _dbContext = dbContext;
 
-        public void Add(Cart cart)
+        public void Add(CartItem entity) =>
+            _dbContext.cartItems.Add(entity);
+       
+        public void Delete(CartItem entity)
         {
-            _dbContext.Carts.Add(cart);
-        }
-        public void AddItem(CartItem item)
-        {
-            _dbContext.cartItems.Add(item);
-        }
-        
-        public void DeletItem(CartItem item)
-        {
-            if (item != null)
-                _dbContext.cartItems.Remove(item);
-            else throw new NotFoundException("Cart Item");
-
-        }
-
-        public void Delete(Cart entity)
-        {
-            _dbContext.Carts.Remove(entity);
+            _dbContext.cartItems.Remove(entity);
          
         }
 
-        public Cart? Get(int id)
+        public CartItem? Get(int id)
         {
             return GetAll().Find(c => c.Id == id);
         }
 
-        public List<Cart> Get(string name)
+        public List<CartItem> Get(string name)
         {
             throw new NotImplementedException();
         }
 
-        public List<Cart> GetAll() =>
-            _dbContext.Carts
-            .Include(ic => ic.ProductVarients)
-                .ThenInclude(pv => pv.ColoredProduct).ThenInclude(pv => pv.Product) //ProductVarient
-            .Include(ic => ic.CartItems)
-                .ThenInclude(ci => ci.ProductVarient)
-                    .ThenInclude(ic => ic.ColoredProduct)
-                        .ThenInclude(ci => ci.Product)
-
+        public List<CartItem> GetAll() =>
+            _dbContext.cartItems
+            .Include(ic => ic.ProductVarient)
+                .ThenInclude(pv => pv.ColoredProduct).ThenInclude(pv => pv.Product)
+             .Include(ic => ic.ProductVarient)
+                .ThenInclude(pv => pv.ColoredProduct).ThenInclude(pv => pv.Color)
+             .Include(ic => ic.ProductVarient)
+                .ThenInclude(pv => pv.Size)
             .Include(ic => ic.Customer).ToList();
 
-        public Cart? GetByCustomerId(int customerId)
+        public List<CartItem> GetByCustomerId(int customerId)
         {
-            return GetAll().FirstOrDefault(c => c.CustomerId == customerId);
+            return GetAll().Where(c => c.CustomerId == customerId).ToList();
         }
-        public void Update(Cart cart)
+        public void Update(CartItem entity)
         {
-            _dbContext.Carts.Update(cart);
+            _dbContext.cartItems.Update(entity);
         }
-        public CartItem? GetItem(int cartId,int productVarientId)
+        public CartItem? GetItem(int customerId, int productVarientId)
         {
-            var cart = Get(cartId);
-            if (cart == null)  throw new NotFoundException("Cart");
-            
-            return cart.CartItems.FirstOrDefault(ci => ci.ProductVarient.Id == productVarientId);
+            var cart = GetByCustomerId(customerId);
+            if (cart == null) throw new NotFoundException("Cart");
+
+            return cart.SingleOrDefault(pv => pv.ProductVarient.Id == productVarientId);
         }
 
-        public void UpdateItem(CartItem item)
+        public void AddRange(List<CartItem> items)
         {
-            _dbContext.cartItems.Update(item);
+            _dbContext.cartItems.AddRange(items);
         }
     }
 }

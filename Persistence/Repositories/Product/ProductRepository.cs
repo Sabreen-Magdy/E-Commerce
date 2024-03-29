@@ -55,6 +55,8 @@ namespace Persistence.Repositories
             //.ThenInclude(cp => cp.Category)
             .ToList();
 
+        public int GetLength() => _dbContext.Products.Count();
+
         public void Update(Product entity) =>
             _dbContext.Products.Update(entity);
     }

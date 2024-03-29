@@ -9,7 +9,8 @@ namespace Contract.OrderItem
     public record ItemNewDto
     {
         public int ProductVarientId { get; set; }
-        public int CartId { get; set; }
+        //public int CustomerId { get; set; }
+        public int State { get; set; }
         public int Quantity { get; set; }
     }
 }

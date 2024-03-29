@@ -247,7 +247,7 @@ public class SallerController : ControllerBase
     {
         var customer = _adminService.CustomerService.GetAll();
 
-        if (customer == null) NotFound("No Cudtomers in System");
+        if (customer == null) NotFound("No Sallers in System");
         return Ok(customer);
     }
 

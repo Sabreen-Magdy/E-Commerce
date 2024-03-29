@@ -18,8 +18,7 @@ public class ProductVarient : BaseEntity
     public int SizeId { get; set; }
     public Size Size { get; set; } = null!;
 
-    public ICollection<Cart> Carts { get; set; } = null!;
-    public List<CartItem> CartItems { get; set; } = null!;
+    public ICollection<CartItem> CartItems { get; set; } = null!;
  
     public ICollection<ProductVarientBelongToOrder> ProductBelongToOrders { get; set; } = null!;
 
