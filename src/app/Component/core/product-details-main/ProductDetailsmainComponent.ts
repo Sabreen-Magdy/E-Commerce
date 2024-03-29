@@ -72,7 +72,7 @@ export class ProductDetailsmainComponent implements OnInit {
     this.getUniqueColors();
     this.getUniqueCode
     // This function extracts unique colors from the prodVariantList
-   
+
 
   }
 
@@ -220,7 +220,7 @@ export class ProductDetailsmainComponent implements OnInit {
   //     return { name: colorName, code: variant ? variant.code : '' }; // Assuming 'code' is the property for color codes in your variant objects
   //   });
   // }
- 
+
   pushItemToFavCart( prodId : number ){
     const addFav : IaddFavorite = {
       customerId: this.customerId,
@@ -235,7 +235,8 @@ export class ProductDetailsmainComponent implements OnInit {
       console.log("may bt item in fav already");
       console.log("ERROR when add fav to item" + e);
     }
-   }) 
+   })
+   this.favService.getNumberOfitemInFavCart();
   }
 
   pushItemTocart (){

@@ -21,7 +21,13 @@ export class FavoriteComponent {
         this.customerId=this._AuthService.id;
         console.log(this.customerId);
         this.getFavbyCId();
-      }   
+      }
+    }
+  });
+  this._FavService.getNumberOfitemInFavCart();
+  this._FavService.numberOfitemInFavCart.subscribe({
+    next:()=>{
+      this._FavService.numberOfitemInFavCart;
     }
   });
  }
@@ -35,6 +41,7 @@ export class FavoriteComponent {
     next : (data) => {
       console.log(data);
         this.FavList = data;
+        console.log(this.FavList.length);
     }
   })
  }
@@ -43,12 +50,13 @@ export class FavoriteComponent {
   this.deleteFav = this._FavService.deletefavitem(this.customerId,prodid).subscribe({
     next : (data) => {
       console.log("succesful delete: " + data);
+      this._FavService.getNumberOfitemInFavCart();
       this.getFavbyCId();
     },
     error : (e)=>{
       console.log("ERROR when delete fav item" + e);
     }
-  })
+  });
  }
 
 }

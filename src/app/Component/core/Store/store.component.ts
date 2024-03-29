@@ -36,9 +36,9 @@ export class StoreComponent implements OnInit , OnDestroy{
   customerId : number = 0;
 
   constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
-  
+
   ngOnDestroy(): void {
-    
+
   }
   ngOnInit(): void {
     this.customerId=this.auth.id;
@@ -55,12 +55,12 @@ export class StoreComponent implements OnInit , OnDestroy{
     //     this.getAllproductByCat()
     //   } else if (this.productName){
     //     console.log("product");
-    //     this.getproductByName();    
+    //     this.getproductByName();
     //   }
     //   else{
     //     console.log('all');
     //     this.getAllProduct();
-        
+
     //   }
     // })
 
@@ -79,7 +79,7 @@ export class StoreComponent implements OnInit , OnDestroy{
       console.error('Error fetching products:', error);
     }
   );
-    
+
   }
 
 
@@ -153,11 +153,11 @@ export class StoreComponent implements OnInit , OnDestroy{
   }
 
   pushItemToFavCart( prodId : number ){
+    alert("Item added successfully!");
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
     }
-
    this.addFavSub = this._favService.additemTofav(addFav).subscribe({
     next : (data) => {
       console.log("item Add to Fav Succesfully" + data);
@@ -166,6 +166,7 @@ export class StoreComponent implements OnInit , OnDestroy{
       console.log("may bt item in fav already");
       console.log("ERROR when add fav to item" + e);
     }
-   }) 
+   })
+   this._favService.getNumberOfitemInFavCart();
   }
 }

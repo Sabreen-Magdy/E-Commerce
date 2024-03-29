@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 import { Iproduct } from 'src/app/models/iproduct';
 import { IproductShow } from 'src/app/models/i-product-variant';
+import { FavoriteService } from 'src/app/services/favorite.service';
+
 @Component({
   selector: 'app-signin-form',
   templateUrl: './signin-form.component.html',
@@ -13,9 +15,9 @@ export class SigninFormComponent {
   signinform : FormGroup;
   showerror : boolean =false;
   unauthorized : boolean = false;
-  signAllproduct : IproductShow[] = []; 
+  signAllproduct : IproductShow[] = [];
 
-  constructor(private _AuthService:AuthService , private _Router:Router){
+  constructor(private _AuthService:AuthService , private _Router:Router,private _fav:FavoriteService){
     this.signinform = new FormGroup({
       email: new FormControl(
         "",
@@ -76,5 +78,7 @@ ngOnInit():void{
       }
   }
 
-  
+  ngOnDestroy(){
+    this._fav.getNumberOfitemInFavCart();
+  }
 }

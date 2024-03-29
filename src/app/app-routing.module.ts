@@ -29,6 +29,7 @@ import { ReviewsComponent } from './Component/core/anonymous-page/reviews/review
 import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
 import { AuthGuard } from './auth.guard';
 import { ProductDetailsmainComponent } from './Component/core/product-details-main/ProductDetailsmainComponent';
+import { adminServiceGuard } from './admin-service.guard';
 
 
 const routes: Routes = [
@@ -45,10 +46,10 @@ const routes: Routes = [
     {path:"Settings",component:TableComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
-    {path:"main",component:AnonymousPageComponent, },
-    {path:"main/aboutus",component:AboutComponent, },
+    {path:"main",canActivate:[adminServiceGuard],component:AnonymousPageComponent, },
+    {path:"aboutus",component:AboutComponent, },
     { path: ComponentUrl.Reviews, component: ReviewsComponent },
-    {path:"main",component:SignFamilyComponent,children:[
+    {path:"",component:SignFamilyComponent,children:[
       {path:"signin",component:SigninFormComponent, },
       {path:"signup",component:SignUpFormComponent, },
       {path:"forgetpassword",component:ForgetPasswordComponent, },
