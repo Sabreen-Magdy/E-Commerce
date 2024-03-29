@@ -12,9 +12,9 @@
 
      // Use Configuration Ya Sama ! 
         public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; } = null!;
+        public Customer Customer { get; set; } = null!;
 
-        public virtual ICollection<ProductVarientBelongToOrder> ProductBelongToOrders { get; set; } = null!;
+        public ICollection<ProductVarientBelongToOrder> ProductBelongToOrders { get; set; } = null!;
 
         #endregion
 

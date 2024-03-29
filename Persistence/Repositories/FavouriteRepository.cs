@@ -51,7 +51,9 @@ namespace Persistence.Repositories
         public List<Favourite> GetAll()
         {
             return _dbContext.Favourites
-                .Include(f => f.Product).ThenInclude(p => p.ColoredProducts)
+                .Include(f => f.Product)
+                    .ThenInclude(p => p.ColoredProducts)
+                    .ThenInclude(pc => pc.Varients)
                 .Include(f => f.Customer).ToList();
         }
 

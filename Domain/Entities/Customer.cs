@@ -12,9 +12,9 @@ public class Customer : BaseEntity
 
     public UserRole Role => UserRole.Customer;
 
-    public virtual List<CartItem> Cart { get; set; } = null!;
-    public virtual List<Favourite> Favourites { get; set; } = null!;
-    public virtual List<Review> Reviews { get; set; } = null!;
+    public List<CartItem> Cart { get; set; } = null!;
+    public List<Favourite> Favourites { get; set; } = null!;
+    public List<Review> Reviews { get; set; } = null!;
 
-    public virtual List<Order> Orders { get; set; } = null!;
+    public List<Order> Orders { get; set; } = null!;
 }

@@ -6,5 +6,5 @@ public class Category : BaseEntity
     public string? Description { get; set; }
     public string? Icon { get; set; }
 
-    public virtual ICollection<ProductCategory> ProductCategories { get; set; } = null!;
+    public ICollection<ProductCategory> ProductCategories { get; set; } = null!;
 }

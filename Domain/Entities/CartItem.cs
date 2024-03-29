@@ -13,11 +13,11 @@
 
         // Foreign key to reference the cart
         public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; } = null!;
+        public Customer Customer { get; set; } = null!;
         // Foreign key to reference the product
         public int ProductId { get; set; }
         public int ColorId { get; set; }
         public int SizeId { get; set; }
-        public virtual ProductVarient ProductVarient { get; set; } = null!;
+        public ProductVarient ProductVarient { get; set; } = null!;
     }
 }

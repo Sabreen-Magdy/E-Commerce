@@ -6,6 +6,6 @@
         public string Name { get; set; } = null!;
 
         // To use in Filter Products By Color and Reduce Join
-        public virtual ICollection<ColoredProduct> ColoredProducts { get; set; } = null!;
+        public ICollection<ColoredProduct> ColoredProducts { get; set; } = null!;
     }
 }
