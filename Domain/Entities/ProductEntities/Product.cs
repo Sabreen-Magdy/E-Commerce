@@ -38,16 +38,16 @@ public class Product : BaseEntity
 
 
     private bool IsColoredProductsNull() => 
-        ColoredProducts != null || !ColoredProducts!.Any();
+        ColoredProducts == null || !ColoredProducts!.Any();
 
     // RelationShip Mapping
-    public virtual int SallerId { get; set; }
-    public virtual Saller Saller { get; set; } = null!;
-    public virtual ICollection<Review> Reviews { get; set; } = null!;
-    public virtual ICollection<Favourite> Favourites { get; set; } = null!;
+    public int SallerId { get; set; }
+    public Saller Saller { get; set; } = null!;
+    public ICollection<Review> Reviews { get; set; } = null!;
+    public ICollection<Favourite> Favourites { get; set; } = null!;
 
 
     // Reduce Join
-    public virtual ICollection<ColoredProduct> ColoredProducts { get; set; } = null!;
-    public virtual ICollection<ProductCategory> ProductCategories { get; set; } = null!;
+    public ICollection<ColoredProduct> ColoredProducts { get; set; } = null!;
+    public ICollection<ProductCategory> ProductCategories { get; set; } = null!;
 }
