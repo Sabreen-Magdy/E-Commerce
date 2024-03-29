@@ -4,7 +4,9 @@
     >قم بتسجيل الدخول للموقع للتمكن من عرض المنتجات، الاسعار، والتسويق
     لها.</span
   >
-  <div *ngIf="unauthorized" class="alert alert-danger mt-3">هذا الحساب غير مسجل</div>
+  <div *ngIf="unauthorized" class="alert alert-danger mt-3">
+    هذا الحساب غير مسجل
+  </div>
   <form
     class="my-3"
     [formGroup]="signinform"
@@ -42,10 +44,11 @@
       </div>
     </div>
     <div
-      class="mb-3  form-control-div"
+      class="mb-3 form-control-div"
       [ngClass]="{
         sucess: passwordcontrol?.valid,
-        danger: passwordcontrol?.errors && (passwordcontrol?.touched || showerror )
+        danger:
+          passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
       }"
     >
       <input
@@ -56,11 +59,15 @@
       />
       <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="passwordcontrol?.errors &&( passwordcontrol?.touched || showerror)"
+        *ngIf="
+          passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
+        "
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="passwordcontrol?.errors && (passwordcontrol?.touched || showerror)"
+        *ngIf="
+          passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
+        "
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="passwordcontrol?.hasError('required')">
@@ -78,9 +85,7 @@
     </div>
     <div class="d-flex gap-2">
       <button class="btn btn-success col-md-7">تسجيل الدخول</button>
-      <a
-        [routerLink]="'/main/signup'"
-        class="btn btn-outline-success col border-2"
+      <a [routerLink]="'/signup'" class="btn btn-outline-success col border-2"
         >انشئ حساب</a
       >
     </div>

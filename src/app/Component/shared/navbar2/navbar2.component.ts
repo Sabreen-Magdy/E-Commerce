@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
+import { FavoriteService } from 'src/app/services/favorite.service';
 
 @Component({
   selector: 'app-navbar2',
@@ -9,7 +10,13 @@ import { AuthService } from 'src/app/auth.service';
 export class Navbar2Component {
   showMenu: boolean = false;
   isCustomer: boolean = false;
-  constructor(private _AuthService:AuthService){
+  numOfItemInFavCart:number=0;
+  constructor(private _AuthService:AuthService,private _favservice:FavoriteService){
+    this._favservice.numberOfitemInFavCart.subscribe({
+      next:()=>{
+         this._favservice.numberOfitemInFavCart.getValue();
+      }
+    });
   }
   ngOnInit():void{
     this._AuthService.userData.subscribe({
@@ -19,6 +26,11 @@ export class Navbar2Component {
         }else{
           this.isCustomer=false;
         }
+      }
+    });
+    this._favservice.numberOfitemInFavCart.subscribe({
+      next:()=>{
+         this.numOfItemInFavCart=this._favservice.numberOfitemInFavCart.getValue();
       }
     });
   }

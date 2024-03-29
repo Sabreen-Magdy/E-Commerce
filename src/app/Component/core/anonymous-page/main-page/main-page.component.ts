@@ -1,6 +1,7 @@
 import { ComponentUrl } from 'src/app/models/unit';
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
+import { FavoriteService } from 'src/app/services/favorite.service';
 
 AuthService
 @Component({
@@ -10,5 +11,6 @@ AuthService
 })
 export class MainPageComponent {
   ComponentUrl = ComponentUrl;
+
 
 }

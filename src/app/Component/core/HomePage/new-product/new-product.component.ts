@@ -25,10 +25,8 @@ export class NewProductComponent implements OnInit {
   AllProductSub : Subscription | undefined;
   addFavSub : Subscription | undefined;
   getallproduct(){
-    console.log("doooone");
     this.AllProductSub = this.prodServ.getAllProduct().subscribe({
       next : (data) => {
-        console.log("doooone");
         this.allproductList = data;
       },
       error : (e) => {
@@ -38,6 +36,7 @@ export class NewProductComponent implements OnInit {
   }
 
   pushItemToFavCart( prodId : number ){
+    alert("Item added successfully!");
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
@@ -46,14 +45,16 @@ export class NewProductComponent implements OnInit {
    this.addFavSub = this._favService.additemTofav(addFav).subscribe({
     next : (data) => {
       console.log("item Add to Fav Succesfully" + data);
+      this._favService.getNumberOfitemInFavCart();
     },
     error : (e) => {
       console.log("may bt item in fav already");
       console.log("ERROR when add fav to item" + e);
     }
-   }) 
+   })
+   this._favService.getNumberOfitemInFavCart();
   }
 
 
-  
+
 }

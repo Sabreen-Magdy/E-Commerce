@@ -13,7 +13,8 @@
       class="mb-3 col-md-6 form-control-div"
       [ngClass]="{
         sucess: firstnamecontrol?.valid,
-        danger: firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)
+        danger:
+          firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)
       }"
     >
       <input
@@ -24,11 +25,15 @@
       />
       <i *ngIf="firstnamecontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="firstnamecontrol?.errors && ( firstnamecontrol?.touched || showerror)"
+        *ngIf="
+          firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)
+        "
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)"
+        *ngIf="
+          firstnamecontrol?.errors && (firstnamecontrol?.touched || showerror)
+        "
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="firstnamecontrol?.hasError('required')">
@@ -68,9 +73,8 @@
           يجب عليك ادخال رقم التليفون
         </ng-container>
         <ng-container *ngIf="phonecontrol?.hasError('pattern')">
-          يجب علي الرقم ان يكون 11 رقم، ويبدا ب 010 |012|015 
+          يجب علي الرقم ان يكون 11 رقم، ويبدا ب 010 |012|015
         </ng-container>
-        
       </div>
     </div>
     <div
@@ -108,7 +112,8 @@
       class="mb-3 col-md-6 form-control-div"
       [ngClass]="{
         sucess: passwordcontrol?.valid,
-        danger: passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
+        danger:
+          passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
       }"
     >
       <input
@@ -119,11 +124,15 @@
       />
       <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i
-        *ngIf="passwordcontrol?.errors && ( passwordcontrol?.touched || showerror)"
+        *ngIf="
+          passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
+        "
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
-        *ngIf="passwordcontrol?.errors &&( passwordcontrol?.touched || showerror )"
+        *ngIf="
+          passwordcontrol?.errors && (passwordcontrol?.touched || showerror)
+        "
         class="alert p-1 mt-3 alert-danger"
       >
         <ng-container *ngIf="passwordcontrol?.hasError('required')">
@@ -140,7 +149,8 @@
         sucess:
           confirmpasswordcontrol?.valid && !signupform.hasError('mismatch'),
         danger:
-          (confirmpasswordcontrol?.errors && (confirmpasswordcontrol?.touched || showerror)) ||
+          (confirmpasswordcontrol?.errors &&
+            (confirmpasswordcontrol?.touched || showerror)) ||
           signupform.hasError('mismatch')
       }"
     >
@@ -158,14 +168,16 @@
       ></i>
       <i
         *ngIf="
-          (confirmpasswordcontrol?.errors && (confirmpasswordcontrol?.touched || showerror)) ||
+          (confirmpasswordcontrol?.errors &&
+            (confirmpasswordcontrol?.touched || showerror)) ||
           signupform.hasError('mismatch')
         "
         class="bi bi-exclamation-circle-fill"
       ></i>
       <div
         *ngIf="
-          (confirmpasswordcontrol?.errors && (confirmpasswordcontrol?.touched || showerror)) ||
+          (confirmpasswordcontrol?.errors &&
+            (confirmpasswordcontrol?.touched || showerror)) ||
           signupform.hasError('mismatch')
         "
         class="alert p-1 mt-3 alert-danger"
@@ -180,9 +192,7 @@
     </div>
     <div class="d-flex gap-2">
       <button class="btn btn-success col-md-7">انشاء الحساب</button>
-      <a
-        class="btn btn-outline-success col border-2"
-        [routerLink]="'/main/signin'"
+      <a class="btn btn-outline-success col border-2" [routerLink]="'/signin'"
         >تسجيل الدخول</a
       >
     </div>

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { favitem, IaddFavorite, Ifav } from '../models/Ifav';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +12,26 @@ import { favitem, IaddFavorite, Ifav } from '../models/Ifav';
 
 export class FavoriteService {
   baseURL :string ="http://localhost:5058/api/Favourite/";
- 
-  constructor(private _HttpClient:HttpClient) {}
+  // numberOfitemInFavCart:number=0;
+  numberOfitemInFavCart:any=new BehaviorSubject(null);
+  constructor(private _HttpClient:HttpClient,private authservice:AuthService) {}
 
-  
+
   getallFavbycustomr(id : number): Observable<favitem[]>{
-    return this._HttpClient.get<favitem[]>(`${this.baseURL}GetByCustomerId?customerId=${id}`)
+    return this._HttpClient.get<favitem[]>(`${this.baseURL}GetByCustomerId?customerId=${id}`);
   }
+ getNumberOfitemInFavCart(){
+    this.getallFavbycustomr(this.authservice.id).subscribe({
+    next: (data) => {
+      console.log(data.length);
+      this.numberOfitemInFavCart.next(data.length);
+      console.log(this.numberOfitemInFavCart.getValue());
+    }
+  });
 
+ }
   additemTofav(data :IaddFavorite){
-    return this._HttpClient.post(`${this.baseURL}AddFavorite`,data)
+    return this._HttpClient.post(`${this.baseURL}AddFavorite`,data);
   }
 
   getFavProductCustomer (customerId : number, productId : number) : Observable<favitem>
