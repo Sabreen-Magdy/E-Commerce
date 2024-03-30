@@ -5,7 +5,11 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-normal mb-0 text-black">قائمة المشتريات</h3>
         </div>
-
+        
+          <div  *ngIf="cart.items.length == 0 && !noitem" class="loader"></div>
+          <div *ngIf="cart.items.length == 0 && noitem" class="alert alert-success" role="alert">
+            سلتك فارغة، لكن لا داعي للقلق! انطلق إلى المتجر الآن لتمتلئ بالعروض المثيرة والمنتجات الرائعة.
+          </div>
         <div *ngFor="let item of cart.items" class="card rounded-3 mb-4">
           <div class="card-body p-4">
             <div class="row d-flex justify-content-between align-items-center">
@@ -63,7 +67,7 @@
           </div>
         </div>
 
-        <div class="">
+        <div  *ngIf="cart.items.length > 0">
           <div class="container-fluid">
             <div class="row justify-content-start">
               <div class="col-lg-4">
@@ -77,10 +81,17 @@
                     </li>
                   </ul>
                   <a
+                  style="cursor: pointer;"
                     (click)="gotoCheckout()"
-                    [routerLink]="['/', ComponentUrl.Checkout]"
+                    
                     class="proceed-btn"
-                    >تأكيد الطلب</a
+                    >
+                    <div *ngIf="wiating">
+                      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                      {{buttonText}}
+                    
+                    </a
                   >
                 </div>
               </div>

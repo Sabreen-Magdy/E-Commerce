@@ -31,22 +31,21 @@ export class ProductFormService  implements OnInit{
     
   }
 
+  getlength()
+  {
+    this.http.get<number>(`${this.baseURL2}GetNumberProducts`).subscribe({
+      next:(data) => {
+        console.log(data);
+        this.allNumber = data;
+      }
+    })
+  }
 
   
 
-  // addProduct (product:IProductAddForm){
-  //   this.http.head
-  //    return  this.http.post(`${this.baseURL}AddProduct`,product)
-  // }
+ 
   addProduct(product:IProductAddForm ): Observable<any> {
-    // Define headers if needed (for example, if you have custom headers)
-    // const headers = new HttpHeaders();
-    // headers.append('Content-Type', 'multipart/form-data');
-
-
-
     return this.http.post<any>(`${this.baseURL}Add`, product)
-
   }
 
   fetchAndCacheProducts(): Observable<IproductShow[]> {
@@ -59,25 +58,14 @@ export class ProductFormService  implements OnInit{
       );
     }
     else {
+      console.log("catch form our");
 
-      console.log("osjsk");
-      // If products are cached, return the cached products as an Observable
       return of(this.productsCache);
     }
   }
 
-
-  getlength()
-  {
-    this.http.get<number>(`${this.baseURL2}GetNumberProducts`).subscribe({
-      next:(data) => {
-        console.log(data);
-        this.allNumber = data;
-      }
-    })
-  }
-  
   getAllProduct2(): Observable<IproductShow[]> {
+    console.log(this.productsCache);
     console.log("getAllproduct2");
     return this.fetchAndCacheProducts();
   }
