@@ -13,6 +13,7 @@ export class FavoriteComponent {
   processedData: any[] = [];
   FavList : favitem[] = [];
   customerId:any;
+  noitem : boolean = false;
  constructor(private _FavService:FavoriteService,private _AuthService:AuthService ){}
  ngOnInit(): void {
   this._AuthService.userData.subscribe({
@@ -41,7 +42,13 @@ export class FavoriteComponent {
     next : (data) => {
       console.log(data);
         this.FavList = data;
-        console.log(this.FavList.length);
+        if(data.length == 0) {
+          this.noitem = true;
+        }
+    },
+    error : (e) =>{
+      console.log("ERROR", e);
+      this.noitem = true;
     }
   })
  }

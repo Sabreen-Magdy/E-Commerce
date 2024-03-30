@@ -19,6 +19,7 @@ export class NewProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId=this._authService.id;
+    this.prodServ.getlength();
     this.prodServ.getAllProduct2().subscribe(
       products => {
         products.sort((a,b)=>b.addingDate.localeCompare(a.addingDate))

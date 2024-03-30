@@ -18,7 +18,7 @@ import { IaddFavorite } from 'src/app/models/Ifav';
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css'],
 })
-export class StoreComponent implements OnInit , OnDestroy{
+export class StoreComponent implements OnInit {
   ComponentUrl = ComponentUrl;
   toggle() {
     var blur = document.getElementById('blur');
@@ -37,16 +37,12 @@ export class StoreComponent implements OnInit , OnDestroy{
   noitem : boolean = false;
   constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
 
-  ngOnDestroy(): void {
-
-  }
+ 
   ngOnInit(): void {
-    console.log("length of store",this.ProductList.length);
-    console.log("noitem",this.noitem);
     this.customerId=this.auth.id;
     this.prodServ.getlength();
     this.getAllCategory();
-    console.log("start");
+    console.log("start store");
     this.activeRoute.params.subscribe(params => {
       this.categoryName = params['catgoryname'];
       this.productName = params ['productname']
@@ -121,6 +117,7 @@ export class StoreComponent implements OnInit , OnDestroy{
   prodByNameSub : Subscription | undefined;
   allCategorySub : Subscription | undefined;
   addFavSub : Subscription | undefined;
+  
   getAllCategory(){
     this.allCategorySub = this.cateServ.getAllCategs().subscribe({
       next : (data) => {
@@ -131,6 +128,8 @@ export class StoreComponent implements OnInit , OnDestroy{
       }
     })
   }
+
+
 
   getAllProduct(){
     this.allProductSub = this.prodServ.getAllProduct().subscribe({
