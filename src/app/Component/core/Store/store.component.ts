@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/auth.service';
 import { SigninFormComponent } from '../SignComp/signin-form/signin-form.component';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { IaddFavorite } from 'src/app/models/Ifav';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @Component({
   selector: 'app-store',
@@ -27,18 +29,35 @@ export class StoreComponent implements OnInit {
     popup?.classList.toggle('active');
   }
 
+  removeActiveClassIfBothExist() {
+    console.log("remove filter");
+    var blur = document.getElementById('blur');
+    var popup = document.getElementById('popup');
+  
+    // Check if both elements have the class 'active'
+    if (blur?.classList.contains('active') && popup?.classList.contains('active')) {
+      console.log("it will remove cause it show");
+      blur?.classList.remove('active');
+      popup?.classList.remove('active');
+    }
+  }
+  
+
   /**fetch data */
 
   ProductList:IproductShow[] = [];
   categoryList : ICategory [] = [];
+  pageWhat : string = "الكل"
   categoryName : string = "";
   productName : string = "";
   customerId : number = 0;
   noitem : boolean = false;
+  p: number = 1;
   constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
 
  
   ngOnInit(): void {
+    this.removeActiveClassIfBothExist();
     this.customerId=this.auth.id;
     this.prodServ.getlength();
     this.getAllCategory();
@@ -49,6 +68,7 @@ export class StoreComponent implements OnInit {
       console.log(this.categoryName); // Convert the parameter to a number
       if (this.categoryName)
       {
+        this.pageWhat = this.categoryName;
         console.log(this.categoryName);
         this.prodServ.gatProductbyCategoryName2(this.categoryName).subscribe(
           products => {
@@ -64,6 +84,7 @@ export class StoreComponent implements OnInit {
         );
       } else 
       if (this.productName){
+        this.pageWhat = this.productName;
         console.log("product");
         this.getproductByName();
       }

@@ -38,11 +38,15 @@ export class ProductDetailsmainComponent implements OnInit {
   };
   prodDetrev: IproductReviws[] = [];
   customerHasReview:boolean=false;
+  isProductInFav : boolean = false;
+  waitingFav : boolean = false;
   // sizeIndexMap: { [size: string]: number } = {};
   id: number = 0;
   customerId : number = 0;
   addFavSub : Subscription | undefined;
   addcartSub : Subscription | undefined;
+  getFavSub : Subscription | undefined;
+  deleteFavsub : Subscription | undefined;
   constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService,private revService:ProductReviewService) {
     this.commentForm = new FormGroup({
       comment : new FormControl (
@@ -76,6 +80,7 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log(this.groupedByColor)
       }
     });
+    this.checkFavourite();
     this.prodDetApi.getProd(this.id).subscribe({
       next: (data) => {
         this.prodDet = data;
@@ -324,6 +329,7 @@ export class ProductDetailsmainComponent implements OnInit {
   // }
 
   pushItemToFavCart( prodId : number ){
+    this.waitingFav = true;
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
@@ -331,8 +337,10 @@ export class ProductDetailsmainComponent implements OnInit {
 
    this.addFavSub = this.favService.additemTofav(addFav).subscribe({
     next : (data) => {
+      this.waitingFav = false;
       console.log("item Add to Fav Succesfully" + data);
       this.favService.getNumberOfitemInFavCart();
+      this.isProductInFav = true;
     },
     error : (e) => {
       console.log("may bt item in fav already");
@@ -341,8 +349,40 @@ export class ProductDetailsmainComponent implements OnInit {
    })
   }
 
+  checkFavourite (){
+    this.getFavSub = this.favService.getallFavbycustomr(this.customerId).subscribe({
+      next: (data) =>{
+            console.log("Product id  " + this.id);
+            console.log("customrt id  " + this.customerId);
+            console.log(data);
+        data.forEach(element => {
+          console.log(element.productId);
+          if (element.productId == this.id){
+            console.log("found product id in fav");
+            this.isProductInFav = true;
+            console.log(this.isProductInFav);
+          }
+        });
+      }
+    })
+  }
+
+  deleteFavitem(){
+    this.waitingFav = true;
+    this.deleteFavsub = this.favService.deletefavitem(this.customerId,this.id).subscribe({
+      next : (data) => {
+        this.waitingFav = false;
+        console.log("succesful delete: " + data);
+        this.favService.getNumberOfitemInFavCart();
+        this.isProductInFav = false;
+      },
+      error : (e)=>{
+        console.log("ERROR when delete fav item" + e);
+      }
+    });
+   }
+
   pushItemTocart (){
-    this.buttonText="تم إضافة المنتج"
     console.log(this.selectedvariant.id);
     console.log(this.quantityNumber);
 
@@ -355,9 +395,12 @@ export class ProductDetailsmainComponent implements OnInit {
     this.addcartSub = this.CartServi.addCartItem(this.customerId,addcart).subscribe({
       next: (done) => {
         console.log("Added Succesful" + done);
+        this.buttonText="تم إضافة المنتج"
         this.CartServi.getNumberOfitemInCart();
       },
       error : (e) => {
+        this.buttonText="ذلك المنتج متواجد بالفعل في السلة"
+
         console.log("ERROR when delete" + e);
       }
     })

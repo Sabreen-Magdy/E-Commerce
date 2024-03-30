@@ -2,7 +2,8 @@
   <h3>جميع الفئات</h3>
   <div class="line"></div>
   <div class="items">
-    <div class="element" *ngFor="let x of categoryList">
+    <div [routerLink]="['/store',x.name]" class="element" *ngFor="let x of categoryList">
+
       <span class="material-symbols-outlined"> {{x.icon}} </span>
       <h6>{{x.name}}</h6>
     </div>
