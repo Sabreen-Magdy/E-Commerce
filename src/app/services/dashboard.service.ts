@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Dashboard } from '../models/dashboard';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,10 @@ export class DashboardService {
     return this.http.get<number>(`${this.BaseUrl}GetNumberOrders?state=1`)
   }
 
-  getprofitByYear():Observable<number>{
-    return this.http.get<number>(`${this.BaseUrl}GetProfitByYear?state=1`)
+  getprofitByYear():Observable<Dashboard[]>{
+    return this.http.get<Dashboard[]>(`${this.BaseUrl}GetProfitByYear?state=1`)
   }
-  getprofitByweekDay():Observable<number>{
-    return this.http.get<number>(`${this.BaseUrl}GetProfitByYear?state=1`)
+  getprofitByweek():Observable<Dashboard[]>{
+    return this.http.get<Dashboard[]>(`${this.BaseUrl}GetProfitByWeek?state=1`)
   }
 }
