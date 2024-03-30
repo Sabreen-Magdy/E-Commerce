@@ -41,10 +41,14 @@ export class AuthService {
   {
     return this._HttpClient.post('http://localhost:5058/api/Customer/AddCustomers/',userData);
   }
-  signIn(email:string,password:string) : Observable<any>
+  signIn(Email:string,Password:string) : Observable<any>
   {
     console.log("hi from service");
-     this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`).subscribe({
+    let userDataAyth={
+      email: Email,
+      password: Password
+    }
+     this._HttpClient.post<any>(`http://localhost:5058/api/Authentication/Login`,userDataAyth).subscribe({
       next:(response)=>{
         console.log(response)
         if(response.token) {
@@ -58,8 +62,7 @@ export class AuthService {
       }
     });
 
-     return this._HttpClient.get<any>(`http://localhost:5058/api/Authentication?email=${email}&password=${password}`)
-
+     return  this._HttpClient.post<any>(`http://localhost:5058/api/Authentication/Login`,userDataAyth);
   }
   signOut(){
     localStorage.removeItem('loginToken');
