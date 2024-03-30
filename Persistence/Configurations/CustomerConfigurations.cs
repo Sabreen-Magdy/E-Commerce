@@ -9,6 +9,9 @@ public class CustomerConfigurations : IEntityTypeConfiguration<Customer>
     void IEntityTypeConfiguration<Customer>.Configure
         (EntityTypeBuilder<Customer> builder)
     {
+        builder.Property(c => c.Address)
+            .HasMaxLength(1000);
+
         // Other Constraints
         builder.ToTable(b =>
             b.HasCheckConstraint("ImageValidation",

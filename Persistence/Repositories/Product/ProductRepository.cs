@@ -40,7 +40,7 @@ namespace Persistence.Repositories
             GetAll().Find(p => p.Id == id);
 
         public List<Product> Get(string name) =>
-            GetAll().Where(p => p.Name == name).ToList();
+            GetAll().Where(p => p.Name.Contains(name.ToLower())).ToList();
         
 
         public List<Product> GetAll() =>

@@ -40,7 +40,8 @@ public class CustomerService : ICustomerService
         _repository.SaveChanges();
     }
 
-    public void Add(string name, string image, string phono, string email, string passwor)
+    public void Add(string name, string image, string phono, 
+                    string email, string passwor, string address)
     {
         _repository.CustomerRepository.Add(new Customer
         {
@@ -49,7 +50,8 @@ public class CustomerService : ICustomerService
             Image = image,
             Phone = phono,
             Email = email,
-            Password = passwor
+            Password = passwor,
+            Address = address
         });
 
         _repository.SaveChanges();
@@ -72,8 +74,9 @@ public class CustomerService : ICustomerService
                 case Properties.Name:
                     customer.Name = item.Value;
                     break;
-
-
+                case Properties.Address:
+                    customer.Address = item.Value;
+                    break;
                 case Properties.Image:
                     customer.Image = item.Value;
                     break;

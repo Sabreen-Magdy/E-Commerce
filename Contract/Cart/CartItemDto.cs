@@ -9,8 +9,8 @@
         public string Size { get; set; } = null!;
         public string Color { get; set; } = null!;
         public double UnitPrice { get; set; }
+        public double Discount { get; set; }
         public int State { get; set; }
-
         public int Quantity { get; set; }
     }
 }

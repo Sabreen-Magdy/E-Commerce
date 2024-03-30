@@ -3,10 +3,8 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Repositories;
-using Microsoft.AspNetCore.Http;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Services.DataServices
 {

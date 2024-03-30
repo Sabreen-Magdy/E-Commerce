@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contract;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Services.Abstraction.DataServices;
 
@@ -17,10 +18,10 @@ namespace Presentation.Controllers
             _loginService = loginService;
         }
 
-        [HttpGet]
-        public IActionResult Login(string email, string password) 
+        [HttpPost("Login")]
+        public IActionResult Login(LoginDto login) 
         {
-            var user = _loginService.Login(email, password);
+            var user = _loginService.Login(login);
 
             if(user == null)
                 return Unauthorized();
