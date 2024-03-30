@@ -83,7 +83,7 @@ export class ProductFormService  implements OnInit{
     console.log("we are now in fetch carProduct");
     let res =  this.isCurrentCategoryInList();
     console.log(res);
-    if (this.productsCache.length == 0 || this.productsCache.length != this.allNumber || res ) {
+    if (res ) {
       console.log("fetch form service for cate");
       console.log(this.isCurrentCategoryInList());
       return this.http.get<IproductShow[]>(`${this.baseURL2}GetByGetegory?gategory=${this.cuurentCategName}`).pipe(

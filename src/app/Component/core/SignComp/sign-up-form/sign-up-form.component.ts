@@ -26,14 +26,14 @@ export class SignUpFormComponent {
         "",
         [
           Validators.required,
-          Validators.pattern(/^(010|012|015)[0-9]{8}$/)
+          Validators.pattern(/^(010|012|015|011)[0-9]{8}$/)
         ]
       ),
       email: new FormControl(
         "",
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.com$/)
+          Validators.pattern(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.com$/)
         ]
       ),
       password : new FormControl (
@@ -87,7 +87,7 @@ export class SignUpFormComponent {
       this._AuthService.signUp(this.signupform.value).subscribe({
       next:(response)=>{
         console.log("ffff",response)
-        this._Router.navigate(['/main/signin']);
+        this._Router.navigate(['/signin']);
 
       },
       error : (e) => {

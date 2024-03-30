@@ -12,6 +12,7 @@
       class="form-control"
       id="username"
       formControlName="name"
+      [value]="nameValue"
     />
     <i *ngIf="namecontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i
@@ -46,9 +47,10 @@
       type="email"
       class="form-control"
       id="useremail"
+      [value]="EmailValue"
     />
     <i
-      *ngIf="emailcontrol?.valid && emailcontrol?.touched"
+      *ngIf="emailcontrol?.valid "
       class="bi bi-check-circle-fill"
     ></i>
     <i
@@ -70,7 +72,7 @@
   <div
     class="mb-3 form-control-div"
     [ngClass]="{
-      sucess: phonecontrol?.valid && phonecontrol?.touched,
+      sucess: phonecontrol?.valid ,
       danger: phonecontrol?.errors && phonecontrol?.touched
     }"
   >
@@ -80,9 +82,10 @@
       type="text"
       class="form-control"
       id="userPhone"
+      [value]="PhoneValue"
     />
     <i
-      *ngIf="phonecontrol?.valid && phonecontrol?.touched"
+      *ngIf="phonecontrol?.valid "
       class="bi bi-check-circle-fill"
     ></i>
     <i
@@ -94,7 +97,7 @@
       class="alert p-1 mt-3 alert-danger"
     >
       <ng-container *ngIf="phonecontrol?.hasError('pattern')">
-        ادخل رقم صالح يبدأ 010 او 012 او 015
+        ادخل رقم صالح يبدأ 011 او 010 او 012 او 015
       </ng-container>
     </div>
   </div>
@@ -111,6 +114,7 @@
       type="password"
       class="form-control"
       id="userPassword"
+      [value]="PhoneValue"
     />
     <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i

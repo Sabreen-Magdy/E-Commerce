@@ -132,8 +132,25 @@
             {{ buttonText }}
           </button>
           <button
+            *ngIf="!isProductInFav"
             (click)="pushItemToFavCart(prodDet.id)"
-            class="btn favbnt bi bi-heart-fill"
+            class="btn favbnt bi"
+            [ngClass]="{
+              'bi-heart': !waitingFav,
+              'bi-hourglass-split': waitingFav
+            }"
+          >
+            <!-- <i class="bi bi-heart"></i> -->
+            <!-- <i class="bi bi-heart-fill"></i> -->
+          </button>
+          <button
+            (click)="deleteFavitem()"
+            [ngClass]="{
+              'bi-heart-fill': !waitingFav,
+              'bi-hourglass-split': waitingFav
+            }"
+            *ngIf="isProductInFav"
+            class="btn favbnt bi"
           >
             <!-- <i class="bi bi-heart"></i> -->
             <!-- <i class="bi bi-heart-fill"></i> -->

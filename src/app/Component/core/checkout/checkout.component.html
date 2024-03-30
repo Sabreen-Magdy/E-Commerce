@@ -2,22 +2,47 @@
   <div class="py-5 text-center text-success">
     <h2>معلومات الطلب</h2>
   </div>
-  <div *ngIf="productVarientperOrder.length == 0 && !noitem && !doneOrder"  style="height: 200px;">
-    <div  class="loader"></div>
+  <div
+    *ngIf="
+      productVarientperOrder.length == 0 &&
+      !noitem &&
+      (!doneOrder || !errorOrder ||!deleteOrder)
+    "
+    style="height: 200px"
+  >
+    <div class="loader"></div>
   </div>
-  
-  <div  *ngIf="productVarientperOrder.length == 0 && noitem && !doneOrder" class="px-5 mx-5 alert alert-success" role="alert">
-    ليس لديك أي منتج في  قائمة الطلب. 
-    
 
+  <div
+    *ngIf="
+      productVarientperOrder.length == 0 &&
+      noitem &&
+      (!doneOrder || !errorOrder ||!deleteOrder)
+    "
+    class="px-5 mx-5 alert alert-success"
+    role="alert"
+  >
+    ليس لديك أي منتج في قائمة الطلب.
   </div>
 
-  <div  *ngIf="doneOrder" class="px-5 mx-5 alert alert-success" role="alert">
-        تم ارسال الطلب بنجاح  . 
-    
-
+  <div *ngIf="doneOrder" class="px-5 mx-5 alert alert-success" role="alert">
+    تم ارسال الطلب بنجاح .
   </div>
-  <div *ngIf="productVarientperOrder.length > 0 || wiating" class="row g-3">
+
+  <div *ngIf="errorOrder" class="px-5 mx-5 alert alert-danger" role="alert">
+    عذرًا، حدث خطأ في إرسال الطلب. يرجى المحاولة مرة أخرى.
+  </div>
+
+  <div *ngIf="deleteOrder" class="px-5 mx-5 alert alert-secondary" role="alert">
+    تم الغاء الطلب بنجاح.
+  </div>
+  <div
+    *ngIf="
+      (productVarientperOrder.length > 0 || wiating) &&
+      !(doneOrder || errorOrder || deleteOrder)
+    "
+    class="row g-3"
+  >
     <div class="col-md-4 col-lg-3 order-md-last">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-success">مشترياتك</span>
@@ -42,8 +67,6 @@
           <strong>{{ totalPrice }} EGY</strong>
         </li>
       </ul>
-
-
     </div>
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3 text-success">عنوان العميل</h4>
@@ -54,7 +77,6 @@
         (submit)="SendOrder($event)"
       >
         <div class="row g-3">
- 
           <div
             class="col-12 form-control-div"
             [ngClass]="{
@@ -102,32 +124,49 @@
               </ng-container>
             </div>
           </div>
-
-
         </div>
 
         <hr class="my-4" />
 
         <div class="d-flex gap-2">
-          <button 
-          [ngClass]="{
+          <button
+          *ngIf="!waitingDelete"
+            [ngClass]="{
             'col-8' : !wiating,
             col : wiating,
           }"
-          class="btn btn-success mb-3 btn-lg bg-l col-8"
+            class="btn btn-success mb-3 btn-lg bg-l col-8"
             type="submit"
           >
-          <div *ngIf="wiating">
-            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-          </div>
-          {{btnText}}
+            <div *ngIf="wiating">
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            {{ btnText }}
           </button>
-          <a  *ngIf="!wiating" class="btn btn-outline-danger mb-3 col btn-lg border-2"
-            >الغاء الطلب</a
+          <button
+          (click)="cancelOrder()"
+          *ngIf="!wiating"
+          
+          class="btn btn-outline-danger mb-3 col btn-lg border-2 delbtn"
           >
+          <div>
+            <div *ngIf="waitingDelete" class="lds-ellipsisd">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          {{delText}}
+          </button>
+          
+          
         </div>
-       
-
       </form>
     </div>
   </div>
