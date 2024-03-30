@@ -17,5 +17,6 @@ namespace Services.Abstraction.DataServices
 
         List<ProfitDto> GetProfitByYear(int state);
         List<ProfitDto> GetProfitByWeek(int state);
+        List<ProfitWeekDto> GetProfitByWeekDay(int state);
     }
 }

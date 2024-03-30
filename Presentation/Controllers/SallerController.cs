@@ -110,7 +110,22 @@ public class SallerController : ControllerBase
         {
             return StatusCode(500, ex.Message);
         }
-    }    
+    }
+    
+    [HttpGet("GetProfitByWeekDay")]
+    public IActionResult GetProfitByWeekDay(int state)
+    {
+        try
+        {
+            var result = _adminService.OrderService.GetProfitByWeekDay(state);
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 
     #region Delete
 

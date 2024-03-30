@@ -9,5 +9,6 @@ namespace Domain.Repositories
         double GetProfit(int state);
         List<KeyValuePair<int, double>> GetProfitByYear(int state);
         List<KeyValuePair<int, double>> GetProfitByWeek(int state);
+        List<KeyValuePair<DayOfWeek, double>> GetProfitByWeekDay(int state);
     }
 }
