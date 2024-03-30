@@ -21,7 +21,8 @@ namespace Services.Extenstions
                 Color = varient.ColoredProduct.Color.Name,
                 Size = varient.Size.Name,
                 UnitPrice = varient.Price,
-                ProductVarientId = varient.Id
+                ProductVarientId = varient.Id,
+                Discount = varient.Discount
             };
         }
         public static List<CartItemDto> ToCartItemDto(this List<CartItem> cartItems)
@@ -44,8 +45,8 @@ namespace Services.Extenstions
 
 
             return new() { 
-            items = cart,
-            TotalPrice = cart.Sum(ci => ci.Quantity * ci.UnitPrice),
+            Items = cart,
+            TotalPrice = cart.Sum(ci => ci.Quantity * ci.UnitPrice * ci.Discount),
             TotalQuantity = cart.Sum(ci => ci.Quantity)
             };
         }

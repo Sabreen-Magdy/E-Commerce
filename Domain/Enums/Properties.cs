@@ -12,11 +12,9 @@ public enum Properties
     AddingDate, ColoredProductId, 
     NumberReviews, Discount,
     AvgRate, UnitPrice,
-    Code, Quantity,// ProductBelongToOrderId, ProductBelongToOrder, متككررة
-    //order prop
+    Code, Quantity,
     OrderedDate , ConfirmDate , State , TotalCost , CustomerAddress , CustomerId, Customer, ProductBelongToOrderId, ProductBelongToOrder,
-    // ProductVarientBelongToOrder props
-    // Quantity , متكررة
-    Price, Orders , Products,Rate, ColorId, CartId , Comment
+
+    Price, Orders , Products,Rate, ColorId, CartId , Comment, Address
 
 }

@@ -1,5 +1,6 @@
 ﻿using Contract;
 using Domain.Entities;
+using System.Net;
 
 namespace Services.Extenstions;
 
@@ -17,6 +18,7 @@ public static class CustomerExtenstion
             Email = customer.Email,
             Image = customer.Image,
             Phone = customer.Phone,
+            Address = customer.Address,
         };
     }
 
@@ -33,6 +35,7 @@ public static class CustomerExtenstion
             Email = customer.Email,
             Image = customer.Image,
             Phone = customer.Phone,
+            Address = customer.Address
         };
     }
 

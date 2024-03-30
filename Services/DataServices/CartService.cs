@@ -88,7 +88,7 @@ namespace Services.DataServices
             var cartDto = cart.ToCartDto();
             for (int i=0; i < cart.Count; i++)
             {
-                FillProductImages(cart[i].ProductId, cartDto.items[i]);
+                FillProductImages(cart[i].ProductId, cartDto.Items[i]);
             }
             return cartDto;
         }

@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Contract;
+using Domain.Repositories;
 using Services.Abstraction.DataServices;
 
 namespace Persistence.Authentication
@@ -11,8 +12,8 @@ namespace Persistence.Authentication
             _loginRepository = loginRepository;
         }
 
-        public User? Login(string email, string password) =>
-            _loginRepository.Login(email, password);
+        public User? Login(LoginDto login) =>
+            _loginRepository.Login(login.Email, login.Password);
       
         public string GenerateJSONWebToken(User user) =>
             _loginRepository.GenerateJSONWebToken(user);

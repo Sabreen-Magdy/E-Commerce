@@ -9,6 +9,6 @@
         public string Password { get; set; } = null!;
         public string Phono{ get; set; } = null!;
         public string Email { get; set; } = null!;
-        //public List<ItemDto> items { get; set; } = null!;
+        //public List<ItemDto> Items { get; set; } = null!;
     }
 }
