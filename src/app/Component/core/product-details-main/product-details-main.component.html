@@ -160,8 +160,7 @@
   </div>
 
   <!-- التقيييييييييييييييييييييم -->
-
-  <div *ngIf="!customerHasReview" class="wrapper mt-5">
+  <div class="wrapper mt-5">
     <h3>أضف تقييم</h3>
     <form [formGroup]="commentForm" (submit)="confirmComment($event)">
       <div class="rating">
@@ -172,16 +171,57 @@
         <i class="bx bx-star star" style="--i: 3"></i>
         <i class="bx bx-star star" style="--i: 4"></i>
       </div>
-      <textarea
-        formControlName="comment"
-        name="opinion"
-        cols="10"
-        rows="2"
-        placeholder="رأيك يهمنا...."
-      ></textarea>
+      <div
+        class="col-12 form-control-div"
+        [ngClass]="{
+          sucess: commentForm?.valid,
+          danger:
+            commentcontrol?.errors &&
+            (commentcontrol?.touched || showerror) &&
+            !customerHasReview
+        }"
+      >
+        <textarea
+          formControlName="comment"
+          class="textForReview"
+          name="opinion"
+          cols="10"
+          rows="2"
+          placeholder="رأيك يهمنا...."
+          [readonly]="customerHasReview"
+        ></textarea>
+        <i *ngIf="commentcontrol?.valid" class="bi bi-check-circle-fill"></i>
+        <i
+          *ngIf="
+            commentcontrol?.errors &&
+            (commentcontrol?.touched || showerror) &&
+            !customerHasReview
+          "
+          class="bi bi-exclamation-circle-fill"
+        ></i>
+        <div
+          *ngIf="
+            commentcontrol?.errors &&
+            (commentcontrol?.touched || showerror) &&
+            customerHasReview
+          "
+          class="alert p-1 mt-3 alert-danger"
+        >
+          <ng-container
+            *ngIf="commentcontrol?.hasError('required') && !customerHasReview"
+          >
+            يجب عليك كتابة تعليق
+          </ng-container>
+          <ng-container
+            *ngIf="commentcontrol?.hasError('pattern') && !customerHasReview"
+          >
+            ادخل تعليقك باللغة العربية
+          </ng-container>
+        </div>
+      </div>
       <div class="btn-group">
-        <button type="submit" class="btn submit">تأكيد</button>
-        <button class="btn cancel">حذف</button>
+        <button type="submit" class="btn submit">{{ subText }}</button>
+        <button (click)="clearForm()" class="btn cancel">حذف</button>
       </div>
     </form>
     <!-- <img
@@ -190,7 +230,6 @@
       alt=""
     /> -->
   </div>
-
   <!-- التقيييييييييييييييييييييم -->
 
   <div class="row review">

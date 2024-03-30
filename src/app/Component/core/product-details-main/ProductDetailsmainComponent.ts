@@ -27,6 +27,7 @@ export class ProductDetailsmainComponent implements OnInit {
   allStars!: NodeListOf<HTMLElement>;
   ratingValue!: HTMLInputElement;
   buttonText:string="أضف للعربة";
+  subText:string="تأكيد"
   activeStarsCount:any;
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
@@ -46,16 +47,16 @@ export class ProductDetailsmainComponent implements OnInit {
   constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService,private revService:ProductReviewService) {
     this.commentForm = new FormGroup({
       comment : new FormControl (
-        "",
+        ""
+        ,
         [
           Validators.required,
-          Validators.minLength(10),
           Validators.pattern('[\u0600-\u06FF ,]+')
         ]
       ),
     }
     );}
-    get mainaddresscontrol(){
+    get commentcontrol(){
       return this.commentForm.get('comment')
     }
   ngOnInit(): void {
@@ -88,8 +89,11 @@ export class ProductDetailsmainComponent implements OnInit {
       next: (data) => {
         this.prodDetrev = data;
         data.forEach(rev => {
-          if(rev.customerId==this.customerId){
+          if(this.customerId==rev.customerId){
             this.customerHasReview=true;
+            this.subText="لقد أضفت تعليقا من قبل";
+            (document.querySelector('.btn-group .submit') as HTMLInputElement).classList.add('disabled');
+
           }
         });
         console.log(this.prodDetrev);
@@ -127,14 +131,20 @@ export class ProductDetailsmainComponent implements OnInit {
 
 
   }
-
+ clearForm(){
+  this.commentForm.get('comment')?.setValue("");
+  (document.querySelectorAll('.rating input i') as NodeListOf<HTMLElement>).forEach(i => {
+        i.classList.remove('active');
+        console.log(i)
+      });
+ }
+ showerror:boolean=false;
   confirmComment(e:Event){
-      if (this.commentForm.valid){
+      if (this.commentForm.valid && this.customerHasReview==false){
          let productId=this.prodDet.id ;
          let customerId= this.authService.id;
          let rate= this.activeStarsCount;
          let content= this.commentForm.get('comment')?.value;
-
         console.log(rate,content);
         this.revService.addProductReview(customerId,productId,content,rate).subscribe({
           next: (data) => {
@@ -149,7 +159,10 @@ export class ProductDetailsmainComponent implements OnInit {
           }
         });;
       }
-
+      else{
+        alert("لقد أضفت تعليقا من قبل")
+        this.showerror=true;
+      }
    }
   // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
