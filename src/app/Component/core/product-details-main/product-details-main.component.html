@@ -19,8 +19,8 @@
         <div
           class="smallImgs"
           #smallImgs
-          (click)="showImage($event, index ,x.value[0])"
-          *ngFor="let x of groupedByColor |keyvalue; let index = index"
+          (click)="showImage($event, index, x.value[0])"
+          *ngFor="let x of groupedByColor | keyvalue; let index = index"
         >
           <img [src]="x.value[0].coloredimage" alt="" />
         </div>
@@ -48,37 +48,24 @@
           <div class="rowe" *ngIf="selectedvariant.discount > 0">
             <div class="title">قبل:</div>
             <div class="before">
-              {{
-               selectedvariant.price /
-               selectedvariant.quantity
-              }}
+              {{ selectedvariant.price / selectedvariant.quantity }}
               جنيه
             </div>
           </div>
           <div class="rowe">
             <div class="title">الان:</div>
             <div class="now">
-              {{
-                selectedvariant.priceAfter /
-                selectedvariant.quantity
-              }}
+              {{ selectedvariant.priceAfter / selectedvariant.quantity }}
               جنيه
             </div>
           </div>
           <div class="rowe" *ngIf="selectedvariant.discount > 0">
             <div class="title">وفرت:</div>
-            <div class="sale">
-              {{ selectedvariant.offerPrice }} جنيه
-            </div>
-            <div class="precent">
-              خصم {{ selectedvariant.discount * 100 }}%
-            </div>
+            <div class="sale">{{ selectedvariant.offerPrice }} جنيه</div>
+            <div class="precent">خصم {{ selectedvariant.discount * 100 }}%</div>
           </div>
         </div>
-        <div
-          *ngIf="selectedvariant.discount > 0"
-          class="comment"
-        >
+        <div *ngIf="selectedvariant.discount > 0" class="comment">
           اي تعليق جديد
         </div>
       </div>
@@ -101,7 +88,7 @@
               *ngFor="let c of groupedByColor | keyvalue; let index = index"
               class="box"
               [class.selected]="c.value[0].colorName === selectedColor"
-              (click)="selectColor(c.value[0] , index)"
+              (click)="selectColor(c.value[0], index)"
             >
               <div class="circle" [style.background-color]="c.key"></div>
             </div>
@@ -112,15 +99,17 @@
             <div class="title">مقاس:</div>
           </div>
           <div class="sizes">
-            <div *ngFor="let variant of groupedByColor[selectedColorCode]  ;let index = index"
-   
+            <div
+              *ngFor="
+                let variant of groupedByColor[selectedColorCode];
+                let index = index
+              "
               class="box"
               [class.selected]="variant.size === selectedSize"
               (click)="selectSize(variant.size, variant)"
             >
               {{ variant.size }}
-            
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -142,9 +131,26 @@
           <button (click)="pushItemTocart()" class="btn btn-dark cartbtn">
             {{ buttonText }}
           </button>
-          <button
+          <button *ngIf="!isProductInFav"
             (click)="pushItemToFavCart(prodDet.id)"
-            class="btn favbnt bi bi-heart-fill"
+            class="btn favbnt bi "
+            [ngClass]="{
+             'bi-heart' : !waitingFav,
+             'bi-hourglass-split':waitingFav
+            }"
+          >
+            <!-- <i class="bi bi-heart"></i> -->
+            <!-- <i class="bi bi-heart-fill"></i> -->
+          </button>
+          <button 
+          (click)="deleteFavitem()"
+          [ngClass]="{
+            'bi-heart-fill' : !waitingFav,
+            'bi-hourglass-split':waitingFav
+           }"
+          *ngIf="isProductInFav"
+            
+            class="btn favbnt bi"
           >
             <!-- <i class="bi bi-heart"></i> -->
             <!-- <i class="bi bi-heart-fill"></i> -->
@@ -170,16 +176,47 @@
     </div>
   </div>
 
+  <!-- التقيييييييييييييييييييييم -->
+
+  <div *ngIf="!customerHasReview" class="wrapper mt-5">
+    <h3>أضف تقييم</h3>
+    <form [formGroup]="commentForm" (submit)="confirmComment($event)">
+      <div class="rating">
+        <input type="number" name="rating" hidden />
+        <i class="bx bx-star star" style="--i: 0"></i>
+        <i class="bx bx-star star" style="--i: 1"></i>
+        <i class="bx bx-star star" style="--i: 2"></i>
+        <i class="bx bx-star star" style="--i: 3"></i>
+        <i class="bx bx-star star" style="--i: 4"></i>
+      </div>
+      <textarea
+        formControlName="comment"
+        name="opinion"
+        cols="10"
+        rows="2"
+        placeholder="رأيك يهمنا...."
+      ></textarea>
+      <div class="btn-group">
+        <button type="submit" class="btn submit">تأكيد</button>
+        <button class="btn cancel">حذف</button>
+      </div>
+    </form>
+    <!-- <img
+      class="image-content"
+      src="assets\Images\WhatsApp Image 2024-03-30 at 03.19.41_c1bdd7bc.jpg"
+      alt=""
+    /> -->
+  </div>
+
+  <!-- التقيييييييييييييييييييييم -->
+
   <div class="row review">
     <h4>مراجعات العملاء</h4>
     <div class="averageRate">
       <h6>متوسط التقييم</h6>
       <div class="rowe">
-        <span class="num">{{ prodDet.avgRating + 2 }}</span>
-        <span
-          class="star"
-          *ngFor="let _ of getStarArray(prodDet.numberReviews + 2)"
-        >
+        <span class="num">{{ prodDet.avgRating }}</span>
+        <span class="star" *ngFor="let _ of getStarArray(prodDet.avgRating)">
           <span class="material-symbols-outlined"> star </span>
           <!-- <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>

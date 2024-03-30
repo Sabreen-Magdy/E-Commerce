@@ -33,7 +33,7 @@ import { adminServiceGuard } from './admin-service.guard';
 
 
 const routes: Routes = [
-  {path:"",redirectTo:"main",pathMatch:"full"},
+  {path:"",redirectTo:"home",pathMatch:"full"},
   {path:"admin",canActivate:[adminServiceGuard],component:SidebarAdminComponent, children:[
     {path:"dashboard",canActivate:[adminServiceGuard],component:DashboardAdminPageComponent, },
     {path:"product",canActivate:[adminServiceGuard],component:ProductTabelComponent, },
