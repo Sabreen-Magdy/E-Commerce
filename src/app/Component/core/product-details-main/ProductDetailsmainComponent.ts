@@ -19,6 +19,8 @@ import { ProductDetailsService } from 'src/app/services/product-details.service'
   styleUrls: ['./product-details-main.component.css']
 })
 export class ProductDetailsmainComponent implements OnInit {
+  allStars!: NodeListOf<HTMLElement>;
+  ratingValue!: HTMLInputElement;
 
   constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService) { }
   buttonText:string="أضف للعربة"
@@ -73,9 +75,42 @@ export class ProductDetailsmainComponent implements OnInit {
     this.getUniqueColors();
     this.getUniqueCode
     // This function extracts unique colors from the prodVariantList
+      this.allStars = document.querySelectorAll('.rating .star') as NodeListOf<HTMLElement>;
+      this.ratingValue = document.querySelector('.rating input') as HTMLInputElement;
+      this.allStars.forEach((star, idx) => {
+        star.addEventListener('click', () => {
+          let click = 0;
+          this.ratingValue.value = String(idx + 1);
+
+          this.allStars.forEach(i => {
+            i.classList.replace('bxs-star', 'bx-star');
+            i.classList.remove('active');
+          });
+          for (let i = 0; i < this.allStars.length; i++) {
+            if (i <= idx) {
+              this.allStars[i].classList.replace('bx-star', 'bxs-star');
+              this.allStars[i].classList.add('active');
+            } else {
+              (this.allStars[i] as HTMLElement).style.setProperty('--i', String(click));
+              click++;
+            }
+          }
+        });
+      });
 
 
   }
+
+
+
+
+
+
+
+
+
+
+
 
   list: string[] = [
     "https://cdn1.iconfinder.com/data/icons/loading-icon/100/loading_icon-01-512.png"

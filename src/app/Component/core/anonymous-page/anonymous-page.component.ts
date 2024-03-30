@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class AnonymousPageComponent {
   isCustomer: boolean = false;
-
   constructor(private _AuthService:AuthService){}
   ngOnInit():void{
     this._AuthService.userData.subscribe({

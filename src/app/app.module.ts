@@ -113,7 +113,8 @@ import { TableComponent } from './Component/core/AdminSide/general/table/table.c
     HomePageLayoutComponent,
     HomePageComponent,
     Navbar2Component,
-    TableComponent,
+    TableComponent
+
 
   ],
   imports: [
