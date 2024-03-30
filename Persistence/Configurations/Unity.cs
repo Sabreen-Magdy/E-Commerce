@@ -10,5 +10,6 @@
         public static string CheckDate(string sourceDate,
             string targetDate = "GETDATE()") =>
             $"DATEPART(YEAR, {sourceDate}) >= DATEPART(YEAR, {targetDate}) and DATEPART(MONTH, {sourceDate}) >= DATEPART(MONTH, {targetDate}) and DATEPART(DAY, {sourceDate}) >= DATEPART(DAY, {targetDate})";
+    
     }
 }
