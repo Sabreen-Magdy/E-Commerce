@@ -11,7 +11,7 @@ import { IproductReviws } from 'src/app/models/iproduct-reviws';
 import { IproductVarDet } from 'src/app/models/iproduct-var-det';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductDetailsService } from 'src/app/services/product-details.service';
-import { FormControl, FormGroup ,Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductIReview, Review } from 'src/app/models/ireview';
 import { ProductReviewService } from 'src/app/services/reviews.service';
 
@@ -23,12 +23,12 @@ import { ProductReviewService } from 'src/app/services/reviews.service';
   styleUrls: ['./product-details-main.component.css']
 })
 export class ProductDetailsmainComponent implements OnInit {
-  commentForm : FormGroup;
+  commentForm: FormGroup;
   allStars!: NodeListOf<HTMLElement>;
   ratingValue!: HTMLInputElement;
-  buttonText:string="أضف للعربة";
-  subText:string="تأكيد"
-  activeStarsCount:any;
+  buttonText: string = "أضف للعربة";
+  subText: string = "تأكيد"
+  activeStarsCount: any;
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
@@ -38,19 +38,46 @@ export class ProductDetailsmainComponent implements OnInit {
     "description": "undefine"
   };
   prodDetrev: IproductReviws[] = [];
-  customerHasReview:boolean=false;
-  isProductInFav : boolean = false;
-  waitingFav : boolean = false;
+  customerHasReview: boolean = false;
+  isProductInFav: boolean = false;
+  waitingFav: boolean = false;
   // sizeIndexMap: { [size: string]: number } = {};
   id: number = 0;
-  customerId : number = 0;
-  addFavSub : Subscription | undefined;
-  addcartSub : Subscription | undefined;
-  getFavSub : Subscription | undefined;
-  deleteFavsub : Subscription | undefined;
-  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService,private revService:ProductReviewService) {
+  customerId: number = 0;
+  addFavSub: Subscription | undefined;
+  addcartSub: Subscription | undefined;
+  getFavSub: Subscription | undefined;
+  deleteFavsub: Subscription | undefined;
+
+  getProductDetailsRev(){
+    this.prodDetApi.getProdReviews(this.id).subscribe({
+      next: (data) => {
+        this.prodDetrev = data;
+        data.forEach(rev => {
+          if (this.customerId == rev.customerId) {
+            this.customerHasReview = true;
+            this.subText = "لقد أضفت تعليقا من قبل";
+            (document.querySelector('.btn-group .submit') as HTMLInputElement).classList.add('disabled');
+
+          }
+        });
+        console.log(this.prodDetrev);
+      }
+    });
+    }
+    getProductDetails(){
+
+      this.prodDetApi.getProd(this.id).subscribe({
+        next: (data) => {
+          this.prodDet = data;
+  
+          console.log(this.prodDet);
+        }
+      });
+    }
+  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute, private favService: FavoriteService, private authService: AuthService, private CartServi: CartService, private revService: ProductReviewService) {
     this.commentForm = new FormGroup({
-      comment : new FormControl (
+      comment: new FormControl(
         ""
         ,
         [
@@ -59,10 +86,11 @@ export class ProductDetailsmainComponent implements OnInit {
         ]
       ),
     }
-    );}
-    get commentcontrol(){
-      return this.commentForm.get('comment')
-    }
+    );
+  }
+  get commentcontrol() {
+    return this.commentForm.get('comment')
+  }
   ngOnInit(): void {
 
     this.customerId = this.authService.id;
@@ -74,104 +102,88 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log(this.prodVariantList);
         this.selectedImage = this.prodVariantList[0].coloredimage;
         this.selectedColor = this.prodVariantList[0].colorName;
-       this.selectedColorCode = this.prodVariantList[0].code;
-        this.selectedSize = this.prodVariantList[0].size ;
+        this.selectedColorCode = this.prodVariantList[0].code;
+        this.selectedSize = this.prodVariantList[0].size;
         this.selectedvariant = this.prodVariantList[0]
         this.groupedByColor = this.groupByColorCode(this.prodVariantList);
         console.log(this.groupedByColor)
       }
     });
     this.checkFavourite();
-    this.prodDetApi.getProd(this.id).subscribe({
-      next: (data) => {
-        this.prodDet = data;
-
-        console.log(this.prodDet);
-      }
-    });
-
-    this.prodDetApi.getProdReviews(this.id).subscribe({
-      next: (data) => {
-        this.prodDetrev = data;
-        data.forEach(rev => {
-          if(this.customerId==rev.customerId){
-            this.customerHasReview=true;
-            this.subText="لقد أضفت تعليقا من قبل";
-            (document.querySelector('.btn-group .submit') as HTMLInputElement).classList.add('disabled');
-
-          }
-        });
-        console.log(this.prodDetrev);
-      }
-    });
+   this.getProductDetails()
+    this.getProductDetailsRev()
 
     this.getUniqueColors();
     this.getUniqueCode
-// reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-      this.allStars = document.querySelectorAll('.rating .star') as NodeListOf<HTMLElement>;
-      this.ratingValue = document.querySelector('.rating input') as HTMLInputElement;
-      this.allStars.forEach((star, idx) => {
-        star.addEventListener('click', () => {
-          let click = 0;
-          this.ratingValue.value = String(idx + 1);
+    // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    this.allStars = document.querySelectorAll('.rating .star') as NodeListOf<HTMLElement>;
+    this.ratingValue = document.querySelector('.rating input') as HTMLInputElement;
+    this.allStars.forEach((star, idx) => {
+      star.addEventListener('click', () => {
+        let click = 0;
+        this.ratingValue.value = String(idx + 1);
 
-          this.allStars.forEach(i => {
-            i.classList.replace('bxs-star', 'bx-star');
-            i.classList.remove('active');
-          });
-          for (let i = 0; i < this.allStars.length; i++) {
-            if (i <= idx) {
-              this.allStars[i].classList.replace('bx-star', 'bxs-star');
-              this.allStars[i].classList.add('active');
-            } else {
-              (this.allStars[i] as HTMLElement).style.setProperty('--i', String(click));
-              click++;
-            }
-          }
-          this.activeStarsCount = document.querySelectorAll('.rating .active').length;
-          console.log('Number of active stars:',this.activeStarsCount);
+        this.allStars.forEach(i => {
+          i.classList.replace('bxs-star', 'bx-star');
+          i.classList.remove('active');
         });
-
+        for (let i = 0; i < this.allStars.length; i++) {
+          if (i <= idx) {
+            this.allStars[i].classList.replace('bx-star', 'bxs-star');
+            this.allStars[i].classList.add('active');
+          } else {
+            (this.allStars[i] as HTMLElement).style.setProperty('--i', String(click));
+            click++;
+          }
+        }
+        this.activeStarsCount = document.querySelectorAll('.rating .active').length;
+        console.log('Number of active stars:', this.activeStarsCount);
       });
+
+    });
 
 
   }
- clearForm(){
-  this.commentForm.get('comment')?.setValue("");
-  (document.querySelectorAll('.rating input i') as NodeListOf<HTMLElement>).forEach(i => {
-        i.classList.remove('active');
-        console.log(i)
-      });
- }
- showerror:boolean=false;
-  confirmComment(e:Event){
-      if (this.commentForm.valid && this.customerHasReview==false){
-         let productId=this.prodDet.id ;
-         let customerId= this.authService.id;
-         let rate= this.activeStarsCount;
-         let content= this.commentForm.get('comment')?.value;
-        console.log(rate,content);
-        this.revService.addProductReview(customerId,productId,content,rate).subscribe({
-          next: (data) => {
-            console.log(data);
-            this.commentForm.get('comment')?.setValue("");
-            this.prodDetApi.getProdReviews(this.id).subscribe({
-              next: (data) => {
-                this.prodDetrev = data;
-                console.log(this.prodDetrev);
-              }
-            });
-          }
-        });;
-      }
-      else{
-        alert("لقد أضفت تعليقا من قبل")
-        this.showerror=true;
-      }
-   }
+  clearForm() {
+    this.commentForm.get('comment')?.setValue("");
+    (document.querySelectorAll('.rating input i') as NodeListOf<HTMLElement>).forEach(i => {
+      i.classList.remove('active');
+      console.log(i)
+    });
+  }
+
+
+
+  showerror: boolean = false;
+  confirmComment(e: Event) {
+    if (this.commentForm.valid && this.customerHasReview == false) {
+      let productId = this.prodDet.id;
+      let customerId = this.authService.id;
+      let rate = this.activeStarsCount;
+      let content = this.commentForm.get('comment')?.value;
+      console.log(rate, content);
+      this.revService.addProductReview(customerId, productId, content, rate).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.commentForm.get('comment')?.setValue("");
+          this.getProductDetails()
+          this.prodDetApi.getProdReviews(this.id).subscribe({
+            next: (data) => {
+              this.prodDetrev = data;
+              console.log(this.prodDetrev);
+            }
+          });
+        }
+      });;
+    }
+    else {
+      alert("لقد أضفت تعليقا من قبل")
+      this.showerror = true;
+    }
+  }
   // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
-    // This function extracts unique colors from the prodVariantList
+  // This function extracts unique colors from the prodVariantList
   groupByColorCode(productVariants: IproductVarDet[]): Record<string, IproductVarDet[]> {
     const grouped: Record<string, IproductVarDet[]> = {};
 
@@ -185,7 +197,7 @@ export class ProductDetailsmainComponent implements OnInit {
 
     return grouped;
   }
-  groupedByColor : Record<string, IproductVarDet[]> ={}
+  groupedByColor: Record<string, IproductVarDet[]> = {}
 
   list: string[] = [
     "https://cdn1.iconfinder.com/data/icons/loading-icon/100/loading_icon-01-512.png"
@@ -209,8 +221,8 @@ export class ProductDetailsmainComponent implements OnInit {
   selectedindex: number = 0;
   selectedImage: string = this.list[0];
   selectedColor: string = this.color[0].name;
-  selectedColorCode:string = this.color[0].code;
-  selectedvariant:IproductVarDet={code:"",coloredimage:'' , colorName:'',discount:0 , id:0 ,offerPrice:0 ,price:0 ,priceAfter:0 ,quantity:0 ,size:''};
+  selectedColorCode: string = this.color[0].code;
+  selectedvariant: IproductVarDet = { code: "", coloredimage: '', colorName: '', discount: 0, id: 0, offerPrice: 0, price: 0, priceAfter: 0, quantity: 0, size: '' };
   selectedSize: string = this.size[0];
   quantityNumber: number = 1;
   currentPage: number = 1;
@@ -240,14 +252,14 @@ export class ProductDetailsmainComponent implements OnInit {
     this.checkArrowsVisibility();
   }
 
-  showImage(event: any, index: number, variant:IproductVarDet): void {
+  showImage(event: any, index: number, variant: IproductVarDet): void {
     if (event.target.tagName === 'IMG') {
       this.selectedImage = event.target.src;
       this.selectedindex = index;
-      this.selectedvariant=variant
+      this.selectedvariant = variant
       this.selectedColorCode = variant.code
       this.selectedColor = variant.colorName;
-      this.selectedSize = variant.size ;
+      this.selectedSize = variant.size;
       this.quantityNumber = 1; // Reset quantity to 1
     }
   }
@@ -256,14 +268,14 @@ export class ProductDetailsmainComponent implements OnInit {
     this.selectedColor = variant.colorName;
     this.selectedindex = index;
     this.selectedColorCode = variant.code
-    this.selectedvariant=variant
+    this.selectedvariant = variant
     this.selectedImage = variant.coloredimage;
     this.selectedSize = variant.size;
     this.quantityNumber = 1; // Reset quantity to 1
   }
-  selectSize(sizename: string, variant:IproductVarDet): void {
+  selectSize(sizename: string, variant: IproductVarDet): void {
 
-    this.selectedSize = sizename ;
+    this.selectedSize = sizename;
     this.selectedvariant = variant
     // this.selectedindex = index;
     // this.selectedImage = this.prodVariantList[this.selectedindex].coloredimage;
@@ -329,7 +341,7 @@ export class ProductDetailsmainComponent implements OnInit {
     return Array.from(new Set(this.prodVariantList.map(item => item.colorName)));
   }
 
-  getUniqueCode() : string[]{
+  getUniqueCode(): string[] {
     return Array.from(new Set(this.prodVariantList.map(item => item.code)));
   }
 
@@ -341,36 +353,36 @@ export class ProductDetailsmainComponent implements OnInit {
   //   });
   // }
 
-  pushItemToFavCart( prodId : number ){
+  pushItemToFavCart(prodId: number) {
     this.waitingFav = true;
-    const addFav : IaddFavorite = {
+    const addFav: IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
-  }
-
-   this.addFavSub = this.favService.additemTofav(addFav).subscribe({
-    next : (data) => {
-      this.waitingFav = false;
-      console.log("item Add to Fav Succesfully" + data);
-      this.favService.getNumberOfitemInFavCart();
-      this.isProductInFav = true;
-    },
-    error : (e) => {
-      console.log("may bt item in fav already");
-      console.log("ERROR when add fav to item" + e);
     }
-   })
+
+    this.addFavSub = this.favService.additemTofav(addFav).subscribe({
+      next: (data) => {
+        this.waitingFav = false;
+        console.log("item Add to Fav Succesfully" + data);
+        this.favService.getNumberOfitemInFavCart();
+        this.isProductInFav = true;
+      },
+      error: (e) => {
+        console.log("may bt item in fav already");
+        console.log("ERROR when add fav to item" + e);
+      }
+    })
   }
 
-  checkFavourite (){
+  checkFavourite() {
     this.getFavSub = this.favService.getallFavbycustomr(this.customerId).subscribe({
-      next: (data) =>{
-            console.log("Product id  " + this.id);
-            console.log("customrt id  " + this.customerId);
-            console.log(data);
+      next: (data) => {
+        console.log("Product id  " + this.id);
+        console.log("customrt id  " + this.customerId);
+        console.log(data);
         data.forEach(element => {
           console.log(element.productId);
-          if (element.productId == this.id){
+          if (element.productId == this.id) {
             console.log("found product id in fav");
             this.isProductInFav = true;
             console.log(this.isProductInFav);
@@ -380,39 +392,39 @@ export class ProductDetailsmainComponent implements OnInit {
     })
   }
 
-  deleteFavitem(){
+  deleteFavitem() {
     this.waitingFav = true;
-    this.deleteFavsub = this.favService.deletefavitem(this.customerId,this.id).subscribe({
-      next : (data) => {
+    this.deleteFavsub = this.favService.deletefavitem(this.customerId, this.id).subscribe({
+      next: (data) => {
         this.waitingFav = false;
         console.log("succesful delete: " + data);
         this.favService.getNumberOfitemInFavCart();
         this.isProductInFav = false;
       },
-      error : (e)=>{
+      error: (e) => {
         console.log("ERROR when delete fav item" + e);
       }
     });
-   }
+  }
 
-  pushItemTocart (){
+  pushItemTocart() {
     console.log(this.selectedvariant.id);
     console.log(this.quantityNumber);
 
-    const addcart : AddCart = {
+    const addcart: AddCart = {
       productVarientId: this.selectedvariant.id,
       state: 0,
       quantity: this.quantityNumber
     }
 
-    this.addcartSub = this.CartServi.addCartItem(this.customerId,addcart).subscribe({
+    this.addcartSub = this.CartServi.addCartItem(this.customerId, addcart).subscribe({
       next: (done) => {
         console.log("Added Succesful" + done);
-        this.buttonText="تم إضافة المنتج"
+        this.buttonText = "تم إضافة المنتج"
         this.CartServi.getNumberOfitemInCart();
       },
-      error : (e) => {
-        this.buttonText="ذلك المنتج متواجد بالفعل في السلة"
+      error: (e) => {
+        this.buttonText = "ذلك المنتج متواجد بالفعل في السلة"
 
         console.log("ERROR when delete" + e);
       }

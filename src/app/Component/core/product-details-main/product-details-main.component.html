@@ -191,7 +191,7 @@
       <div
         class="col-12 form-control-div"
         [ngClass]="{
-          sucess: commentForm?.valid,
+          sucess: commentForm!.valid,
           danger:
             commentcontrol?.errors &&
             (commentcontrol?.touched || showerror) &&
