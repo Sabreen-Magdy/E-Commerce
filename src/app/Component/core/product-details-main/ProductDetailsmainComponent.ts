@@ -327,7 +327,7 @@ export class ProductDetailsmainComponent implements OnInit {
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
-    }
+  }
 
    this.addFavSub = this.favService.additemTofav(addFav).subscribe({
     next : (data) => {

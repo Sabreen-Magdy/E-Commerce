@@ -54,7 +54,7 @@ export class ActivityComponent {
   }
 
   stringState(s: number): string {
-    return s === 0 ? "تم رفضه" : "يتم تجهيزه";
+    return s === 0 ? "يتم مراجعته" : 1 ? "تم قبوله":"تم رفضه";
   }
 
   toggleModel(index :number){

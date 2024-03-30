@@ -139,6 +139,17 @@
                 >
               </li>
               <li>
+                <a
+                  (click)="toggleMenu()"
+                  [routerLink]="'/checkout'"
+                  [routerLinkActive]="'active'"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="dropdown-item"
+                  href="#"
+                  >تأكيد الطلب</a
+                >
+              </li>
+              <li>
                 <a class="dropdown-item" (click)="logOut()" href="#"
                   >تسجيل خروج</a
                 >

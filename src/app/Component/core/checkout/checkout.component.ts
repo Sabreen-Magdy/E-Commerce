@@ -15,7 +15,11 @@ import { CartService } from 'src/app/services/cart.service';
 export class CheckoutComponent  implements OnInit {
   showerror : boolean = false;
   customerID : number = 0;
+  noitem:boolean = false;
+  wiating:boolean = false;
+  doneOrder : boolean = false;
   checkoutForm : FormGroup;
+  btnText :string = "الاستمرار في تأكيد الطلب"
   productVarientperOrder : IproductforOrderadd[] = [];
   nameProductVarient : string[] =[];
   cartitemfordelete : CartItemDto [] = [];
@@ -43,27 +47,14 @@ export class CheckoutComponent  implements OnInit {
   cartByIDsub : Subscription | undefined;
   deletecartAfCheckSub : Subscription | undefined;
 
+
+
+
   get mainaddresscontrol(){
     return this.checkoutForm.get('mainaddress')
   }
 
-  enter(e:Event){
-    console.log(this.checkoutForm.valid);
-   }
 
-   deleteafterCheckout() {
-    for (let item of this.productVarientperOrder) {
-      this.deletecartAfCheckSub = this.CartService.deleteCartItemByCID(this.customerID,item.productVarientId).subscribe({
-        next: ()=>{
-          console.log("Delete success ");
-        },
-        error: (e)=>{
-          console.log("ERROR when delete",e);
-        }
-      })
-
-    }
-  }
 
   deleteafterCheckout2() {
     for (let item of this.cartitemfordelete) {
@@ -98,9 +89,12 @@ export class CheckoutComponent  implements OnInit {
         }
         this.totalPrice = totalPriceS;
         this.cartitemfordelete = filterdata;
-
+       if( this.productVarientperOrder.length == 0){
+        this.noitem = true
+       }
       },
       error : (e) =>{
+        this.noitem = true;
         console.log("ERROR when fetch Data of CartItem" + e);
       }
     })
@@ -110,9 +104,11 @@ export class CheckoutComponent  implements OnInit {
 
 
    SendOrder(e:Event){
+
     console.log(new Date().toISOString());
       if (this.checkoutForm.valid){
-
+        this.wiating = true;
+        this.btnText= "";
         const order : IorderAdd = {
           customerId: this.customerID,
           orderDate: new Date().toISOString(),
@@ -123,8 +119,8 @@ export class CheckoutComponent  implements OnInit {
         this.orderSer.addorder(order).subscribe({
           next: (data) => {
             console.log("done"+data);
-            this.deleteafterCheckout();
-            this.getcartbyId();
+            this.doneOrder = true;
+            this.deleteafterCheckout2();
           },
           error : (e) => {
             console.log(e);
