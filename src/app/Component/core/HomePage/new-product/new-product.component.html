@@ -2,7 +2,9 @@
   <h3>احدث المنتجات</h3>
   <div class="line"></div>
   <div class="items row">
+    <div *ngIf="allproductList.length == 0" class="loader"></div>
     <div
+        
       *ngFor="let x of allproductList.slice(0, 8)"
       class="element col-lg-3 col-md-6"
     >

@@ -19,10 +19,10 @@
         <div
           class="smallImgs"
           #smallImgs
-          (click)="showImage($event, index)"
-          *ngFor="let x of prodVariantList; let index = index"
+          (click)="showImage($event, index ,x.value[0])"
+          *ngFor="let x of groupedByColor |keyvalue; let index = index"
         >
-          <img [src]="x.coloredimage" alt="" />
+          <img [src]="x.value[0].coloredimage" alt="" />
         </div>
         <span
           class="material-symbols-outlined down"
@@ -45,12 +45,12 @@
           <span>({{ prodDet.numberReviews }} تعليقات)</span>
         </div>
         <div class="price">
-          <div class="rowe" *ngIf="prodVariantList[selectedindex].discount > 0">
+          <div class="rowe" *ngIf="selectedvariant.discount > 0">
             <div class="title">قبل:</div>
             <div class="before">
               {{
-                prodVariantList[selectedindex].price /
-                  prodVariantList[selectedindex].quantity
+               selectedvariant.price /
+               selectedvariant.quantity
               }}
               جنيه
             </div>
@@ -59,24 +59,24 @@
             <div class="title">الان:</div>
             <div class="now">
               {{
-                prodVariantList[selectedindex].priceAfter /
-                  prodVariantList[selectedindex].quantity
+                selectedvariant.priceAfter /
+                selectedvariant.quantity
               }}
               جنيه
             </div>
           </div>
-          <div class="rowe" *ngIf="prodVariantList[selectedindex].discount > 0">
+          <div class="rowe" *ngIf="selectedvariant.discount > 0">
             <div class="title">وفرت:</div>
             <div class="sale">
-              {{ prodVariantList[selectedindex].offerPrice }} جنيه
+              {{ selectedvariant.offerPrice }} جنيه
             </div>
             <div class="precent">
-              خصم {{ prodVariantList[selectedindex].discount * 100 }}%
+              خصم {{ selectedvariant.discount * 100 }}%
             </div>
           </div>
         </div>
         <div
-          *ngIf="prodVariantList[selectedindex].discount > 0"
+          *ngIf="selectedvariant.discount > 0"
           class="comment"
         >
           اي تعليق جديد
@@ -98,12 +98,12 @@
 
           <div class="clrs">
             <div
-              *ngFor="let c of prodVariantList; let index = index"
+              *ngFor="let c of groupedByColor | keyvalue; let index = index"
               class="box"
-              [class.selected]="c.colorName === selectedColor"
-              (click)="selectColor(c.colorName, index)"
+              [class.selected]="c.value[0].colorName === selectedColor"
+              (click)="selectColor(c.value[0] , index)"
             >
-              <div class="circle" [style.background-color]="c.code"></div>
+              <div class="circle" [style.background-color]="c.key"></div>
             </div>
           </div>
         </div>
@@ -112,14 +112,15 @@
             <div class="title">مقاس:</div>
           </div>
           <div class="sizes">
-            <div
-              *ngFor="let s of prodVariantList; let index = index"
+            <div *ngFor="let variant of groupedByColor[selectedColorCode]  ;let index = index"
+   
               class="box"
-              [class.selected]="s.size + index === selectedSize"
-              (click)="selectSize(s.size, index)"
+              [class.selected]="variant.size === selectedSize"
+              (click)="selectSize(variant.size, variant)"
             >
-              {{ s.size }}
-            </div>
+              {{ variant.size }}
+            
+          </div>
           </div>
         </div>
       </div>

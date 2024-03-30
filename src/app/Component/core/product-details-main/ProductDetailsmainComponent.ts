@@ -1,3 +1,4 @@
+import { compileNgModule } from '@angular/compiler';
 import { CartService } from './../../../services/cart.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -55,7 +56,11 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log(this.prodVariantList);
         this.selectedImage = this.prodVariantList[0].coloredimage;
         this.selectedColor = this.prodVariantList[0].colorName;
-        this.selectedSize = this.prodVariantList[0].size + 0;
+       this.selectedColorCode = this.prodVariantList[0].code;
+        this.selectedSize = this.prodVariantList[0].size ;
+        this.selectedvariant = this.prodVariantList[0]
+        this.groupedByColor = this.groupByColorCode(this.prodVariantList);
+        console.log(this.groupedByColor)
       }
     });
     this.prodDetApi.getProd(this.id).subscribe({
@@ -101,16 +106,20 @@ export class ProductDetailsmainComponent implements OnInit {
 
   }
 
+  groupByColorCode(productVariants: IproductVarDet[]): Record<string, IproductVarDet[]> {
+    const grouped: Record<string, IproductVarDet[]> = {};
 
+    productVariants.forEach(variant => {
+      const colorCode = variant.code;
+      if (!grouped[colorCode]) {
+        grouped[colorCode] = [];
+      }
+      grouped[colorCode].push(variant);
+    });
 
-
-
-
-
-
-
-
-
+    return grouped;
+  }
+  groupedByColor : Record<string, IproductVarDet[]> ={}
 
   list: string[] = [
     "https://cdn1.iconfinder.com/data/icons/loading-icon/100/loading_icon-01-512.png"
@@ -134,6 +143,8 @@ export class ProductDetailsmainComponent implements OnInit {
   selectedindex: number = 0;
   selectedImage: string = this.list[0];
   selectedColor: string = this.color[0].name;
+  selectedColorCode:string = this.color[0].code;
+  selectedvariant:IproductVarDet={code:"",coloredimage:'' , colorName:'',discount:0 , id:0 ,offerPrice:0 ,price:0 ,priceAfter:0 ,quantity:0 ,size:''};
   selectedSize: string = this.size[0];
   quantityNumber: number = 1;
   currentPage: number = 1;
@@ -163,34 +174,39 @@ export class ProductDetailsmainComponent implements OnInit {
     this.checkArrowsVisibility();
   }
 
-  showImage(event: any, index: number): void {
+  showImage(event: any, index: number, variant:IproductVarDet): void {
     if (event.target.tagName === 'IMG') {
       this.selectedImage = event.target.src;
       this.selectedindex = index;
-      this.selectedColor = this.prodVariantList[this.selectedindex].colorName;
-      this.selectedSize = this.prodVariantList[this.selectedindex].size + index;
+      this.selectedvariant=variant
+      this.selectedColorCode = variant.code
+      this.selectedColor = variant.colorName;
+      this.selectedSize = variant.size ;
       this.quantityNumber = 1; // Reset quantity to 1
     }
   }
-  selectColor(colorName: string, index: number): void {
+  selectColor(variant: IproductVarDet, index: number): void {
 
-    this.selectedColor = colorName;
+    this.selectedColor = variant.colorName;
     this.selectedindex = index;
-    this.selectedImage = this.prodVariantList[this.selectedindex].coloredimage;
-    this.selectedSize = this.prodVariantList[this.selectedindex].size + index;
+    this.selectedColorCode = variant.code
+    this.selectedvariant=variant
+    this.selectedImage = variant.coloredimage;
+    this.selectedSize = variant.size;
     this.quantityNumber = 1; // Reset quantity to 1
   }
-  selectSize(sizename: string, index: number): void {
+  selectSize(sizename: string, variant:IproductVarDet): void {
 
-    this.selectedSize = sizename + index;
-    this.selectedindex = index;
-    this.selectedImage = this.prodVariantList[this.selectedindex].coloredimage;
+    this.selectedSize = sizename ;
+    this.selectedvariant = variant
+    // this.selectedindex = index;
+    // this.selectedImage = this.prodVariantList[this.selectedindex].coloredimage;
     // this.selectedSize = this.prodVariantList[this.selectedindex].size+index
-    this.selectedColor = this.prodVariantList[this.selectedindex].colorName;
+    // this.selectedColor = this.prodVariantList[this.selectedindex].colorName;
     this.quantityNumber = 1; // Reset quantity to 1
   }
   plus() {
-    if (this.quantityNumber <= this.prodVariantList[this.selectedindex].quantity) {
+    if (this.quantityNumber <= this.selectedvariant!.quantity) {
       this.quantityNumber++;
       this.CartServi.getNumberOfitemInCart();
     }
@@ -279,11 +295,11 @@ export class ProductDetailsmainComponent implements OnInit {
 
   pushItemTocart (){
     this.buttonText="تم إضافة المنتج"
-    console.log(this.prodVariantList[this.selectedindex].id);
+    console.log(this.selectedvariant.id);
     console.log(this.quantityNumber);
 
     const addcart : AddCart = {
-      productVarientId: this.prodVariantList[this.selectedindex].id,
+      productVarientId: this.selectedvariant.id,
       state: 0,
       quantity: this.quantityNumber
     }

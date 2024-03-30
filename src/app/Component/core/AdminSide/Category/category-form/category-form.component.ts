@@ -68,6 +68,7 @@ export class CategoryFormComponent implements OnInit {
         console.log(this.id);
         var editCategory  ={
           name: this.categoryForm.get('categoryname')?.value,
+          icon: this.categoryForm.get('categoryicon')?.value,
           description: this.categoryForm.get('categorydescription')?.value
         }
         this.editCategorySub = this.cateService.editCategory(this.id,editCategory).subscribe({

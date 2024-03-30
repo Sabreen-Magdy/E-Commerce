@@ -19,21 +19,31 @@ export class NewProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId=this._authService.id;
-    this.getallproduct();
+    this.prodServ.getAllProduct2().subscribe(
+      products => {
+        products.sort((a,b)=>b.addingDate.localeCompare(a.addingDate))
+        this.allproductList = products;
+        
+      },
+      error => {
+        console.error('Error fetching products:', error);
+        
+      }
+    );
   }
 
   AllProductSub : Subscription | undefined;
   addFavSub : Subscription | undefined;
-  getallproduct(){
-    this.AllProductSub = this.prodServ.getAllProduct().subscribe({
-      next : (data) => {
-        this.allproductList = data;
-      },
-      error : (e) => {
-        console.log("Error when fetch Data" + e);
-      }
-    })
-  }
+  // getallproduct(){
+  //   this.AllProductSub = this.prodServ.getAllProduct().subscribe({
+  //     next : (data) => {
+  //       this.allproductList = data;
+  //     },
+  //     error : (e) => {
+  //       console.log("Error when fetch Data" + e);
+  //     }
+  //   })
+  // }
 
   pushItemToFavCart( prodId : number ){
     alert("Item added successfully!");

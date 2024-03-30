@@ -25,7 +25,11 @@ export interface IproductShow {
     id: number,
     name: string,
     price: number,
-    image: string
+    image: string,
+    addingDate:string,
+    avgRating:number,
+
   
 }
+
 

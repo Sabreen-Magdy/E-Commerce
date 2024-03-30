@@ -313,3 +313,14 @@ span.msg.show {
     color: rgb(70, 167, 70);
     
 }
+
+.loaddiv{
+    width: 100%;
+    text-align: center;
+
+}
+
+.loader{
+    margin: 150px auto;
+    text-align: center;
+}
