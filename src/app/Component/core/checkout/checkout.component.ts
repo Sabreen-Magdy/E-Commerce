@@ -22,35 +22,6 @@ export class CheckoutComponent  implements OnInit {
   totalPrice : number =0;
   constructor( private auth: AuthService, private orderSer:addorderService , private CartService:CartService){
     this.checkoutForm = new FormGroup({
-      // firstname: new FormControl(
-      //   "",
-      //   [
-      //     Validators.required,
-      //     Validators.minLength(3),
-      //     Validators.pattern('[\u0600-\u06FF]+')
-      //   ]
-      // ),
-      // lastname: new FormControl(
-      //   "",
-      //   [
-      //     Validators.required,
-      //     Validators.minLength(3),
-      //     Validators.pattern('[\u0600-\u06FF ,]+')
-      //   ]
-      // ),
-      // email: new FormControl(
-      //   "",
-      //   [
-      //     Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
-      //   ]
-      // ),
-      // phone : new FormControl(
-      //   "",
-      //   [
-      //     Validators.required,
-      //     Validators.pattern(/^(010|012|015)[0-9]{8}$/)
-      //   ]
-      // ),
       mainaddress : new FormControl (
         "",
         [
@@ -71,24 +42,6 @@ export class CheckoutComponent  implements OnInit {
 
   cartByIDsub : Subscription | undefined;
   deletecartAfCheckSub : Subscription | undefined;
-
-
-  // get firstnamecontrol(){
-  //   return this.checkoutForm.get('firstname')
-  // }
-  // get lastnamecontrol(){
-  //   return this.checkoutForm.get('lastname')
-  // }
-  // get emailcontrol(){
-  //   return this.checkoutForm.get('email')
-  // }
-  // get phonecontrol(){
-  //   return this.checkoutForm.get('phone')
-  // }
-
-  // get address2control(){
-  //   return this.checkoutForm.get('address2')
-  // }
 
   get mainaddresscontrol(){
     return this.checkoutForm.get('mainaddress')
@@ -152,6 +105,7 @@ export class CheckoutComponent  implements OnInit {
       }
     })
   }
+
 
 
 

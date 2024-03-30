@@ -11,6 +11,9 @@ import { IproductReviws } from 'src/app/models/iproduct-reviws';
 import { IproductVarDet } from 'src/app/models/iproduct-var-det';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductDetailsService } from 'src/app/services/product-details.service';
+import { FormControl, FormGroup ,Validators} from '@angular/forms';
+import { ProductIReview, Review } from 'src/app/models/ireview';
+import { ProductReviewService } from 'src/app/services/reviews.service';
 
 
 
@@ -20,11 +23,11 @@ import { ProductDetailsService } from 'src/app/services/product-details.service'
   styleUrls: ['./product-details-main.component.css']
 })
 export class ProductDetailsmainComponent implements OnInit {
+  commentForm : FormGroup;
   allStars!: NodeListOf<HTMLElement>;
   ratingValue!: HTMLInputElement;
-
-  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService) { }
-  buttonText:string="أضف للعربة"
+  buttonText:string="أضف للعربة";
+  activeStarsCount:any;
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
@@ -33,20 +36,30 @@ export class ProductDetailsmainComponent implements OnInit {
     "numberReviews": 0,
     "description": "undefine"
   };
-
   prodDetrev: IproductReviws[] = [];
+  customerHasReview:boolean=false;
   // sizeIndexMap: { [size: string]: number } = {};
   id: number = 0;
   customerId : number = 0;
-
   addFavSub : Subscription | undefined;
   addcartSub : Subscription | undefined;
-
+  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute , private favService : FavoriteService , private authService : AuthService, private CartServi : CartService,private revService:ProductReviewService) {
+    this.commentForm = new FormGroup({
+      comment : new FormControl (
+        "",
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.pattern('[\u0600-\u06FF ,]+')
+        ]
+      ),
+    }
+    );}
+    get mainaddresscontrol(){
+      return this.commentForm.get('comment')
+    }
   ngOnInit(): void {
-    // this.router.paramMap.subscribe(params => {
-    //   this.id = params.get('id');
-    //   console.log('ID:', id); // Use the ID as needed
-    // });
+
     this.customerId = this.authService.id;
     this.id = this.Actrouter.snapshot.params['id'];
     console.log("hiiiiiii" + this.id);
@@ -66,6 +79,7 @@ export class ProductDetailsmainComponent implements OnInit {
     this.prodDetApi.getProd(this.id).subscribe({
       next: (data) => {
         this.prodDet = data;
+
         console.log(this.prodDet);
       }
     });
@@ -73,13 +87,18 @@ export class ProductDetailsmainComponent implements OnInit {
     this.prodDetApi.getProdReviews(this.id).subscribe({
       next: (data) => {
         this.prodDetrev = data;
+        data.forEach(rev => {
+          if(rev.customerId==this.customerId){
+            this.customerHasReview=true;
+          }
+        });
         console.log(this.prodDetrev);
       }
     });
 
     this.getUniqueColors();
     this.getUniqueCode
-    // This function extracts unique colors from the prodVariantList
+// reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
       this.allStars = document.querySelectorAll('.rating .star') as NodeListOf<HTMLElement>;
       this.ratingValue = document.querySelector('.rating input') as HTMLInputElement;
       this.allStars.forEach((star, idx) => {
@@ -100,12 +119,41 @@ export class ProductDetailsmainComponent implements OnInit {
               click++;
             }
           }
+          this.activeStarsCount = document.querySelectorAll('.rating .active').length;
+          console.log('Number of active stars:',this.activeStarsCount);
         });
+
       });
 
 
   }
 
+  confirmComment(e:Event){
+      if (this.commentForm.valid){
+         let productId=this.prodDet.id ;
+         let customerId= this.authService.id;
+         let rate= this.activeStarsCount;
+         let content= this.commentForm.get('comment')?.value;
+
+        console.log(rate,content);
+        this.revService.addProductReview(customerId,productId,content,rate).subscribe({
+          next: (data) => {
+            console.log(data);
+            this.commentForm.get('comment')?.setValue("");
+            this.prodDetApi.getProdReviews(this.id).subscribe({
+              next: (data) => {
+                this.prodDetrev = data;
+                console.log(this.prodDetrev);
+              }
+            });
+          }
+        });;
+      }
+
+   }
+  // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+    // This function extracts unique colors from the prodVariantList
   groupByColorCode(productVariants: IproductVarDet[]): Record<string, IproductVarDet[]> {
     const grouped: Record<string, IproductVarDet[]> = {};
 

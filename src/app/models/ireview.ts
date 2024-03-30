@@ -12,6 +12,13 @@ export interface ProductIReview {
   customerName: string;
   review?: string;
   rate: number;
-  date: Date;
+  date: string;
 }
+export interface Review {
+  productId: number;
+  customerId: number;
+  rate: number;
+  content: string;
+}
+
 
