@@ -31,6 +31,16 @@ namespace Services.Extenstions
             });
             return profit;
         }
+        public static List<ProfitWeekDto> ToProfitWeekDto(this List<KeyValuePair<DayOfWeek, double>> valuePairs)
+        {
+            var profit = new List<ProfitWeekDto>();
+            foreach (var item in valuePairs) profit.Add(new()
+            {
+                Profit = item.Value,
+                TimeInterval = item.Key.ToString()
+            });
+            return profit;
+        }
 
         public static Order ToOrderEntity(this OrderDto order)
         {

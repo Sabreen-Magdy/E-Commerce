@@ -161,5 +161,8 @@ namespace Services.DataServices
 
         public List<ProfitDto> GetProfitByWeek(int state) =>
             _repository.OrderReposatory.GetProfitByWeek(state).ToProfitDto();
+
+        public List<ProfitWeekDto> GetProfitByWeekDay(int state) =>
+            _repository.OrderReposatory.GetProfitByWeekDay(state).ToProfitWeekDto();
     }
 }
