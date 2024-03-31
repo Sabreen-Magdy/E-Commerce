@@ -7,6 +7,7 @@
         public int State { get; set; } // 0 for pending , 1 for confirmed , 2 for rejected
         public double TotalCost { get; set; }
         public string CustomerAddress { get; set; } = null!;
+        public string Comment { get; set; } = null!;
 
         #region Relationship Mapping
 

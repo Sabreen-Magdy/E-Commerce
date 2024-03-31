@@ -52,7 +52,7 @@ namespace Services.DataServices
                     throw new NotFoundException("Cart Item");
 
                 _repository.ProductVarientRepository
-                    .UpdateQuntity(existProduct, item.Quantity * -1);
+                    .AddQuntity(existProduct, item.Quantity * -1);
 
                 _repository.CardRepositry.Delete(item);
                 _repository.SaveChanges();
@@ -104,7 +104,7 @@ namespace Services.DataServices
                         {
                             int newQ = cartItem.Quantity - item.Value; 
                             var varient = _repository.ProductVarientRepository.Get(cartItem.ProductVarient.Id);
-                            _repository.ProductVarientRepository.UpdateQuntity(
+                            _repository.ProductVarientRepository.AddQuntity(
                                 varient ?? throw new NotFoundException("Product Varient"),
                                 newQ
                                 );

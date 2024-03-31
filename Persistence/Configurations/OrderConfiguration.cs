@@ -13,10 +13,15 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         builder.Property(o => o.OrderedDate)
             .HasDefaultValueSql("GetDate()");
-        
+        builder.Property(o => o.Comment)
+            .HasDefaultValue("يُرجى الانتظار بينما يقوم البائع بمراجعة طلبك واتخاذ قرار بشأن قبوله أو رفض");
+      
         builder.HasOne(o => o.Customer)
             .WithMany(c => c.Orders)
             .HasForeignKey(o => o.CustomerId);
+
+        builder.ToTable(b => b.HasCheckConstraint("StateValidation",
+            "[State] >= 0 and [State] <= 3"));
 
         //builder.ToTable(b => b.HasCheckConstraint("OrderedDateValidation",
         //    $"{Unity.CheckDate(Properties.OrderedDate.ToString())} and {Unity.CheckDate(Properties.ConfirmDate.ToString(), Properties.OrderedDate.ToString())}"           

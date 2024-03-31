@@ -442,9 +442,9 @@ public class SallerController : ControllerBase
 
 
     [HttpPut("UpdateOrderStatus")]
-    public IActionResult UpdateOrderStatus(int id, int status)
+    public IActionResult UpdateOrderStatus(int id, int status, string comment)
     {
-        _adminService.OrderService.Updatestatus(id, status);
+        _adminService.OrderService.UpdateState(id, status, comment);
 
         return Ok();
     }

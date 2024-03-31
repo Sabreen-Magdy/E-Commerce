@@ -11,7 +11,7 @@ namespace Services.Abstraction.DataServices
         public void Add(OrderDtoNew DTO);
         public void Update(OrderDto DTO);
         public void Delete(int id);
-        public void Updatestatus(int id, int status);
+        public void UpdateState(int id, int status, string comment);
         int GetNumberOrders(int state);
         double GetProfit(int state);
 
