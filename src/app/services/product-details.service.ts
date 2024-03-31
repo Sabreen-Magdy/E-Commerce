@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductDetailsService {
 
-  baseUrl : string ="http://localhost:5058/api/Product"
+  baseUrl : string ="http://srmgroub.somee.com/api/Product"
   //http://localhost:5058/api/Product/GetDetailsById
   constructor(private http :HttpClient , private router:ActivatedRoute) { }
  

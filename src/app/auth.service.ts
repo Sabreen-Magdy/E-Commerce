@@ -39,7 +39,7 @@ export class AuthService {
   }
   signUp(userData:object):Observable<any>
   {
-    return this._HttpClient.post('http://localhost:5058/api/Customer/AddCustomers/',userData);
+    return this._HttpClient.post('http://srmgroub.somee.com/api/Customer/AddCustomers/',userData);
   }
   signIn(Email:string,Password:string) : Observable<any>
   {
@@ -48,7 +48,7 @@ export class AuthService {
       email: Email,
       password: Password
     }
-     this._HttpClient.post<any>(`http://localhost:5058/api/Authentication/Login`,userDataAyth).subscribe({
+     this._HttpClient.post<any>(`http://srmgroub.somee.com/api/Authentication/Login`,userDataAyth).subscribe({
       next:(response)=>{
         console.log(response)
         if(response.token) {
@@ -62,7 +62,7 @@ export class AuthService {
       }
     });
 
-     return  this._HttpClient.post<any>(`http://localhost:5058/api/Authentication/Login`,userDataAyth);
+     return  this._HttpClient.post<any>(`http://srmgroub.somee.com/api/Authentication/Login`,userDataAyth);
   }
   signOut(){
     localStorage.removeItem('loginToken');
@@ -70,18 +70,18 @@ export class AuthService {
     this._Router.navigate(['/main']);
   }
   getDataOfUser():Observable<any>{
-   return this._HttpClient.get<any>(`http://localhost:5058/api/Customer/GetCustomerById?id=${this.id}`);
+   return this._HttpClient.get<any>(`http://srmgroub.somee.com/api/Customer/GetCustomerById?id=${this.id}`);
   }
   updateUser(data:object):Observable<any>{
-    return this._HttpClient.put<any>(`http://localhost:5058/api/Customer/UpdateCustomers?id=${this.id}`,data);
+    return this._HttpClient.put<any>(`http://srmgroub.somee.com/api/Customer/UpdateCustomers?id=${this.id}`,data);
    }
 
  getOrderOfUser():Observable<customerOrder[]>{
-  return this._HttpClient.get<customerOrder[]>(`http://localhost:5058/api/Customer/GetOrders?id=${this.id}`);
+  return this._HttpClient.get<customerOrder[]>(`http://srmgroub.somee.com/api/Customer/GetOrders?id=${this.id}`);
  }
 
  getallProduct() {
-  return this._HttpClient.get<IproductShow[]>("http://localhost:5058/api/Product/GetAll").subscribe({
+  return this._HttpClient.get<IproductShow[]>("http://srmgroub.somee.com/api/Product/GetAll").subscribe({
     next: (data) => {
       console.log("hiiii");
       console.log(data[0]);

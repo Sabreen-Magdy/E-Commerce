@@ -24,7 +24,7 @@ export class AdminOrderComponent implements OnInit{
     })
      
   }
-  selectedIndex :number = 1
+  selectedIndex :number = 0
   toggleModel(index :number){
     var model = document.getElementById("orderForm");
     model?.classList.add("model-show")

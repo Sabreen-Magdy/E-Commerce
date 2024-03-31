@@ -9,7 +9,7 @@ import { Dashboard } from '../models/dashboard';
 export class DashboardService {
 
   constructor(private http : HttpClient) { }
-  BaseUrl : string ="http://localhost:5058/api/Saller/"
+  BaseUrl : string ="http://srmgroub.somee.com/api/Saller/"
 
   getProfit():Observable<number>{
     return this.http.get<number>(`${this.BaseUrl}GetProfit?state=1`)

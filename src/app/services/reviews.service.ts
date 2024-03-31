@@ -7,7 +7,7 @@ import { IReview, ProductIReview, Review } from '../models/ireview';
   providedIn: 'root'
 })
 export class ProductReviewService {
-  private baseURL: string = "http://localhost:5058/api/Customer/";
+  private baseURL: string = "http://srmgroub.somee.com/api/Customer/";
 
   constructor(private http: HttpClient) { }
 
