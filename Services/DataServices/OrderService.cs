@@ -127,25 +127,43 @@ namespace Services.DataServices
             var order = _repository.OrderReposatory.Get(id);
             if (order == null)
                 throw new NotFoundException("Order");
-            order.State = status;
-            if (status == 1)
+            if (order.State == 0)
             {
-                order.ConfirmDate = DateTime.Now;
-            }
-            _repository.OrderReposatory.Update(order);
-            _repository.SaveChanges();
-            
-            if (status == 2)
-            {
-                if (order.ProductBelongToOrders != null)
+                if (status == 1)
                 {
-                    foreach (var pveriant in order.ProductBelongToOrders)
+                    order.State = status;
+
+                    order.ConfirmDate = DateTime.Now;
+                    _repository.OrderReposatory.Update(order);
+                    _repository.SaveChanges();
+                }
+               
+
+                if (status == 2)
+                {
+                    order.State = status;
+                    _repository.OrderReposatory.Update(order);
+                    _repository.SaveChanges();
+
+                    if (order.ProductBelongToOrders != null)
                     {
-                        var Products = pveriant.ProductVarient;
-                        Products.Quantity = Products.Quantity + pveriant.Quantity;
-                        _repository.ProductVarientRepository.Update(Products);
-                        _repository.SaveChanges();
+                        foreach (var pveriant in order.ProductBelongToOrders)
+                        {
+                            var Products = pveriant.ProductVarient;
+                            Products.Quantity = Products.Quantity + pveriant.Quantity;
+                            _repository.ProductVarientRepository.Update(Products);
+                            _repository.SaveChanges();
+                        }
                     }
+                }
+            }
+            else if(order.State == 1) 
+            {
+                if(status == 3)
+                {
+                    order.State = status;
+                    _repository.OrderReposatory.Update(order);
+                    _repository.SaveChanges();
                 }
             }
         }
