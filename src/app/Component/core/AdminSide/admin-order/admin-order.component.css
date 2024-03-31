@@ -131,7 +131,16 @@
     background-color: #198754;
     color: #fff;
   }
+  .btn-deliver {
+    color: #9a5307;
+    border: 1px solid #9a5307;
   
+  }
+  
+  .btn-deliver:hover {
+    background-color: #9a5307;
+    color: #fff;
+  }
   
   .btn-delete {
     color: #dc3545;
