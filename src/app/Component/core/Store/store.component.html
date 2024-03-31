@@ -38,7 +38,7 @@
         <span [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
         <span class="msg show">عرض المنتج</span>
         <img
-          [src]="x.image"
+          [src]="'http://localhost:5058/Images/'+x.image"
         />
       </div>
       <div class="element-detials">

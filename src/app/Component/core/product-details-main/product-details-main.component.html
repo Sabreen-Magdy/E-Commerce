@@ -22,7 +22,7 @@
           (click)="showImage($event, index, x.value[0])"
           *ngFor="let x of groupedByColor | keyvalue; let index = index"
         >
-          <img [src]="x.value[0].coloredimage" alt="" />
+          <img [src]= "'http://localhost:5058/Images/'+x.value[0].coloredimage" alt="" />
         </div>
         <span
           class="material-symbols-outlined down"
@@ -34,7 +34,7 @@
       </div>
 
       <div class="mainImg col-9 col-sm-10">
-        <img [src]="selectedImage" alt="" />
+        <img [src]="'http://localhost:5058/Images/'+selectedImage" alt="" />
       </div>
     </div>
     <div class="pData col-md-4">
