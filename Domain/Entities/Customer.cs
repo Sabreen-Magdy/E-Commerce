@@ -15,7 +15,7 @@ public class Customer : BaseEntity
 
     public List<CartItem> Cart { get; set; } = null!;
     public List<Favourite> Favourites { get; set; } = null!;
-    public List<Review> Reviews { get; set; } = null!;
+    //public List<Review> Reviews { get; set; } = null!;
 
     public List<Order> Orders { get; set; } = null!;
 }

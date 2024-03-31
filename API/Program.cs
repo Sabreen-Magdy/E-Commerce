@@ -71,12 +71,11 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 var app = builder.Build();
 app.UseCors(corsName);
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
-    app.UseSwaggerUI();
-    
-}
+    app.UseSwaggerUI(); 
+//}
 
 app.UseCors(corsName);
 app.UseStaticFiles();

@@ -96,14 +96,7 @@ namespace Services.DataServices
 
         //    }
         }
-        //private  void SaveFileAsync(IFormFile file, string filePath)
-        //{
-        //    Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //         file.CopyTo(stream);
-        //    }
-        //}
+      
         public void AddColor(ProductColoredNewDto productColored)
         {
             _repository.ProductColerdRepository
@@ -298,6 +291,18 @@ namespace Services.DataServices
                 throw new NotFoundException("Products");
             return Map(productVarients.Select(e => e.ColoredProduct.Product).ToList());
         }
+        
+        public List<ProductCategoriesDto> GetCategories(int id)
+        {
+            var productCategs = _repository.ProductCategoryRepository
+               .GetAll().FindAll(e => e.ProductId == id);
+            if (productCategs == null)
+                throw new NotFoundException("Products");
+
+            return productCategs
+                .Select(pc => new ProductCategoriesDto(pc.CategoryId, pc.Category.Name))
+                .ToList();
+        }
 
         public List<ProductDto> GetByQuantity(int quantity)
         {
@@ -422,6 +427,9 @@ namespace Services.DataServices
                         break;
                     case Properties.ColorId:
                         product.ColorId = int.Parse(item.Value);
+                        break;
+                    case Properties.Discount:
+                        product.Discount = int.Parse(item.Value);
                         break;
 
                     default:

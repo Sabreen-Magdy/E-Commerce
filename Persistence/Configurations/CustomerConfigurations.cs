@@ -26,8 +26,6 @@ public class CustomerConfigurations : IEntityTypeConfiguration<Customer>
             b.HasCheckConstraint("ImageValidation",
            "[Image] like '%.png'"));
 
-        builder.ToTable(b => b
-            .HasCheckConstraint("EmailValidation",
-                "[Email] like '%[a-zA-Z0-9.]@__%.__%' and [Email] not like '%[-+/*]%'"));
+        Unity.ApplyEmailConstraint(builder);
     }
 }

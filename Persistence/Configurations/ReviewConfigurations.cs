@@ -2,28 +2,20 @@
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Configurations
 {
-    internal class ReviewConfigurations : IEntityTypeConfiguration<Domain.Entities.Review>
+    internal class ReviewConfigurations : IEntityTypeConfiguration<Review>
     {
         public void Configure(EntityTypeBuilder<Review> builder)
         {
-            builder.Ignore(r => r.Id);
+            builder.HasKey(r => r.Id);
             #region Relationship Constrains
-            builder.HasKey(r => new { r.ProductId, r.CustomerId });
+            //builder.HasKey(r => new { r.ProductId, r.CustomerId });
+
             builder.HasOne(r => r.Product)
                    .WithMany(p => p.Reviews)
                    .HasForeignKey(r => r.ProductId);
-            builder.HasOne(r => r.Customer)
-                   .WithMany(c => c.Reviews)
-                   .HasForeignKey(r=>r.CustomerId);
             #endregion
 
             #region Properties Constrains
@@ -47,6 +39,6 @@ namespace Persistence.Configurations
             builder.Property(r => r.Comment)
                    .HasMaxLength(100);
             #endregion
-        }
+        } 
     }
 }

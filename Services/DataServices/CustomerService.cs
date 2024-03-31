@@ -125,38 +125,61 @@ public class CustomerService : ICustomerService
                     .GetByCustomer(customerId)
                     .ToOrderDto();
 
-    public List<CartDto> GetCart(int customerId) => null!;
-    //_repository.OrderReposatory
-    //            .GetByCustomer(customerId)
-    //            .ToOrderDto();
-
-    public List<CustomerReviewDto> GetReviews(int customerId) => null!;
-    //_repository.ReviewRepository
-    //           .GetByCustomer(customerId)
-    //           .ToCustomerReviewDto();
-
-    public void AddReview(int customerId, int productId, string comment, int rate)
-    {
-        if (_repository.CustomerRepository.Get(customerId) == null)
+    public CartDto GetCart(int customerId) {
+        var customer = _repository.CustomerRepository.Get(customerId);
+        if (customer == null)
             throw new NotFoundException("Customer");
-        if (_repository.ProductRepository.Get(productId) == null)
+
+        return customer.Cart.ToCartDto();
+    }
+
+    public List<CustomerReviewDto> GetReviews(int customerId) =>
+        _repository.ReviewRepository
+        .GetAllReviewByCustomerId(customerId)
+        .ToCustomerReview();
+
+    public bool CanAddReview(int customerId, int productId)
+    {
+        var customer = _repository.CustomerRepository.Get(customerId);
+        if (customer == null)
+            throw new NotFoundException("Customer");
+        var product = _repository.ProductRepository.Get(productId);
+        if (product == null)
             throw new NotFoundException("Product");
 
-        _repository.ReviewRepository.Add(
-            new()
-            {
-                CustomerId = customerId,
-                ProductId = productId,
-                Comment = comment,
-                Rate = rate
-            });
+        var productVarients = customer.Orders
+            .SelectMany(o => o.ProductBelongToOrders, (o, p) => p.ProductId);
+        return productVarients.Count(pv => pv == productId) != 0;
 
-        int affectedRows = _repository.SaveChanges();
-        if (affectedRows != 0)
+    } 
+    public void AddReview(int customerId, int productId, string comment, int rate)
+    {
+        if (CanAddReview(customerId, productId))
         {
-            _repository.ProductRepository.AddReview(productId, rate);
-            _repository.SaveChanges();
+            var customer = _repository.CustomerRepository.Get(customerId);
+            if (customer == null)
+                throw new NotFoundException("Customer");
+            if (_repository.ProductRepository.Get(productId) == null)
+                throw new NotFoundException("Product");
+
+            _repository.ReviewRepository.Add(
+                new()
+                {
+                    CustomerId = customerId,
+                    Customer = customer.Name,
+                    ProductId = productId,
+                    Comment = comment,
+                    Rate = rate
+                });
+
+            int affectedRows = _repository.SaveChanges();
+            if (affectedRows != 0)
+            {
+                _repository.ProductRepository.AddReview(productId, rate);
+                _repository.SaveChanges();
+            }
         }
+        throw new NotAllowedException("Can not Add Review to this Product");
     }
 
     private void DeleteRiview(Review? review)

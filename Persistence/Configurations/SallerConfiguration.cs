@@ -24,11 +24,9 @@ public class SallerConfigurations : IEntityTypeConfiguration<Saller>
         builder.HasIndex(p => p.NId)
             .IsUnique();
 
-        // Constraints
-        builder.ToTable(b => b
-            .HasCheckConstraint("EmailValidation",
-                "[Email] like '%[a-zA-Z0-9.]@__%.__%' and [Email] not like '%[-+/*]%'"));
         builder.ToTable(b => b
             .HasCheckConstraint("NidValidation", "len([NId]) = 14 and [NId] not like '%[a-zA-Z.+/*_]%'"));
+
+        Unity.ApplyEmailConstraint(builder);
     }
 }

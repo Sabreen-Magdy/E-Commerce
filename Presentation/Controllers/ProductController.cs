@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction.DataServices;
@@ -66,6 +67,24 @@ namespace Presentation.Controllers
                 var result = _adminService.ProductService.GetNumberProducts();
               
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        
+        [HttpGet("GetCategories")]
+        public IActionResult GetCategories(int id)
+        {
+            try
+            {
+                return Ok(_adminService.ProductService.GetCategories(id));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+
             }
             catch (Exception ex)
             {

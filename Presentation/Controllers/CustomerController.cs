@@ -155,6 +155,25 @@ public class CustomerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpGet("CanAddReview")]
+    public IActionResult CanAddReview(int id, int productId)
+    {
+        try
+        {
+            return Ok(_adminService.CustomerService.CanAddReview(id, productId));
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+
     [HttpPost("AddReview")]
     public IActionResult AddReview(int customerId, int productId, string comment, int rate )
     {
@@ -167,6 +186,10 @@ public class CustomerController : ControllerBase
         catch (NotFoundException ex)
         {
             return NotFound(ex.Message);
+        }
+        catch (NotAllowedException ex)
+        {
+            return StatusCode(405, ex.Message);
         }
         catch (Exception ex)
         {

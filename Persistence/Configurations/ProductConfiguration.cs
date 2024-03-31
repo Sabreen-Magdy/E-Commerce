@@ -43,9 +43,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         #region Other Constraints
 
-        builder.ToTable(b =>
-            b.HasCheckConstraint("AddingDateValidation",
-            Unity.CheckDate($"[{Properties.AddingDate}]")));
+        //builder.ToTable(b =>
+        //    b.HasCheckConstraint("AddingDateValidation",
+        //    Unity.CheckDate($"[{Properties.AddingDate}]")));
 
         builder.ToTable(b => b
             .HasCheckConstraint("NumberReviewsValidation",
