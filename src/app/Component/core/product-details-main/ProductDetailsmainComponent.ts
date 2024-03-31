@@ -29,6 +29,7 @@ export class ProductDetailsmainComponent implements OnInit {
   buttonText: string = "أضف للعربة";
   subText: string = "تأكيد"
   activeStarsCount: any;
+  p : number = 1;
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,

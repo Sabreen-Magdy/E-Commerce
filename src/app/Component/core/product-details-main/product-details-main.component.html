@@ -271,7 +271,7 @@
     <div class="Comments">
       <h5>جميع التقييمات</h5>
       <div class="line3"><div></div></div>
-      <div *ngFor="let x of prodDetrev" class="coment row">
+      <div *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }" class="coment row">
         <div class="user col-md-3">
           <p class="name">{{ x.customerName }}</p>
           <div class="space"></div>
@@ -286,19 +286,10 @@
           </p>
         </div>
       </div>
+
       <!-- Pagination controls -->
-      <div class="controls">
-        <button class="btn" (click)="prevPage()" [disabled]="currentPage === 1">
-          <i class="bi bi-caret-right-fill"></i>
-        </button>
-        Page {{ currentPage }} of {{ getTotalPages() }}
-        <button
-          class="btn"
-          (click)="nextPage()"
-          [disabled]="currentPage === getTotalPages()"
-        >
-          <i class="bi bi-caret-left-fill"></i>
-        </button>
+      <div *ngIf="prodDetrev.length>0" class="pagiDiv">
+        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
   </div>
