@@ -64,7 +64,11 @@ import { HomePageComponent } from './Component/collectionCompent/home-page/home-
 import { Navbar2Component } from './Component/shared/navbar2/navbar2.component';
 import { TableComponent } from './Component/core/AdminSide/general/table/table.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AllProductDetialsComponent } from './Component/core/AdminSide/EditProduct/all-product-detials/all-product-detials.component';
+import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color-form/color-form.component';
+import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
@@ -116,6 +120,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomePageComponent,
     Navbar2Component,
     TableComponent,
+    AllProductDetialsComponent,
+    ColorFormComponent,
+    VarientFormComponent,
     
     
 
@@ -129,7 +136,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppRoutingModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    StarRatingModule.forRoot()
 
     // ChartsModule
     //BrowserModule,

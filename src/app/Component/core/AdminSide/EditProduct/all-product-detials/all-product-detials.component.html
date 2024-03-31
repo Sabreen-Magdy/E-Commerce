@@ -1,0 +1,95 @@
+
+<div class="container">
+    <header>
+        <h3 class="mb-3">تفاصيل المنتج</h3>
+    </header>
+    
+    <div class="row detials">
+        
+        <p class="col-md-6">
+            <span>الاسم: </span> {{detilasObject.name}}
+        </p>
+        <p class="col-md-6">
+            <span>التقييم: </span> 
+            <i *ngFor="let _ of getStarArray(detilasObject.avgRating)" class="bi bi-star-fill text-warning"></i>
+            <i *ngFor="let _ of getStarArray(5-detilasObject.avgRating)" class="bi bi-star text-warning"></i>
+            ({{detilasObject.numberReviews}})
+           
+        </p>
+        <p class="col-12">
+            <span>الوصف: </span> {{detilasObject.description}}
+        </p>
+    </div>
+    <div class="m-3">
+        <div class="col-md-10  text-start">
+            <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" > تعديل 
+                <i class="me-2 bi bi-gear-fill"></i>
+            </button>
+          </div>
+    </div>
+    
+      
+    <div class="m-3">
+      <div class="col-md-10 text-start">
+        <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" >الصور <i
+            class="me-2 bi bi-plus-circle-fill"></i></button>
+      </div>
+      
+      <div class="row row-cols-1 row-cols-md-5 ps-md-5 g-4 ms-md-5 m-3">
+        <div *ngFor="let x of coloredProduct; let i = index" class="col">
+          <div class="card">
+            <div class="card-img-top">
+  
+              <div class="">
+                <img [src]="'http://localhost:5058/Images/'+x.image" class="d-block w-100" style="aspect-ratio: 1; object-fit: cover;">
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title" [style.color]="x.colorCode"> {{x.colorName}}
+                <i (click)="deleteColoredProd(x.id)" class="me-2 bi bi-x-square text-danger"></i></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+    <div class="m-3 col-md-10">
+      <div class=" text-start">
+        <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" >المنتج <i
+            class="me-2 bi bi-plus-circle-fill"></i></button>
+      </div>
+     
+      <table  *ngIf="true" class="table w-md-75 m-3 py-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">اللون</th>
+            <th scope="col">الحجم</th>
+            <th scope="col">السعر</th>
+            <th scope="col">العدد</th>
+            <th scope="col">الخصم</th>
+            <th scope="col">اجراءت</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of variantProduct, let i = index" class="pb-2">
+            <th scope="row">{{i}}</th>
+            <td>{{item.colorName}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.discount}}</td>
+            <td><i (click)="deleteVariantProd(item.id)" class="bi bi-x-square text-danger"></i></td>
+          </tr>
+  
+        </tbody>
+      </table>
+  
+  
+    </div>
+
+    <div style="height: 50px;">
+
+    </div>
+  
+  </div>

@@ -1,0 +1,40 @@
+.container{
+    background-color: white;
+    margin: 20px auto;
+    /* padding: 20px; */
+    width: 70%;
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.container header {
+    /* position: relative; */
+    width: 100%;
+    background-color: #000000;
+    padding: 1rem ;
+    border-radius: 10px 10px 0px 0px;
+  }
+  
+  .container header h3 {
+    color: #fff;
+    /* margin-left: 1.5rem; */
+  
+  }
+
+.detials{
+  margin: 25px 20px;
+}
+
+.detials p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.detials p span {
+  display: inline-block;
+  color: gray;
+  width: 68px;
+  font-size: 16px;
+  font-weight: 600;
+}
