@@ -38,20 +38,14 @@ constructor(
   customerID: number = 0;
   noitem: boolean = false;
   wiating: boolean = false;
-  // doneOrder: boolean = false;
-  // errorOrder: boolean = false;
-  // deleteOrder: boolean = false;
-  // waitingDelete: boolean = false;
+  doneOrder: boolean = false;
+  errorOrder: boolean = false;
+  deleteOrder: boolean = false;
+  waitingDelete: boolean = false;
   // checkoutForm: FormGroup;
   btnText: string = 'الاستمرار في تأكيد الطلب';
   // delText: string = 'الغاء الطلب';
-  productVarientperOrder: IproductforOrderadd[] = [
-    {productVarientId: 3,
-    quantity: 3,
-    totalCost: 9},
-    {productVarientId: 3,
-      quantity: 3,
-      totalCost: 9}];
+  productVarientperOrder: IproductforOrderadd[] = [];
   nameProductVarient: string[] = [];
   cartitemfordelete: CartItemDto[] = [];
   totalPrice: number = 0;
@@ -74,7 +68,7 @@ constructor(
   // }
 
   cartByIDsub: Subscription | undefined;
-  // deletecartAfCheckSub: Subscription | undefined;
+  deletecartAfCheckSub: Subscription | undefined;
 
   // get mainaddresscontrol() {
   //   return this.checkoutForm.get('mainaddress');
@@ -231,6 +225,7 @@ get residential_areaAddresscontrol() {
         if (this.productVarientperOrder.length == 0) {
           this.noitem = true;
         }
+        console.log(this.productVarientperOrder)
       },
       error: (e) => {
         this.noitem = true;
@@ -249,18 +244,18 @@ get residential_areaAddresscontrol() {
         productsperOrder: this.productVarientperOrder,
       };
       console.log(order);
-      // this.orderSer.addorder(order).subscribe({
-      //   next: (data) => {
-      //     console.log('done' + data);
-      //     this.doneOrder = true;
-      //     this.deleteafterCheckout2();
-      //   },
-      //   error: (e) => {
-      //     console.log('error when send order', e);
-      //     this.errorOrder = true;
-      //     this.deleteafterCheckout2();
-      //   },
-      // });
+      this.orderSer.addorder(order).subscribe({
+        next: (data) => {
+          console.log('done' + data);
+          this.doneOrder = true;
+          this.deleteafterCheckout2();
+        },
+        error: (e) => {
+          console.log('error when send order', e);
+          this.errorOrder = true;
+          // this.deleteafterCheckout2();
+        },
+      });
     } else {
       this.showerror = true;
     }
@@ -297,6 +292,22 @@ get residential_areaAddresscontrol() {
   //     }
   //   }
   // }
+   deleteafterCheckout2() {
+    for (let item of this.cartitemfordelete) {
+      this.deletecartAfCheckSub = this.CartService.deleteCartitem(
+        item.id
+      ).subscribe({
+        next: () => {
+          console.log('Delete success ');
+        },
+        error: (e) => {
+          console.log('ERROR when delete', e);
+        },
+      });
+    }
+  }
+
+
 }
 
 
