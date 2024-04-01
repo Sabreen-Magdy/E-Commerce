@@ -64,9 +64,10 @@ export class AdminOrderComponent implements OnInit {
   accepted: boolean = false
   rejected: boolean = false
   AcceptOrder(order: AdminOrder, index: number) {
-    this.adminser.UpdateStatus(order.orderId, 1).subscribe({
+    this.adminser.UpdateStatus(order.orderId, 1,"تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله").subscribe({
       next: () => {
         order.state = 1;
+        order.comment='تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله'
         //order.accepted = false;
         this.orderStateAOrR[index] = 1
       },
@@ -84,7 +85,7 @@ export class AdminOrderComponent implements OnInit {
   }
   submitRefuse(event: Event) {
     event.preventDefault()
-    this.adminser.UpdateStatus(this.orders[this.selectedIndex].orderId, 2).subscribe({
+    this.adminser.UpdateStatus(this.orders[this.selectedIndex].orderId, 2,this.RefuseForm.get('ReasonOrder')?.value).subscribe({
       next: () => {
         this.orders[this.selectedIndex].state = 2;
         //order.accepted = false;
@@ -100,7 +101,7 @@ export class AdminOrderComponent implements OnInit {
     //this.rejected = true
   }
   DeliverOrder(order: AdminOrder, index: number) {
-    this.adminser.UpdateStatus(order.orderId, 3).subscribe({
+    this.adminser.UpdateStatus(order.orderId, 3,'تم تسليم طلبك تشرفنا بزيارتك لموقعنا').subscribe({
       next: () => {
         order.state = 3;
         //order.accepted = false;
