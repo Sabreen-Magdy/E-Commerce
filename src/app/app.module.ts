@@ -69,6 +69,7 @@ import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color
 import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
 import { StarRatingModule } from 'angular-star-rating';
+import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,8 @@ import { StarRatingModule } from 'angular-star-rating';
     AllProductDetialsComponent,
     ColorFormComponent,
     VarientFormComponent,
+    VerifiyComponent,
+    
     
     
 
