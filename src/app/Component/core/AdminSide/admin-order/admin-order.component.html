@@ -17,7 +17,8 @@
           </tr>
         </thead>
 
-        <tbody id="tbdyprod" *ngFor="let o of orders; let index = index">
+        <tbody id="tbdyprod" >
+          <tr *ngFor="let o of orders | paginate: {  itemsPerPage: 6, currentPage: p, }; let index = index ">
           <td data-label="العميل">{{o.customerName}}</td>
           <td data-label="رقم الطلب">{{o.orderId}}</td>
           <td data-label="السعر">{{o.orderTotalCost}}$</td>
@@ -55,9 +56,14 @@
           <td style="text-align: left;" data-label="عرض الطلب">
             <button class="btn" (click)="toggleModel(index)"><i class="bi bi-box-arrow-up-right"></i></button>
           </td>
+        </tr>
         </tbody>
-
+        <br>
+        
       </table>
+      <div style="margin-top: 10px;"  class="pagiDiv">
+        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+      </div>
       <div id="loading-icon" class="loading-icon"></div>
 
     </div>

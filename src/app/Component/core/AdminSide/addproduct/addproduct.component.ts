@@ -9,6 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class AddproductComponent {
   ProductList: Iproduct[] = [];
+  p:number = 1;
 
   constructor(private prodService: ProductService) {}
 

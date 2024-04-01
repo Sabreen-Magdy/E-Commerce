@@ -11,6 +11,7 @@ import { ProductFormService } from 'src/app/services/product-form.service';
 export class ProductTabelComponent implements OnInit {
 
   productList : IproductShow[] = [];
+  p : number = 1;
 
   constructor( private prodServ:ProductFormService ){}
   ngOnInit(): void {

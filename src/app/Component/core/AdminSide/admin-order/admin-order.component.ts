@@ -9,7 +9,7 @@ import { AdminOrderService } from 'src/app/services/admin-order.service';
   styleUrls: ['./admin-order.component.css']
 })
 export class AdminOrderComponent implements OnInit {
-
+  p:number = 1;
 
   constructor(private adminser: AdminOrderService) { }
   orders: AdminOrder[] = []

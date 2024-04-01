@@ -24,7 +24,7 @@
         </thead>
 
         <tbody id="tbdyprod">
-          <tr *ngFor="let x of productList">
+          <tr *ngFor="let x of productList | paginate: {  itemsPerPage: 6, currentPage: p, }">
             <td data-label="#">{{ x.id }}</td>
             <td data-label="الاسم">{{ x.name }}</td>
             <td data-label="الصور">
@@ -51,6 +51,9 @@
           </tr>
         </tbody>
       </table>
+      <div style="margin-top: 10px;"  class="pagiDiv">
+        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+      </div>
       <div id="loading-icon" class="loading-icon"></div>
     </div>
   </div>
