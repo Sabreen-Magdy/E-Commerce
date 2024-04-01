@@ -1,80 +1,114 @@
-<!-- 
-<div class="container">
-    <h3 class="mb-3">اضافة فئة</h3>
-    <form class="row g-3" [formGroup]="categoryForm" (submit)="cateFormSub($event)">
-      <div class="col-md-6 form-control-div " [ngClass]="{
-        sucess: categorynamecontrol?.valid,
-        danger: categorynamecontrol?.errors && ( categorynamecontrol?.touched || showerror)
-      }">
-        <label for="catename" class="form-label">اسم الفئة</label>
-        <input
-          type="text"
-          class="form-control our-is-valid"
-          id="catename"
-          formControlName="categoryname"
-          required
-        />
-        <i *ngIf="categorynamecontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="categorynamecontrol?.errors && (categorynamecontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="categorynamecontrol?.errors && (categorynamecontrol?.touched || showerror)" class="alert p-1 mt-2 alert-danger">
-      <ng-container *ngIf="categorynamecontrol?.hasError('required')">
-        يجب عليك ادخال الاسم
-      </ng-container>
-      <ng-container  *ngIf="categorynamecontrol?.hasError('minlength')">
-        يجب علي الاسم ان تكون اطول من 3 حروف 
-      </ng-container>
-      <ng-container *ngIf="categorynamecontrol?.hasError('pattern')">
-        ادخل الاسم بالغة العربية رجاء
-      </ng-container>
+<div id="VariantForm" class="add-model2 model-wrapper2">
+  <div class="model2 container">
+    <div class="model-header2">
+      <h3>اضافة تفاصيل المنتج</h3>
     </div>
-      </div>
-      <div class="col-md-6 form-control-div " [ngClass]="{
-        sucess: categoryiconcontrol?.valid,
-        danger: categoryiconcontrol?.errors && (categoryiconcontrol?.touched || showerror )
-      }">
-        <label for="cateicon" class="form-label">الايقون</label>
-        <input
-          type="text"
-          class="form-control our-is-valid"
-          id="cateicon"
-          formControlName="categoryicon"
-          required
-         
-        />
-        <i *ngIf="categoryiconcontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i *ngIf="categoryiconcontrol?.errors && (categoryiconcontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>
-      <div *ngIf="categoryiconcontrol?.errors && ( categoryiconcontrol?.touched || showerror)" class="alert p-1 mt-2 alert-danger">
-      <ng-container *ngIf="categoryiconcontrol?.hasError('required')">
-        يجب عليك ادخال الايقون
-      </ng-container>
-      
+    <div *ngIf="match">
+      <div class="p-2 alert alert-danger">ذلك المنتج موجود بالفعل <br><span style="font-size: 13px;">حيث تم استخدام هذا اللون مع هذا الحجم </span></div>
     </div>
-      </div>
-      <div class="col-md-12 form-control-div" [ngClass]="{
-        sucess: categorydescriptioncontrol?.valid,
-        danger: categorydescriptioncontrol?.errors && (categorydescriptioncontrol?.touched || showerror)
-      }">
-        <label for="cateDescrip" class="form-label">وصف الفئة</label>
-        <textarea formControlName="categorydescription" class="form-control" id="cateDescrip" rows="3" required></textarea>
-        <i *ngIf="categorydescriptioncontrol?.valid" class="bi bi-check-circle-fill"></i>
-        <i *ngIf="categorydescriptioncontrol?.errors && ( categorydescriptioncontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>
-        <div *ngIf="categorydescriptioncontrol?.errors && ( categorydescriptioncontrol?.touched || showerror)" class="alert p-1 mt-2 alert-danger">
-        <ng-container *ngIf="categorydescriptioncontrol?.hasError('required')">
-          يجب عليك ادخال للفئة
-        </ng-container>
-        <ng-container  *ngIf="categorydescriptioncontrol?.hasError('minlength')">
-          يجب علي الوصف ان تكون اطول من 6 حروف 
-        </ng-container>
-        <ng-container *ngIf="categorydescriptioncontrol?.hasError('pattern')">
-          ادخل الوصف بالغة العربية رجاء
-        </ng-container>
-      </div>
-      </div>
-      <div class="col-md-12 text-start">
-        <button class="btn btn-success rounded-1  px-5" type="submit">اضف</button>
-      </div>
-    </form>
-    
-    
-    
-  </div> -->
+    <div class="model-body2">
+      <form class="row g-3" [formGroup]="productVariantForm" (submit)="addVariant($event)">
+        
+        <div class="col-6 form-control-div" [ngClass]="{
+          sucess: colorvariantcontrol?.valid,
+          danger: colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)
+        }">
+        
+          <label for="colorSelect" class="form-label">اللون</label>
+          <select formControlName="color" class="form-select" id="colorSelect" required>
+            <option *ngFor="let x of listColor" value="{{x.id}}">{{x.name}}</option>
+          </select>
+          <i *ngIf="colorvariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
+          <i *ngIf="colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)"
+            class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="colorvariantcontrol?.errors && (colorvariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="colorvariantcontrol?.hasError('required')">
+              يجب عليك اختيار لون
+            </ng-container>
+
+          </div>
+        </div>
+        <div class="col-6 form-control-div" [ngClass]="{
+          sucess: sizevariantcontrol?.valid,
+          danger: sizevariantcontrol?.errors && (sizevariantcontrol?.touched || showerroS)
+        }">
+          <label for="colorSelect" class="form-label">الحجم</label>
+          <select formControlName="size" class="form-select" id="colorSelect" required>
+            <option *ngFor="let x of listSize" value="{{x.id}}">{{x.size}}</option>
+
+          </select>
+          <i *ngIf="sizevariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
+          <i *ngIf="sizevariantcontrol?.errors && ( sizevariantcontrol?.touched || showerroS)"
+            class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="sizevariantcontrol?.errors && ( sizevariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="sizevariantcontrol?.hasError('required')">
+              يجب عليك اختيار حجم
+            </ng-container>
+
+          </div>
+        </div>
+        <div class="col-md-6 form-control-div" [ngClass]="{
+          sucess: pricevariantcontrol?.valid,
+          danger: pricevariantcontrol?.errors && ( pricevariantcontrol?.touched || showerroS)
+        }">
+          <label for="priceInp" class="form-label">السعر</label>
+          <input formControlName="price" type="number" class="form-control" id="priceInp" required />
+          <i *ngIf="pricevariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
+          <i *ngIf="pricevariantcontrol?.errors && ( pricevariantcontrol?.touched || showerroS)"
+            class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="pricevariantcontrol?.errors && (pricevariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="pricevariantcontrol?.hasError('required')">
+              يجب عليك ادخال السعر
+            </ng-container>
+            <ng-container *ngIf="pricevariantcontrol?.hasError('min')">
+              يجب علي السعر ان يكون اكبر من او يساوي 70 جنيه
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-md-6 form-control-div" [ngClass]="{
+          sucess: quantiyVariantcontrol?.valid,
+          danger: quantiyVariantcontrol?.errors && (quantiyVariantcontrol?.touched || showerroS)
+        }">
+          <label for="quntityInp" class="form-label">العدد</label>
+          <input formControlName="quantiy" type="number" class="form-control" id="quntityInp" required />
+          <i *ngIf="quantiyVariantcontrol?.valid" class="bi bi-check-circle-fill"></i>
+          <i *ngIf="quantiyVariantcontrol?.errors && (quantiyVariantcontrol?.touched || showerroS)"
+            class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="quantiyVariantcontrol?.errors && (quantiyVariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="quantiyVariantcontrol?.hasError('required')">
+              يجب عليك ادخال الكمية
+            </ng-container>
+            <ng-container *ngIf="quantiyVariantcontrol?.hasError('min')">
+              لا يجب عن الرقم ان يقل عن 5
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-md-6 form-control-div" [ngClass]="{
+          sucess: disceountvariantcontrol?.valid && (disceountvariantcontrol?.touched || showerroS),
+          danger: disceountvariantcontrol?.errors && ( disceountvariantcontrol?.touched || showerroS)
+        }">
+          <label for="quntityInp" class="form-label">الخصم</label>
+          <input formControlName="disceount" type="number" class="form-control" id="quntityInp" required />
+          <i *ngIf="disceountvariantcontrol?.valid && (disceountvariantcontrol?.touched || showerroS)"
+            class="bi bi-check-circle-fill"></i>
+          <i *ngIf="disceountvariantcontrol?.errors && (disceountvariantcontrol?.touched || showerroS)"
+            class="bi bi-exclamation-circle-fill"></i>
+          <div *ngIf="disceountvariantcontrol?.errors && (disceountvariantcontrol?.touched || showerroS)"
+            class="alert p-1 mt-2 alert-danger">
+
+            <ng-container *ngIf="disceountvariantcontrol?.hasError('min') || disceountvariantcontrol?.hasError('max')">
+              يجب ان يكون الخصم ما بين 1% : 25%
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-12 center">
+          <button class="btn btn-secondary" type="submit">اضف</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

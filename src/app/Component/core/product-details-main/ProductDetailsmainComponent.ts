@@ -70,6 +70,7 @@ export class ProductDetailsmainComponent implements OnInit {
 
       this.prodDetApi.getProd(this.id).subscribe({
         next: (data) => {
+          data.avgRating = Math.floor(data.avgRating)
           this.prodDet = data;
   
           console.log(this.prodDet);
@@ -254,16 +255,15 @@ export class ProductDetailsmainComponent implements OnInit {
   }
 
   showImage(event: any, index: number, variant: IproductVarDet): void {
-    if (event.target.tagName === 'IMG') {
-      this.selectedImage = event.target.src;
-      this.selectedindex = index;
-      this.selectedvariant = variant
-      this.selectedColorCode = variant.code
-      this.selectedColor = variant.colorName;
-      this.selectedSize = variant.size;
-      this.quantityNumber = 1; // Reset quantity to 1
-    }
+    this.selectedImage = variant.coloredimage;
+    this.selectedindex = index;
+    this.selectedvariant = variant;
+    this.selectedColorCode = variant.code;
+    this.selectedColor = variant.colorName;
+    this.selectedSize = variant.size;
+    this.quantityNumber = 1; // Reset quantity to 1
   }
+  
   selectColor(variant: IproductVarDet, index: number): void {
 
     this.selectedColor = variant.colorName;

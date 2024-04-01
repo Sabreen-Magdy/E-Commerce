@@ -38,3 +38,90 @@
   font-size: 16px;
   font-weight: 600;
 }
+
+
+
+.categDiv p {
+  display: inline-block;
+  border: 1px solid #d5d4d4;
+  margin: 5px;
+  padding: 10px 15px;
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.categDiv p i {
+  margin: 4px;
+  margin-right: 10px;
+  color: #000;
+  cursor: pointer;
+  
+}
+
+.categDiv p i:hover{
+  font-size: 20px;
+  color: #dc3545;
+}
+
+
+  /*Form*/
+
+  .model-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.24);
+    display: none;
+    z-index: 100000000000;
+  }
+  
+  .model {
+    position: relative;
+    background: #fff;
+    text-align: center;
+    width: 44%;
+    max-height: 90%;
+    border-radius: 10px;
+    margin: 1rem auto;
+    box-shadow: 0px 4px 22px -5px rgba(0, 0, 0, 0.75);
+    animation-name: animatetop;
+    animation-duration: .4s;
+    
+  }
+  
+  @keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+  
+    to {
+        top: 0;
+        opacity: 1;
+    }
+  }
+  
+  .model-show {
+    display: block;
+  }
+  
+  .model-header {
+    background: #f8fafb;
+    padding: 2rem;
+  }
+  
+  .model-body {
+    padding: 1rem;
+    text-align:start;
+  }
+  
+  .model-body input[type="file"] {
+    display: none;
+  }
+
+  .center{
+    text-align: center;
+  }
