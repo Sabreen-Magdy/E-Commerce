@@ -1,109 +1,153 @@
-
 <div class="container">
-    <div class="contai">
-        <header>
-            <h3>طلبات العميل</h3>
-        </header>
-        <div class="table-wrapped">
-            <table class="table-products">
-                <thead>
-                    <tr>
-                        <th>العميل</th>
-                        <th>رقم الطلب</th>
-                        <th>السعر</th>
-                        <th>تاريخ الطلب</th>
-                        <th style="text-align: center;">الأجراءات</th>
-                        <th style="text-align: center;">تسليم الطلب</th>
-                        <th style="text-align: left;">تفاصيل الطلب</th>
-                    </tr>
-                </thead>
+  <div class="contai">
+    <header>
+      <h3>طلبات العميل</h3>
+    </header>
+    <div class="table-wrapped">
+      <table class="table-products">
+        <thead>
+          <tr>
+            <th>العميل</th>
+            <th>رقم الطلب</th>
+            <th>السعر</th>
+            <th>تاريخ الطلب</th>
+            <th style="text-align: center;">الأجراءات</th>
+            <th style="text-align: center;">تسليم الطلب</th>
+            <th style="text-align: left;">تفاصيل الطلب</th>
+          </tr>
+        </thead>
 
-                <tbody id="tbdyprod" *ngFor="let o of orders; let index = index">
-                    <td data-label="العميل">{{o.customerName}}</td>
-                    <td data-label="رقم الطلب">{{o.orderId}}</td>
-                    <td data-label="السعر">{{o.orderTotalCost}}$</td>
-                    <td data-label="تاريخ الطلب">{{o.orderDate.split('T')}}</td>
-                    <td data-label="الاجراءات" style="text-align: center;">
-                    <ng-container *ngIf="orderStateAOrR[index] == 0 ">
-                        <button class="btn2 btn-edit" (click)="AcceptOrder(o,index)">قبول</button>
-                        <button class="btn2 btn-delete" (click)="RegectOrder(o,index)">رفض</button>
-                    </ng-container>
-                    <ng-container *ngIf="orderStateAOrR[index] == 1">
-                        <i class="material-icons">done</i>
-                    </ng-container>
-                    <ng-container *ngIf="orderStateAOrR[index] == 2">
-                        <i class="material-icons">clear</i>
-                    </ng-container>
-                </td>
-                <td data-label="تسليم الطلب" style="text-align: center;">
-                  <ng-container *ngIf="o.state == 1">
-                      <button class="btn2 btn-deliver" (click)="DeliverOrder(o,index)">تسليم</button>
-                      <!-- <button class="btn2 btn-delete" (click)="RegectOrder(o)">رفض</button> -->
-                  </ng-container>
-                  <ng-container *ngIf="o.state == 0">
-                    <i class="material-icons" style="color: rgb(176, 138, 2);">hourglass_top</i>
-                </ng-container>
-                  <ng-container *ngIf="o.state == 4">
-                      <i class="material-icons" style="color: green;">done</i>
-                  </ng-container>
-                  <ng-container *ngIf="o.state == 2">
-                      <i class="material-icons" style="color: rgb(250, 2, 2);">clear</i>
-                  </ng-container>
-              </td>
-                     <!-- <td style="text-align: center;">
+        <tbody id="tbdyprod" *ngFor="let o of orders; let index = index">
+          <td data-label="العميل">{{o.customerName}}</td>
+          <td data-label="رقم الطلب">{{o.orderId}}</td>
+          <td data-label="السعر">{{o.orderTotalCost}}$</td>
+          <td data-label="تاريخ الطلب">{{o.orderDate.split('T')}}</td>
+          <td data-label="الاجراءات" style="text-align: center;">
+            <ng-container *ngIf="orderStateAOrR[index] == 0 ">
+              <button class="btn2 btn-edit" (click)="AcceptOrder(o,index)">قبول</button>
+              <button class="btn2 btn-delete" (click)="RegectOrder(o,index)">رفض</button>
+            </ng-container>
+            <ng-container *ngIf="orderStateAOrR[index] == 1">
+              <i class="material-icons">done</i>
+            </ng-container>
+            <ng-container *ngIf="orderStateAOrR[index] == 2">
+              <i class="material-icons">clear</i>
+            </ng-container>
+          </td>
+          <td data-label="تسليم الطلب" style="text-align: center;">
+            <ng-container *ngIf="o.state == 1">
+              <button class="btn2 btn-deliver" (click)="DeliverOrder(o,index)">تسليم</button>
+              <!-- <button class="btn2 btn-delete" (click)="RegectOrder(o)">رفض</button> -->
+            </ng-container>
+            <ng-container *ngIf="o.state == 0">
+              <i class="material-icons" style="color: rgb(176, 138, 2);">hourglass_top</i>
+            </ng-container>
+            <ng-container *ngIf="o.state == 3">
+              <i class="material-icons" style="color: green;">done</i>
+            </ng-container>
+            <ng-container *ngIf="o.state == 2">
+              <i class="material-icons" style="color: rgb(250, 2, 2);">clear</i>
+            </ng-container>
+          </td>
+          <!-- <td style="text-align: center;">
                         <p class="statusprreject">Accepted</p>
                     </td>  -->
-                    <td style="text-align: left;" data-label="عرض الطلب">
-                        <button class="btn" (click)="toggleModel(index)" ><i class="bi bi-box-arrow-up-right"></i></button>
-                    </td>
-                </tbody>
+          <td style="text-align: left;" data-label="عرض الطلب">
+            <button class="btn" (click)="toggleModel(index)"><i class="bi bi-box-arrow-up-right"></i></button>
+          </td>
+        </tbody>
 
-            </table>
-            <div id="loading-icon" class="loading-icon"></div>
+      </table>
+      <div id="loading-icon" class="loading-icon"></div>
 
-        </div>
     </div>
+  </div>
 </div>
 
 <div id="orderForm" class="add-model model-wrapper">
-    <div class="model">
-      <div class="model-header">
-        <i (click)="closeModel()" class="bi bi-x-square-fill"></i>
-        <h3>تفاصيل الطلب </h3>
-        <h6 class="mt-3 text-secondary">{{orders[selectedIndex].orderId}}</h6>
+  <div class="model">
+    <div class="model-header">
+      <i (click)="closeModel()" class="bi bi-x-square-fill"></i>
+      <h3>تفاصيل الطلب </h3>
+      <h6 class="mt-3 text-secondary">{{orders[selectedIndex].orderId}}</h6>
+    </div>
+    <div class="model-body">
+      <div class="customerDetilas detilas">
+        <p> <span>اسم العميل </span> {{orders[selectedIndex].customerName}}</p>
+        <p><span>عنوان الشحن </span> {{orders[selectedIndex].customerAddress}}</p>
+        <p><span>تاريخ الطلب </span>{{orders[selectedIndex].orderDate.split('T')}} </p>
       </div>
-      <div class="model-body">
-        <div class="customerDetilas detilas">
-            <p> <span>اسم العميل </span> {{orders[selectedIndex].customerName}}</p>
-            <p><span>عنوان الشحن </span>  {{orders[selectedIndex].customerAddress}}</p>
-            <p><span>تاريخ الطلب </span>{{orders[selectedIndex].orderDate.split('T')}} </p>
-        </div>
-        <table class="table">
-            <thead class="table-success">
-              <tr>
-                <th scope="col">المنتج</th>
-                <th scope="col">الصورة</th>
-                <th scope="col">العدد</th>
-                <th scope="col">السعر</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of orders[selectedIndex].productsperOrders">
-                <th scope="row">{{item.productName}}</th>
-                <td>
-                    <img class="img-product-order-D" [src]="'http://srmgroub.somee.com/Images/'+item.image">
-                </td>
-                <td>{{item.quantity}}</td>
-                <td>{{item.totalCost}} جنيه</td>
-              </tr>
-             
-            </tbody>
-          </table>
-        <div class="PriceDetilas detilas">
-            <p><span>سعر المنتجات </span>  {{orders[selectedIndex].orderTotalCost}} جنيه </p>
-            <p><span>سعر الشحن  </span>لم يتم تعينه بعض </p>
-            <p><span>سعر الكلي </span> {{orders[selectedIndex].orderTotalCost}} جنيه+ سعر الشحن  </p>
-        </div>
+      <table class="table">
+        <thead class="table-success">
+          <tr>
+            <th scope="col">المنتج</th>
+            <th scope="col">الصورة</th>
+            <th scope="col">العدد</th>
+            <th scope="col">السعر</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orders[selectedIndex].productsperOrders">
+            <th scope="row">{{item.productName}}</th>
+            <td>
+              <img class="img-product-order-D" [src]="'http://srmgroub.somee.com/Images/'+item.image">
+            </td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.totalCost}} جنيه</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="PriceDetilas detilas">
+        <p><span>سعر المنتجات </span> {{orders[selectedIndex].orderTotalCost}} جنيه </p>
+        <p><span>سعر الشحن </span>لم يتم تعينه بعض </p>
+        <p><span>سعر الكلي </span> {{orders[selectedIndex].orderTotalCost}} جنيه+ سعر الشحن </p>
       </div>
     </div>
   </div>
+</div>
+
+<div id="RefuceReason" class="add-model model-wrapper">
+  <div class="model">
+    <div class="model-header">
+      <i (click)="closeRefuse()" class="bi bi-x-square-fill"></i>
+      <h3>سبب الرفض</h3>
+      <h6 class="mt-3 text-secondary">{{orders[selectedIndex].orderId}}</h6>
+    </div>
+    <div class="model-body">
+      <div class="customerDetilas detilas">
+        <p> <span>اسم العميل </span> {{orders[selectedIndex].customerName}}</p>
+        <p><span>تاريخ الطلب </span>{{orders[selectedIndex].orderDate.split('T')}} </p>
+      </div>
+      <div class="PriceDetilas detilas">
+        <form class="row g-3" [formGroup]="RefuseForm" (submit)="submitRefuse($event)">
+          <div class="col-md-12 form-control-div " [ngClass]="{
+            sucess: Reasonproductcontrol?.valid,
+            danger: Reasonproductcontrol?.errors && ( Reasonproductcontrol?.touched )
+          }">
+            <label for="ReasonOrder" class="form-label">سبب الرفض</label>
+
+            <input type="text" class="form-control our-is-valid" id="Refucetext" formControlName="ReasonOrder"
+              required />
+            <!-- <i *ngIf="Reasonproductcontrol?.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="Reasonproductcontrol?.errors && (Reasonproductcontrol?.touched )"
+              class="bi bi-exclamation-circle-fill"></i> -->
+            <div *ngIf="Reasonproductcontrol?.errors && (Reasonproductcontrol?.touched )"
+              class="alert p-1 mt-2 alert-danger">
+              <ng-container *ngIf="Reasonproductcontrol?.hasError('required')">
+                يجب عليك ادخال السبب
+              </ng-container>
+              <ng-container *ngIf="Reasonproductcontrol?.hasError('minlength')">
+                يجب علي السبب ان تكون اطول من 4 حروف
+              </ng-container>
+              <ng-container *ngIf="Reasonproductcontrol?.hasError('pattern')">
+                ادخل السبب بالغة العربية رجاء
+              </ng-container>
+            </div>
+          </div>
+          <button class="btn btn-danger m-3" type="submit">تأكيد الرفض</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
