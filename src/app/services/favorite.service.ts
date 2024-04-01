@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 
 
 export class FavoriteService {
-  baseURL :string ="http://localhost:5058/api/Favourite/";
+  baseURL :string ="http://srmgroub.somee.com/api/Favourite/";
   // numberOfitemInFavCart:number=0;
   numberOfitemInFavCart:any=new BehaviorSubject(null);
   constructor(private _HttpClient:HttpClient,private authservice:AuthService) {}

@@ -8,7 +8,7 @@ import { Isize } from '../models/isize';
 })
 export class SizeService {
 
-  baseURL : string = 'http://localhost:5058/api/General'
+  baseURL : string = 'http://srmgroub.somee.com/api/General'
   constructor(private http:HttpClient) { }
 
   getAllSize() : Observable<Isize[]>{

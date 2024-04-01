@@ -38,7 +38,8 @@
         <span [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
         <span class="msg show">عرض المنتج</span>
         <img
-          [src]="'http://localhost:5058/Images/'+x.image"
+
+          [src]="'http://srmgroub.somee.com/Images/'+x.image"
         />
       </div>
       <div class="element-detials">
@@ -46,7 +47,7 @@
         <p>{{x.price}} <span>جنيه</span></p>
       </div>
     </div>
-    <div *ngIf="ProductList.length>0" class="pagiDiv">
+    <div  class="pagiDiv">
       <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
     </div>
     

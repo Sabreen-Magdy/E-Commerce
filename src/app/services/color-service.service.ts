@@ -9,7 +9,7 @@ import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 })
 export class ColorServiceService {
 
-  baseURL : string = 'http://localhost:5058/api/General'
+  baseURL : string = 'http://srmgroub.somee.com/api/General'
   constructor(private http: HttpClient) {
 
    }

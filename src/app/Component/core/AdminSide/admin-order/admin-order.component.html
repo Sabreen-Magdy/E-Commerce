@@ -13,6 +13,7 @@
                         <th>السعر</th>
                         <th>تاريخ الطلب</th>
                         <th style="text-align: center;">الأجراءات</th>
+                        <th style="text-align: center;">تسليم الطلب</th>
                         <th style="text-align: left;">تفاصيل الطلب</th>
                     </tr>
                 </thead>
@@ -23,17 +24,32 @@
                     <td data-label="السعر">{{o.orderTotalCost}}$</td>
                     <td data-label="تاريخ الطلب">{{o.orderDate.split('T')}}</td>
                     <td data-label="الاجراءات" style="text-align: center;">
-                    <ng-container *ngIf="o.state == 0">
-                        <button class="btn2 btn-edit" (click)="AcceptOrder(o)">قبول</button>
-                        <button class="btn2 btn-delete" (click)="RegectOrder(o)">رفض</button>
+                    <ng-container *ngIf="orderStateAOrR[index] == 0 ">
+                        <button class="btn2 btn-edit" (click)="AcceptOrder(o,index)">قبول</button>
+                        <button class="btn2 btn-delete" (click)="RegectOrder(o,index)">رفض</button>
                     </ng-container>
-                    <ng-container *ngIf="o.state == 1">
+                    <ng-container *ngIf="orderStateAOrR[index] == 1">
                         <i class="material-icons">done</i>
                     </ng-container>
-                    <ng-container *ngIf="o.state == 2">
+                    <ng-container *ngIf="orderStateAOrR[index] == 2">
                         <i class="material-icons">clear</i>
                     </ng-container>
                 </td>
+                <td data-label="تسليم الطلب" style="text-align: center;">
+                  <ng-container *ngIf="o.state == 1">
+                      <button class="btn2 btn-deliver" (click)="DeliverOrder(o,index)">تسليم</button>
+                      <!-- <button class="btn2 btn-delete" (click)="RegectOrder(o)">رفض</button> -->
+                  </ng-container>
+                  <ng-container *ngIf="o.state == 0">
+                    <i class="material-icons" style="color: rgb(176, 138, 2);">hourglass_top</i>
+                </ng-container>
+                  <ng-container *ngIf="o.state == 4">
+                      <i class="material-icons" style="color: green;">done</i>
+                  </ng-container>
+                  <ng-container *ngIf="o.state == 2">
+                      <i class="material-icons" style="color: rgb(250, 2, 2);">clear</i>
+                  </ng-container>
+              </td>
                      <!-- <td style="text-align: center;">
                         <p class="statusprreject">Accepted</p>
                     </td>  -->
@@ -75,7 +91,7 @@
               <tr *ngFor="let item of orders[selectedIndex].productsperOrders">
                 <th scope="row">{{item.productName}}</th>
                 <td>
-                    <img class="img-product-order-D" [src]="item.image">
+                    <img class="img-product-order-D" [src]="'http://srmgroub.somee.com/Images/'+item.image">
                 </td>
                 <td>{{item.quantity}}</td>
                 <td>{{item.totalCost}} جنيه</td>
