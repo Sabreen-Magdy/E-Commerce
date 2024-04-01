@@ -125,6 +125,7 @@ import { StarRatingModule } from 'angular-star-rating';
     VarientFormComponent,
     
     
+    
 
 
   ],

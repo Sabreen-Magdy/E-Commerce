@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2'; 
 import { AuthService } from 'src/app/auth.service';
-import { IaddFavorite, Ifav } from 'src/app/models/Ifav';
+import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductShow } from 'src/app/models/i-product-variant';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductFormService } from 'src/app/services/product-form.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-new-product',
@@ -35,19 +36,9 @@ export class NewProductComponent implements OnInit {
 
   AllProductSub : Subscription | undefined;
   addFavSub : Subscription | undefined;
-  // getallproduct(){
-  //   this.AllProductSub = this.prodServ.getAllProduct().subscribe({
-  //     next : (data) => {
-  //       this.allproductList = data;
-  //     },
-  //     error : (e) => {
-  //       console.log("Error when fetch Data" + e);
-  //     }
-  //   })
-  // }
 
   pushItemToFavCart( prodId : number ){
-    alert("Item added successfully!");
+    Swal.fire('تم اضافة منتج للقائمه المفضلة!');
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
@@ -65,7 +56,4 @@ export class NewProductComponent implements OnInit {
    })
    this._favService.getNumberOfitemInFavCart();
   }
-
-
-
 }
