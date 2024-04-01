@@ -58,26 +58,26 @@
     <button class="btn" (click)="toggle()">x</button>
   </div>
   <div class="nameSearch" >
-    <form  [formGroup]="nameSearchForm" (submit)="enterName($event)">
-      <input formControlName="name" type="text" placeholder="البحث باسم المنتج ..." />
-      <button>
-        <span class="material-symbols-outlined"> chevron_left </span>
-      </button>
+    <form  [formGroup]="nameSearchForm" ngModel (submit)="enterName($event)">
+      <input formControlName="name" type="text" placeholder="البحث باسم المنتج ..."  />
+      
     </form>
   </div>
   <div class="priceSearch">
     <h5>السعر<span class="EGP">( جنيه )</span></h5>
-    <form>
+    <form [formGroup]="PriceSearchForm">
       <span class="txt">من</span>
-      <input type="number" />
+      <input type="number" formControlName="minPrice" />
       <span class="txt">الي</span>
-      <input type="number" />
-      <button>
-        <span class="material-symbols-outlined"> chevron_left </span>
-      </button>
+      <input type="number" formControlName="maxPrice"/>
     </form>
   </div>
-
+  <div class="nameSearch">
+    <button>
+      البحث 
+    </button>
+  </div>
+ 
   <div class="categSearch">
     <h5 class="mb-3">الفئات</h5>
     <ul class="catList">

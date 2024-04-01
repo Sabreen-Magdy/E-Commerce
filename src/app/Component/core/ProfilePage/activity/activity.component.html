@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of processedData.reverse(), let index = index">
+    <tr *ngFor="let item of processedData.reverse()  , let index = index">
       <td>
         <button type="button" (click)="toggleModel(index)" class="btn btn-link btn-sm btn-rounded">
           {{ item.orderId }}
@@ -31,6 +31,9 @@
     </tr>
   </tbody>
 </table>
+<div   class="pagiDiv">
+  <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+</div>
 
 <div id="orderForm" class="add-model model-wrapper">
   <div class="model">
@@ -55,7 +58,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of processedData[selectedIndex].productsperOrders">
+            <tr *ngFor="let item of processedData[selectedIndex].productsperOrders ">
               <th scope="row">{{item.productName}}</th>
               <td>
                   <img class="img-product-order-D" [src]="'http://srmgroub.somee.com/Images/'+item.image">

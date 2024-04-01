@@ -22,6 +22,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class StoreComponent implements OnInit {
   ComponentUrl = ComponentUrl;
+  inputText :string = "";
+  maxPrice : number = 0;
+  minPrice : number = 0;
   toggle() {
     var blur = document.getElementById('blur');
     blur?.classList.toggle('active');
@@ -46,7 +49,9 @@ export class StoreComponent implements OnInit {
   /**fetch data */
 
   ProductList:IproductShow[] = [];
+  MainList : IproductShow [] = [];  
   categoryList : ICategory [] = [];
+
   pageWhat : string = "الكل"
   categoryName : string = "";
   productName : string = "";
@@ -73,6 +78,7 @@ export class StoreComponent implements OnInit {
         this.prodServ.gatProductbyCategoryName2(this.categoryName).subscribe(
           products => {
             this.ProductList = products;
+            this.MainList = products;
             if(this.ProductList.length == 0){
               this.noitem = true;
             }
@@ -92,6 +98,7 @@ export class StoreComponent implements OnInit {
         this.prodServ.getAllProduct2().subscribe(
           products => {
             this.ProductList = products;
+            this.MainList = products;
             if(this.ProductList.length == 0){
               this.noitem = true;
             }
@@ -124,13 +131,27 @@ export class StoreComponent implements OnInit {
     return this.nameSearchForm.get('name')
   }
 
+  PriceSearchForm :FormGroup = new FormGroup ({
+    minPrice : new FormControl(0,),
+    maxPrice : new FormControl(0,)
+  })
+
+  
+  
+
   enterName (e: Event) {
-    e.preventDefault();
-    if (this.nameSearchForm.valid){
-      var name= this.nameSearchForm.get('name')?.value;
-      this._Router.navigate([`store/products`,name]);
-      this.toggle();
-    }
+    // e.preventDefault();
+    // if (this.nameSearchForm.valid){
+    //   var name= this.nameSearchForm.get('name')?.value;
+    //   this._Router.navigate([`store/products`,name]);
+    //   this.toggle();
+    // }
+    this.inputText = this.nameSearchForm.get('name')?.value;
+    this.maxPrice = this.PriceSearchForm.get('maxPrice')?.value;
+    this.minPrice = this.PriceSearchForm.get('minPrice')?.value
+    console.log(this.inputText);
+    console.log("hello man");
+    this.applyFilter();
 
   }
   allProductSub : Subscription | undefined;
@@ -231,5 +252,28 @@ export class StoreComponent implements OnInit {
     }
 
   }
+
+
+applyFilter() {
+  if (!this.maxPrice) {
+    // If maxPrice is not entered, filter only by name and minimum price
+    this.ProductList = this.MainList.filter(item => 
+      item.name.toLowerCase().includes(this.inputText.toLowerCase()) &&
+      item.price >= this.minPrice
+    );
+  } else {
+    // Filter by name, minimum price, and maximum price
+    this.ProductList = this.MainList.filter(item => 
+      item.name.toLowerCase().includes(this.inputText.toLowerCase()) &&
+      item.price >= this.minPrice && item.price <= this.maxPrice
+    );
+  }
+
+  if (this.ProductList.length ==0){
+    this.noitem=true;
+  } 
+}
+
+
 }
 
