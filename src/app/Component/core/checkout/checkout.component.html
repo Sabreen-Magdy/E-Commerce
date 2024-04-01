@@ -185,7 +185,7 @@
 
 <!-- Modal -->
 <div
-  class="modal fade"
+  class="modal fade modal-lg"
   id="exampleModal2"
   tabindex="-1"
   aria-labelledby="exampleModal2Label"
@@ -194,72 +194,195 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-success" id="exampleModal2Label">
+        <h3 class="modal-title text-success" id="exampleModal2Label">
           معلومات الطلب
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        </h3>
       </div>
-      <div class="modal-body">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">المحافظة</label>
-            <input
-              type="text"
-              formControlName="Governorate"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.Governorate.errors }"
-              id="inputEmail4"
-            />
-            <label for="exampleInputEmail1" class="form-label">المركز</label>
-            <input
-              type="text"
-              formControlName="place"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.place.errors }"
-              id="inputEmail4"
-            />
-            <label for="exampleInputEmail1" class="form-label"
-              >المنطقة السكنية
-            </label>
-            <input
-              type="text"
-              formControlName="residential_area"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': submitted && f.residential_area.errors
-              }"
-              id="inputEmail4"
-            />
-            <label for="exampleInputEmail1" class="form-label"
-              >رقم التليفون للتواصل عند الإستلام</label
+      <div class="modal-body row">
+        <div class="col-md-12 col-lg-6 order-md-last">
+          <h5 class="d-flex justify-content-around align-items-center mb-3">
+            <span class="text-success">مشترياتك</span>
+            <span class="badge bg-success rounded-pill">{{
+              productVarientperOrder.length
+            }}</span>
+          </h5>
+          <ul class="list-group mb-3">
+            <li
+              *ngFor="let item of productVarientperOrder; let i = index"
+              class="list-group-item d-flex justify-content-between lh-sm p-3"
             >
-            <input
-              type="number"
-              formControlName="phone"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
-              id="inputEmail4"
-            />
-            <div
-              *ngIf="submitted && f.Governorate.errors"
-              class="invalid-feedback"
-            >
-              <div *ngIf="f.Governorate.errors.required">العنوان مطلوب</div>
-              <div *ngIf="f.Governorate.errors.email">
-                ادخل العنوان باللغة العربية رجاءا
+              <div>
+                <h6 class="my-0">{{ nameProductVarient[i] }}</h6>
+                <small class="text-muted">{{ item.quantity }}</small>
+              </div>
+              <span class="text-muted">{{ item.totalCost }} EGY</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between p-3">
+              <span>المجموع</span>
+              <strong>{{ totalPrice }} EGY</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <form [formGroup]="registerForm" (ngSubmit)="SendOrder($event)">
+            <div class="mb-3">
+              <div
+                class="col-12 form-control-div"
+                [ngClass]="{
+                  sucess: GovernorateAddresscontrol?.valid,
+                  danger:
+                    GovernorateAddresscontrol?.errors &&
+                    (GovernorateAddresscontrol?.touched || showerror)
+                }"
+              >
+                <label for="address" class="form-label">المحافظة</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  formControlName="Governorate"
+                  placeholder="محافظة القاهرة"
+                  required
+                />
+                <i
+                  *ngIf="GovernorateAddresscontrol?.valid"
+                  class="bi bi-check-circle-fill"
+                ></i>
+                <i
+                  *ngIf="
+                    GovernorateAddresscontrol?.errors &&
+                    (GovernorateAddresscontrol?.touched || showerror)
+                  "
+                  class="bi bi-exclamation-circle-fill"
+                ></i>
+                <div
+                  *ngIf="
+                    GovernorateAddresscontrol?.errors &&
+                    (GovernorateAddresscontrol?.touched || showerror)
+                  "
+                  class="alert p-1 mt-3 alert-danger"
+                >
+                  <ng-container
+                    *ngIf="GovernorateAddresscontrol?.hasError('required')"
+                  >
+                    يجب عليك ادخال المحافظة
+                  </ng-container>
+                  <ng-container
+                    *ngIf="GovernorateAddresscontrol?.hasError('pattern')"
+                  >
+                    ادخل المحافظة باللغة العربية
+                  </ng-container>
+                </div>
               </div>
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary">إرسال الطلب</button>
-        </form>
+            <div class="mb-3">
+              <div
+                class="col-12 form-control-div"
+                [ngClass]="{
+                  sucess: placeAddresscontrol?.valid,
+                  danger:
+                    placeAddresscontrol?.errors &&
+                    (placeAddresscontrol?.touched || showerror)
+                }"
+              >
+                <label for="address1" class="form-label">المدينة</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address1"
+                  formControlName="place"
+                  placeholder="مدينة نصر "
+                  required
+                />
+                <i
+                  *ngIf="placeAddresscontrol?.valid"
+                  class="bi bi-check-circle-fill"
+                ></i>
+                <i
+                  *ngIf="
+                    placeAddresscontrol?.errors &&
+                    (placeAddresscontrol?.touched || showerror)
+                  "
+                  class="bi bi-exclamation-circle-fill"
+                ></i>
+                <div
+                  *ngIf="
+                    placeAddresscontrol?.errors &&
+                    (placeAddresscontrol?.touched || showerror)
+                  "
+                  class="alert p-1 mt-3 alert-danger"
+                >
+                  <ng-container
+                    *ngIf="placeAddresscontrol?.hasError('required')"
+                  >
+                    يجب عليك ادخال المدينة
+                  </ng-container>
+                  <ng-container
+                    *ngIf="placeAddresscontrol?.hasError('pattern')"
+                  >
+                    ادخل المدينة باللغة العربية
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div
+                class="col-12 form-control-div"
+                [ngClass]="{
+                  sucess: residential_areaAddresscontrol?.valid,
+                  danger:
+                    residential_areaAddresscontrol?.errors &&
+                    (residential_areaAddresscontrol?.touched || showerror)
+                }"
+              >
+                <label for="address2" class="form-label"
+                  >الشارع أو المنطقة السكنية</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address2"
+                  formControlName="residential_area"
+                  placeholder="شارع الطيران"
+                  required
+                />
+                <i
+                  *ngIf="residential_areaAddresscontrol?.valid"
+                  class="bi bi-check-circle-fill"
+                ></i>
+                <i
+                  *ngIf="
+                    residential_areaAddresscontrol?.errors &&
+                    (residential_areaAddresscontrol?.touched || showerror)
+                  "
+                  class="bi bi-exclamation-circle-fill"
+                ></i>
+                <div
+                  *ngIf="
+                    residential_areaAddresscontrol?.errors &&
+                    (residential_areaAddresscontrol?.touched || showerror)
+                  "
+                  class="alert p-1 mt-3 alert-danger"
+                >
+                  <ng-container
+                    *ngIf="residential_areaAddresscontrol?.hasError('required')"
+                  >
+                    يجب عليك ادخال اسم الشارع
+                  </ng-container>
+                  <ng-container
+                    *ngIf="residential_areaAddresscontrol?.hasError('pattern')"
+                  >
+                    ادخل اسم الشارع باللغة العربية
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">إرسال الطلب</button>
+          </form>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
           إلغاء الطلب
         </button>
       </div>
