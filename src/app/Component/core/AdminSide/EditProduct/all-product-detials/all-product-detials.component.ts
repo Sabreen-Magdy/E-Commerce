@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { EditProductService } from 'src/app/services/edit-product.service';
 import { ICategory } from 'src/app/models/i-category';
 import { CategoryService } from 'src/app/services/category.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-product-detials',
@@ -27,12 +28,12 @@ export class AllProductDetialsComponent implements OnInit {
   ) {}
 
   productId: number = 0;
-  
+
   loadDETIALS : boolean = true;
   loadImag : boolean = true;
   LOadvariant : boolean = true;
   loadCategory : boolean = true;
-  
+
   detilasObject: IProductDetilas = {
     id: 0,
     name: '',
@@ -50,8 +51,8 @@ export class AllProductDetialsComponent implements OnInit {
   generateNumberArray(limit: number): number[] {
     return Array.from({length: limit}, (_, index) => index + 1);
   }
-  
-  
+
+
   ngOnInit(): void {
     this.productId = this.actRoute.snapshot.params['id'];
     console.log(this.productId);
@@ -155,6 +156,10 @@ export class AllProductDetialsComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
+    Swal.fire({
+      title: 'هل أنت متأكد من أنك تريد حذف المنتج؟!',
+      confirmButtonColor: '#198754', // Change this to the color you prefer
+    });
     if (this.coloredProduct.length > 1) {
       this.deleteCategorySub = this.editServ
         .deleteCatgoryofProduct(this.productId, id)
@@ -210,13 +215,13 @@ export class AllProductDetialsComponent implements OnInit {
     return this.CategoryForm.controls['category']
   }
 
-  
+
   subCategoey(e:Event) {
     e.preventDefault();
     if (this.CategoryForm.valid){
-      
+
       const categoryId = this.CategoryForm.get('category')?.value;
-      
+
         this.addCategorySub = this.editServ.addCategoryToprodutc(this.productId, categoryId).subscribe(
           {
             next: () => {
@@ -229,14 +234,14 @@ export class AllProductDetialsComponent implements OnInit {
           }
         );
       }
-      
+
       // this.closeSizeForm();
     else{
       this.showerroCat =true
     }
 
-    
-  
+
+
 
   }
   toggleSizeForm(){
@@ -249,11 +254,11 @@ export class AllProductDetialsComponent implements OnInit {
     var form = document.getElementById("CategForm");
     form?.classList.remove('model-show');
     this.showerroCat = false;
-    
-    
+
+
   }
 
-  
+
   productForm: FormGroup = new FormGroup({
     nameproduct: new FormControl(this.detilasObject.name, [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+'), Validators.minLength(5)]),
     descriptionProduct: new FormControl(this.detilasObject.description, [Validators.required, Validators.minLength(7), Validators.pattern('[\u0600-\u06FF ,\n]+')
@@ -286,7 +291,7 @@ export class AllProductDetialsComponent implements OnInit {
 
         }
       })
-      
+
 
     }else{
       this.showerrordetials = true;
@@ -310,7 +315,7 @@ export class AllProductDetialsComponent implements OnInit {
     var form = document.getElementById("detialsForm");
     form?.classList.remove('model-show');
     this.showerrordetials = false;
-    
-    
+
+
   }
 }

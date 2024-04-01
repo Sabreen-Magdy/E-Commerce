@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Isize } from 'src/app/models/isize';
 import { ColorServiceService } from 'src/app/services/color-service.service';
 import { SizeService } from 'src/app/services/size.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table',
@@ -21,16 +22,16 @@ export class TableComponent implements OnInit{
   s:number =1;
   btnsizeForm : string = "اضف";
   titlesizeForm : string = "اضافة حجم";
-  
+
   btncolorForm : string = "اضف";
   titlecolorForm : string = "اضافة لون";
   colorForm : FormGroup = new FormGroup({
     name : new FormControl("",[Validators.required, Validators.minLength(3)]),
     code : new FormControl("",[Validators.required])
   })
-  
 
-  
+
+
 
   get colornamecontrol(){
     return this.colorForm.controls['name']
@@ -51,7 +52,7 @@ export class TableComponent implements OnInit{
     this.getallcolor();
     this.getallSize();
   }
-  
+
 
   allcolorSubscription : Subscription | undefined;
   addColorSub : Subscription | undefined;
@@ -118,19 +119,23 @@ export class TableComponent implements OnInit{
           }
         );
       }
-  
+
       this.closeColorForm();
     }else{
       this.showerro = true;
     }
   }
-  
+
 
   deleteColor (id :number){
     this.clrService.deletecolor(id).subscribe(
       {
         next: () => {this.getallcolor();},
         error: (error) => {
+          Swal.fire({
+            title: 'توجد منتجات بذلك اللون لا يمكنك حذفه حتى الإنتهاء منها',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+          });
           console.error('Error deleteing color:', error);
         }
       }
@@ -168,24 +173,24 @@ export class TableComponent implements OnInit{
       }
     })
 
-    
-   
+
+
   }
 
   subSize(e:Event) {
     e.preventDefault();
     if (this.sizeForm.valid){
       const size = this.sizeForm.get('size')?.value;
-      
+
       if (this.selectedSize) {
         // If a size is selected, update it instead of adding a new one
         console.log(this.selectedSize);
         var editSized :Isize ={
           id: this.selectedSize.id,
           size: this.sizeForm.get('size')?.value
-        } 
+        }
         this.editSizeSub = this.sizeServ.editSize(editSized).subscribe({
-          next: () => 
+          next: () =>
           {
             console.log('edit succesful');
             this.getallSize();
@@ -207,13 +212,13 @@ export class TableComponent implements OnInit{
           }
         );
       }
-      
+
       this.closeSizeForm();
     }else{
       this.showerro =true
     }
 
-    
+
   }
 
   deleteSize (id :number){
@@ -221,6 +226,10 @@ export class TableComponent implements OnInit{
       {
         next: () => {this.getallSize();},
         error: (error) => {
+          Swal.fire({
+            title: 'توجد منتجات بذلك الحجم لا يمكنك حذفه حتى الإنتهاء منها',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+          });
           console.error('Error deleteing Size:', error);
         }
       }
