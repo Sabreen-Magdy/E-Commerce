@@ -23,7 +23,7 @@
                 </thead>
 
                 <tbody id="tbdyprod">
-                    <tr *ngFor="let x of colorList">
+                    <tr *ngFor="let x of colorList | paginate: {  itemsPerPage: 6, currentPage: p, }">
                         <td data-label="#">{{x.id}}</td>
                     <td data-label="الاسم">{{x.name}}</td>
                     <td  data-label="الكود"> <div [style.backgroundColor]="x.code" class="codebox"></div></td>
@@ -42,6 +42,9 @@
                 </tbody>
 
             </table>
+            <div style="margin-top: 10px;"  class="pagiDiv">
+              <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+            </div>
             <div id="loading-icon" class="loading-icon"></div>
 
         </div>
@@ -86,6 +89,7 @@
                 </tbody>
 
             </table>
+           
             <div id="loading-icon" class="loading-icon"></div>
 
         </div>
@@ -209,3 +213,6 @@
       </div>
     </div>
   </div>
+
+
+  

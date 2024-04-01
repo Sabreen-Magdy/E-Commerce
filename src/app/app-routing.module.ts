@@ -30,6 +30,9 @@ import { TableComponent } from './Component/core/AdminSide/general/table/table.c
 import { AuthGuard } from './auth.guard';
 import { ProductDetailsmainComponent } from './Component/core/product-details-main/ProductDetailsmainComponent';
 import { adminServiceGuard } from './admin-service.guard';
+import { AllProductDetialsComponent } from './Component/core/AdminSide/EditProduct/all-product-detials/all-product-detials.component';
+import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color-form/color-form.component';
+import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
 
 
 const routes: Routes = [
@@ -38,7 +41,10 @@ const routes: Routes = [
     {path:"dashboard",canActivate:[adminServiceGuard],component:DashboardAdminPageComponent, },
     {path:"product",canActivate:[adminServiceGuard],component:ProductTabelComponent, },
     {path:"product/add",canActivate:[adminServiceGuard],component:ProductFormComponent, },
-    {path:"product/edit/:id",canActivate:[adminServiceGuard],component:ProductFormComponent, },
+    {path:"product/detials/:id",canActivate:[adminServiceGuard],component:AllProductDetialsComponent, },
+    {path:"product/detials/AddImage/:id",canActivate:[adminServiceGuard],component:ColorFormComponent, },
+    {path:"product/detials/AddVariant/:id",canActivate:[adminServiceGuard],component:VarientFormComponent, },
+    {path:"product/details/EditVariant/:id/:variantId", canActivate: [adminServiceGuard], component: VarientFormComponent },
     {path:"order",canActivate:[adminServiceGuard],component:AdminOrderComponent, },
     {path:"category",canActivate:[adminServiceGuard],component:CategoryTableComponent, },
     {path:"category/add",canActivate:[adminServiceGuard],component:CategoryFormComponent, },

@@ -17,7 +17,8 @@ export class TableComponent implements OnInit{
   showerro : boolean = false;
   selectedSize: Isize | undefined;
   selectedColor: Icolor | undefined;
-
+  p:number =1;
+  s:number =1;
   btnsizeForm : string = "اضف";
   titlesizeForm : string = "اضافة حجم";
   

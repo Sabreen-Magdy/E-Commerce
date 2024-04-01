@@ -1,0 +1,20 @@
+.model-wrapper{
+    padding: 40px 20px;
+}
+.container{
+    background-color: white;
+    padding: 20px;
+    width: 60%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.fetchImg {
+    margin: 20px auto;
+    width: 300px;
+}
+
+.fetchImg img{
+    width: 100%;
+    border-radius: 10PX;
+}

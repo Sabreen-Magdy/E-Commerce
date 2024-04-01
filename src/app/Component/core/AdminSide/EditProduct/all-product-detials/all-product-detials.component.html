@@ -3,16 +3,16 @@
     <header>
         <h3 class="mb-3">تفاصيل المنتج</h3>
     </header>
-    
-    <div class="row detials">
+    <div *ngIf="!(loadCategory || loadDETIALS || loadImag || LOadvariant)">
+      <div class="row detials">
         
         <p class="col-md-6">
-            <span>الاسم: </span> {{detilasObject.name}}
+            <span>الاسم: </span> {{detilasObject.name}} {{detilasObject.id}}
         </p>
         <p class="col-md-6">
             <span>التقييم: </span> 
-            <i *ngFor="let _ of getStarArray(detilasObject.avgRating)" class="bi bi-star-fill text-warning"></i>
-            <i *ngFor="let _ of getStarArray(5-detilasObject.avgRating)" class="bi bi-star text-warning"></i>
+            <i *ngFor="let _ of generateNumberArray(detilasObject.avgRating)" class="bi bi-star-fill text-warning"></i>
+            <i *ngFor="let _ of generateNumberArray(5- detilasObject.avgRating)" class="bi bi-star text-warning"></i>
             ({{detilasObject.numberReviews}})
            
         </p>
@@ -22,16 +22,29 @@
     </div>
     <div class="m-3">
         <div class="col-md-10  text-start">
-            <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" > تعديل 
+            <button (click)="toggleDetialsForm()" class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" > تعديل 
                 <i class="me-2 bi bi-gear-fill"></i>
             </button>
           </div>
     </div>
+    <div class="m-3 categDiv" >
+      <h3>الفئات</h3>
+      <p *ngFor="let item of CategoryProduct">
+        {{item.name}}
+        <i (click)="deleteCategory(item.id)" class="bi bi-shield-fill-x"></i>
+      </p>
+    </div>
+    <div class="m-3">
+      <div class="col-md-10  text-start">
+          <button (click)="toggleSizeForm()" class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" > الفئة 
+              <i class="me-2 bi bi-plus-circle-fill"></i>
+          </button>
+        </div>
+  </div>
     
-      
     <div class="m-3">
       <div class="col-md-10 text-start">
-        <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" >الصور <i
+        <button  [routerLink]="'/admin/product/detials/AddImage/'+ detilasObject.id" class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" >الصور <i
             class="me-2 bi bi-plus-circle-fill"></i></button>
       </div>
       
@@ -41,7 +54,7 @@
             <div class="card-img-top">
   
               <div class="">
-                <img [src]="'http://localhost:5058/Images/'+x.image" class="d-block w-100" style="aspect-ratio: 1; object-fit: cover;">
+                <img [src]="'http://srmgroub.somee.com/Images/'+x.image" class="d-block w-100" style="aspect-ratio: 1; object-fit: cover;">
               </div>
             </div>
             <div class="card-body">
@@ -55,7 +68,7 @@
     </div>
     <div class="m-3 col-md-10">
       <div class=" text-start">
-        <button class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" >المنتج <i
+        <button [routerLink]="['/admin/product/detials/AddVariant/', detilasObject.id]" class="btn btn-dark rounded-1 text-light ms-1 py-1 px-4" >المنتج <i
             class="me-2 bi bi-plus-circle-fill"></i></button>
       </div>
      
@@ -79,7 +92,11 @@
             <td>{{item.price}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.discount}}</td>
-            <td><i (click)="deleteVariantProd(item.id)" class="bi bi-x-square text-danger"></i></td>
+            <td>
+              
+              <i [routerLink]="'/admin/product/details/EditVariant/'+ detilasObject.id +'/'+ item.id" class="bi bi-pencil-square text-success fs-4 ms-1"></i>
+              <i (click)="deleteVariantProd(item.id)" class="bi bi-x-square text-danger fs-4"></i>
+            </td>
           </tr>
   
         </tbody>
@@ -91,5 +108,127 @@
     <div style="height: 50px;">
 
     </div>
+    </div>
+
   
   </div>
+
+
+
+  <div id="detialsForm" class="add-model model-wrapper">
+    <div class="model">
+      <div class="model-header">
+        <h3>تعديل البيانات</h3>
+      </div>
+      <div class="model-body">
+      
+
+        <form class="row g-3" [formGroup]="productForm" (submit)="subUpdate($event)">
+          <div class="col-md-5 form-control-div " [ngClass]="{
+            sucess: nameproductcontrol?.valid,
+            danger: nameproductcontrol?.errors && ( nameproductcontrol?.touched || showerrordetials)
+          }">
+            <label for="nameProduct" class="form-label">اسم المنتج</label>
+            <input type="text" class="form-control our-is-valid" id="nameProduct" formControlName="nameproduct" required />
+            <i *ngIf="nameproductcontrol?.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="nameproductcontrol?.errors && (nameproductcontrol?.touched || showerrordetials)"
+              class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="nameproductcontrol?.errors && (nameproductcontrol?.touched || showerrordetials)"
+              class="alert p-1 mt-2 alert-danger">
+              <ng-container *ngIf="nameproductcontrol?.hasError('required')">
+                يجب عليك ادخال الاسم
+              </ng-container>
+              <ng-container *ngIf="nameproductcontrol?.hasError('minlength')">
+                يجب علي الاسم ان تكون اطول من 4 حروف
+              </ng-container>
+              <ng-container *ngIf="nameproductcontrol?.hasError('pattern')">
+                ادخل الاسم بالغة العربية رجاء
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-md-10 form-control-div " [ngClass]="{
+            sucess: descriptionProductcontrol?.valid,
+            danger: descriptionProductcontrol?.errors && (descriptionProductcontrol?.touched || showerrordetials)
+          }">
+            <label for="productDescription" class="form-label">وصف المنتج</label>
+            <textarea formControlName="descriptionProduct" class="form-control" id="productDescription" rows="3"
+              required></textarea>
+            <i *ngIf="descriptionProductcontrol?.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="descriptionProductcontrol?.errors && (descriptionProductcontrol?.touched || showerrordetials)"
+              class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="descriptionProductcontrol?.errors && (descriptionProductcontrol?.touched || showerrordetials)"
+              class="alert p-1 mt-2 alert-danger">
+              <ng-container *ngIf="descriptionProductcontrol?.hasError('required')">
+                يجب عليك ادخال وصف المنتج
+              </ng-container>
+              <ng-container *ngIf="descriptionProductcontrol?.hasError('minlength')">
+                يجب علي الوصف ان تكون اطول من 6 حروف
+              </ng-container>
+              <ng-container *ngIf="descriptionProductcontrol?.hasError('pattern')">
+                ادخل الوصف بالغة العربية رجاء
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-12 center">
+            <button class="btn btn-success m-3" type="submit">اضافة</button>
+            <button
+              class="btn btn-danger m-3"
+              type="button"
+              (click)="closeDetialsForm()"
+            >
+              تجاهل
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> 
+
+  <div id="CategForm" class="add-model model-wrapper">
+    <div class="model">
+      <div class="model-header">
+        <h3>اضف فئة</h3>
+      </div>
+      <div class="model-body">
+        <form class="row g-3" [formGroup]="CategoryForm" (submit)="subCategoey($event)">
+          <div class="col-7 form-control-div" [ngClass]="{
+            sucess: categorycontrol.valid,
+            danger: categorycontrol.errors && (categorycontrol.touched || showerroCat)
+          }">
+            <label for="Categoryname" class="form-label">اسم الفئة</label>
+            <select
+              formControlName="category"
+              type="text"
+              class="form-control"
+              id="Categoryname"
+              required
+            >
+            <option *ngFor="let x of ALLCategory" value="{{x.id}}">{{x.name}}</option>
+          
+          </select>
+            <i *ngIf="categorycontrol.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="categorycontrol?.errors && (categorycontrol?.touched || showerroCat)" class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="categorycontrol?.errors && (categorycontrol?.touched || showerroCat)" class="alert p-1 mt-2 alert-danger">
+            <ng-container *ngIf="categorycontrol?.hasError('required')">
+          يجب عليك ادخال الفئة
+        </ng-container>
+        
+        
+      </div>
+          </div>
+          
+  
+          <div class="col-12 center">
+            <button class="btn btn-success m-3" type="submit">اضافة</button>
+            <button
+              class="btn btn-danger m-3"
+              type="button"
+              (click)="closeSizeForm()"
+            >
+              تجاهل
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> 

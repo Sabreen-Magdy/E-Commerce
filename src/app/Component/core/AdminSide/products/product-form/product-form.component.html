@@ -241,6 +241,9 @@
       <i (click)="closeVarient()" class="bi bi-x-square-fill"></i>
       <h3>اضافة تفاصيل المنتج</h3>
     </div>
+    <div *ngIf="match">
+      <div class="p-2 alert alert-danger">ذلك المنتج موجود بالفعل <br><span style="font-size: 13px;">حيث تم استخدام هذا اللون مع هذا الحجم </span></div>
+    </div>
     <div class="model-body2">
       <form class="row g-3" [formGroup]="productVariantForm" (submit)="addVariant($event)">
         

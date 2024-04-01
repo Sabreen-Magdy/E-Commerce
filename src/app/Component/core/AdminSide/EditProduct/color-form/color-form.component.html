@@ -1,1 +1,61 @@
-<p>color-form works!</p>
+<div id="photoForm" class="model-wrapper">
+    <div class="container">
+      <div class="model-header mb-3">
+        <h3>اضافة صور للون</h3>
+      </div >
+      <div class="model-body2">
+        <form class="row g-3" [formGroup]="picForm" (submit)="addPhoto($event)">
+          <div class="col-md-6 form-control-div" [ngClass]="{
+            sucess: colorPicFormcontrol?.valid,
+            danger: colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)
+          }">
+            <label for="colorSelect" class="form-label">اللون</label>
+            <select formControlName="colorId" class="form-select" id="colorSelect" required>
+              <option *ngFor="let x of colorList" value="{{x.id}}">{{x.name}}</option>
+            </select>
+            <i *ngIf="colorPicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)"
+              class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="colorPicFormcontrol?.errors && (colorPicFormcontrol?.touched || showerroC)"
+              class="alert p-1 mt-2 alert-danger">
+              <ng-container *ngIf="colorPicFormcontrol?.hasError('required')">
+                يجب عليك اختيار لون
+              </ng-container>
+  
+            </div>
+          </div>
+          <div class="col-md-6 form-control-div " 
+          [ngClass]="{
+            sucess: imagePicFormcontrol?.valid,
+            danger: imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)
+          }">
+           
+  
+            <label for="image" class="form-label">صورة المنتج</label>
+            <input  type="file" class="form-control" id="nameProduct"  (change)="onFileSelected($event)" required accept="image/*" />
+            <i *ngIf="imagePicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
+              class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
+              class="alert p-1 mt-2 alert-danger">
+              <ng-container *ngIf="imagePicFormcontrol?.hasError('required')">
+                يجب عليك اختيار صورة
+              </ng-container> 
+              <!-- Add more error messages if needed -->
+             </div> 
+          </div>
+          <div *ngIf="selectedimgUrl != '' " class="fetchImg">
+            
+            <img [src]="selectedimgUrl" alt="">
+        </div>
+          <div class="col-12 center">
+            
+            <button class="btn btn-success m-3" type="submit">اضف</button>
+            
+          </div>
+        </form>
+        
+        
+      </div>
+    </div>
+  </div>

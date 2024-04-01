@@ -31,6 +31,10 @@ export interface IcoloredImage
     image: string
 }
 
+export interface ICategoryProduct {
+    id: number,
+    name:string
+}
 export interface IaddVariant {
     
     productId: number,
@@ -59,6 +63,10 @@ export interface IupdateDetials {
 }
 
 /**تحت الاعداد */
-// export interface IupdateVariant {
-
-// }
+export interface IupdateVariant {
+    
+    unitPrice: string,
+    discount: string,
+    quantity: string
+      
+}

@@ -57,14 +57,14 @@
           <div class="rowe" *ngIf="selectedvariant.discount > 0">
             <div class="title">قبل:</div>
             <div class="before">
-              {{ selectedvariant.price / selectedvariant.quantity }}
+              {{ selectedvariant.priceAfter }}
               جنيه
             </div>
           </div>
           <div class="rowe">
             <div class="title">الان:</div>
             <div class="now">
-              {{ selectedvariant.priceAfter / selectedvariant.quantity }}
+              {{ selectedvariant.priceAfter }}
               جنيه
             </div>
           </div>
@@ -75,7 +75,7 @@
           </div>
         </div>
         <div *ngIf="selectedvariant.discount > 0" class="comment">
-          اي تعليق جديد
+            خصم
         </div>
       </div>
       <div class="line"></div>
@@ -281,13 +281,8 @@
       </div>
 
       <!-- Pagination controls -->
-      <div *ngIf="prodDetrev.length > 0" class="pagiDiv">
-        <pagination-controls
-          class="custom-pagination"
-          nextLabel="&rsaquo;"
-          previousLabel="&lsaquo;"
-          (pageChange)="p = $event"
-        ></pagination-controls>
+      <div *ngIf="true" class="pagiDiv">
+        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
   </div>ئ

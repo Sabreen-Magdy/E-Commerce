@@ -49,6 +49,7 @@ export class ProductFormComponent implements OnInit {
   showerroM: boolean = false;
   showerroC: boolean = false;
   showerroS: boolean = false;
+  match : boolean = false;
   selectedFile!: File
   colorList: Icolor[] = [];
   sizeList: Isize[] = [];
@@ -323,6 +324,7 @@ export class ProductFormComponent implements OnInit {
 
   addVariant(e: Event) {
     e.preventDefault();
+    this.match = false;
     if (this.productVariantForm.valid) {
 
       const vary: IProductVariant = {
@@ -333,6 +335,14 @@ export class ProductFormComponent implements OnInit {
         sizeId: this.productVariantForm.get('size')?.value
       }
 
+      for (let x of this.productVariants){
+        if (x.sizeId == vary.sizeId && x.colorId == vary.colorId){
+
+          this.match = true;
+          break;
+        }
+      }
+      if (!this.match){
       this.productVariants.push(vary);
       const data: varienty = {
         colorname: this.getColorNameById(this.productVariantForm.get('color')?.value),
@@ -342,7 +352,7 @@ export class ProductFormComponent implements OnInit {
 
       this.datafColorandSizeCari.push(data)
       this.closeVarient();
-    } else {
+    }}else {
       this.showerroS = true;
     }
 

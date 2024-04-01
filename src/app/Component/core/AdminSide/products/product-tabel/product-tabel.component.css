@@ -183,3 +183,48 @@
 
   }
   
+
+  .pagiDiv{
+    text-align: center;
+    margin: auto;
+  }
+  
+  /* Custom styles for ngx-pagination */
+  
+  Change the background color of the pagination controls
+  /* .custom-pagination /deep/ .ngx-pagination {
+    background-color: transparent;
+    padding: 10px;
+  }
+   */
+  /* Style the individual page numbers */
+  .custom-pagination /deep/ .ngx-pagination li {
+    margin: 0;
+    display: inline-block;
+    font-size: 14px;
+  }
+  
+  /* Style the active page number */
+  .custom-pagination /deep/ .ngx-pagination .current {
+    background-color: #198754;
+    color: #fff;
+    border-radius: 50%;
+    /* padding: 7px 10px; */
+  }
+  
+  /* Style the "Next" and "Previous" buttons */
+  .custom-pagination /deep/ .ngx-pagination a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Hover effect for buttons */
+  .custom-pagination /deep/ .ngx-pagination a:hover {
+    color: #198754;
+  }
+  
+  /* Optional: Center the pagination controls */
+  .custom-pagination /deep/ .ngx-pagination {
+    text-align: center;
+  }
