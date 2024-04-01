@@ -39,12 +39,12 @@ export class ProductDetailsmainComponent implements OnInit {
     "description": "undefine"
   };
   prodDetrev: IproductReviws[] = [];
-  customerHasReview: boolean = false;
   isProductInFav: boolean = false;
   waitingFav: boolean = false;
   // sizeIndexMap: { [size: string]: number } = {};
   id: number = 0;
   customerId: number = 0;
+  customerCanAddRev:boolean=false;
   addFavSub: Subscription | undefined;
   addcartSub: Subscription | undefined;
   getFavSub: Subscription | undefined;
@@ -55,12 +55,6 @@ export class ProductDetailsmainComponent implements OnInit {
       next: (data) => {
         this.prodDetrev = data;
         data.forEach(rev => {
-          if (this.customerId == rev.customerId) {
-            this.customerHasReview = true;
-            this.subText = "لقد أضفت تعليقا من قبل";
-            (document.querySelector('.btn-group .submit') as HTMLInputElement).classList.add('disabled');
-
-          }
         });
         console.log(this.prodDetrev);
       }
@@ -72,7 +66,7 @@ export class ProductDetailsmainComponent implements OnInit {
         next: (data) => {
           data.avgRating = Math.floor(data.avgRating)
           this.prodDet = data;
-  
+
           console.log(this.prodDet);
         }
       });
@@ -94,10 +88,16 @@ export class ProductDetailsmainComponent implements OnInit {
     return this.commentForm.get('comment')
   }
   ngOnInit(): void {
-
     this.customerId = this.authService.id;
     this.id = this.Actrouter.snapshot.params['id'];
     console.log("hiiiiiii" + this.id);
+    this.revService.isCustomerCanAddRev(this.customerId,this.id).subscribe({
+      next: (data) => {
+        this.customerCanAddRev=data;
+        console.log(this.customerCanAddRev)
+        console.log("Customer can Review??????????????",data);
+      }
+    })
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
         this.prodVariantList = data.filter(item => item.quantity > 0);
@@ -112,11 +112,11 @@ export class ProductDetailsmainComponent implements OnInit {
       }
     });
     this.checkFavourite();
-   this.getProductDetails()
+    this.getProductDetails()
     this.getProductDetailsRev()
-
     this.getUniqueColors();
     this.getUniqueCode
+
     // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     this.allStars = document.querySelectorAll('.rating .star') as NodeListOf<HTMLElement>;
     this.ratingValue = document.querySelector('.rating input') as HTMLInputElement;
@@ -158,7 +158,7 @@ export class ProductDetailsmainComponent implements OnInit {
 
   showerror: boolean = false;
   confirmComment(e: Event) {
-    if (this.commentForm.valid && this.customerHasReview == false) {
+    if (this.commentForm.valid) {
       let productId = this.prodDet.id;
       let customerId = this.authService.id;
       let rate = this.activeStarsCount;
@@ -166,7 +166,6 @@ export class ProductDetailsmainComponent implements OnInit {
       console.log(rate, content);
       this.revService.addProductReview(customerId, productId, content, rate).subscribe({
         next: (data) => {
-          console.log(data);
           this.commentForm.get('comment')?.setValue("");
           this.getProductDetails()
           this.prodDetApi.getProdReviews(this.id).subscribe({
@@ -179,7 +178,6 @@ export class ProductDetailsmainComponent implements OnInit {
       });;
     }
     else {
-      alert("لقد أضفت تعليقا من قبل")
       this.showerror = true;
     }
   }

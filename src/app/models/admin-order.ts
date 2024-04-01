@@ -9,5 +9,6 @@ export interface AdminOrder {
     state: number
     orderTotalCost: number
     customerAddress: string
+    comment:string;
     productsperOrders :AdminOrderProducts[]
 }

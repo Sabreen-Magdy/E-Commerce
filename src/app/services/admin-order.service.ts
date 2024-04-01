@@ -14,8 +14,8 @@ export class AdminOrderService {
     return this.http.get<AdminOrder[]>(this.baseUrl+"GetAllOrders")
   }
 
-  UpdateStatus(orderid:number , status:number){
-    const url = `${this.baseUrl}UpdateOrderStatus?id=${orderid}&status=${status}`;
+  UpdateStatus(orderid:number , status:number, comment:string){
+    const url = `${this.baseUrl}UpdateOrderStatus?id=${orderid}&status=${status}&comment=${comment}`;
     return this.http.put(url,null)
   }
 }

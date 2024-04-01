@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ICategory } from 'src/app/models/i-category';
 import { CategoryService } from 'src/app/services/category.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category-table',
@@ -35,6 +36,11 @@ export class CategoryTableComponent implements OnInit {
     this.catService.deleteCategory(id).subscribe({
       next: () => {this.getallCategory();},
         error: (error) => {
+          // Swal.fire('لا يمكنك حذف الفئة قم بإفراغها أولا!');
+          Swal.fire({
+            title: 'لا يمكنك حذف الفئة قم بإفراغها أولا!',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+          });
           console.error('Error deleteing category:', error);
         }
     })

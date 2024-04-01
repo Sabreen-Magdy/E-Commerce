@@ -1,4 +1,4 @@
-<main class="container-fluid bg-light">
+<!-- <main class="container-fluid bg-light">
   <div class="py-5 text-center text-success">
     <h2>معلومات الطلب</h2>
   </div>
@@ -151,7 +151,7 @@
           <button
           (click)="cancelOrder()"
           *ngIf="!wiating"
-          
+
           class="btn btn-outline-danger mb-3 col btn-lg border-2 delbtn"
           >
           <div>
@@ -164,10 +164,228 @@
           </div>
           {{delText}}
           </button>
-          
-          
+
+
         </div>
       </form>
     </div>
   </div>
-</main>
+</main> -->
+
+<div class="container p-5">
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal2"
+  >
+    Login Form
+  </button>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade modal-lg"
+  id="exampleModal2"
+  tabindex="-1"
+  aria-labelledby="exampleModal2Label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-success" id="exampleModal2Label">
+          معلومات الطلب
+        </h3>
+      </div>
+      <div class="modal-body row">
+        <div class="col-md-12 col-lg-6 order-md-last">
+          <h5 class="d-flex justify-content-around align-items-center mb-3">
+            <span class="text-success">مشترياتك</span>
+            <span class="badge bg-success rounded-pill">{{
+              productVarientperOrder.length
+            }}</span>
+          </h5>
+          <ul class="list-group mb-3">
+            <li
+              *ngFor="let item of productVarientperOrder; let i = index"
+              class="list-group-item d-flex justify-content-between lh-sm p-3"
+            >
+              <div>
+                <h6 class="my-0">{{ nameProductVarient[i] }}</h6>
+                <small class="text-muted">{{ item.quantity }}</small>
+              </div>
+              <span class="text-muted">{{ item.totalCost }} EGY</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between p-3">
+              <span>المجموع</span>
+              <strong>{{ totalPrice }} EGY</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <form [formGroup]="registerForm" (ngSubmit)="SendOrder($event)">
+            <div class="mb-3">
+              <div
+                class="col-12 form-control-div"
+                [ngClass]="{
+                  sucess: GovernorateAddresscontrol?.valid,
+                  danger:
+                    GovernorateAddresscontrol?.errors &&
+                    (GovernorateAddresscontrol?.touched || showerror)
+                }"
+              >
+                <label for="address" class="form-label">المحافظة</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  formControlName="Governorate"
+                  placeholder="محافظة القاهرة"
+                  required
+                />
+                <i
+                  *ngIf="GovernorateAddresscontrol?.valid"
+                  class="bi bi-check-circle-fill"
+                ></i>
+                <i
+                  *ngIf="
+                    GovernorateAddresscontrol?.errors &&
+                    (GovernorateAddresscontrol?.touched || showerror)
+                  "
+                  class="bi bi-exclamation-circle-fill"
+                ></i>
+                <div
+                  *ngIf="
+                    GovernorateAddresscontrol?.errors &&
+                    (GovernorateAddresscontrol?.touched || showerror)
+                  "
+                  class="alert p-1 mt-3 alert-danger"
+                >
+                  <ng-container
+                    *ngIf="GovernorateAddresscontrol?.hasError('required')"
+                  >
+                    يجب عليك ادخال المحافظة
+                  </ng-container>
+                  <ng-container
+                    *ngIf="GovernorateAddresscontrol?.hasError('pattern')"
+                  >
+                    ادخل المحافظة باللغة العربية
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div
+                class="col-12 form-control-div"
+                [ngClass]="{
+                  sucess: placeAddresscontrol?.valid,
+                  danger:
+                    placeAddresscontrol?.errors &&
+                    (placeAddresscontrol?.touched || showerror)
+                }"
+              >
+                <label for="address1" class="form-label">المدينة</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address1"
+                  formControlName="place"
+                  placeholder="مدينة نصر "
+                  required
+                />
+                <i
+                  *ngIf="placeAddresscontrol?.valid"
+                  class="bi bi-check-circle-fill"
+                ></i>
+                <i
+                  *ngIf="
+                    placeAddresscontrol?.errors &&
+                    (placeAddresscontrol?.touched || showerror)
+                  "
+                  class="bi bi-exclamation-circle-fill"
+                ></i>
+                <div
+                  *ngIf="
+                    placeAddresscontrol?.errors &&
+                    (placeAddresscontrol?.touched || showerror)
+                  "
+                  class="alert p-1 mt-3 alert-danger"
+                >
+                  <ng-container
+                    *ngIf="placeAddresscontrol?.hasError('required')"
+                  >
+                    يجب عليك ادخال المدينة
+                  </ng-container>
+                  <ng-container
+                    *ngIf="placeAddresscontrol?.hasError('pattern')"
+                  >
+                    ادخل المدينة باللغة العربية
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div
+                class="col-12 form-control-div"
+                [ngClass]="{
+                  sucess: residential_areaAddresscontrol?.valid,
+                  danger:
+                    residential_areaAddresscontrol?.errors &&
+                    (residential_areaAddresscontrol?.touched || showerror)
+                }"
+              >
+                <label for="address2" class="form-label"
+                  >الشارع أو المنطقة السكنية</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address2"
+                  formControlName="residential_area"
+                  placeholder="شارع الطيران"
+                  required
+                />
+                <i
+                  *ngIf="residential_areaAddresscontrol?.valid"
+                  class="bi bi-check-circle-fill"
+                ></i>
+                <i
+                  *ngIf="
+                    residential_areaAddresscontrol?.errors &&
+                    (residential_areaAddresscontrol?.touched || showerror)
+                  "
+                  class="bi bi-exclamation-circle-fill"
+                ></i>
+                <div
+                  *ngIf="
+                    residential_areaAddresscontrol?.errors &&
+                    (residential_areaAddresscontrol?.touched || showerror)
+                  "
+                  class="alert p-1 mt-3 alert-danger"
+                >
+                  <ng-container
+                    *ngIf="residential_areaAddresscontrol?.hasError('required')"
+                  >
+                    يجب عليك ادخال اسم الشارع
+                  </ng-container>
+                  <ng-container
+                    *ngIf="residential_areaAddresscontrol?.hasError('pattern')"
+                  >
+                    ادخل اسم الشارع باللغة العربية
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">إرسال الطلب</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          إلغاء الطلب
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
