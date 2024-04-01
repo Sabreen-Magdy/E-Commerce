@@ -1,6 +1,7 @@
 ﻿using Contract;
 using Contract.Order;
 using Domain.Entities;
+using System.Xml.Linq;
 
 namespace Services.Extenstions
 {
@@ -49,13 +50,13 @@ namespace Services.Extenstions
 
             return new()
             {
+                Comment = order.Comment,
                 ConfirmDate = order.ConfirmDate,
                 OrderedDate = order.OrderDate,
                 CustomerAddress = order.CustomerAddress,
                 State = order.State,
                 TotalCost = order.OrderTotalCost,
                 CustomerId = order.CustomerId,
-                //ProductBelongToOrders=
             };
         }
 
@@ -92,7 +93,8 @@ namespace Services.Extenstions
                 });
 
             return new()
-            {
+            {  
+                Comment= order.Comment, 
                 ConfirmDate = order.ConfirmDate,
                 OrderDate = order.OrderedDate,
                 CustomerAddress = order.CustomerAddress,
