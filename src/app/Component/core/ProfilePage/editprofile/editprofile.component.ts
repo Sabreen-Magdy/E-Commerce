@@ -46,7 +46,7 @@ MakeFormValidation(){
       this.nameValue,
       [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(2),
         Validators.pattern('[\u0600-\u06FF ,]+')
       ]
     ),
