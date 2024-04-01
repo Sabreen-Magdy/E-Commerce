@@ -54,7 +54,14 @@ export class ActivityComponent {
   }
 
   stringState(s: number): string {
-    return s === 0 ? "يتم مراجعته" : 1 ? "تم قبوله":"تم رفضه";
+    if (s == 0){
+      return 'يُرجى الانتظار بينما يقوم البائع بمراجعة طلبك واتخاذ قرار بشأن قبوله أو رفضه'
+    }else if (s == 1){
+      return 'تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله'
+    }else if (s == 2){
+      return 'تم رفض طلبك'
+    }
+    return 'تم تسليم طلبك تشرفنا بزيارتك لموقعنا'
   }
 
   toggleModel(index :number){
