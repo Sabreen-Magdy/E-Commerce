@@ -1,4 +1,4 @@
-<main class="container-fluid bg-light">
+<!-- <main class="container-fluid bg-light">
   <div class="py-5 text-center text-success">
     <h2>معلومات الطلب</h2>
   </div>
@@ -151,7 +151,7 @@
           <button
           (click)="cancelOrder()"
           *ngIf="!wiating"
-          
+
           class="btn btn-outline-danger mb-3 col btn-lg border-2 delbtn"
           >
           <div>
@@ -164,10 +164,105 @@
           </div>
           {{delText}}
           </button>
-          
-          
+
+
         </div>
       </form>
     </div>
   </div>
-</main>
+</main> -->
+
+<div class="container p-5">
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal2"
+  >
+    Login Form
+  </button>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal2"
+  tabindex="-1"
+  aria-labelledby="exampleModal2Label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-success" id="exampleModal2Label">
+          معلومات الطلب
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">المحافظة</label>
+            <input
+              type="text"
+              formControlName="Governorate"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.Governorate.errors }"
+              id="inputEmail4"
+            />
+            <label for="exampleInputEmail1" class="form-label">المركز</label>
+            <input
+              type="text"
+              formControlName="place"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.place.errors }"
+              id="inputEmail4"
+            />
+            <label for="exampleInputEmail1" class="form-label"
+              >المنطقة السكنية
+            </label>
+            <input
+              type="text"
+              formControlName="residential_area"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': submitted && f.residential_area.errors
+              }"
+              id="inputEmail4"
+            />
+            <label for="exampleInputEmail1" class="form-label"
+              >رقم التليفون للتواصل عند الإستلام</label
+            >
+            <input
+              type="number"
+              formControlName="phone"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+              id="inputEmail4"
+            />
+            <div
+              *ngIf="submitted && f.Governorate.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.Governorate.errors.required">العنوان مطلوب</div>
+              <div *ngIf="f.Governorate.errors.email">
+                ادخل العنوان باللغة العربية رجاءا
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
+          إلغاء الطلب
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

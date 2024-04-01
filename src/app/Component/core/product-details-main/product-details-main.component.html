@@ -22,9 +22,12 @@
           (click)="showImage($event, index, x.value[0])"
           *ngFor="let x of groupedByColor | keyvalue; let index = index"
         >
-
-          <img [src]="'http://srmgroub.somee.com/Images/'+x.value[0].coloredimage" alt="" />
-
+          <img
+            [src]="
+              'http://srmgroub.somee.com/Images/' + x.value[0].coloredimage
+            "
+            alt=""
+          />
         </div>
         <span
           class="material-symbols-outlined down"
@@ -36,9 +39,10 @@
       </div>
 
       <div class="mainImg col-9 col-sm-10">
-
-        <img [src]="'http://srmgroub.somee.com/Images/'+selectedImage" alt="" />
-
+        <img
+          [src]="'http://srmgroub.somee.com/Images/' + selectedImage"
+          alt=""
+        />
       </div>
     </div>
     <div class="pData col-md-4">
@@ -181,7 +185,7 @@
   </div>
 
   <!-- التقيييييييييييييييييييييم -->
-  <div class="wrapper mt-5">
+  <div [hidden]="!customerCanAddRev" class="wrapper mt-5">
     <h3>أضف تقييم</h3>
     <form [formGroup]="commentForm" (submit)="confirmComment($event)">
       <div class="rating">
@@ -196,10 +200,7 @@
         class="col-12 form-control-div"
         [ngClass]="{
           sucess: commentForm!.valid,
-          danger:
-            commentcontrol?.errors &&
-            (commentcontrol?.touched || showerror) &&
-            !customerHasReview
+          danger: commentcontrol?.errors && showerror
         }"
       >
         <textarea
@@ -209,33 +210,21 @@
           cols="10"
           rows="2"
           placeholder="رأيك يهمنا...."
-          [readonly]="customerHasReview"
         ></textarea>
         <i *ngIf="commentcontrol?.valid" class="bi bi-check-circle-fill"></i>
         <i
-          *ngIf="
-            commentcontrol?.errors &&
-            (commentcontrol?.touched || showerror) &&
-            !customerHasReview
-          "
+          *ngIf="commentcontrol?.errors && showerror"
           class="bi bi-exclamation-circle-fill"
         ></i>
+        <!-- commentcontrol?.touched || -->
         <div
-          *ngIf="
-            commentcontrol?.errors &&
-            (commentcontrol?.touched || showerror) &&
-            customerHasReview
-          "
+          *ngIf="commentcontrol?.errors && showerror"
           class="alert p-1 mt-3 alert-danger"
         >
-          <ng-container
-            *ngIf="commentcontrol?.hasError('required') && !customerHasReview"
-          >
+          <ng-container *ngIf="commentcontrol?.hasError('required')">
             يجب عليك كتابة تعليق
           </ng-container>
-          <ng-container
-            *ngIf="commentcontrol?.hasError('pattern') && !customerHasReview"
-          >
+          <ng-container *ngIf="commentcontrol?.hasError('pattern')">
             ادخل تعليقك باللغة العربية
           </ng-container>
         </div>
@@ -271,7 +260,10 @@
     <div class="Comments">
       <h5>جميع التقييمات</h5>
       <div class="line3"><div></div></div>
-      <div *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }" class="coment row">
+      <div
+        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }"
+        class="coment row"
+      >
         <div class="user col-md-3">
           <p class="name">{{ x.customerName }}</p>
           <div class="space"></div>
@@ -288,8 +280,13 @@
       </div>
 
       <!-- Pagination controls -->
-      <div *ngIf="prodDetrev.length>0" class="pagiDiv">
-        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+      <div *ngIf="prodDetrev.length > 0" class="pagiDiv">
+        <pagination-controls
+          class="custom-pagination"
+          nextLabel="&rsaquo;"
+          previousLabel="&lsaquo;"
+          (pageChange)="p = $event"
+        ></pagination-controls>
       </div>
     </div>
   </div>
