@@ -70,6 +70,7 @@ import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/var
 // import { NgxPaginationModule } from 'ngx-pagination';
 import { StarRatingModule } from 'angular-star-rating';
 import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
+import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
     ColorFormComponent,
     VarientFormComponent,
     VerifiyComponent,
+    EmailSignFORMComponent,
     
     
     
