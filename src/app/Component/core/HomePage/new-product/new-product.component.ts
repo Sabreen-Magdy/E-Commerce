@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/auth.service';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductShow } from 'src/app/models/i-product-variant';
@@ -25,11 +25,11 @@ export class NewProductComponent implements OnInit {
       products => {
         products.sort((a,b)=>b.addingDate.localeCompare(a.addingDate))
         this.allproductList = products;
-        
+
       },
       error => {
         console.error('Error fetching products:', error);
-        
+
       }
     );
   }
@@ -38,7 +38,10 @@ export class NewProductComponent implements OnInit {
   addFavSub : Subscription | undefined;
 
   pushItemToFavCart( prodId : number ){
-    Swal.fire('تم اضافة منتج للقائمه المفضلة!');
+    Swal.fire({
+      title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+      confirmButtonColor: '#198754', // Change this to the color you prefer
+    });
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
