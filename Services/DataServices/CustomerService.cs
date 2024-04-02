@@ -1,5 +1,4 @@
 ﻿using Contract;
-using Contract.Favorite;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
@@ -35,13 +34,22 @@ public class CustomerService : ICustomerService
 
     public void Add(CustomerAddDto customer)
     {
-        _repository.CustomerRepository.Add(customer.ToCustomerEntity());
+        var customers = _repository.CustomerRepository.GetAll();
 
+        if (customers.Find(c => c.Email == customer.Email) != null)
+            throw new AlreadyExistException($"Customer with {customer.Email}");
+
+        _repository.CustomerRepository.Add(customer.ToCustomerEntity());
+        _repository.SaveChanges();
+    }
+    public void Add(Customer customer)
+    {
+        _repository.CustomerRepository.Add(customer);
         _repository.SaveChanges();
     }
 
     public void Add(string name, string image, string phono, 
-                    string email, string passwor, string address)
+                    string email, string password, string address)
     {
         _repository.CustomerRepository.Add(new Customer
         {
@@ -50,8 +58,8 @@ public class CustomerService : ICustomerService
             Image = image,
             Phone = phono,
             Email = email,
-            Password = passwor,
-            Address = address
+          //  Password = passwor,
+            Address = address,
         });
 
         _repository.SaveChanges();
@@ -80,9 +88,9 @@ public class CustomerService : ICustomerService
                 case Properties.Image:
                     customer.Image = item.Value;
                     break;
-                case Properties.Password:
-                    customer.Password = item.Value;
-                    break;
+                //case Properties.Password:
+                //    customer.Password = item.Value;
+                //    break;
 
                 default:
                     throw new PropertyException(item.Key.ToString());
@@ -146,7 +154,7 @@ public class CustomerService : ICustomerService
         var product = _repository.ProductRepository.Get(productId);
         if (product == null)
             throw new NotFoundException("Product");
-
+        
         var productVarients = customer.Orders
             .SelectMany(o => o.ProductBelongToOrders, (o, p) => p.ProductId);
         return productVarients.Count(pv => pv == productId) != 0;
@@ -179,7 +187,7 @@ public class CustomerService : ICustomerService
                 _repository.SaveChanges();
             }
         }
-        throw new NotAllowedException("Can not Add Review to this Product");
+        else throw new NotAllowedException("Can not Add Review to this Product, You must add at least one Order");
     }
 
     private void DeleteRiview(Review? review)

@@ -69,10 +69,7 @@ namespace Services.DataServices
                 });
                 _repository.SaveChanges();
             }
-            //for (int i = 0; i < product.ProductVariants.Count; i++)
-            //{
-            //   product.Images[i] .Image.FileName = productEntity.Id.ToString() + "_" + product.ProductVariants[i].ColorId + "." + product.Images[i].Image.FileName.Split('.').Last();
-            //}
+
             // Save Product Images
             var productColoredLis = product.Images
                 .ToColoredProductEntity(productEntity.Id);
@@ -86,15 +83,6 @@ namespace Services.DataServices
                 .ToProductVariantEntity(productEntity.Id));
             _repository.SaveChanges();
 
-        //string UploadDirectory = "wwwroot/images";
-        //    for (int i =0; i<product.Images.Count; i++)
-        //    {
-        //        var file = product.Images[i].Image;
-        //        var fileName = $"{productEntity.Id}_{product.ProductVariants[i].ColorId}.{file.FileName.Split('.').Last()}";
-        //        var filePath = Path.Combine(UploadDirectory, fileName);
-        //         SaveFileAsync(file, filePath);
-
-        //    }
         }
       
         public void AddColor(ProductColoredNewDto productColored)

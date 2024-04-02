@@ -1,5 +1,6 @@
 ﻿using Contract;
 using Domain.Entities;
+using Domain.Entities.Other;
 using System.Net;
 
 namespace Services.Extenstions;
@@ -14,7 +15,7 @@ public static class CustomerExtenstion
         return new Customer
         {
             Name = customer.Name,
-            Password = customer.Password,
+            //Password = customer.Password,
             Email = customer.Email,
             Image = customer.Image,
             Phone = customer.Phone,
@@ -31,11 +32,12 @@ public static class CustomerExtenstion
         {
             Id = customer.Id,
             Name = customer.Name,
-            Password = customer.Password,
+            //Password = customer.Password,
             Email = customer.Email,
             Image = customer.Image,
             Phone = customer.Phone,
-            Address = customer.Address
+            Address = customer.Address,
+            UserId = customer.UserId
         };
     }
 

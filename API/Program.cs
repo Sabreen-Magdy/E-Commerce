@@ -2,14 +2,22 @@ using Presentation;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Persistence.Repositories;
-using Services.Abstraction.DataServices;
 using Domain.Repositories;
 using Services;
-using Persistence.JWTAuthentication;
 using Persistence.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Services.Abstraction;
+using Services.Authentication;
+using Persistence.OtherConfiguration;
+using Domain.External;
+using Persistence.ExternalConfiguration;
+using Persistence.External;
+using Services.Abstraction.External;
+using Services.External;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,11 +40,6 @@ builder.Services.AddCors(options =>
                       });
 });
 
-var connection = builder.Configuration.GetConnectionString("online");
-builder.Services
-    .AddDbContext<ApplicationDbContext>(options =>
-    options/*.UseLazyLoadingProxies()*/.UseSqlServer(
-        connection, b => b.MigrationsAssembly("Persistence")));
 
 // Add Controllers 
 builder.Services.AddControllers().AddApplicationPart(
@@ -46,40 +49,52 @@ builder.Services.AddControllers().AddApplicationPart(
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
-builder.Services.AddScoped<ILoginRepository, LoginRepository>();
-builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IExternalRepository, ExternalRepository>();
+builder.Services.AddScoped<IExrernalService, ExrernalService>();
 
 
 //// Add Authentication
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//            ValidAudience = builder.Configuration["Jwt:Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-//        };
-//    });
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(op =>
+    {
+        op.RequireHttpsMetadata = false;
+        op.TokenValidationParameters = new TokenValidationParameters
+          {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+          };
+    });
 
+
+builder.Services.AddIdentity<ApplicationIdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders(); ;
+
+var connection = builder.Configuration.GetConnectionString("mosCon");
+builder.Services
+    .AddDbContext<ApplicationDbContext>(options =>
+    options/*.UseLazyLoadingProxies()*/.UseSqlServer(
+        connection, b => b.MigrationsAssembly("Persistence")));
 #endregion
 
 var app = builder.Build();
 app.UseCors(corsName);
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI(); 
-//}
+app.UseSwagger();
+app.UseSwaggerUI(); 
 
 app.UseCors(corsName);
 app.UseStaticFiles();
-//app.UseAuthentication();
+
+app.UseAuthentication();
+app.UseAuthorization();
 //app.UseMvc();
 
 app.MapControllers();

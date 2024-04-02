@@ -1,11 +1,11 @@
 ﻿using Contract;
-using Domain.Entities;
 using Domain.Enums;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
 using Domain.Exceptions;
 using Contract.OrderItem;
+using Domain.Entities;
 
 namespace Services.DataServices
 {

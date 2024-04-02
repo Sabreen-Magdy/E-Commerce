@@ -1,9 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 namespace Persistence.Context;
 
-public class ApplicationDbContext: DbContext
+public class ApplicationDbContext: IdentityDbContext<ApplicationIdentityUser>
 {
+    public ApplicationDbContext(DbContextOptions options)
+       : base(options)
+    { }
     public DbSet<Saller> Sallers { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<CartItem> cartItems { get; set; }
@@ -19,17 +24,13 @@ public class ApplicationDbContext: DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<ProductVarientBelongToOrder> ProductVarientBelongToOrder { get; set; }
 
-    public ApplicationDbContext(DbContextOptions options)
-       : base(options)
-    { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-    //    modelBuilder.Entity<ProductVarient>()
-    //.HasOne(pv => pv.ColoredProduct)
-    //.WithMany(cp => cp.Varients)
-    //.HasForeignKey(pv => pv.ColoredProductId);
-
+        base.OnModelCreating(modelBuilder);
+       
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(ApplicationDbContext).Assembly);
+
+        modelBuilder.Entity<IdentityRole>().HasData(InsertData.AddRole());
     }
 }

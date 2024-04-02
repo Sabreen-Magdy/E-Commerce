@@ -1,5 +1,5 @@
 ﻿using Contract;
-using Contract.Favorite;
+using Domain.Entities;
 
 namespace Services.Abstraction.DataServices;
 
@@ -11,7 +11,8 @@ public interface ICustomerService
     CustomerDto? Get(int id);
     List<CustomerDto> Get(string name);
 
-    void Add(CustomerAddDto customer);
+    //void Add(CustomerAddDto customer);
+    void Add(Customer customer);
 
     void Update(int id,CustomerAddDto customer);
 

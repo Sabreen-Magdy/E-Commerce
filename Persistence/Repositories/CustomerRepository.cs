@@ -46,7 +46,7 @@ public class CustomerRepository : ICustomerRepository
                 existingCustomer.Name = customer.Name; 
                 existingCustomer.Email = customer.Email;
                 existingCustomer.Phone = customer.Phone;
-                existingCustomer.Password = customer.Password;
+                //existingCustomer.Password = customer.Password;
             }
             else
             {

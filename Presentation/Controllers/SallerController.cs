@@ -1,19 +1,16 @@
 ﻿using Contract;
 using Domain.Enums;
-using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Exceptions;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Http;
-using Domain.Entities;
+using Services.Abstraction;
 
 
 namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+[Authorize(Roles = "Saller")]
 public class SallerController : ControllerBase
 {
     private readonly IAdminService _adminService;
