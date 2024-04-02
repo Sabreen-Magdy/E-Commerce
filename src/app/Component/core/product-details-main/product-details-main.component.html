@@ -177,9 +177,9 @@
           </span>
         </div>
         <div>
-          <pre class="content" id="descptionProductString">{{
+          <p class="content" id="descptionProductString">{{
             prodDet.description
-          }}</pre>
+          }}</p>
         </div>
       </div>
     </div>
@@ -281,7 +281,7 @@
       </div>
 
       <!-- Pagination controls -->
-      <div *ngIf="true" class="pagiDiv">
+      <div *ngIf="prodDetrev.length>0" class="pagiDiv">
         <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>

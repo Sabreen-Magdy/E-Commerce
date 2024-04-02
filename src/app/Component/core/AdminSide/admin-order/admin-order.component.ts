@@ -24,6 +24,7 @@ export class AdminOrderComponent implements OnInit {
   ngOnInit(): void {
     this.adminser.getAll().subscribe({
       next: (data) => {
+        data.sort((a,b)=>b.orderId-a.orderId);
         this.orders = data;
         console.log(this.orders)
         //console.log(this.orders[0].customerName)
