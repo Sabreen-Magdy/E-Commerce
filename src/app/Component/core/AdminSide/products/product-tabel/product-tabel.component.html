@@ -3,8 +3,18 @@
     <header>
       <h3>المنتجات</h3>
     </header>
-  
+   
     <div class="addbtn">
+      <div class="search-Sect">
+        <form [formGroup]="nameSearch" (submit)="sumbit($event)">
+          
+        <input formControlName="name" type="text" class="form-control ms-3" style="display: inline-block; width: 300px;" placeholder="ابحث بالاسم ...">
+        <button type="submit" class="btn btn-dark">
+          <i class="bi bi-search"></i>
+        </button>
+        </form>
+      
+      </div>
       <button
         [routerLink]="'/admin/product/add'"
         class="btn btn-outline-secondary rounded-1"

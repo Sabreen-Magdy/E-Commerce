@@ -21,12 +21,19 @@
   
   }
   
-  .addbtn{
+  .search-Sect{
 
+    margin: 0px 20px;
+
+  }
+  .addbtn{
     width: 100%;
     text-align: left;
     margin-top: 10px;
     padding-left: 25px;
+    display: flex;
+  justify-content: space-between;
+    /* align-content: space-between; */
 
   }
   

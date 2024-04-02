@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IproductShow } from 'src/app/models/i-product-variant';
 import { ProductFormService } from 'src/app/services/product-form.service';
@@ -11,8 +12,10 @@ import Swal from 'sweetalert2';
 })
 export class ProductTabelComponent implements OnInit {
 
+  mainList : IproductShow [] = [];
   productList : IproductShow[] = [];
   p : number = 1;
+  searchNmae : string = "";
 
   constructor( private prodServ:ProductFormService ){}
   ngOnInit(): void {
@@ -25,6 +28,7 @@ export class ProductTabelComponent implements OnInit {
     this.allProductSub = this.prodServ.getAllProduct().subscribe({
       next:(data) => {
         console.log(data);
+        this.mainList = data;
         this.productList=data;
       } ,
       error:(e) => {
@@ -52,6 +56,18 @@ export class ProductTabelComponent implements OnInit {
 
   }
 
+  nameSearch : FormGroup = new FormGroup({
+    name: new FormControl("")
+  })
 
+  sumbit(e:Event){
+    this.searchNmae = this.nameSearch.get('name')?.value;
+    this.applyFilter();
+  }
 
+  applyFilter(){
+    this.productList = this.mainList.filter(item =>
+      item.name.toLowerCase().includes(this.searchNmae.toLowerCase()) 
+    );
+  }
 }
