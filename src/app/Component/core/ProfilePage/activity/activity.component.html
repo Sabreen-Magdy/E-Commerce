@@ -9,9 +9,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of processedData.reverse()  , let index = index">
+    <tr *ngFor="let item of processedData | paginate: {  itemsPerPage: 6, currentPage: p }; , let index = index">
       <td>
-        <button type="button" (click)="toggleModel(index)" class="btn btn-link btn-sm btn-rounded">
+        <button type="button" (click)="toggleModel(((p- 1) * 6) + index)" class="btn btn-link btn-sm btn-rounded">
           {{ item.orderId }}
         </button>
       </td>

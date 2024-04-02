@@ -2,37 +2,47 @@ import { customerOrder } from './../../../../models/customerOrder';
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
 
-
 interface orderDetials {
-  totalCost :string,
-  address:string,
-  date :string,
-  status:string,
-  orderI:string
+  totalCost: string;
+  address: string;
+  date: string;
+  status: string;
+  orderI: string;
 }
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.css']
+  styleUrls: ['./activity.component.css'],
 })
 export class ActivityComponent {
   processedData: customerOrder[] = [];
-  selectedIndex :number = 1
-  p:number =1;
-  constructor(private _AuthService:AuthService){}
+  selectedIndex: number = 1;
+  p: number = 1;
+  constructor(private _AuthService: AuthService) {}
   ngOnInit(): void {
     this._AuthService.userData.subscribe({
-      next:()=>{
-        if(this._AuthService.userData.getValue()!=null){
-          this._AuthService.getOrderOfUser().subscribe({ 
-            next:(response)=> {
+      next: () => {
+        if (this._AuthService.userData.getValue() != null) {
+          this._AuthService.getOrderOfUser().subscribe({
+            next: (response) => {
               // this.processedData = response;
-              for (var item of response){
+              for (var item of response) {
                 let dateObj = new Date(item.orderDate);
-                let formattedDate = dateObj.toISOString().split('T')[0].replace(/-/g, '/');
+                let formattedDate = dateObj
+                  .toISOString()
+                  .split('T')[0]
+                  .replace(/-/g, '/');
                 item.orderDate = formattedDate;
-              } 
+              }
+              // Sort the response array by the 'orderDate' property in descending order
+              response.sort((a, b) => {
+                // Convert 'orderDate' strings to Date objects for comparison
+                
+
+                // Compare the date objects
+                return b.orderId - a.orderId;
+              });
               this.processedData = response;
               // console.log(response[0].orderDate);
               // console.log(typeof(response[0].orderDate));
@@ -47,32 +57,32 @@ export class ActivityComponent {
               //     orderId: order.orderId
               //   };
               // });
-          }
-        });
+            },
+          });
         }
-      }
+      },
     });
   }
 
   stringState(s: number): string {
-    if (s == 0){
-      return 'يُرجى الانتظار بينما يقوم البائع بمراجعة طلبك واتخاذ قرار بشأن قبوله أو رفضه'
-    }else if (s == 1){
-      return 'تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله'
-    }else if (s == 2){
-      return 'تم رفض طلبك'
+    if (s == 0) {
+      return 'يُرجى الانتظار بينما يقوم البائع بمراجعة طلبك واتخاذ قرار بشأن قبوله أو رفضه';
+    } else if (s == 1) {
+      return 'تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله';
+    } else if (s == 2) {
+      return 'تم رفض طلبك';
     }
-    return 'تم تسليم طلبك تشرفنا بزيارتك لموقعنا'
+    return 'تم تسليم طلبك تشرفنا بزيارتك لموقعنا';
   }
 
-  toggleModel(index :number){
-    var model = document.getElementById("orderForm");
-    model?.classList.add("model-show")
-    this.selectedIndex = index
+  toggleModel(index: number) {
+    var model = document.getElementById('orderForm');
+    model?.classList.add('model-show');
+    this.selectedIndex = index;
   }
 
-  closeModel(){
-    var model = document.getElementById("orderForm");
-    model?.classList.remove("model-show")
+  closeModel() {
+    var model = document.getElementById('orderForm');
+    model?.classList.remove('model-show');
   }
 }
