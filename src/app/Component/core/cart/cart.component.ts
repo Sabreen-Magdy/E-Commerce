@@ -6,6 +6,9 @@ import { filter, Subscribable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { CartDto, CartItemDto } from 'src/app/models/icart';
 import { ComponentUrl } from 'src/app/models/unit';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { addorderService } from 'src/app/services/AddOrder.service';
+import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
 
 @Component({
   selector: 'app-cart',
@@ -29,9 +32,41 @@ export class CartComponent implements OnInit {
   isZero: boolean = false;
   lastitemChange: number = 0;
 
+
+
+  /**  ====   checkOut       ========= */
+  registerForm:FormGroup = new FormGroup({
+    Governorate: new FormControl("", [Validators.required,Validators.pattern('[\u0600-\u06FF ,]+')]),
+    place: new FormControl("", [Validators.required,Validators.pattern('[\u0600-\u06FF ,]+')]),
+    residential_area: new FormControl( "", [Validators.required,Validators.pattern('[\u0600-\u06FF ,]+')]),
+  });;
+
+  get GovernorateAddresscontrol() {
+    return this.registerForm.get('Governorate');
+  }get placeAddresscontrol() {
+    return this.registerForm.get('place');
+  }
+  get residential_areaAddresscontrol() {
+    return this.registerForm.get('residential_area');
+  }
+  submitted = false;
+  productVarientperOrder: IproductforOrderadd[] = [];
+  nameProductVarient: string[] = [];
+  cartitemforelete: CartItemDto[] = [];
+  totalPrice: number = 0;
+  showerror: boolean = false;
+  doneOrder: boolean = false;
+  errorOrder: boolean = false;
+  deleteOrder: boolean = false;
+  waitingSendOrder: boolean = false;
+  btnText: string = 'الاستمرار في تأكيد الطلب';
+  delText: string = this.doneOrder ? "قفل" : "الغاء الطلب";
+
+  deletecartAfCheckSub: Subscription | undefined;
   constructor(
     private CartService: CartService,
     private authServ: AuthService,
+    private orderSer: addorderService,
     private _Router: Router
   ) {}
   ngOnInit(): void {
@@ -55,6 +90,7 @@ export class CartComponent implements OnInit {
         let totalPriceS: number = 0;
         // this.cart.items = this.cart.items.filter((item)=>item.state==0)
         for (var item of filterdata) {
+          item.unitPrice = item.unitPrice - (item.unitPrice*item.discount)
           totalPriceS += item.unitPrice * item.quantity;
         }
         this.cart = data;
@@ -148,6 +184,21 @@ export class CartComponent implements OnInit {
     });
   }
 
+  assignToCheckoutForm(){
+    this.nameProductVarient = [];
+    this.productVarientperOrder = [];
+    for (var item of this.cart.items){
+      let PVI: IproductforOrderadd = {
+        productVarientId: item.productVarientId,
+        quantity: item.quantity,
+        totalCost: item.unitPrice * item.quantity,
+      };
+      this.productVarientperOrder.push(PVI);
+      this.nameProductVarient.push(item.name);
+      this.totalPrice = this.cart.totalPrice;
+    }
+  }
+
   //   gotoCheckout() {
   //     this.CartService.getNumberOfitemInCart();
   //     let length : number = this.cart.items.length;
@@ -179,62 +230,91 @@ export class CartComponent implements OnInit {
   //     }
   //   }
 
-  gotoCheckout() {
-    this.buttonText = '';
-    this.wiating = true;
-    // Call CartService to get the number of items in the cart
-    this.CartService.getNumberOfitemInCart();
-    // Get the length of cart items
-    let length: number = this.cart.items.length;
 
-    // Check if cart has items
-    if (length > 0) {
-      // Initialize index
-      let i = 0;
-
-      // Iterate through cart items
-      for (const item of this.cart.items) {
-        const updatecart: Uppdatecart = {
-          state: 1,
-          quantity: item.quantity,
-        };
-
-        // Update cart item
-        this.updateCartItemsub = this.CartService.updateCartItem(
-          this.customerID,
-          item.productVarientId,
-          updatecart
-        ).subscribe({
-          next: (e) => {
-            // Log success message
-            console.log('Item updated successfully.');
-            console.log(i);
-            console.log(e);
-            // Check if it's the last item
-            if (i == length - 1) {
-              this.CartService.getNumberOfitemInCart();
-              // Navigate to checkout page
-              console.log('we are gonna go');
-              this._Router.navigate(['/checkout']);
-            } else {
-              // Increment index
-              i++;
-
-              console.log('increament', i);
-            }
-          },
-          error: (e) => {
-            // Log error and reload cart
-            console.log('Error when updating item: ' + e);
-            if (i == length - 1) {
-              this.wiating = false;
-              this.getcartbyId();
-            }
-          },
-        });
-      }
+  SendOrder(e: Event) {
+    if (this.registerForm.valid) {
+      this.waitingSendOrder = true;
+      this.btnText = '';
+      const order: IorderAdd = {
+        customerId: this.customerID,
+        orderDate: new Date().toISOString(),
+        customerAddress:`${this.registerForm.get('Governorate')?.value},${this.registerForm.get('place')?.value},${this.registerForm.get('residential_area')?.value}` ,
+        productsperOrder: this.productVarientperOrder,
+      };
+      console.log(order);
+      this.orderSer.addorder(order).subscribe({
+        next: (data) => {
+          console.log('done' + data);
+          this.deleteafterCheckout2();
+        },
+        error: (e) => {
+          console.log('error when send order', e);
+          // this.errorOrder = true;
+          
+        },
+      });
+      
     } else {
-      // Cart is empty, do something (e.g., display message)
+      this.showerror = true;
     }
   }
+
+//   deleteafterCheckout2() {
+//     console.log("we are now in delete");
+//     let length : number = this.cart.items.length;
+//     for (let i = 0; i < length;) {
+//       let item = this.cart.items[i];
+//       console.log("no gonna delete",item);
+//       this.deletecartAfCheckSub = this.CartService.deleteCartitem(
+//         item.id
+//       ).subscribe({
+//         next: () => {
+//           console.log('Delete success ');
+//           if (i == length-1)
+//           {
+//             this.doneOrder = true;
+//             this.waitingSendOrder = false;
+//             this.CartService.getNumberOfitemInCart();
+//           }
+//           else{
+//             i++
+//           }
+//         },
+//         error: (e) => {
+//           i++;
+//           console.log('ERROR when delete', e);
+//         },
+//       });
+//     }
+//   }
+
+deleteafterCheckout2() {
+  console.log("we are now in delete");
+  let length: number = this.cart.items.length;
+  let successfulDeletions = 0; // Track successful deletions
+
+  for (let i = 0; i < length; i++) {
+    let item = this.cart.items[i];
+    console.log("no gonna delete", item);
+    this.deletecartAfCheckSub = this.CartService.deleteCartitem(item.id).subscribe({
+      next: () => {
+        console.log('Delete success ');
+        successfulDeletions++; // Increment successful deletion count
+
+        // Check if all items have been successfully deleted
+        if (successfulDeletions === length) {
+          this.doneOrder = true;
+          this.waitingSendOrder = false;
+          this.getcartbyId();
+          this.CartService.getNumberOfitemInCart();
+        }
+      },
+      error: (e) => {
+        console.log('ERROR when delete', e);
+        // Handle error appropriately, e.g., display error message to the user
+      },
+    });
+  }
+}
+
 }

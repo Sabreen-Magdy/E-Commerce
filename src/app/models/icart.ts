@@ -12,6 +12,7 @@ export interface CartItemDto {
   name: string;
   size: string;
   color: string;
+  discount: number,
   unitPrice: number;
   state: number;
   quantity: number;
