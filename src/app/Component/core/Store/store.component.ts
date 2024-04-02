@@ -13,6 +13,7 @@ import { SigninFormComponent } from '../SignComp/signin-form/signin-form.compone
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { NgxPaginationModule } from 'ngx-pagination';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class StoreComponent implements OnInit {
     console.log("remove filter");
     var blur = document.getElementById('blur');
     var popup = document.getElementById('popup');
-  
+
     // Check if both elements have the class 'active'
     if (blur?.classList.contains('active') && popup?.classList.contains('active')) {
       console.log("it will remove cause it show");
@@ -44,12 +45,12 @@ export class StoreComponent implements OnInit {
       popup?.classList.remove('active');
     }
   }
-  
+
 
   /**fetch data */
 
   ProductList:IproductShow[] = [];
-  MainList : IproductShow [] = [];  
+  MainList : IproductShow [] = [];
   categoryList : ICategory [] = [];
 
   pageWhat : string = "الكل"
@@ -60,7 +61,7 @@ export class StoreComponent implements OnInit {
   p: number = 1;
   constructor( private _Router:Router, private prodServ:ProductFormService, private cateServ : CategoryService , private activeRoute:ActivatedRoute ,private auth :AuthService , private _favService:FavoriteService){}
 
- 
+
   ngOnInit(): void {
     this.removeActiveClassIfBothExist();
     this.customerId=this.auth.id;
@@ -88,7 +89,7 @@ export class StoreComponent implements OnInit {
             this.noitem = true;
           }
         );
-      } else 
+      } else
       if (this.productName){
         this.pageWhat = this.productName;
         console.log("product");
@@ -108,7 +109,7 @@ export class StoreComponent implements OnInit {
             this.noitem = true;
           }
         );
-      
+
       }
     })
 
@@ -119,7 +120,7 @@ export class StoreComponent implements OnInit {
 
   // this.prodServ.getAllProduct2();
   // this.ProductList = this.prodServ.productsCache;
-  
+
   }
 
 
@@ -136,8 +137,8 @@ export class StoreComponent implements OnInit {
     maxPrice : new FormControl(0,)
   })
 
-  
-  
+
+
 
   enterName (e: Event) {
     // e.preventDefault();
@@ -159,7 +160,7 @@ export class StoreComponent implements OnInit {
   prodByNameSub : Subscription | undefined;
   allCategorySub : Subscription | undefined;
   addFavSub : Subscription | undefined;
-  
+
   getAllCategory(){
     this.allCategorySub = this.cateServ.getAllCategs().subscribe({
       next : (data) => {
@@ -214,7 +215,10 @@ export class StoreComponent implements OnInit {
   }
 
   pushItemToFavCart( prodId : number ){
-    alert("Item added successfully!");
+    Swal.fire({
+      title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+      confirmButtonColor: '#198754', // Change this to the color you prefer
+    });
     const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
@@ -230,7 +234,7 @@ export class StoreComponent implements OnInit {
    })
    this._favService.getNumberOfitemInFavCart();
   }
-  
+
   sortProductList(e : any){
     let option = (e.target as HTMLInputElement).value;
     switch (option){
@@ -257,13 +261,13 @@ export class StoreComponent implements OnInit {
 applyFilter() {
   if (!this.maxPrice) {
     // If maxPrice is not entered, filter only by name and minimum price
-    this.ProductList = this.MainList.filter(item => 
+    this.ProductList = this.MainList.filter(item =>
       item.name.toLowerCase().includes(this.inputText.toLowerCase()) &&
       item.price >= this.minPrice
     );
   } else {
     // Filter by name, minimum price, and maximum price
-    this.ProductList = this.MainList.filter(item => 
+    this.ProductList = this.MainList.filter(item =>
       item.name.toLowerCase().includes(this.inputText.toLowerCase()) &&
       item.price >= this.minPrice && item.price <= this.maxPrice
     );
@@ -271,7 +275,7 @@ applyFilter() {
 
   if (this.ProductList.length ==0){
     this.noitem=true;
-  } 
+  }
 }
 
 
