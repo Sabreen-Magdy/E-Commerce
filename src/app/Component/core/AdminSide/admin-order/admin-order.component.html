@@ -18,26 +18,26 @@
         </thead>
 
         <tbody id="tbdyprod" >
-          <tr *ngFor="let o of orders | paginate: {  itemsPerPage: 6, currentPage: p, }; let index = index ">
+          <tr *ngFor="let o of orders | paginate: {  itemsPerPage: 6, currentPage: p }; let index = index ">
           <td data-label="العميل">{{o.customerName}}</td>
           <td data-label="رقم الطلب">{{o.orderId}}</td>
           <td data-label="السعر">{{o.orderTotalCost}}$</td>
           <td data-label="تاريخ الطلب">{{o.orderDate.split('T')}}</td>
           <td data-label="الاجراءات" style="text-align: center;">
-            <ng-container *ngIf="orderStateAOrR[index] == 0 ">
-              <button class="btn2 btn-edit" (click)="AcceptOrder(o,index)">قبول</button>
-              <button class="btn2 btn-delete" (click)="RegectOrder(o,index)">رفض</button>
+            <ng-container *ngIf="orderStateAOrR[((p- 1) * 6) + index] == 0 ">
+              <button class="btn2 btn-edit" (click)="AcceptOrder(o,((p- 1) * 6) + index)">قبول</button>
+              <button class="btn2 btn-delete" (click)="RegectOrder(o,((p- 1) * 6) + index)">رفض</button>
             </ng-container>
-            <ng-container *ngIf="orderStateAOrR[index] == 1">
+            <ng-container *ngIf="orderStateAOrR[((p- 1) * 6) + index] == 1">
               <i class="material-icons">done</i>
             </ng-container>
-            <ng-container *ngIf="orderStateAOrR[index] == 2">
+            <ng-container *ngIf="orderStateAOrR[((p- 1) * 6) + index] == 2">
               <i class="material-icons">clear</i>
             </ng-container>
           </td>
           <td data-label="تسليم الطلب" style="text-align: center;">
             <ng-container *ngIf="o.state == 1">
-              <button class="btn2 btn-deliver" (click)="DeliverOrder(o,index)">تسليم</button>
+              <button class="btn2 btn-deliver" (click)="DeliverOrder(o,((p- 1) * 6) + index)">تسليم</button>
               <!-- <button class="btn2 btn-delete" (click)="RegectOrder(o)">رفض</button> -->
             </ng-container>
             <ng-container *ngIf="o.state == 0">
@@ -54,7 +54,7 @@
                         <p class="statusprreject">Accepted</p>
                     </td>  -->
           <td style="text-align: left;" data-label="عرض الطلب">
-            <button class="btn" (click)="toggleModel(index)"><i class="bi bi-box-arrow-up-right"></i></button>
+            <button class="btn" (click)="toggleModel(((p- 1) * 6) + index)"><i class="bi bi-box-arrow-up-right"></i></button>
           </td>
         </tr>
         </tbody>

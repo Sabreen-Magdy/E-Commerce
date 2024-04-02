@@ -1,7 +1,7 @@
 <div id="VariantForm" class="add-model2 model-wrapper2">
   <div class="model2 container">
     <div class="model-header2">
-      <h3>اضافة تفاصيل المنتج</h3>
+      <h3>{{formTitle}}</h3>
     </div>
     <div *ngIf="match">
       <div class="p-2 alert alert-danger">ذلك المنتج موجود بالفعل <br><span style="font-size: 13px;">حيث تم استخدام هذا اللون مع هذا الحجم </span></div>
@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class="col-12 center">
-          <button class="btn btn-secondary" type="submit">اضف</button>
+          <button class="btn btn-secondary" type="submit">{{btnTitle}}</button>
         </div>
       </form>
     </div>

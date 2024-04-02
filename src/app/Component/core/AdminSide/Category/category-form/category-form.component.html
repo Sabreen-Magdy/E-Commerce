@@ -1,5 +1,5 @@
 <div class="container">
-    <h3 class="mb-3">اضافة فئة</h3>
+    <h3 class="mb-3">{{titleTxt}}</h3>
     <form class="row g-3" [formGroup]="categoryForm" (submit)="cateFormSub($event)">
       <div class="col-md-6 form-control-div " [ngClass]="{
         sucess: categorynamecontrol?.valid,
@@ -70,7 +70,7 @@
       </div>
       </div>
       <div class="col-md-12 text-start">
-        <button class="btn btn-success rounded-1  px-5" type="submit">اضف</button>
+        <button class="btn btn-success rounded-1  px-5" type="submit">{{btnText}}</button>
       </div>
     </form>
     

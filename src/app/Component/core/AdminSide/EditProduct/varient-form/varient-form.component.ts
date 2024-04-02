@@ -29,6 +29,8 @@ export class VarientFormComponent {
   listSize: Isize[] = [];
   ProductVariantList: IVarient[] = [];
   coloredProductList: IcoloredImage[] = [];
+  formTitle :string = "اضافة تفاصيل المنتج";
+  btnTitle : string = "اضف";
 
   constructor(
     private editServ: EditProductService,
@@ -45,6 +47,8 @@ export class VarientFormComponent {
 
       if (this.variantid) {
         console.log('edit');
+        this.formTitle = "تعديل تفاصيل المنتج"
+        this.btnTitle="تعديل"
         this.isedit = true;
         this.getAllVarientProduct();
       } else {

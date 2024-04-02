@@ -16,6 +16,8 @@ export class CategoryFormComponent implements OnInit {
   id : number = 0 ;
   showerror : boolean = false;
   isedit : boolean = false;
+  titleTxt : string = "اضافة الفئة";
+  btnText : string = "اضف";
   constructor( 
     private cateService : CategoryService,
     private myRouter: Router,
@@ -50,6 +52,8 @@ export class CategoryFormComponent implements OnInit {
       {
         next : (data) => {
           this.isedit = true;
+          this.titleTxt = "تعديل الفئة"
+          this.btnText = "تعديل"
           this.categoryForm.controls['categoryname'].setValue(data.name);
           this.categoryForm.controls['categoryicon'].setValue(data.icon);
           this.categoryForm.controls['categorydescription'].setValue(data.description);

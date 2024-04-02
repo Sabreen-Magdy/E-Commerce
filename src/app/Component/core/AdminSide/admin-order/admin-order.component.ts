@@ -46,9 +46,11 @@ export class AdminOrderComponent implements OnInit {
   orderStateDeliver: number[] = []
 
   toggleModel(index: number) {
+    console.log(index);
     var model = document.getElementById("orderForm");
     model?.classList.add("model-show")
-    this.selectedIndex = index
+    this.selectedIndex = index ;
+    console.log(this.selectedIndex);
   }
 
   closeModel() {
@@ -111,5 +113,18 @@ export class AdminOrderComponent implements OnInit {
         console.error('Error rejecting order:', error);
       }
     })
+  }
+
+
+
+  getIndex(i: number) {
+    let pageCorrection: number;
+    let indexPerPage = 10;
+    if (this.p === 1) {
+      pageCorrection = 0;
+    } else {
+      pageCorrection = (this.p - 1) * indexPerPage;
+    }
+    return i + 1 + pageCorrection;
   }
 }

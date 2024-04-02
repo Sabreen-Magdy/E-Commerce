@@ -10,10 +10,15 @@
     <i class="bx bx-menu" id="btn" (click)="menuBtnChange()"></i>
   </div>
   <ul class="nav-list">
-    <li>
+    <!-- <li>
       <i class="bx bx-search"></i>
       <input type="text" placeholder="البحث..." />
       <span class="tooltip">البحث</span>
+    </li> -->
+    <li>
+      
+
+      
     </li>
     <li>
       <a
@@ -65,10 +70,11 @@
         [routerLinkActive]="'active'"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <i class="bx bx-cog"></i>
-        <span class="links_name">الاعدادات</span>
+      <i class='bx bx-palette'></i>
+    
+        <span class="links_name">الالوان والاحجام</span>
       </a>
-      <span class="tooltip">الاعدادات</span>
+      <span class="tooltip">الالوان والاحجام</span>
     </li>
     <li class="profile">
       <a href="#">

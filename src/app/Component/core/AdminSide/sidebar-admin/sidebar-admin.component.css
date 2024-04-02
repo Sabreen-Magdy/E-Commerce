@@ -250,8 +250,10 @@
 }
 .sidebar.open .profile #log_out{
   width: 50px;
-  background: none;
+  background: wheat;
 }
+
+
 .home-section{
   position: absolute;
   min-height: 100vh;

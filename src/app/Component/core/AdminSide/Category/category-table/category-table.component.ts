@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class CategoryTableComponent implements OnInit {
   categoryList : ICategory[] =[];
   p:number = 1;
+  
 
   constructor(private catService : CategoryService){}
   ngOnInit(): void {
