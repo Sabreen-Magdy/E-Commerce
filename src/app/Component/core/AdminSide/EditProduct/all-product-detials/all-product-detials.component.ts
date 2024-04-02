@@ -156,10 +156,6 @@ export class AllProductDetialsComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
-    Swal.fire({
-      title: 'هل أنت متأكد من أنك تريد حذف المنتج؟!',
-      confirmButtonColor: '#198754', // Change this to the color you prefer
-    });
     if (this.coloredProduct.length > 1) {
       this.deleteCategorySub = this.editServ
         .deleteCatgoryofProduct(this.productId, id)
@@ -179,6 +175,14 @@ export class AllProductDetialsComponent implements OnInit {
   }
 
   deleteColoredProd(id: number) {
+    Swal.fire({
+      title: 'هل أنت متأكد من أنك تريد حذف المنتج؟!',
+      confirmButtonColor: '#198754', // لون زر التأكيد
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+      showCancelButton: true,
+      cancelButtonColor: '#dc3545' // لون زر الإلغاء
+    }).then((result) => {if (result.isConfirmed) {
     this.deleteColoredProdSub = this.editServ
       .deleteProductImages(id)
       .subscribe({
@@ -191,16 +195,21 @@ export class AllProductDetialsComponent implements OnInit {
           console.log('ERROR when delete product Image');
           console.log(e);
         },
-      });
+      });}})
   }
 
   deleteVariantProd(id: number) {
+
     this.deleteVariantSub = this.editServ.deleteVariant(id).subscribe({
       next: (d) => {
         console.log(d);
         this.getAllVariant();
       },
       error: (e) => {
+        Swal.fire({
+          title: 'لديك منتجات  لايمنكك أن تمسح!',
+          confirmButtonColor: '#198754', // Change this to the color you prefer
+        });
         console.log('ERROR when delete product variant');
         console.log(e);
       },
