@@ -207,7 +207,7 @@
   right:    0;
   bottom: -8px;
   padding: 10px 14px;
-  background: #fff;
+  background: #f5f5f5;
   transition: all 0.5s ease;
   overflow: hidden;
 }
@@ -250,7 +250,12 @@
 }
 .sidebar.open .profile #log_out{
   width: 50px;
-  background: wheat;
+  background: none;
+}
+
+.sidebar.open .profile #log_out:hover{
+  width: 50px;
+  background: #268a26;
 }
 
 

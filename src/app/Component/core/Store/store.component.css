@@ -195,44 +195,75 @@ span.msg.show {
 }
 .nameSearch form {
 
-   display: flex;
-   flex-wrap: wrap;
-   margin-top: 50px;
+   /* display: flex; */
+   /* flex-wrap: wrap; */
+   margin-top: 20px;
 }
 .nameSearch input{
     border: 1px solid rgb(70, 167, 70);
     height: 45px;
     padding: 5px;
     width: 250px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
+    margin: auto;
     margin-bottom: 5px;
     color:rgb(70, 167, 70);
 }
 
 
-.nameSearch button{
+.nameSearch2{
+    display: block;
+    /* text-align: center; */
+    margin-top: 20px;
+    margin-right: 10px;
+}
 
-    background-color: rgb(70, 167, 70);
+.nameSearch2 button.search{
+
+    background-color: #198754;
     color: white;
     border: 0;
-    border-radius: 2px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+    width: 230px;
     height: 45px;
     padding: 5px;
 }
-.nameSearch button span{
-
-    margin-top:5px;
-    font-size: 26px;
-}
-.nameSearch button:hover{
-    border: 1px solid rgb(70, 167, 70);
+.nameSearch2 button.search:hover{
+    border: 1px solid #198754;
     background-color: white;
-    color: rgb(70, 167, 70);
+    color: #198754;
     
 }
 
+.nameSearch2 button.cancel{
+
+    background-color: #dc3545;
+    color: white;
+    border: 0;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-right :20px ;
+    width: 40px;
+    height: 45px;
+    padding: 5px;
+}
+
+.nameSearch2 button.cancel:hover{
+
+    border: 1px solid #dc3545;
+    background-color: white;
+    color: #dc3545;
+   
+}
+
+
+
+
 .priceSearch{
-    margin-top: 40px;
+    margin-top: 20px;
     
 
 }
@@ -370,4 +401,6 @@ Change the background color of the pagination controls
   .custom-pagination /deep/ .ngx-pagination {
     text-align: center;
   }
+  
+
   
