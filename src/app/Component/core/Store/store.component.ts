@@ -140,13 +140,8 @@ export class StoreComponent implements OnInit {
 
 
 
-  enterName (e: Event) {
-    // e.preventDefault();
-    // if (this.nameSearchForm.valid){
-    //   var name= this.nameSearchForm.get('name')?.value;
-    //   this._Router.navigate([`store/products`,name]);
-    //   this.toggle();
-    // }
+  startSearch () {
+  
     this.inputText = this.nameSearchForm.get('name')?.value;
     this.maxPrice = this.PriceSearchForm.get('maxPrice')?.value;
     this.minPrice = this.PriceSearchForm.get('minPrice')?.value
@@ -278,6 +273,12 @@ applyFilter() {
   }
 }
 
+cancelFilte(){
+   this.nameSearchForm.get('name')?.setValue("");
+   this.PriceSearchForm.get('maxPrice')?.setValue("");
+   this.PriceSearchForm.get('minPrice')?.setValue("");
+  this.ProductList = this.MainList;
+}
 
 }
 
