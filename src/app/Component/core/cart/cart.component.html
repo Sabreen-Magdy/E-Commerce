@@ -1,26 +1,27 @@
-<section class="h-100" style="background-color: #eef9f3; min-height: 550px;">
+<section class="h-100" style="background-color: #ffffff; min-height: 550px;">
   <div class="container h-100 py-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-10">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-normal mb-0 text-black">قائمة المشتريات</h3>
         </div>
-        
-          <div  *ngIf="cart.items.length == 0 && !noitem" class="loader"></div>
-          <div *ngIf="cart.items.length == 0 && noitem" class="alert alert-success" role="alert">
-            سلتك فارغة، لكن لا داعي للقلق! انطلق إلى المتجر الآن لتمتلئ بالعروض المثيرة والمنتجات الرائعة.
-          </div>
-        <div *ngFor="let item of cart.items" class="card rounded-3 mb-4">
-          <div class="card-body p-4">
+
+        <div *ngIf="cart.items.length == 0 && !noitem" class="loader"></div>
+        <div *ngIf="cart.items.length == 0 && noitem" class=" d-flex flex-column align-items-center justify-content-center" role="alert">
+          <img class="mb-3" style="opacity: 0.3;" src="assets/Images/sad cart.png" width="150" alt="ليس لديك طلبات سابقة">
+          <h3 class="mb-3">
+            <b>ليس لديك منتجات في العربه</b>
+          </h3>
+          <p> لدينا آلاف المنتجات المتاحة من خلال مجموعتنا الكبيرة من المنتجات. اطلب دلوقتي!</p>
+          <a [routerLink]="'/store'" class="btn btn-success">تصفح اكثر</a>
+          
+        </div>
+        <div *ngFor="let item of cart.items" class="card rounded-3 mb-4 items">
+          <div class="card-body p-4" style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  [src]="'http://srmgroub.somee.com/Images/'+item.image"
-
-                  
-                  class="img-fluid rounded-3"
-                  alt="Cotton T-shirt"
-                />
+                <img [src]="'http://srmgroub.somee.com/Images/'+item.image" class="img-fluid rounded-3"
+                  alt="Cotton T-shirt" />
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
                 <p class="lead fw-normal mb-2">{{ item.name }}</p>
@@ -33,78 +34,64 @@
                 </p>
               </div>
               <div class="col-md-4 col-lg-4 col-xl-2">
-                <div *ngIf="waitUpdatNumber && lastitemChange == item.productVarientId" class="iconWaithNumb"><i class="bi bi-hourglass-split"></i></div>
-                <div *ngIf="isMaxThanAvailable && lastitemChange == item.productVarientId" class="mx-2 p-1 alert alert-danger">هذة فقط الكمية المتوفرة</div>
-                <div *ngIf="isZero && lastitemChange == item.productVarientId" class="mx-2 p-1 alert alert-danger">الحد الأدنى للكمية هو 1. </div>
+                <div *ngIf="waitUpdatNumber && lastitemChange == item.productVarientId" class="iconWaithNumb"><i
+                    class="bi bi-hourglass-split"></i></div>
+                <div *ngIf="isMaxThanAvailable && lastitemChange == item.productVarientId"
+                  class="mx-2 p-1 alert alert-danger">هذة فقط الكمية المتوفرة</div>
+                <div *ngIf="isZero && lastitemChange == item.productVarientId" class="mx-2 p-1 alert alert-danger">الحد
+                  الأدنى للكمية هو 1. </div>
                 <div class=" d-flex">
-                  <button
-                    class="btn btn-link px-2"
-                    (click)="
+                  <button class="btn btn-link px-2" (click)="
                       decreasecartItem(item.productVarientId, item.quantity)
-                    "
-                  >
+                    ">
                     <i class="fas fa-minus" style="color: green"></i>
                   </button>
-  
-                  <input
-                    id="form1"
-                    min="0"
-                    name="quantity"
-                    value="{{ item.quantity }}"
-                    type="number"
-                    class="form-control form-control-sm"
-                  />
-  
-                  <button
-                    class="btn btn-link px-2"
-                    (click)="
+
+                  <input id="form1" min="0" name="quantity" value="{{ item.quantity }}" type="number"
+                    class="form-control form-control-sm" />
+
+                  <button class="btn btn-link px-2" (click)="
                       increasecartItem(item.productVarientId, item.quantity)
-                    "
-                  >
+                    ">
                     <i class="fas fa-plus" style="color: green"></i>
                   </button>
                 </div>
               </div>
-              
+
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                 <h5 class="mb-0">{{ item.unitPrice * item.quantity }} ج.م.</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a (click)="deleteByItemId(item.id)" class="text-danger del"
-                  ><i class="fas fa-trash fa-lg"></i
-                ></a>
+                <a (click)="deleteByItemId(item.id)" class="text-danger del"><i style="font-size: x-large;" class="bi bi-trash3"></i></a>
               </div>
             </div>
           </div>
         </div>
 
-        <div  *ngIf="cart.items.length > 0">
+        <div *ngIf="cart.items.length > 0">
           <div class="container-fluid">
             <div class="row justify-content-start">
               <div class="col-lg-4">
                 <div class="proceed-checkout">
                   <ul>
-                    <li
-                      class="d-flex justify-content-between align-items-center"
-                    >
+                    <li class="d-flex justify-content-between align-items-center">
                       <span class="text-start">المجموع الكلي</span>
                       <span class="total">{{ cart.totalPrice }} ج.م.</span>
                     </li>
                   </ul>
-                  <a
-                  style="cursor: pointer;"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal2"
-                  (click)="assignToCheckoutForm()"
-                    class="proceed-btn"
-                    >
+                  <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                    (click)="assignToCheckoutForm()" class="proceed-btn">
                     <div *ngIf="wiating">
-                      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                      <div class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
                     </div>
-                      {{buttonText}}
-                    
-                    </a
-                  >
+                    {{buttonText}}
+
+                  </a>
                 </div>
               </div>
             </div>
@@ -117,13 +104,8 @@
 
 
 <!-- Modal -->
-<div
-  class="modal fade modal-lg"
-  id="exampleModal2"
-  tabindex="-1"
-  aria-labelledby="exampleModal2Label"
-  aria-hidden="true"
->
+<div class="modal fade modal-lg" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -140,13 +122,11 @@
             <span class="text-success">مشترياتك</span>
             <span class="badge bg-success rounded-pill">{{
               productVarientperOrder.length
-            }}</span>
+              }}</span>
           </h5>
           <ul class="list-group mb-3">
-            <li
-              *ngFor="let item of productVarientperOrder; let i = index"
-              class="list-group-item d-flex justify-content-between lh-sm p-3"
-            >
+            <li *ngFor="let item of productVarientperOrder; let i = index"
+              class="list-group-item d-flex justify-content-between lh-sm p-3">
               <div>
                 <h6 class="my-0">{{ nameProductVarient[i] }}</h6>
                 <small class="text-muted">{{ item.quantity }}</small>
@@ -162,170 +142,98 @@
         <div class="col-md-12 col-lg-6">
           <form [formGroup]="registerForm" (ngSubmit)="SendOrder($event)">
             <div class="mb-3">
-              <div
-                class="col-12 form-control-div"
-                [ngClass]="{
+              <div class="col-12 form-control-div" [ngClass]="{
                   sucess: GovernorateAddresscontrol?.valid,
                   danger:
                     GovernorateAddresscontrol?.errors &&
                     (GovernorateAddresscontrol?.touched || showerror)
-                }"
-              >
+                }">
                 <label for="address" class="form-label">المحافظة</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  formControlName="Governorate"
-                  placeholder="محافظة القاهرة"
-                  required
-                />
-                <i
-                  *ngIf="GovernorateAddresscontrol?.valid"
-                  class="bi bi-check-circle-fill"
-                ></i>
-                <i
-                  *ngIf="
+                <input type="text" class="form-control" id="address" formControlName="Governorate"
+                  placeholder="محافظة القاهرة" required />
+                <i *ngIf="GovernorateAddresscontrol?.valid" class="bi bi-check-circle-fill"></i>
+                <i *ngIf="
                     GovernorateAddresscontrol?.errors &&
                     (GovernorateAddresscontrol?.touched || showerror)
-                  "
-                  class="bi bi-exclamation-circle-fill"
-                ></i>
-                <div
-                  *ngIf="
+                  " class="bi bi-exclamation-circle-fill"></i>
+                <div *ngIf="
                     GovernorateAddresscontrol?.errors &&
                     (GovernorateAddresscontrol?.touched || showerror)
-                  "
-                  class="alert p-1 mt-3 alert-danger"
-                >
-                  <ng-container
-                    *ngIf="GovernorateAddresscontrol?.hasError('required')"
-                  >
+                  " class="alert p-1 mt-3 alert-danger">
+                  <ng-container *ngIf="GovernorateAddresscontrol?.hasError('required')">
                     يجب عليك ادخال المحافظة
                   </ng-container>
-                  <ng-container
-                    *ngIf="GovernorateAddresscontrol?.hasError('pattern')"
-                  >
+                  <ng-container *ngIf="GovernorateAddresscontrol?.hasError('pattern')">
                     ادخل المحافظة باللغة العربية
                   </ng-container>
                 </div>
               </div>
             </div>
             <div class="mb-3">
-              <div
-                class="col-12 form-control-div"
-                [ngClass]="{
+              <div class="col-12 form-control-div" [ngClass]="{
                   sucess: placeAddresscontrol?.valid,
                   danger:
                     placeAddresscontrol?.errors &&
                     (placeAddresscontrol?.touched || showerror)
-                }"
-              >
+                }">
                 <label for="address1" class="form-label">المدينة</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address1"
-                  formControlName="place"
-                  placeholder="مدينة نصر "
-                  required
-                />
-                <i
-                  *ngIf="placeAddresscontrol?.valid"
-                  class="bi bi-check-circle-fill"
-                ></i>
-                <i
-                  *ngIf="
+                <input type="text" class="form-control" id="address1" formControlName="place" placeholder="مدينة نصر "
+                  required />
+                <i *ngIf="placeAddresscontrol?.valid" class="bi bi-check-circle-fill"></i>
+                <i *ngIf="
                     placeAddresscontrol?.errors &&
                     (placeAddresscontrol?.touched || showerror)
-                  "
-                  class="bi bi-exclamation-circle-fill"
-                ></i>
-                <div
-                  *ngIf="
+                  " class="bi bi-exclamation-circle-fill"></i>
+                <div *ngIf="
                     placeAddresscontrol?.errors &&
                     (placeAddresscontrol?.touched || showerror)
-                  "
-                  class="alert p-1 mt-3 alert-danger"
-                >
-                  <ng-container
-                    *ngIf="placeAddresscontrol?.hasError('required')"
-                  >
+                  " class="alert p-1 mt-3 alert-danger">
+                  <ng-container *ngIf="placeAddresscontrol?.hasError('required')">
                     يجب عليك ادخال المدينة
                   </ng-container>
-                  <ng-container
-                    *ngIf="placeAddresscontrol?.hasError('pattern')"
-                  >
+                  <ng-container *ngIf="placeAddresscontrol?.hasError('pattern')">
                     ادخل المدينة باللغة العربية
                   </ng-container>
                 </div>
               </div>
             </div>
             <div class="mb-3">
-              <div
-                class="col-12 form-control-div"
-                [ngClass]="{
+              <div class="col-12 form-control-div" [ngClass]="{
                   sucess: residential_areaAddresscontrol?.valid,
                   danger:
                     residential_areaAddresscontrol?.errors &&
                     (residential_areaAddresscontrol?.touched || showerror)
-                }"
-              >
-                <label for="address2" class="form-label"
-                  >الشارع أو المنطقة السكنية</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address2"
-                  formControlName="residential_area"
-                  placeholder="شارع الطيران"
-                  required
-                />
-                <i
-                  *ngIf="residential_areaAddresscontrol?.valid"
-                  class="bi bi-check-circle-fill"
-                ></i>
-                <i
-                  *ngIf="
+                }">
+                <label for="address2" class="form-label">الشارع أو المنطقة السكنية</label>
+                <input type="text" class="form-control" id="address2" formControlName="residential_area"
+                  placeholder="شارع الطيران" required />
+                <i *ngIf="residential_areaAddresscontrol?.valid" class="bi bi-check-circle-fill"></i>
+                <i *ngIf="
                     residential_areaAddresscontrol?.errors &&
                     (residential_areaAddresscontrol?.touched || showerror)
-                  "
-                  class="bi bi-exclamation-circle-fill"
-                ></i>
-                <div
-                  *ngIf="
+                  " class="bi bi-exclamation-circle-fill"></i>
+                <div *ngIf="
                     residential_areaAddresscontrol?.errors &&
                     (residential_areaAddresscontrol?.touched || showerror)
-                  "
-                  class="alert p-1 mt-3 alert-danger"
-                >
-                  <ng-container
-                    *ngIf="residential_areaAddresscontrol?.hasError('required')"
-                  >
+                  " class="alert p-1 mt-3 alert-danger">
+                  <ng-container *ngIf="residential_areaAddresscontrol?.hasError('required')">
                     يجب عليك ادخال اسم الشارع
                   </ng-container>
-                  <ng-container
-                    *ngIf="residential_areaAddresscontrol?.hasError('pattern')"
-                  >
+                  <ng-container *ngIf="residential_areaAddresscontrol?.hasError('pattern')">
                     ادخل اسم الشارع باللغة العربية
                   </ng-container>
                 </div>
               </div>
             </div>
-            <button
-              type="submit"
-              class="btn btn-success"
-              
-            >
-            <div *ngIf="waitingSendOrder">
-              <div class="lds-ellipsis">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <button type="submit" class="btn btn-success">
+              <div *ngIf="waitingSendOrder">
+                <div class="lds-ellipsis">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
               </div>
-            </div>
               {{btnText}}
             </button>
           </form>
@@ -333,8 +241,8 @@
       </div>
       <div *ngIf="!waitingSendOrder" class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-           <ng-container *ngIf="doneOrder">اغلاق</ng-container>
-           <ng-container *ngIf="!doneOrder">الغاء الطلب</ng-container>
+          <ng-container *ngIf="doneOrder">اغلاق</ng-container>
+          <ng-container *ngIf="!doneOrder">الغاء الطلب</ng-container>
         </button>
       </div>
 
