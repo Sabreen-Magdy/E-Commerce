@@ -4,5 +4,6 @@
     {
         public IAuthenticationService AuthenticationService { get; }
         public IEmailService EmailService { get; }
+        public IPaymentService PaymentService { get; }
     }
 }

@@ -11,10 +11,8 @@ namespace Persistence.External
     {
         private readonly MailConfiguration _mailConfiguration;
 
-        public MailingRepository(MailConfiguration mailConfiguration)
-        {
-            _mailConfiguration = mailConfiguration;
-        }
+        public MailingRepository(MailConfiguration mailConfiguration) => 
+            _mailConfiguration = mailConfiguration;        
         private void InitiateMail(MailData emailData, string fileBodyPath)
         {
             using (MailMessage mailMessage = new MailMessage())
@@ -41,8 +39,6 @@ namespace Persistence.External
                 }
             }
         }
-
-
         public void SendEmailConfirmation(MailData emailData, string fileBodyPath)
         {
             {
@@ -50,8 +46,8 @@ namespace Persistence.External
                 {
                     string encodedEmail = WebUtility.UrlEncode(emailData.To);
 
-                    if (!emailData.Body.StartsWith("http")
-                        || !emailData.Body.StartsWith("https"))
+                    if (!(emailData.Body.StartsWith("http")
+                        || emailData.Body.StartsWith("https")))
                             throw new NotAllowedException("Not Vailid URL");
                     
                     if (emailData.Body.EndsWith("?"))
@@ -67,7 +63,6 @@ namespace Persistence.External
                 }
             }
         }
-
         public void SendEmailReset(MailData emailData, string fileBodyPath)
         {
             {
@@ -81,66 +76,5 @@ namespace Persistence.External
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public void SendEmailConfirmation(MailData emailData)
-        //{
-        //    {
-        //        try
-        //        {
-        //            using (MailMessage mailMessage = new MailMessage())
-        //            {
-        //                mailMessage.From = new MailAddress(_mailConfiguration.SenderEmail);
-        //                mailMessage.To.Add(new MailAddress(emailData.To));
-        //                mailMessage.Subject = emailData.Subject;
-
-        //                using (StreamReader reader = File.OpenText(_mailConfiguration.Value))
-        //                {
-        //                    mailMessage.Body = reader.ReadToEnd();
-        //                }
-
-        //                string encodedEmail = WebUtility.UrlEncode(emailData.To);
-
-        //                if (!emailData.Body.StartsWith("http")
-        //                 || !emailData.Body.StartsWith("https"))
-        //                    throw new NotAllowedException("Not Vailid URL");
-
-        //                else if (emailData.Body.EndsWith("?"))
-        //                    emailData.Body += $"email={encodedEmail}";
-        //                else
-        //                    throw new NotAllowedException("Not Vailid URL for Rediriction");
-
-
-        //                mailMessage.Body = mailMessage.Body.Replace("url", encodedEmail);
-
-
-        //                mailMessage.IsBodyHtml = true;
-        //                using (SmtpClient client = new SmtpClient(_mailConfiguration.Server, _mailConfiguration.Port))
-        //                {
-        //                    client.Credentials = new NetworkCredential(_mailConfiguration.SenderEmail, _mailConfiguration.Password);
-        //                    client.EnableSsl = true;
-        //                    client.Send(mailMessage);
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            throw new Exception(ex.Message);
-        //        }
-        //    }
-        //}
-
     }
 }
