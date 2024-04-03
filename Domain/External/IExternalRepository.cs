@@ -4,5 +4,6 @@
     {
         IAuthenticationRepository AuthenticationRepository { get; }
         IMailingRepository MailRepository { get; }
+        IPaymentRepository PaymentRepository { get; }
     }
 }

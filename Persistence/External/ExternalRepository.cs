@@ -10,10 +10,12 @@ namespace Persistence.External
 {
     public class ExternalRepository : IExternalRepository
     {
+        private readonly UserManager<ApplicationIdentityUser> _userManager;
         private IAuthenticationRepository _loginRepository;
         private IMailingRepository _mailingRepository;
+        private IPaymentRepository _paymentRepository;
+
         private readonly IConfiguration _configuration;
-        private readonly UserManager<ApplicationIdentityUser> _userManager;
 
         public ExternalRepository(IConfiguration configuration,
             UserManager<ApplicationIdentityUser> userManager)
@@ -48,6 +50,21 @@ namespace Persistence.External
                     _mailingRepository = new MailingRepository(loginConfiguration);
                 }
                 return _mailingRepository;
+            }
+        }
+
+        public IPaymentRepository PaymentRepository
+        {
+            get
+            {
+                if (_paymentRepository == null)
+                {
+                    PaymentConfiguration paymentConfiguration = new PaymentConfiguration();
+
+                    _configuration.GetRequiredSection("Payment").Bind(paymentConfiguration);
+                    _paymentRepository = new PaymentRepository(paymentConfiguration);
+                }
+                return _paymentRepository;
             }
         }
     }
