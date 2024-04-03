@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Other;
-using Domain.External;
+﻿using Domain.External;
 using Microsoft.Extensions.Options;
 using Persistence.Authentication;
 using Services.Abstraction;
@@ -13,12 +12,12 @@ namespace Services.External
         private readonly IEmailService _emailService;
         private readonly IPaymentService _paymentService;
 
-        public ExrernalService(IOptions<PaymentConfiguration> options, 
+        public ExrernalService( 
             IExternalRepository repository, IAdminService adminService)
         {
             _loginService = new AuthenticationService(repository, adminService);
             _emailService = new EmailService(repository);
-            _paymentService = new PaymentService(options.Value);
+            _paymentService = new PaymentService(repository);
         }
 
         public IAuthenticationService AuthenticationService => _loginService;

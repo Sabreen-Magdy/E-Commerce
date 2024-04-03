@@ -2,29 +2,29 @@
 using Contract;
 using Domain.Entities.Other;
 using Domain.Exceptions;
+using Domain.External;
 using Services.Abstraction.External;
 
 namespace Services.External
 {
-    public class PaymentConfiguration
+    public class PaymentService : IPaymentService
     {
-        public Braintree.Environment Environment { get; set; } = null!;
-        public string MerchantId { get; set; } = null!;
-        public string PublicKey { get; set; } = null!;
-        public string PrivateKey { get; set; } = null!;
-    }
-    public class PaymentService(PaymentConfiguration configure) : IPaymentService
-    {
-        private readonly PaymentConfiguration _configure = configure;
+        private readonly Dictionary<string, string> _confogurations;
+
+        public PaymentService(IExternalRepository repository)
+        {
+            _confogurations = repository.PaymentRepository.GetConfigurations();
+        }
+
         private IBraintreeGateway BraintreeGateway { get; set; }
        
         public IBraintreeGateway CreateGetWay() =>
                 new BraintreeGateway()
                 {
-                    Environment = _configure.Environment,
-                    MerchantId = _configure.MerchantId,
-                    PublicKey = _configure.PublicKey,
-                    PrivateKey = _configure.PrivateKey,            
+                    Environment = Braintree.Environment.ParseEnvironment(_confogurations["Environment"]),
+                    MerchantId = _confogurations["MerchantId"],
+                    PublicKey = _confogurations["PublicKey"],
+                    PrivateKey = _confogurations["PrivateKey"],            
                 };
 
         public IBraintreeGateway GetGetWay()
