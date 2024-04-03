@@ -2,7 +2,7 @@
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.Abstraction.DataServices;
+using Services.Abstraction;
 using System.Drawing;
 
 namespace Presentation.Controllers
@@ -31,7 +31,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
        
@@ -47,7 +47,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -110,7 +110,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -123,13 +123,17 @@ namespace Presentation.Controllers
                 _adminService.GeneralService.RemoveColor(id);
                 return Ok();
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
+            }
+            catch (NotAllowedException ex)
+            {
+                return StatusCode(405, ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -142,13 +146,17 @@ namespace Presentation.Controllers
                 _adminService.GeneralService.RemoveSize(id);
                 return Ok();
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
+            }
+            catch (NotAllowedException ex)
+            {
+                return StatusCode(405, ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -168,7 +176,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -187,7 +195,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
     }

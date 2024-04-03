@@ -12,19 +12,32 @@ namespace Services.DataServices
     {
         private IAdminRepository _repositoryAdmin;
 
-        private Category GetCategory(int id) {
-          var category =  _repositoryAdmin.CategoryRepository
-                .Get(id);
-            if (category == null)
-                throw new NotFoundException("Category");
-
-            return category;
-        }
         public CategoryService(IAdminRepository repositoryAdmin)
         {
             _repositoryAdmin = repositoryAdmin;
         }
 
+        private Category GetCategory(int id)
+        {
+            var category = _repositoryAdmin.CategoryRepository
+                  .Get(id);
+            if (category == null)
+                throw new NotFoundException("Category");
+
+            return category;
+        }
+
+        private bool CanRemove(Category category)
+        {
+            var productCategory = category.ProductCategories.Select(pc => pc.Product);
+            if (productCategory.Count() == 0) return true;
+
+           var varients = productCategory
+                .SelectMany(pc => pc.ColoredProducts, (pc, cp) => cp.Varients);
+            if (varients.Count() == 0) return true;
+
+            return varients.SelectMany(v => v, (v, varient) => varient.Quantity).Sum() == 0;
+        }
         public void Add(CategoryNewDto category)
         {
             _repositoryAdmin.CategoryRepository
@@ -34,10 +47,17 @@ namespace Services.DataServices
         public void Delete(int id)
         {
             var category = GetCategory(id);
-            _repositoryAdmin.CategoryRepository
-                .Delete(category);
+            if (category == null)
+                throw new NotFoundException("Category");
 
-            _repositoryAdmin.SaveChanges();
+            if (CanRemove(category))
+            {
+                _repositoryAdmin.CategoryRepository
+                    .Delete(category);
+
+                _repositoryAdmin.SaveChanges();
+            }
+            throw new NotAllowedException("This Category has one or more Products in Store");
         }
 
         public CategoryDto? Get(int id) => 

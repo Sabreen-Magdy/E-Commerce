@@ -30,6 +30,8 @@ namespace Persistence.Repositories
             _dbContext.Categories
            .Include(c => c.ProductCategories)
             .ThenInclude(cp => cp.Product)
+             .ThenInclude(p => p.ColoredProducts)
+               .ThenInclude(pc => pc.Varients)
             .ToList();
 
         public int NumProduct(int categoryId) =>

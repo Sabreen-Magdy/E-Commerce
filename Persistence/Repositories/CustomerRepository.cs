@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 
 namespace Persistence.Repositories;
@@ -13,7 +14,11 @@ public class CustomerRepository : ICustomerRepository
 
     public int GetNumberCustomers() => _context.Customers.Count();
     public List<Customer> GetAll() =>
-        _context.Customers.ToList();
+        _context.Customers
+        .Include(c => c.Orders)
+            .ThenInclude(o => o.ProductBelongToOrders)
+        .Include(c => c.Cart)
+        .ToList();
 
     public void Add(Customer customer) =>
       _context.Customers.Add(customer);
@@ -23,10 +28,10 @@ public class CustomerRepository : ICustomerRepository
       _context.Customers.Remove(customer);
 
     public Customer? Get(int id) =>
-      _context.Customers.Find(id);
+      GetAll().Find(c => c.Id == id);
 
     public List<Customer> Get(string name) =>
-      _context.Customers.Where(c => c.Name == name)
+      GetAll().Where(c => c.Name == name)
                     .Select(c => c).ToList();
 
     public void Update(Customer customer) =>
@@ -41,7 +46,7 @@ public class CustomerRepository : ICustomerRepository
                 existingCustomer.Name = customer.Name; 
                 existingCustomer.Email = customer.Email;
                 existingCustomer.Phone = customer.Phone;
-                existingCustomer.Password = customer.Password;
+                //existingCustomer.Password = customer.Password;
             }
             else
             {

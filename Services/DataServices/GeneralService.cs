@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
@@ -12,6 +13,16 @@ namespace Services.DataServices
         private readonly IAdminRepository _adminRepository;
         public GeneralService(IAdminRepository adminRepository) =>
             _adminRepository = adminRepository;
+
+        private bool CanRemoveColor(Color color)
+        {
+            var varients = color.ColoredProducts.Select(pc => pc.Varients);
+            if (varients.Count() == 0) return true;
+
+            return varients.SelectMany(v => v, (v, varient) => varient.Quantity).Sum() == 0;
+        }
+        private bool CanRemoveSize(Size size) =>
+             size.Varients.Sum(v => v.Quantity) == 0;
 
         public void AddColor(string name, string code)
         {
@@ -54,26 +65,24 @@ namespace Services.DataServices
         {
             var color = _adminRepository.ColorRepository.Get(colorId);
 
-            if (color != null)
-            {
-                _adminRepository.ColorRepository.Delete(color);
-                _adminRepository.SaveChanges();
-            }
-            else
-                throw new NotFoundException("Color");
+            if (color == null) throw new NotFoundException("Color");
+            if (CanRemoveColor(color))
+                throw new NotAllowedException("This Color has one or more Products in Store");
+            _adminRepository.ColorRepository.Delete(color);
+            _adminRepository.SaveChanges();
         }
 
         public void RemoveSize(int sizeId)
         {
             var size = _adminRepository.SizeRepository.Get(sizeId);
 
-            if (size != null)
-            {
-                _adminRepository.SizeRepository.Delete(size);
-                _adminRepository.SaveChanges();
-            }
-            else
+            if (size == null)
                 throw new NotFoundException("Size");
+            if (CanRemoveSize(size))
+                throw new NotAllowedException("This Size has one or more Products in Store");
+
+            _adminRepository.SizeRepository.Delete(size);
+            _adminRepository.SaveChanges();
         }
 
         public void UpdaterColor(ColorDto color)

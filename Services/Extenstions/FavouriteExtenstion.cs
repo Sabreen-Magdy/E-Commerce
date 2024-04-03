@@ -1,5 +1,4 @@
 ﻿using Contract;
-using Contract.Favorite;
 using Domain.Entities;
 using System.Diagnostics;
 

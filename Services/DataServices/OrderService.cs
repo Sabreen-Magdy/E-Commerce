@@ -5,6 +5,7 @@ using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
 using Services.Extenstions;
+using System.Data;
 
 namespace Services.DataServices
 {
@@ -22,16 +23,20 @@ namespace Services.DataServices
                 .Where(pvo => pvo.OrderId == order.Id)
                 .Select(pvo => pvo.ProductVarient);
             foreach (var (item, product) in varients.Zip(products))
-                    item.Quantity -= product.Quantity;
+                _repository.ProductVarientRepository.AddQuntity(item, product.Quantity);
             
             _repository.OrderReposatory.Delete(order);
             _repository.SaveChanges();
         }
+
+        private void UpdateState(Order order, int state, string comment)
+        {
+            order.State = state;
+            order.Comment = comment;
+        }
         
         public void Add(OrderDtoNew orderDtonewFromCustomer) // for customer
         {
-            // Order OrderEntity = orderDto.ToOrderEntity();
-
             Order OrderEntity = new Order
             {
                 OrderedDate = orderDtonewFromCustomer.OrderDate,
@@ -52,14 +57,15 @@ namespace Services.DataServices
                
                 if (productVarient != null)
                 {
-                    int newQuan = productVarient.Quantity - item.Quantity;
-                    if (newQuan < 0)
+                    try
+                    {
+                        _repository.ProductVarientRepository.AddQuntity(productVarient, -1 * item.Quantity);
+                        _repository.ProductVarientRepository.Update(productVarient);
+                    }
+                    catch(NotAllowedException)
                     {
                         RemoveOrder(OrderEntity, orderDtonewFromCustomer.productsperOrder);
-                        throw new NotAllowedException("This Quantity Not Availabe in Stock, Order Cancelled");
                     }
-                    productVarient.Quantity = newQuan;
-                    _repository.ProductVarientRepository.Update(productVarient);
 
                     ProductVarientBelongToOrder productVarientBelongToOrderEntity = new ProductVarientBelongToOrder
                     {
@@ -122,30 +128,50 @@ namespace Services.DataServices
             _repository.OrderReposatory.Update(DTO.ToOrderEntity());
             _repository.SaveChanges();
         }
-        public void Updatestatus(int id , int status)
+        
+        public void UpdateState(int id , int state, string comment)
         {
             var order = _repository.OrderReposatory.Get(id);
             if (order == null)
                 throw new NotFoundException("Order");
-            order.State = status;
-            if (status == 1)
+            if (order.State == 0)
             {
-                order.ConfirmDate = DateTime.Now;
-            }
-            _repository.OrderReposatory.Update(order);
-            _repository.SaveChanges();
-            
-            if (status == 2)
-            {
-                if (order.ProductBelongToOrders != null)
+                if (state == 1)
                 {
-                    foreach (var pveriant in order.ProductBelongToOrders)
+                    UpdateState(order, state, comment);
+
+                    order.ConfirmDate = DateTime.Now;
+                    _repository.OrderReposatory.Update(order);
+                    _repository.SaveChanges();
+                }
+              
+                if (state == 2)
+                {
+                    if (order.ProductBelongToOrders != null)
                     {
-                        var Products = pveriant.ProductVarient;
-                        Products.Quantity = Products.Quantity + pveriant.Quantity;
-                        _repository.ProductVarientRepository.Update(Products);
-                        _repository.SaveChanges();
+                        foreach (var pveriant in order.ProductBelongToOrders)
+                        {
+                            var Products = pveriant.ProductVarient;
+                            _repository.ProductVarientRepository
+                                .AddQuntity(Products, pveriant.Quantity);         
+                            _repository.ProductVarientRepository.Update(Products);
+                        }
                     }
+
+                    UpdateState(order, state, comment);
+                    
+                    _repository.OrderReposatory.Update(order);
+                    _repository.SaveChanges();
+                }
+            }
+            else if(order.State == 1) 
+            {
+                if(state == 3)
+                {
+                    UpdateState(order, state, comment);
+
+                    _repository.OrderReposatory.Update(order);
+                    _repository.SaveChanges();
                 }
             }
         }

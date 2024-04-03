@@ -1,19 +1,16 @@
 ﻿using Contract;
 using Domain.Enums;
-using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Exceptions;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Http;
-using Domain.Entities;
+using Services.Abstraction;
 
 
 namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+[Authorize(Roles = "Saller")]
 public class SallerController : ControllerBase
 {
     private readonly IAdminService _adminService;
@@ -37,7 +34,7 @@ public class SallerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
-    
+
     [HttpGet("GetNumberCustomers")]
     public IActionResult GetNumberCustomers()
     {
@@ -52,7 +49,7 @@ public class SallerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
-    
+
     [HttpGet("GetNumberOrders")]
     public IActionResult GetNumberOrders(int state)
     {
@@ -67,7 +64,7 @@ public class SallerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
-    
+
     [HttpGet("GetProfit")]
     public IActionResult GetProfit(int state)
     {
@@ -111,7 +108,7 @@ public class SallerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
-    
+
     [HttpGet("GetProfitByWeekDay")]
     public IActionResult GetProfitByWeekDay(int state)
     {
@@ -165,7 +162,7 @@ public class SallerController : ControllerBase
         }
     }
 
-    [HttpGet("DeleteColor")]
+    [HttpDelete("DeleteColor")]
     public IActionResult DeleteColor(int id)
     {
         try
@@ -442,86 +439,12 @@ public class SallerController : ControllerBase
 
 
     [HttpPut("UpdateOrderStatus")]
-    public IActionResult UpdateOrderStatus(int id, int status)
+    public IActionResult UpdateOrderStatus(int id, int status, string comment)
     {
-        _adminService.OrderService.Updatestatus(id, status);
+        _adminService.OrderService.UpdateState(id, status, comment);
 
         return Ok();
     }
 
     #endregion
-
-
-
- //   [HttpPost("AddProduct")]
- //   [Consumes("multipart/form-data")]
- //   public IActionResult Add(
- //    [FromForm] int SallerId,
- //    [FromForm] string Name,
- //    [FromForm] string Description,
- //    [FromForm] List<int> Categories,
- //    [FromForm] List<IFormFile> Image,
- //    [FromForm] List<int> ColorId,
- //    [FromForm] int[] ProductVariants_ColorId,
- //    [FromForm] double[] ProductVariants_UnitPrice,
- //    [FromForm] double[] ProductVariants_Discount,
- //    [FromForm] int[] ProductVariants_Quantity,
- //    [FromForm] int[] ProductVariants_SizeId
- //)
- //   {
- //       List<ProductColoredAddDto> Images = new List<ProductColoredAddDto>();
- //       if (Image.Count == ColorId.Count && Image.Count > 0 && ColorId.Count > 0)
- //       {
- //           for (int i = 0; i < Image.Count; i++)
- //           {
- //               Images.Add(new(ColorId[i], Image[i]));
- //           }
- //       }
-
- //       List<ProductVarientAddDto> ProductVariants = new List<ProductVarientAddDto>();
- //       if ((ProductVariants_ColorId.Length == ProductVariants_UnitPrice.Length)&&(ProductVariants_ColorId.Length == ProductVariants_Discount.Length)
- //           && (ProductVariants_ColorId.Length== ProductVariants_Quantity.Length)&&(ProductVariants_ColorId.Length == ProductVariants_SizeId.Length)
- //           &&ProductVariants_ColorId.Length > 0)
- //       {
- //           for (int i = 0; i < ProductVariants_ColorId.Length; i++)
- //           {
- //               ProductVariants.Add(new ProductVarientAddDto
- //               {
- //                   ColorId = ProductVariants_ColorId[i],
- //                   UnitPrice = ProductVariants_UnitPrice[i],
- //                   Discount = ProductVariants_Discount[i],
- //                   Quantity = ProductVariants_Quantity[i],
- //                   SizeId = ProductVariants_SizeId[i]
- //               });
- //           }
- //       }
-
- //       ProductNewDto productDto = new()
- //       {
- //           Name = Name,
- //           Description = Description,
- //           Categories = Categories,
- //           Images = Images,
- //           SallerId = SallerId,
- //           ProductVariants = ProductVariants
- //       };
-
- //       try
- //       {
- //           if (productDto == null || productDto.Images == null || productDto.Images.Count == 0)
- //               return BadRequest("Images not provided");
-
- //           // Ensure the directory exists
-            
- //           _adminService.ProductService.Add(productDto);
-
- //           return Ok("product saved successfully");
- //           //return Ok("Images uploaded successfully");
- //       }
- //       catch (System.Exception ex)
- //       {
- //           return StatusCode(500, $"Internal server error: {ex}");
- //       }
- //   }
-
 }

@@ -3,7 +3,7 @@ using Domain.Enums;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.Abstraction.DataServices;
+using Services.Abstraction;
 
 namespace Presentation.Controllers
 {
@@ -29,7 +29,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
 }
 
@@ -45,7 +45,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -89,13 +89,13 @@ namespace Presentation.Controllers
                 _adminService.CategoryService.Update(id, categoryData);
                 return Ok();
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
 
@@ -107,13 +107,17 @@ namespace Presentation.Controllers
                 _adminService.CategoryService.Delete(id);
                 return Ok();
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
+            }
+            catch (NotAllowedException ex)
+            {
+                return StatusCode(405, ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
         [HttpGet("GetNumberProducts")]
@@ -129,7 +133,7 @@ namespace Presentation.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException);
             }
         }
     }

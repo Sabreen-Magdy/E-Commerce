@@ -1,7 +1,7 @@
-﻿using Services.Abstraction.DataServices;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Contract.Order;
 using Domain.Exceptions;
+using Services.Abstraction;
 
 
 namespace Presentation.Controllers;
@@ -105,11 +105,11 @@ public class OrderController : ControllerBase
 
 
     [HttpPut("UpdateOrderStatus")]
-    public IActionResult Update(int id, int status)
+    public IActionResult Update(int id, int status, string comment)
     {
         try
         {
-            _adminService.OrderService.Updatestatus(id, status);
+            _adminService.OrderService.UpdateState(id, status, comment);
 
             return Ok();
         }

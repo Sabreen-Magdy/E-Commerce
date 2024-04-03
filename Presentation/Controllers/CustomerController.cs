@@ -1,16 +1,15 @@
 ﻿using Contract;
-using Domain.Enums;
-using Services.Abstraction.DataServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Exceptions;
+using Services.Abstraction;
 
 
 namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class CustomerController : ControllerBase
 {
     private readonly IAdminService _adminService;
@@ -19,7 +18,6 @@ public class CustomerController : ControllerBase
     {
         _adminService = adminService;
     }
-
 
     [HttpGet("GetAllCustomers")]
     public IActionResult GetAll()
@@ -155,6 +153,25 @@ public class CustomerController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpGet("CanAddReview")]
+    public IActionResult CanAddReview(int id, int productId)
+    {
+        try
+        {
+            return Ok(_adminService.CustomerService.CanAddReview(id, productId));
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+
     [HttpPost("AddReview")]
     public IActionResult AddReview(int customerId, int productId, string comment, int rate )
     {
@@ -168,44 +185,32 @@ public class CustomerController : ControllerBase
         {
             return NotFound(ex.Message);
         }
+        catch (NotAllowedException ex)
+        {
+            return StatusCode(405, ex.Message);
+        }
         catch (Exception ex)
         {
             return StatusCode(500, ex.Message);
         }
     }
 
-    [HttpPost("AddCustomers")]
-    public IActionResult Add(CustomerAddDto customer)
-    {
-        try {
-            _adminService.CustomerService.Add(customer);
+    //[HttpDelete("DeleteCustomers")]
+    //public IActionResult Delete(int id)
+    //{
+    //    try { _adminService.CustomerService.Delete(id);
 
-            return Ok();
-        }
-      
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
-
-    [HttpDelete("DeleteCustomers")]
-    public IActionResult Delete(int id)
-    {
-        try { _adminService.CustomerService.Delete(id);
-
-            return Ok();
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
+    //        return Ok();
+    //    }
+    //    catch (NotFoundException ex)
+    //    {
+    //        return NotFound(ex.Message);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, ex.Message);
+    //    }
+    //}
 
 
     [HttpPut("UpdateCustomers")]

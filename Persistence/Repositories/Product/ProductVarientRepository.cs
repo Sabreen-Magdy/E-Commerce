@@ -50,7 +50,7 @@ namespace Persistence.Repositories
         public void Update(ProductVarient entity) =>
             _dbContext.ProductVarients.Update(entity);
 
-        public void UpdateQuntity(ProductVarient productVarient, int newQuntity)
+        public void AddQuntity(ProductVarient productVarient, int newQuntity)
         {
            
             if (productVarient == null)
@@ -60,7 +60,6 @@ namespace Persistence.Repositories
             if (res < 0)
                 throw new NotAllowedException("Not Available Quantity in Stock");
             productVarient.Quantity = res;
-
         }
     }
 }

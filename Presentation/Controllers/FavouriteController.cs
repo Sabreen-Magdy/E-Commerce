@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.Abstraction.DataServices;
-using Contract.Favorite;
+using Contract;
 using Domain.Exceptions;
+using Services.Abstraction;
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]

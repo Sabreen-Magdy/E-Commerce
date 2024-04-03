@@ -30,22 +30,23 @@ namespace Services.Extenstions
         {
             if (productColored == null)
                 throw new ArgumentNullException(nameof(productColored));
-           
-            string path = productColored.ProductId.ToString() + "_" + productColored.ColorId.ToString() + "";
+
+            string path;
             try
             {
-                Static.SaveImage(path, productColored.Image);
+               path = SaveProductImage(productColored.ProductId, productColored.ColorId, productColored.Image);
+                return new()
+                {
+                    ColorId = productColored.ColorId,
+                    Image = path,
+                    ProductId = productColored.ProductId
+                };
             }
             catch (Exception)
             {
                 throw new Exception("Can not save Image");
             }
-            return new()
-            {
-                ColorId = productColored.ColorId,
-                Image = path,
-                ProductId = productColored.ProductId
-            };
+
         }
 
 
@@ -92,10 +93,10 @@ namespace Services.Extenstions
                 throw new ArgumentNullException(nameof(productColored));
 
             return new(
-Id: productColored.Id,
-ColorCode: productColored.Color.Code,
-ColorName: productColored.Color.Name,
-Image: productColored.Image);
+                    Id: productColored.Id,
+                    ColorCode: productColored.Color.Code,
+                    ColorName: productColored.Color.Name,
+                    Image: productColored.Image);
         }
         public static List<ColoredProuctDto> ToColoredProductDto
             (this List<ColoredProduct> productColoreds)

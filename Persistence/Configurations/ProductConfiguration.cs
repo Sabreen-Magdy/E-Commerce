@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
 using Domain.Enums;
+using Domain.Entities;
 
 namespace Persistence.Configurations;
 
@@ -43,9 +43,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         #region Other Constraints
 
-        builder.ToTable(b =>
-            b.HasCheckConstraint("AddingDateValidation",
-            Unity.CheckDate($"[{Properties.AddingDate}]")));
+        //builder.ToTable(b =>
+        //    b.HasCheckConstraint("AddingDateValidation",
+        //    Unity.CheckDate($"[{Properties.AddingDate}]")));
 
         builder.ToTable(b => b
             .HasCheckConstraint("NumberReviewsValidation",

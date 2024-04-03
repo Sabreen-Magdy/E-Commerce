@@ -1,5 +1,7 @@
 ﻿using Domain.Repositories;
+using Services.Abstraction;
 using Services.Abstraction.DataServices;
+using Services.Authentication;
 using Services.DataServices;
 
 namespace Services;
@@ -15,8 +17,6 @@ public sealed class AdminService : IAdminService
     private readonly IFavouriteService _favoriteService;
     private readonly IReviewService _reviewService;
     private readonly IGeneralService _generalService;
-
-
     public AdminService(IAdminRepository repositoryAdmin)
     {
         _customerService = new CustomerService(repositoryAdmin);
@@ -46,6 +46,7 @@ public sealed class AdminService : IAdminService
     public IReviewService ReviewService => _reviewService;
 
     public IGeneralService GeneralService => _generalService;
+
 }
 
 

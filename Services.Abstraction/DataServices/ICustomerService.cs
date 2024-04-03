@@ -1,5 +1,5 @@
 ﻿using Contract;
-using Contract.Favorite;
+using Domain.Entities;
 
 namespace Services.Abstraction.DataServices;
 
@@ -11,7 +11,8 @@ public interface ICustomerService
     CustomerDto? Get(int id);
     List<CustomerDto> Get(string name);
 
-    void Add(CustomerAddDto customer);
+    //void Add(CustomerAddDto customer);
+    void Add(Customer customer);
 
     void Update(int id,CustomerAddDto customer);
 
@@ -19,8 +20,8 @@ public interface ICustomerService
     List<CustomerReviewDto> GetReviews(int customerId);
     List<FavoriteDto> GetFavourites(int customerId);
     List<OrderDto> GetOrders(int customerId);
-    List<CartDto> GetCart(int customerId);
-
+    CartDto GetCart(int customerId);
+    bool CanAddReview(int customerId, int productId);
     void AddReview(int customerId, int productId, string comment, int rate);
     void UpdateReview(int id, string comment, int rate);
     void UpdateReview(int customerId, int productId, string comment, int rate); 
