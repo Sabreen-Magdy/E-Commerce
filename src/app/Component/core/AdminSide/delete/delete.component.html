@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="contai">
+        <header>
+            <h3>الفئات</h3>
+        </header>
+        
+        <div class="table-wrapped">
+            
+            <table class="table-products">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم</th>
+                        <th>التليفون</th>
+                        <th>الايميل</th>
+                        <th>الاجراءات</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbdyprod">
+                    <tr *ngFor="let c of categoryList  | paginate: {  itemsPerPage: 6, currentPage: p, }">
+                    <td data-label="#">{{c.id}}</td>
+                    <td data-label="الاسم">{{c.name}}</td>
+                    <td data-label="التليفون"><span class="material-symbols-outlined">
+                        {{c.num}}
+                        </span></td>
+                    <td data-label="الايميل"><p>{{c.email}}</p></td>
+                    
+                        <button (click)="deleteCategory(c.id)" class="btn2 btn-delete">مسح</button>
+                    
+                    </tr>
+                    
+                    
+                    
+                </tbody>
+
+            </table>
+            <div style="margin-top: 10px;"  class="pagiDiv">
+                <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+              </div>
+
+
+        </div>
+    </div>
+</div>

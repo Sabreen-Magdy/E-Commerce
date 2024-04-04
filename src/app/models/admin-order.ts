@@ -1,6 +1,7 @@
 import { AdminOrderProducts } from "./admin-order-products";
 
 export interface AdminOrder {
+customerEmail: any;
     orderId: number;
     cutomerId :number
     customerName :string
