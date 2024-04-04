@@ -18,6 +18,7 @@ using Services.Abstraction.External;
 using Services.External;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Braintree;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,6 @@ builder.Services.AddCors(options =>
                           policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                       });
 });
-
 
 // Add Controllers 
 builder.Services.AddControllers().AddApplicationPart(
