@@ -16,6 +16,8 @@
           <a [routerLink]="'/store'" class="btn btn-success">تصفح اكثر</a>
           
         </div>
+        <div *ngIf="cart.items.length" class="text-start m-3"><button (click)="clearAll()" class="btn btn-danger shadow">مسح الكل <i class="bi bi-x-lg me-2"></i></button></div>
+        
         <div *ngFor="let item of cart.items" class="card rounded-3 mb-4 items">
           <div class="card-body p-4" style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="row d-flex justify-content-between align-items-center">

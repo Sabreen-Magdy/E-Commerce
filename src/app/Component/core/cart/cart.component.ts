@@ -317,4 +317,7 @@ deleteafterCheckout2() {
   }
 }
 
+clearAll(){
+  this.deleteafterCheckout2();
+}
 }

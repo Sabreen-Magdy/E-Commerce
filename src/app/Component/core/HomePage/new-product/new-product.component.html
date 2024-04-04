@@ -35,9 +35,7 @@
   </div>
   <div class=".bgo">
     <button
-      [routerLink]="'/store'"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="goto()"
       class="btn btn-success rounded-1 btngoto shrink-border"
     >
       تصفح اكتر

@@ -14,6 +14,8 @@ export class FavoriteComponent {
   FavList : favitem[] = [];
   customerId:any;
   noitem : boolean = false;
+  deleteAllFlag : boolean = false;
+  
  constructor(private _FavService:FavoriteService,private _AuthService:AuthService ){}
  ngOnInit(): void {
   this._AuthService.userData.subscribe({
@@ -66,6 +68,36 @@ export class FavoriteComponent {
       console.log("ERROR when delete fav item" + e);
     }
   });
+ }
+
+ clearAll(){
+  
+  this.deleteAllFlag = true;
+  console.log("we are now in delete");
+  let length: number = this.FavList.length;
+  let successfulDeletions = 0; // Track successful deletions
+
+  for (let i = 0; i < length; i++) {
+    let item = this.FavList[i];
+    console.log("no gonna delete", item);
+    this.deleteFav = this._FavService.deletefavitem(this.customerId,item.productId).subscribe({
+      next: () => {
+        console.log('Delete success ');
+        successfulDeletions++; // Increment successful deletion count
+        // Check if all items have been successfully deleted
+        if (successfulDeletions === length) {
+         this.deleteAllFlag = false;
+          this.getFavbyCId();
+          this._FavService.getNumberOfitemInFavCart();
+        }
+      },
+      error: (e) => {
+        console.log('ERROR when delete', e);
+        // Handle error appropriately, e.g., display error message to the user
+      },
+    });
+  }
+
  }
 
 }
