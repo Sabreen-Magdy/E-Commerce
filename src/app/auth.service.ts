@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { customerOrder } from './models/customerOrder';
 import { IproductShow } from './models/i-product-variant';
+import { IRegisteration } from './models/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -89,5 +90,21 @@ export class AuthService {
     }
   });
  }
+
+ 
+ Registeration(data : IRegisteration){
+  
+  return this._HttpClient.post(`http://localhost:5058/api/Authentication/Registeration`,data)
+ }
+
+confirmEmail(email : string): Observable<any> {
+  
+  const encodedEmail = encodeURIComponent(email); 
+  return this._HttpClient.get<any>(
+    `http://localhost:5058/api/Authentication/ConfirmEmail?email=${encodedEmail}`, 
+    { headers: { 'RedirectUrl': 'http://localhost:4200/signup?' } }
+  );
+}
+
 
 }

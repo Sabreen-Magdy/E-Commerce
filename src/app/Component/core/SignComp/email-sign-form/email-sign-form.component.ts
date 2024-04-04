@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
@@ -33,9 +34,23 @@ export class EmailSignFORMComponent {
     return this.signupform.get('email')
   }
 
+  confirmSub : Subscription | undefined;
+
   ConfirmEmail(e:Event){
     if (this.signupform.valid){
+      let email :string = this.signupform.get('email')?.value;
+      // console.log(email);
+      this.confirmSub = this._AuthService.confirmEmail(email).subscribe({
+        next: (e) => {
+          console.log("Doneeeeeeeeeeeeeee");
+          console.log(e);
+        },
 
+        error : (e) => {
+          console.log("ERROR" , e);
+        }
+      })
+      
     }else{
       this.showerror=true;
     }
