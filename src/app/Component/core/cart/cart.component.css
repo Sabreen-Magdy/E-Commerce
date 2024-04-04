@@ -23,7 +23,10 @@
 	border-bottom: 1px solid #ffffff;
 	padding-bottom: 14px;
 }
-
+.items:hover{
+	background-color: #e8f9e0;
+	
+}
 .proceed-checkout ul li.subtotal span {
 	font-weight: 700;
 }

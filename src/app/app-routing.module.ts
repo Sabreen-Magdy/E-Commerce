@@ -33,6 +33,7 @@ import { adminServiceGuard } from './admin-service.guard';
 import { AllProductDetialsComponent } from './Component/core/AdminSide/EditProduct/all-product-detials/all-product-detials.component';
 import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color-form/color-form.component';
 import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
+import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
 
 
 const routes: Routes = [
@@ -57,10 +58,12 @@ const routes: Routes = [
     { path: ComponentUrl.Reviews, component: ReviewsComponent },
     {path:"",component:SignFamilyComponent,children:[
       {path:"signin",component:SigninFormComponent, },
+      {path:"emailValidation",component:EmailSignFORMComponent, },
       {path:"signup",component:SignUpFormComponent, },
       {path:"forgetpassword",component:ForgetPasswordComponent, },
     ]},
     {path:"home",canActivate:[AuthGuard],component:HomePageComponent, },
+    {path:"home/:catgoryname",canActivate:[AuthGuard],component:HomePageComponent, },
     {path:"store",canActivate:[AuthGuard],component:StoreComponent, },
     {path:"store/:catgoryname",canActivate:[AuthGuard],component:StoreComponent, },
     {path:"store/products/:productname",canActivate:[AuthGuard],component:StoreComponent, },

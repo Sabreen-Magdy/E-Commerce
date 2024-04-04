@@ -1,21 +1,22 @@
 import { compileNgModule } from '@angular/compiler';
 import { CartService } from './../../../services/cart.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { AddCart } from 'src/app/models/icart';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
-import { IproductVarDet } from 'src/app/models/iproduct-var-det';
+import { IproductByGategory, IproductVarDet } from 'src/app/models/iproduct-var-det';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductDetailsService } from 'src/app/services/product-details.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductIReview, Review } from 'src/app/models/ireview';
 import { ProductReviewService } from 'src/app/services/reviews.service';
-
-
+import { Iproduct } from 'src/app/models/iproduct';
+// import 'swiper/swiper-bundle.min.css';
+// import Swiper from 'swiper';
 
 @Component({
   selector: 'app-product-details-main',
@@ -29,7 +30,7 @@ export class ProductDetailsmainComponent implements OnInit {
   buttonText: string = "أضف للعربة";
   subText: string = "تأكيد"
   activeStarsCount: any;
-  p : number = 1;
+  p: number = 1;
   prodVariantList: IproductVarDet[] = [];
   prodDet: IproductDTo = {
     "id": 0,
@@ -44,34 +45,61 @@ export class ProductDetailsmainComponent implements OnInit {
   // sizeIndexMap: { [size: string]: number } = {};
   id: number = 0;
   customerId: number = 0;
-  customerCanAddRev:boolean=false;
+  customerCanAddRev: boolean = false;
   addFavSub: Subscription | undefined;
   addcartSub: Subscription | undefined;
   getFavSub: Subscription | undefined;
   deleteFavsub: Subscription | undefined;
 
-  getProductDetailsRev(){
+  getProductDetailsRev() {
     this.prodDetApi.getProdReviews(this.id).subscribe({
       next: (data) => {
+
         this.prodDetrev = data;
         data.forEach(rev => {
         });
         console.log(this.prodDetrev);
       }
     });
-    }
-    getProductDetails(){
+  }
+  getProductDetails() {
 
-      this.prodDetApi.getProd(this.id).subscribe({
-        next: (data) => {
-          data.avgRating = Math.floor(data.avgRating)
-          this.prodDet = data;
+    this.prodDetApi.getProd(this.id).subscribe({
+      next: (data) => {
+        data.avgRating = Math.floor(data.avgRating)
+        this.prodDet = data;
 
-          console.log(this.prodDet);
-        }
-      });
-    }
-  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute, private favService: FavoriteService, private authService: AuthService, private CartServi: CartService, private revService: ProductReviewService) {
+        console.log(this.prodDet);
+      }
+    });
+  }
+  proctCategories: { id: number, name: string }[] = []
+  getProductcategories() {
+
+    this.prodDetApi.getProdCategories(this.id).subscribe({
+      next: (data) => {
+        //data.avgRating = Math.floor(data.avgRating)
+        this.proctCategories = data;
+        console.log(this.proctCategories);
+        this.getProductsBygategories(this.proctCategories[0].name);
+        console.log("products of ccccaaaaaat");
+        console.log(this.productsByCat);
+
+      }
+    });
+  }
+  productsByCat: IproductByGategory[] = []
+  getProductsBygategories(categoryName: string) {
+    this.prodDetApi.getProductsByCategories(categoryName).subscribe({
+      next: (data) => {
+
+        //data.avgRating = Math.floor(data.avgRating)
+        this.productsByCat = data.filter(p => p.id != this.id);
+        console.log(this.productsByCat);
+      }
+    });
+  }
+  constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute, private favService: FavoriteService, private authService: AuthService, private CartServi: CartService, private revService: ProductReviewService, private router: Router) {
     this.commentForm = new FormGroup({
       comment: new FormControl(
         ""
@@ -91,12 +119,13 @@ export class ProductDetailsmainComponent implements OnInit {
     this.customerId = this.authService.id;
     this.id = this.Actrouter.snapshot.params['id'];
     console.log("hiiiiiii" + this.id);
-    this.revService.isCustomerCanAddRev(this.customerId,this.id).subscribe({
+    this.revService.isCustomerCanAddRev(this.customerId, this.id).subscribe({
       next: (data) => {
-        this.customerCanAddRev=data;
+        this.customerCanAddRev = data;
         console.log(this.customerCanAddRev)
-        console.log("Customer can Review??????????????",data);
+        console.log("Customer can Review??????????????", data);
       }
+
     })
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
@@ -115,7 +144,8 @@ export class ProductDetailsmainComponent implements OnInit {
     this.getProductDetails()
     this.getProductDetailsRev()
     this.getUniqueColors();
-    this.getUniqueCode
+    this.getProductcategories()
+    // this.getUniqueCode()
 
     // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     this.allStars = document.querySelectorAll('.rating .star') as NodeListOf<HTMLElement>;
@@ -261,7 +291,7 @@ export class ProductDetailsmainComponent implements OnInit {
     this.selectedSize = variant.size;
     this.quantityNumber = 1; // Reset quantity to 1
   }
-  
+
   selectColor(variant: IproductVarDet, index: number): void {
 
     this.selectedColor = variant.colorName;
@@ -429,4 +459,20 @@ export class ProductDetailsmainComponent implements OnInit {
       }
     })
   }
+  navigateToAnotherId(id: number) {
+    // this.router.navigate(['/store/productDetials',id])
+    location.replace('/store/productDetials/' + id)
+  }
+
+  // @ViewChild('slider', { static: true }) slider!: ElementRef;
+
+  // slideRight() {
+  //   this.slider.nativeElement.scrollLeft += 100; // Adjust the number based on your requirement
+  // }
+
+  // slideLeft() {
+  //   this.slider.nativeElement.scrollLeft -= 100;
+  //    // Adjust the number based on your requirement
+  // }
+  
 }

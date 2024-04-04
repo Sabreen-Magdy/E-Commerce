@@ -1,0 +1,43 @@
+<div class="signindiv m-3">
+    <h2 class="mb-2">إنشاء حساب</h2>
+    <span class="text-secondary mb-3">قم بالتسجيل للتمكن من عرض المنتجات، والبدء بتسويقها وربح الاموال.
+    </span>
+    <!-- enter($event) -->
+    <form class="my-3 row" [formGroup]="signupform" (ngSubmit)="ConfirmEmail($event)">
+
+
+        <div class="mb-3 form-control-div" [ngClass]="{
+          sucess: emailcontrol?.valid,
+          danger: emailcontrol?.errors && (emailcontrol?.touched || showerror)}">
+            <input formControlName="email" type="email" class="form-control" placeholder="البريد الالكتروني" />
+            <i *ngIf="emailcontrol?.valid" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="emailcontrol?.errors && (emailcontrol?.touched || showerror)"
+                class="bi bi-exclamation-circle-fill"></i>
+            <div *ngIf="emailcontrol?.errors && (emailcontrol?.touched || showerror)"
+                class="alert p-1 mt-3 alert-danger">
+                <ng-container *ngIf="emailcontrol?.hasError('required')">
+                    يجب عليك ادخال البريد الالكتروني
+                </ng-container>
+
+                <ng-container *ngIf="emailcontrol?.hasError('pattern')">
+                    ادخل بريد الالكتروني صحيح
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-success col-md-7">انشاء الحساب</button>
+            <a class="btn btn-outline-success col border-2" [routerLink]="'/signin'">تسجيل الدخول</a>
+        </div>
+        <!-- <div class="alert alert-danger">{{ errorMessage }}</div> -->
+    </form>
+    <!-- <span class="text-secondary">- او سجل الدخول بواسطة -</span>
+    <div>
+      <a href=""
+        ><img
+          class="logo"
+          src="https://cdn.icon-icons.com/icons2/1945/PNG/512/iconfinder-google-4661601_122471.png"
+          alt=""
+      /></a>
+    </div> -->
+</div>

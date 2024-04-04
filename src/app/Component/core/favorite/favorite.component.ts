@@ -32,7 +32,9 @@ export class FavoriteComponent {
     }
   });
  }
+ NavTodetails(id : number){
 
+ }
 
  allFavByCustomerSub : Subscription | undefined;
  deleteFav : Subscription | undefined;

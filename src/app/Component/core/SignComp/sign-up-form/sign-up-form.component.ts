@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
+import { IRegisteration } from 'src/app/models/auth';
 
 @Component({
   selector: 'app-sign-up-form',
   templateUrl: './sign-up-form.component.html',
   styleUrls: ['./sign-up-form.component.css']
 })
-export class SignUpFormComponent {
+export class SignUpFormComponent implements OnInit {
   signupform : FormGroup;
   showerror : boolean = false;
-
-  constructor(private _AuthService:AuthService , private _Router:Router){
+  emailUser : string = "";
+  
+  constructor(private _AuthService:AuthService , private _Router:Router , private actRoute : ActivatedRoute){
     this.signupform = new FormGroup({
       name: new FormControl(
         "",
@@ -40,6 +42,7 @@ export class SignUpFormComponent {
         "",
         [
           Validators.required,
+          Validators.pattern(/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).+$/),
           Validators.minLength(6),
         ]
       ),
@@ -56,6 +59,12 @@ export class SignUpFormComponent {
     }
     );
   }
+  ngOnInit(): void {
+    this.emailUser = this.actRoute.snapshot.queryParams['email'];
+    this.signupform.get('email')?.setValue(this.emailUser);
+  }
+
+  
   passwordMatchValidator(control: AbstractControl) {
     return control.get('password')?.value ===
     control.get('confirmpassword')?.value
@@ -83,17 +92,27 @@ export class SignUpFormComponent {
   submitRegisterForm(e : Event){
     e.preventDefault();
     if (this.signupform.valid){
-      console.log(this.signupform.value);
-      this._AuthService.signUp(this.signupform.value).subscribe({
-      next:(response)=>{
-        console.log("ffff",response)
-        this._Router.navigate(['/signin']);
-
-      },
-      error : (e) => {
-        console.log(e);
+      let dataUser : IRegisteration = {
+        name: this.signupform.get('name')?.value,
+        image: 'image.png',
+        email: this.emailUser,
+        password: this.signupform.get('password')?.value,
+        phone: this.signupform.get('phone')?.value,
+        address: ''
       }
-    })
+
+      console.log(dataUser);
+      this._AuthService.Registeration(dataUser).subscribe({
+        next: (data) => {
+          console.log("Welcome");
+          console.log(data);
+        },
+        error: (e)=>{
+          console.log("ERROR");
+          console.log(e);
+        }
+      })
+    
     }
     else{
       this.showerror = true

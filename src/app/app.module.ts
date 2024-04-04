@@ -70,7 +70,9 @@ import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/var
 // import { NgxPaginationModule } from 'ngx-pagination';
 import { StarRatingModule } from 'angular-star-rating';
 import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
+
 import { DeleteComponent } from './Component/core/AdminSide/delete/delete.component';
+import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +129,7 @@ import { DeleteComponent } from './Component/core/AdminSide/delete/delete.compon
     VarientFormComponent,
     VerifiyComponent,
     DeleteComponent,
+    EmailSignFORMComponent,
     
     
     
