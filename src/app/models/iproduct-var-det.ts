@@ -10,3 +10,17 @@ export interface IproductVarDet {
     size: string
     colorName:string
 }
+
+export interface IproductByGategory {
+    id: number;
+    image: string;
+    name: string;
+    // description: string;
+    price: number;
+    // onSale: boolean;
+    // discount: number;
+    quantity: number;
+    avgRating:number;
+    addingDate:string;
+   
+}

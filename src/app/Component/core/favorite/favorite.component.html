@@ -1,4 +1,4 @@
-<section class="h-100" style="background-color: #eef9f3; min-height: 550px; ">
+<section class="h-100" style="background-color: #ffffff; min-height: 550px; ">
   <div class="container h-100 py-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-10">
@@ -6,15 +6,21 @@
           <h3 class="fw-normal mb-0 text-black">قائمة المفضلة</h3>
         </div>
         <div  *ngIf="FavList.length == 0 && !noitem" class="loader"></div>
-          <div *ngIf="FavList.length == 0 && noitem" class="alert alert-success" role="alert">
-            ليس لديك أي منتج في قائمة أمنياتي. 
+          <div *ngIf="FavList.length == 0 && noitem" class="d-flex flex-column align-items-center justify-content-center" role="alert">
+              <img class="mb-3" style="opacity: 0.4;" src="assets/Images/broken2-removebg.png" width="200" alt="ليس لديك طلبات سابقة">
+              <h3 class="mb-3">
+                <b>جاهز تتمنى أمنية؟</b>
+              </h3>
+                <p>ابدأ بإضافة المنتجات اللي أعجبتك لقائمة أمنياتك بالضغط على علامة القلب</p>
+              <a [routerLink]="'/store'" class="btn btn-success">تصفح اكثر</a>
+              
             <!-- <br>
             <br>
             خزّن كل ما تحب هنا. -->
 
           </div>
-        <div *ngFor="let item of FavList" class="card rounded-3 mb-4">
-          <div class="card-body p-4">
+        <div  *ngFor="let item of FavList" class="card rounded-3 mb-4 items" >
+          <div class="card-body p-4"  style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
                 <img
@@ -26,7 +32,7 @@
                 />
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">{{ item.name }}</p>
+                <a class="lead fw-normal mb-2 text-black " [routerLink]="['/store/productDetials',item.productId]">{{ item.name }}</a>
                 <p>
                   {{ item.description }}
                 </p>
@@ -35,14 +41,13 @@
                 <h5 class="mb-0">ُ{{ item.price }}ج.م.</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a [routerLink]="['/store/productDetials',item.productId]"  class="text-success"
+                <a [routerLink]="['/store/productDetials',item.productId]"  class="text-black "
                   ><i class="fa-solid fa-eye"></i>
                 </a>
               </div>
               <div  class="col-md-1 col-lg-1 col-xl-1 text-end">
                 <a  (click)="deleteFavitem(item.productId)" class="text-danger deleteIcon"
-                  ><i class="fas fa-trash fa-lg"></i
-                ></a>
+                  ><i style="font-size: x-large;" class="bi bi-trash3"></i></a>
               </div>
             </div>
           </div>

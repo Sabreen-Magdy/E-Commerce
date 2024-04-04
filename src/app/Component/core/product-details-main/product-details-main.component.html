@@ -287,25 +287,24 @@
     </div>
   </div>
 
-  <!-- <div class="relatedProduct">
-    <h3 class="mb-3">ما ينظر إليه الاخرون</h3>
+  <div class=" relatedProduct">
+    <h3 class="mb-3">قد يهمك ايضا </h3>
 
     <div class="items row ">
-          <div *ngFor="let item of [1,2,3,4,5]" class="element col-lg-2 col-md-4">
+          <div *ngFor="let item of productsByCat" class="element col-lg-2 col-md-4">
             <div class="element-img">
-              <span class="material-symbols-outlined cart"> shopping_cart </span>
-              <span class="msg cart">اضف للعربة</span>
-              <span class="material-symbols-outlined fav"> favorite </span>
+              
+              <span (click)="pushItemToFavCart(item.id)" class="material-symbols-outlined fav"> favorite </span>
               <span class="msg fav">اضف للمفضلة</span>
-              <span class="material-symbols-outlined show"> visibility </span>
+              <span (click)="navigateToAnotherId(item.id)" class="material-symbols-outlined show" > visibility </span>
               <span class="msg show">عرض المنتج</span>
               <img
-                src="https://websitedemos.net/office-furniture-store-04/wp-content/uploads/sites/913/2021/07/office-furniture-store-product-img-27.jpg"
+                [src]="'http://srmgroub.somee.com/Images/' +item.image"
               />
             </div>
             <div class="element-detials">
-              <h4>اسم المنتج</h4>
-              <p>300 <span>جنيه</span></p>
+              <h4>{{item.name}}</h4>
+              <p>{{item.price}} <span>جنيه</span></p>
             </div>
           </div>
 
@@ -313,5 +312,36 @@
 
     </div>
 
-  </div> -->
+  </div>
+
+  <!-- <div class="relatedProduct">
+    <h3 class="mb-3">قد يهمك ايضا </h3>
+
+    Slider Container
+    <div class="slider-container">
+        Left Arrow
+        <span class="material-symbols-outlined arrow left" (click)="slideLeft()">chevron_left</span>
+        
+        Slider Items
+        <div class="items slider row">
+            <div *ngFor="let item of productsByCat" class="element col-lg-2 col-md-4 items slider row">
+                <div class="element-img">
+                    <span (click)="pushItemToFavCart(item.id)" class="material-symbols-outlined fav"> favorite </span>
+                    <span class="msg fav">اضف للمفضلة</span>
+                    <span (click)="navigateToAnotherId(item.id)" class="material-symbols-outlined show" > visibility </span>
+                    <span class="msg show">عرض المنتج</span>
+                    <img [src]="'http://srmgroub.somee.com/Images/' +item.image"/>
+                </div>
+                <div class="element-details">
+                    <h4>{{item.name}}</h4>
+                    <p>{{item.price}} <span>جنيه</span></p>
+                </div>
+            </div>
+        </div>
+
+        Right Arrow
+        <span class="material-symbols-outlined arrow right" (click)="slideRight()">chevron_right</span>
+    </div>
+</div> -->
+
 </div>

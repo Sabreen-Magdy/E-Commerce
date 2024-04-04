@@ -1,3 +1,38 @@
+/* .slider-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .items.slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  
+  .element {
+    flex: 0 0 auto; Adjust size as needed
+  }
+  
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 100;
+    background-color: #fff; Adjust arrow background
+    border-radius: 50%;
+  }
+  
+  .left {
+    left: 10px;
+  }
+  
+  .right {
+    right: 10px;
+  } */
+  
+
+
 .Mtitle{
     margin-bottom: 20px;
     margin-right: 5px;
