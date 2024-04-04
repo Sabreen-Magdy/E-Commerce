@@ -57,7 +57,7 @@
           <div class="rowe" *ngIf="selectedvariant.discount > 0">
             <div class="title">قبل:</div>
             <div class="before">
-              {{ selectedvariant.priceAfter }}
+              {{ selectedvariant.price }}
               جنيه
             </div>
           </div>
@@ -123,9 +123,9 @@
         </div>
       </div>
       <div class="btns">
-        <div class="rowe">
+        <div class="rowe"*ngIf="selectedvariant.quantity>0">
           <div class="title">العدد:</div>
-          <div class="quanityInp">
+          <div class="quanityInp" >
             <span
               class="minus"
               [class.selected]="quantityNumber == 1"
@@ -133,9 +133,18 @@
               >-</span
             >
             <span class="num">{{ quantityNumber }}</span>
-            <span class="plus" (click)="plus()">+</span>
+            <span *ngIf="plusAppearance" class="plus" (click)="plus()">+</span>
+            <span *ngIf="!plusAppearance" ><i class="bi bi-ban"></i></span>
           </div>
+          
         </div>
+        <div class="rowe" *ngIf="selectedvariant.quantity==0">
+        <div class="" >
+          <span class="text-danger mx-1"><i class="bi bi-ban"></i></span
+          >
+          <span class="text-danger"> لقد استهلكت الكميه المتاحه من هذا المنتج</span>       
+        </div>
+      </div>
         <div class="rowe">
           <button (click)="pushItemTocart()" class="btn btn-dark cartbtn">
             {{ buttonText }}

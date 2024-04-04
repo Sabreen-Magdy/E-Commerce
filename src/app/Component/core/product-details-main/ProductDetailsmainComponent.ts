@@ -4,7 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
-import { AddCart } from 'src/app/models/icart';
+import { AddCart, CartDto, CartItemDto } from 'src/app/models/icart';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
@@ -50,7 +50,13 @@ export class ProductDetailsmainComponent implements OnInit {
   addcartSub: Subscription | undefined;
   getFavSub: Subscription | undefined;
   deleteFavsub: Subscription | undefined;
-
+  cart: CartDto = {
+    totalPrice: 0,
+    totalQuantity: 0,
+    items: [],
+  };
+  cartitems:CartItemDto[]=[]
+  plusAppearance: boolean = true;
   getProductDetailsRev() {
     this.prodDetApi.getProdReviews(this.id).subscribe({
       next: (data) => {
@@ -99,6 +105,7 @@ export class ProductDetailsmainComponent implements OnInit {
       }
     });
   }
+
   constructor(private prodDetApi: ProductDetailsService, private Actrouter: ActivatedRoute, private favService: FavoriteService, private authService: AuthService, private CartServi: CartService, private revService: ProductReviewService, private router: Router) {
     this.commentForm = new FormGroup({
       comment: new FormControl(
@@ -115,6 +122,59 @@ export class ProductDetailsmainComponent implements OnInit {
   get commentcontrol() {
     return this.commentForm.get('comment')
   }
+  noitem:boolean=false
+  getcartbyId(productvar :number[]) {
+    console.log('dkdkd');
+    console.log(this.customerId);
+    this.CartServi.getCartBycstId(
+      this.customerId
+    ).subscribe({
+      next: (data) => {
+        let filterdata = data.items.filter((item) => item.state == 0);
+        let totalPriceS: number = 0;
+        // this.cart.items = this.cart.items.filter((item)=>item.state==0)
+        for (var item of filterdata) {
+          item.unitPrice = item.unitPrice - (item.unitPrice * item.discount)
+          totalPriceS += item.unitPrice * item.quantity;
+        }
+        this.cart = data;
+        this.cart.items = filterdata;
+        this.cart.totalPrice = totalPriceS;
+
+        for (let index = 0; index < this.cart.items.length; index++) {
+          for (let index2 = 0; index2 < productvar.length; index2++) {
+            if(this.cart.items[index].productVarientId == productvar[index2]){
+              this.cartitems.push(this.cart.items[index])
+            }
+          }
+        }
+        console.log('shared cart items', this.cartitems);
+
+        for (let index = 0; index < this.prodVariantList.length; index++) {
+          for (let index2 = 0; index2 < this.cartitems.length; index2++) {
+            if (this.cartitems[index2].productVarientId == this.prodVariantList[index].id) { // cartitems = {{2,3},{4,2}} , prodvar = {{1,3},{2,4}, {3,3},{4,5}}
+              this.prodVariantList[index].quantity -= this.cartitems[index2].quantity
+              //console.log('inside the iiiiiffffff')
+              break;
+            }
+          }
+          
+        }
+
+        console.log('product var list after edit ',this.prodVariantList)
+
+        
+        if (filterdata.length == 0) {
+          this.noitem = true;
+        }
+       // this.waitUpdatNumber = false;
+      },
+      error: (e) => {
+        this.noitem = true;
+        console.log('ERROR when fetch Data of CartItem' + e);
+      },
+    });
+  }
   ngOnInit(): void {
     this.customerId = this.authService.id;
     this.id = this.Actrouter.snapshot.params['id'];
@@ -129,13 +189,24 @@ export class ProductDetailsmainComponent implements OnInit {
     })
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
-        this.prodVariantList = data.filter(item => item.quantity > 0);
+        this.prodVariantList = data.filter(p=>p.quantity>0);
+        // for (let index = 0; index < this.prodVariantList.length; index++) {
+        //   if(this.prodVariantList[index].quantity <1){
+        //     this.outofStok.push(false)
+        //   }else{
+        //     this.outofStok.push(true)
+        //   }
+
+        // }
         console.log(this.prodVariantList);
         this.selectedImage = this.prodVariantList[0].coloredimage;
         this.selectedColor = this.prodVariantList[0].colorName;
         this.selectedColorCode = this.prodVariantList[0].code;
         this.selectedSize = this.prodVariantList[0].size;
         this.selectedvariant = this.prodVariantList[0]
+        this.plusAppearance = this.prodVariantList[0].quantity > 1
+        this.getcartbyId(this.prodVariantList.map(p=>p.id));
+        
         this.groupedByColor = this.groupByColorCode(this.prodVariantList);
         console.log(this.groupedByColor)
       }
@@ -176,6 +247,7 @@ export class ProductDetailsmainComponent implements OnInit {
 
 
   }
+  // outofStok:boolean[] = []
   clearForm() {
     this.commentForm.get('comment')?.setValue("");
     (document.querySelectorAll('.rating input i') as NodeListOf<HTMLElement>).forEach(i => {
@@ -290,6 +362,9 @@ export class ProductDetailsmainComponent implements OnInit {
     this.selectedColor = variant.colorName;
     this.selectedSize = variant.size;
     this.quantityNumber = 1; // Reset quantity to 1
+    this.plusAppearance = true
+    this.buttonText = " اضف للعربة"
+
   }
 
   selectColor(variant: IproductVarDet, index: number): void {
@@ -301,6 +376,9 @@ export class ProductDetailsmainComponent implements OnInit {
     this.selectedImage = variant.coloredimage;
     this.selectedSize = variant.size;
     this.quantityNumber = 1; // Reset quantity to 1
+    this.plusAppearance = true
+    this.buttonText = " اضف للعربة"
+
   }
   selectSize(sizename: string, variant: IproductVarDet): void {
 
@@ -311,17 +389,24 @@ export class ProductDetailsmainComponent implements OnInit {
     // this.selectedSize = this.prodVariantList[this.selectedindex].size+index
     // this.selectedColor = this.prodVariantList[this.selectedindex].colorName;
     this.quantityNumber = 1; // Reset quantity to 1
+    this.plusAppearance = true
+
+    this.buttonText = " اضف للعربة"
+
   }
   plus() {
-    if (this.quantityNumber <= this.selectedvariant!.quantity) {
+    if (this.quantityNumber < this.selectedvariant!.quantity) {
       this.quantityNumber++;
       this.CartServi.getNumberOfitemInCart();
+    } else {
+      this.plusAppearance = false
     }
   }
   minus() {
     if (this.quantityNumber > 1) {
       this.quantityNumber--;
       this.CartServi.getNumberOfitemInCart();
+      this.plusAppearance = true
     }
   }
   toggle() {
@@ -451,6 +536,7 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log("Added Succesful" + done);
         this.buttonText = "تم إضافة المنتج"
         this.CartServi.getNumberOfitemInCart();
+        this.getcartbyId(this.prodVariantList.map(p=>p.id))
       },
       error: (e) => {
         this.buttonText = "ذلك المنتج متواجد بالفعل في السلة"
@@ -474,5 +560,5 @@ export class ProductDetailsmainComponent implements OnInit {
   //   this.slider.nativeElement.scrollLeft -= 100;
   //    // Adjust the number based on your requirement
   // }
-  
+
 }
