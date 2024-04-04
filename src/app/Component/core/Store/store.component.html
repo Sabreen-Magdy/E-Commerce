@@ -33,7 +33,9 @@
   <div class="items row">
     <div *ngFor="let x of ProductList | paginate: {  itemsPerPage: 6, currentPage: p, }" class="element col-lg-4 col-md-6">
       <div class="element-img">
-        <span (click)="pushItemToFavCart(x.id)" class="material-symbols-outlined fav"> favorite </span>
+        <span *ngIf="!checkFav(x.id)" (click)="pushItemToFavCart(x.id)" class="material-symbols-outlined fav"> favorite </span>
+        <span class="msg fav">اضف للمفضلة</span>
+        <span *ngIf="checkFav(x.id)" (click)="removeItemfromFav(x.id)" > <i class="bi bi-heart-fill"></i> </span>
         <span class="msg fav">اضف للمفضلة</span>
         <span [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
         <span class="msg show">عرض المنتج</span>
@@ -67,9 +69,9 @@
     <h5>السعر<span class="EGP">( جنيه )</span></h5>
     <form [formGroup]="PriceSearchForm">
       <span class="txt">من</span>
-      <input type="number" formControlName="minPrice" min="0" placeholder=""/>
+      <input type="number" formControlName="minPrice" [(ngModel)]="fromPrice" min="0"  />
       <span class="txt">الي</span>
-      <input type="number" formControlName="maxPrice" min="1" placeholder="" />
+      <input type="number" formControlName="maxPrice" [(ngModel)]="toPrice"  [min]="fromPrice" />
     </form>
   </div>
   <div class="nameSearch2">

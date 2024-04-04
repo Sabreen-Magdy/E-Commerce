@@ -88,6 +88,7 @@
         formControlName="email"
         type="email"
         class="form-control"
+        [readOnly]="true"
         placeholder="البريد الالكتروني"
       />
       <i *ngIf="emailcontrol?.valid" class="bi bi-check-circle-fill"></i>
@@ -140,6 +141,9 @@
         </ng-container>
         <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
           يجب علي كلمة المرور ان تكون اطول من 5 حروف
+        </ng-container>
+        <ng-container *ngIf="passwordcontrol?.hasError('pattern')">
+          يجب علي كلمة المرور ان تحتوي علي حرف ابجدي علي الاقل واحد [A-Z]
         </ng-container>
       </div>
     </div>
