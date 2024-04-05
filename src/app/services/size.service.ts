@@ -9,13 +9,15 @@ import { Isize } from '../models/isize';
 export class SizeService {
 
   baseURL : string = 'http://srmgroub.somee.com/api/General'
+
+  // baseURL : string = 'http://localhost:5058/api/General'
   constructor(private http:HttpClient) { }
 
   getAllSize() : Observable<Isize[]>{
     return this.http.get<Isize[]>(`${this.baseURL}/GetAllSize`)
    }
 
-   addsize(name: string) {
+  addsize(name: string) {
     return this.http.post(`${this.baseURL}/AddSize?name=${encodeURIComponent(name)}`, {});
   }
 
