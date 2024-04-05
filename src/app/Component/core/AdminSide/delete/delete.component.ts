@@ -17,7 +17,9 @@ import Swal from 'sweetalert2';
 
 export class DeleteComponent implements OnInit {
   cstList: ICstDto[]=[]
-  p:number =1
+  p:number =1;
+  waiting : boolean = true;
+  noitem : boolean = false;
    constructor (private CSTdelete :DeleteService){}
 
   ngOnInit(): void {
@@ -28,10 +30,15 @@ deletesub:Subscription |undefined
 getallcst(){
   this.cstsub=this.CSTdelete.getCSTall().subscribe({
     next:(data)=>{
+      this.waiting = false;
+      if (data.length ==0) {
+        this.noitem = true
+      }
       this.cstList=data
     },
     error:(e)=>{
       console.log('errrrrrrrrrrrrrrrrrrrror',e)
+      this.noitem = true;
     }
   })
 

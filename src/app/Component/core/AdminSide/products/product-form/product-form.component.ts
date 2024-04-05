@@ -64,6 +64,9 @@ export class ProductFormComponent implements OnInit {
   selectedItems: option[] = [];
   dropdownSettings: IDropdownSettings = {};
 
+  btnText :string = "اضف";
+  waitingDoneSend : boolean = false;
+
   nowuploadImage : string = "";
   constructor(private http: HttpClient, private sanitizer: DomSanitizer, private clrServ: ColorServiceService, private sizeServ: SizeService, private categServ: CategoryService, private addproductServ: ProductFormService, private myRouter: Router, private actRoute: ActivatedRoute) { }
 
@@ -379,8 +382,8 @@ export class ProductFormComponent implements OnInit {
   onsumbit() {
     if (this.productForm.valid && this.imagesColor.length > 0 && this.productVariants.length > 0) {
 
-      console.log(this.selectedItems);
-      console.log(this.selectedItems.map(item => item.item_id));
+      this.waitingDoneSend = true;
+      this.btnText = ""
       const formData = new FormData();
       const newProduct:IProductAddForm = {
         sallerId: 1,

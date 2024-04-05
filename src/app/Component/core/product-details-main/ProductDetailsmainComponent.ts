@@ -28,7 +28,8 @@ export class ProductDetailsmainComponent implements OnInit {
   allStars!: NodeListOf<HTMLElement>;
   ratingValue!: HTMLInputElement;
   buttonText: string = "أضف للعربة";
-  subText: string = "تأكيد"
+  subText: string = "تأكيد";
+  waitingDoneSendReview : boolean = false;
   activeStarsCount: any;
   p: number = 1;
   prodVariantList: IproductVarDet[] = [];
@@ -261,6 +262,8 @@ export class ProductDetailsmainComponent implements OnInit {
   showerror: boolean = false;
   confirmComment(e: Event) {
     if (this.commentForm.valid) {
+      this.waitingDoneSendReview = true;
+      this.subText = "";
       let productId = this.prodDet.id;
       let customerId = this.authService.id;
       let rate = this.activeStarsCount;
@@ -273,6 +276,7 @@ export class ProductDetailsmainComponent implements OnInit {
           this.prodDetApi.getProdReviews(this.id).subscribe({
             next: (data) => {
               this.prodDetrev = data;
+              this.waitingDoneSendReview = false;
               console.log(this.prodDetrev);
             }
           });

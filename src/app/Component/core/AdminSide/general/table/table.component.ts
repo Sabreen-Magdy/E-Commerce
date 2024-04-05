@@ -20,6 +20,10 @@ export class TableComponent implements OnInit{
   selectedColor: Icolor | undefined;
   p:number =1;
   s:number =1;
+  waitingClr : boolean = true;
+  noclr : boolean = false;
+  waitingSize : boolean = true;
+  noSize : boolean = false;
   btnsizeForm : string = "اضف";
   titlesizeForm : string = "اضافة حجم";
 
@@ -65,10 +69,15 @@ export class TableComponent implements OnInit{
     this.allcolorSubscription = this.clrService.getAllColor().subscribe({
       next: (data) => {
         this.colorList =data;
+        this.waitingClr = false;
+        if (data.length ==0){
+          this.noclr = true
+        }
       },
       error : (e) => {
         console.log("error");
         console.log(e);
+        this.noclr = true;
       }
     })
   }
@@ -166,8 +175,13 @@ export class TableComponent implements OnInit{
         console.log("hiiii");
         console.log(data);
         this.sizeList =data;
+        this.waitingSize = false;
+        if (data.length==0){
+          this.noSize = true
+        }
       },
       error : (e) => {
+        this.noSize = true;
         console.log("error");
         console.log(e);
       }

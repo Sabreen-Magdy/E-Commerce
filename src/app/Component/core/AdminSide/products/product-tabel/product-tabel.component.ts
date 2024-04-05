@@ -16,7 +16,8 @@ export class ProductTabelComponent implements OnInit {
   productList : IproductShow[] = [];
   p : number = 1;
   searchNmae : string = "";
-
+  waiting : boolean = true;
+  noitem : boolean = false;
   constructor( private prodServ:ProductFormService ){}
   ngOnInit(): void {
     this.getallProduct();
@@ -27,12 +28,17 @@ export class ProductTabelComponent implements OnInit {
   getallProduct(){
     this.allProductSub = this.prodServ.getAllProduct().subscribe({
       next:(data) => {
-        console.log(data);
+        
+        if (data.length ==0 ){
+          this.noitem = true;
+        }
         this.mainList = data;
         this.productList=data;
+        this.waiting = false;
       } ,
       error:(e) => {
         console.log("ERROR: " + e);
+        this.noitem = true;
       }
     })
   }

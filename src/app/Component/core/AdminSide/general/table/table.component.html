@@ -9,7 +9,10 @@
             class="btn btn-outline-secondary rounded-1"
             >اضافة لون</button>
         </div>
-        <div class="table-wrapped">
+        <div *ngIf="colorList.length == 0 && waitingClr" class="loader2"></div>
+        <div *ngIf="colorList.length == 0 && noclr" class="alert alert-danger mx-4 my-3" >لم تتضف فئات بعد
+    </div>
+        <div *ngIf="colorList.length > 0" class="table-wrapped">
             
             <table class="table-products">
                 <thead>
@@ -59,7 +62,10 @@
             class="btn btn-outline-secondary rounded-1"
             >اضافة حجم</button>
         </div>
-        <div class="table-wrapped">
+        <div *ngIf="sizeList.length == 0 && waitingSize" class="loader2"></div>
+        <div *ngIf="sizeList.length == 0 && noSize" class="alert alert-danger mx-4 my-3" >لم تتضف فئات بعد
+    </div>
+        <div *ngIf="sizeList.length > 0" class="table-wrapped">
             
             <table class="table-products">
                 <thead>

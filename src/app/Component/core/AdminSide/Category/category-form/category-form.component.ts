@@ -18,6 +18,7 @@ export class CategoryFormComponent implements OnInit {
   isedit : boolean = false;
   titleTxt : string = "اضافة الفئة";
   btnText : string = "اضف";
+  waitingDoneSend : boolean = false;
   constructor( 
     private cateService : CategoryService,
     private myRouter: Router,
@@ -68,6 +69,8 @@ export class CategoryFormComponent implements OnInit {
   cateFormSub(e: Event) {
     e.preventDefault();
     if (this.categoryForm.valid) {
+      this.waitingDoneSend = true;
+      this.btnText = "";
       if (this.id) {
         console.log(this.id);
         var editCategory  ={

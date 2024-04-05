@@ -52,7 +52,7 @@ const routes: Routes = [
     {path:"category/add",canActivate:[adminServiceGuard],component:CategoryFormComponent, },
     {path:"category/edit/:id",canActivate:[adminServiceGuard],component:CategoryFormComponent, },
     {path:"Settings",canActivate:[adminServiceGuard],component:TableComponent, },
-    {path:"Customer",canActivate:[adminServiceGuard],component:DeleteComponent, },
+    {path:"customer",canActivate:[adminServiceGuard],component:DeleteComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
     {path:"main",component:AnonymousPageComponent, },

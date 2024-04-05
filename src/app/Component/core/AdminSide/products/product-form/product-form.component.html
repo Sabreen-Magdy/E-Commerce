@@ -134,7 +134,17 @@
 
   </div>
   <div class="col-12 text-center mt-3">
-    <button (click)="onsumbit()" class="btn btn-success rounded-1  px-5">اضف</button>
+    <button (click)="onsumbit()" class="btn btn-success rounded-1  px-5">
+      <div *ngIf="waitingDoneSend">
+        <div  class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      {{btnText}}
+    </button>
   </div>
 
 </div>

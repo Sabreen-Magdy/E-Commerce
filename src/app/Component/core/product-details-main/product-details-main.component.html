@@ -240,7 +240,17 @@
         </div>
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn submit">{{ subText }}</button>
+        <button type="submit" class="btn submit">
+          <div *ngIf="waitingDoneSendReview">
+            <div  class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          {{ subText }}
+        </button>
         <button (click)="clearForm()" class="btn cancel">حذف</button>
       </div>
     </form>
