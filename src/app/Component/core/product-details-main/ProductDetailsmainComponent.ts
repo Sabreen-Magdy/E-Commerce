@@ -4,7 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
-import { AddCart, CartDto, CartItemDto } from 'src/app/models/icart';
+import { AddCart, CartDto, CartItemDto, Uppdatecart } from 'src/app/models/icart';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
@@ -158,6 +158,7 @@ export class ProductDetailsmainComponent implements OnInit {
               break;
             }
           }
+          this.groupedByColor = this.groupByColorCode(this.prodVariantList);
           
         }
 
@@ -520,6 +521,35 @@ export class ProductDetailsmainComponent implements OnInit {
       }
     });
   }
+  increasecartItem(productId: number, itemquantity: number) {
+   
+    const updatecart: Uppdatecart = {
+      state: 0,
+      quantity: itemquantity + this.quantityNumber,
+    };
+    console.log(this.customerId);
+    console.log(productId);
+    console.log(updatecart);
+    this.CartServi.updateCartItem(
+      this.customerId,
+      productId,
+      updatecart
+    ).subscribe({
+      next: (data) => {
+        console.log('increased quantity');
+        this.cartitems =[]
+        this.quantityNumber=1
+        this.getcartbyId(this.prodVariantList.map(p=>p.id));
+      },
+
+      // error: (e) => {
+      //   console.log('Error when Update' + e);
+      //   this.isMaxThanAvailable = true;
+      //   this.waitUpdatNumber = false;
+      //   this.getcartbyId();
+      // },
+    });
+  }
 
   pushItemTocart() {
     console.log(this.selectedvariant.id);
@@ -530,17 +560,28 @@ export class ProductDetailsmainComponent implements OnInit {
       state: 0,
       quantity: this.quantityNumber
     }
+    var item :CartItemDto
+    for (let index = 0; index < this.cartitems.length; index++) {
+      // const element = array[index];
+      if(this.cartitems[index].productVarientId==this.selectedvariant.id){
+        item = this.cartitems[index]
+        console.log("item cart that will updated ",item)
+        break;
+      }
+    }
 
     this.addcartSub = this.CartServi.addCartItem(this.customerId, addcart).subscribe({
       next: (done) => {
         console.log("Added Succesful" + done);
         this.buttonText = "تم إضافة المنتج"
         this.CartServi.getNumberOfitemInCart();
+        this.cartitems =[]
+        this.quantityNumber=1
         this.getcartbyId(this.prodVariantList.map(p=>p.id))
       },
       error: (e) => {
-        this.buttonText = "ذلك المنتج متواجد بالفعل في السلة"
-
+        this.buttonText = "اضفت المزيد للعربة"
+        this.increasecartItem(this.selectedvariant.id ,item.quantity)
         console.log("ERROR when delete" + e);
       }
     })

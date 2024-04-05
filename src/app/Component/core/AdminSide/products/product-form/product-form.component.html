@@ -209,17 +209,20 @@
             
           </div> -->
           <label for="image" class="form-label">صورة المنتج</label>
-          <input  type="file" class="form-control" id="nameProduct"  (change)="onFileSelected($event)" required accept="image/*" />
+          <input  type="file" class="form-control" id="nameProduct"  (change)="onFileSelected($event)" required accept=".png, .jpg, .jpeg" />
           <i *ngIf="imagePicFormcontrol?.valid" class="bi bi-check-circle-fill"></i>
           <i *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
             class="bi bi-exclamation-circle-fill"></i>
           <div *ngIf="imagePicFormcontrol?.errors && (imagePicFormcontrol?.touched || showerroC)"
             class="alert p-1 mt-2 alert-danger">
-            <ng-container *ngIf="imagePicFormcontrol?.hasError('required')">
-              يجب عليك اختيار صورة
-            </ng-container> =
+            <ng-container *ngIf="imagePicFormcontrol?.errors">
+               يجب عليك اختيار صورة من النوع jpg or jpeg or png
+            </ng-container> 
             <!-- Add more error messages if needed -->
+            <!-- <div *ngIf="imagePicFormcontrol?.errors">Invalid file type. Only PNG, JPG, and JPEG are allowed.</div> -->
+
            </div> 
+           
         </div>
 
         <div class="col-12 center">
