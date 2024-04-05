@@ -94,7 +94,7 @@ namespace Presentation.Controllers
                     Subject = "اعادة تعيين كلمة المرور"
                 }, "./wwwroot/Html/forget.html");
                 
-                return Ok(tokenOtp.Token);
+                return Ok(tokenOtp);
             }
             catch(NotFoundException ex)
             {

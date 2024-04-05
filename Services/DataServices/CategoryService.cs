@@ -44,13 +44,13 @@ namespace Services.DataServices
                 .Add(category.ToCategoryEntity());
             _repositoryAdmin.SaveChanges();
         }
-        public void Delete(int id)
+        public void Delete(int id, bool ignore)
         {
             var category = GetCategory(id);
             if (category == null)
                 throw new NotFoundException("Category");
-
-            if (CanRemove(category))
+            
+            if (ignore || CanRemove(category))
             {
                 _repositoryAdmin.CategoryRepository
                     .Delete(category);

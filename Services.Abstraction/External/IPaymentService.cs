@@ -9,5 +9,6 @@ namespace Services.Abstraction.External
         IBraintreeGateway CreateGetWay();
         IBraintreeGateway GetGetWay();
         Payment GreateTransaction(PaymentDto payment);
+        Payment RefundTransaction(string transactionId);
     }
 }

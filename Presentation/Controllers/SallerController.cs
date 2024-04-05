@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Exceptions;
 using Services.Abstraction;
+using Services.Abstraction.External;
 
 
 namespace Presentation.Controllers;
@@ -14,6 +15,8 @@ namespace Presentation.Controllers;
 public class SallerController : ControllerBase
 {
     private readonly IAdminService _adminService;
+    private readonly IExrernalService _externalService;
+
 
     public SallerController(IAdminService adminService)
     {
@@ -221,7 +224,7 @@ public class SallerController : ControllerBase
     {
         try
         {
-            _adminService.ProductService.DeleteColor(productId, categoryId);
+            _adminService.ProductService.DeleteCategory(productId, categoryId);
             return Ok();
         }
         catch (NotFoundException)
@@ -442,7 +445,8 @@ public class SallerController : ControllerBase
     public IActionResult UpdateOrderStatus(int id, int status, string comment)
     {
         _adminService.OrderService.UpdateState(id, status, comment);
-
+        //if(status == 2)
+            //_externalService.PaymentService.RefundTransaction
         return Ok();
     }
 

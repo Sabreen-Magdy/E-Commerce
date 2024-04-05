@@ -29,7 +29,9 @@ namespace Services.DataServices
             var varient = _repository.ProductVarientRepository.Get(varientId);
             if (varient == null)
                 throw new NotFoundException("Product Varient");
-       
+           
+            if(varient.Quantity < item.Quantity)
+                throw new NotAllowedException("Quantity out of Stock");
             return new()
             {
                 CustomerId = customerId,
@@ -102,12 +104,12 @@ namespace Services.DataServices
                 {
                     case Properties.Quantity:
                         {
-                            int newQ = cartItem.Quantity - item.Value; 
                             var varient = _repository.ProductVarientRepository.Get(cartItem.ProductVarient.Id);
-                            _repository.ProductVarientRepository.AddQuntity(
-                                varient ?? throw new NotFoundException("Product Varient"),
-                                newQ
-                                );
+                            if (varient == null)
+                                throw new NotFoundException("Product Varient");
+                            if (varient.Quantity < item.Value)
+                                throw new NotAllowedException("Quantity out of Stock");
+
                             cartItem.Quantity = item.Value;
                             break;
                         }
