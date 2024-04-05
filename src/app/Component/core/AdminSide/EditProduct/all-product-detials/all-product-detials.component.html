@@ -3,6 +3,8 @@
     <header>
         <h3 class="mb-3">تفاصيل المنتج</h3>
     </header>
+    <div *ngIf="loadCategory || loadDETIALS || loadImag || LOadvariant" class="loader2 pm-5"></div>
+    <div *ngIf="loadCategory || loadDETIALS || loadImag || LOadvariant" style="height: 50px;"></div>
     <div *ngIf="!(loadCategory || loadDETIALS || loadImag || LOadvariant)">
       <div class="row detials">
         

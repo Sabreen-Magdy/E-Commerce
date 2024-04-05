@@ -66,6 +66,18 @@
     </li>
     <li>
       <a
+        [routerLink]="['/admin/customer']"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+      <i class='bx bx-user'></i>
+    
+        <span class="links_name">المستخدمين</span>
+      </a>
+      <span class="tooltip">المستخدمين</span>
+    </li>
+    <li>
+      <a
         [routerLink]="['/admin/Settings']"
         [routerLinkActive]="'active'"
         [routerLinkActiveOptions]="{ exact: true }"

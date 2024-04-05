@@ -1,10 +1,12 @@
 <div class="container">
     <div class="contai">
         <header>
-            <h3>الفئات</h3>
+            <h3>المستخدمين</h3>
         </header>
-        
-        <div class="table-wrapped">
+        <div *ngIf="cstList.length == 0 && waiting" class="loader2"></div>
+        <div *ngIf="cstList.length == 0 && noitem" class="alert alert-danger mx-4 my-3" >لا يوجد مستخدمين حتي الان  
+    </div>
+        <div *ngIf="cstList.length > 0" class="table-wrapped">
             
             <table class="table-products">
                 <thead>
@@ -18,15 +20,15 @@
                 </thead>
 
                 <tbody id="tbdyprod">
-                    <tr *ngFor="let c of categoryList  | paginate: {  itemsPerPage: 6, currentPage: p, }">
+                    <tr *ngFor="let c of cstList  | paginate: {  itemsPerPage: 6, currentPage: p, }">
                     <td data-label="#">{{c.id}}</td>
                     <td data-label="الاسم">{{c.name}}</td>
-                    <td data-label="التليفون"><span class="material-symbols-outlined">
-                        {{c.num}}
-                        </span></td>
+                    <td data-label="التليفون">
+                        {{c.phone}}
+                        </td>
                     <td data-label="الايميل"><p>{{c.email}}</p></td>
                     
-                        <button (click)="deleteCategory(c.id)" class="btn2 btn-delete">مسح</button>
+                        <button (click)="deletecSt(c.id)" class="btn2 btn-delete">مسح</button>
                     
                     </tr>
                     

@@ -235,3 +235,11 @@
   .custom-pagination /deep/ .ngx-pagination {
     text-align: center;
   }
+
+
+  .hiii{
+    height: 100px;
+    display: inline-block;
+    width: 100%;
+    background-color: #198754;
+  }

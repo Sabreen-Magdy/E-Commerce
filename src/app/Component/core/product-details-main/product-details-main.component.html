@@ -240,7 +240,17 @@
         </div>
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn submit">{{ subText }}</button>
+        <button type="submit" class="btn submit">
+          <div *ngIf="waitingDoneSendReview">
+            <div  class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          {{ subText }}
+        </button>
         <button (click)="clearForm()" class="btn cancel">حذف</button>
       </div>
     </form>
@@ -300,7 +310,7 @@
     <h3 class="mb-3">قد يهمك ايضا </h3>
 
     <div class="items row ">
-          <div *ngFor="let item of productsByCat" class="element col-lg-2 col-md-4">
+          <div *ngFor="let item of productsByCat | paginate: {  itemsPerPage: 6, currentPage: p, } " class="element col-lg-2 col-md-4">
             <div class="element-img">
               
               <span (click)="pushItemToFavCart(item.id)" class="material-symbols-outlined fav"> favorite </span>
@@ -316,7 +326,10 @@
               <p>{{item.price}} <span>جنيه</span></p>
             </div>
           </div>
-
+          <div  class="pagiDiv">
+            <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+          </div>
+          
 
 
     </div>

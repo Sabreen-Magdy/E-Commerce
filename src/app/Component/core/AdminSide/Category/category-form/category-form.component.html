@@ -70,7 +70,17 @@
       </div>
       </div>
       <div class="col-md-12 text-start">
-        <button class="btn btn-success rounded-1  px-5" type="submit">{{btnText}}</button>
+        <button class="btn btn-success rounded-1  px-5" type="submit">
+          <div *ngIf="waitingDoneSend">
+            <div  class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          {{btnText}}
+        </button>
       </div>
     </form>
     
