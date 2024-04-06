@@ -13,12 +13,13 @@ export class SignUpFormComponent implements OnInit {
   signupform : FormGroup;
   showerror : boolean = false;
   emailUser : string = "";
-  
+
   constructor(private _AuthService:AuthService , private _Router:Router , private actRoute : ActivatedRoute){
     this.signupform = new FormGroup({
       name: new FormControl(
         "",
         [
+
           Validators.required,
           Validators.minLength(3),
           Validators.pattern('[\u0600-\u06FF ,]+')
@@ -64,7 +65,7 @@ export class SignUpFormComponent implements OnInit {
     this.signupform.get('email')?.setValue(this.emailUser);
   }
 
-  
+
   passwordMatchValidator(control: AbstractControl) {
     return control.get('password')?.value ===
     control.get('confirmpassword')?.value
@@ -104,6 +105,7 @@ export class SignUpFormComponent implements OnInit {
       console.log(dataUser);
       this._AuthService.Registeration(dataUser).subscribe({
         next: (data) => {
+          this._Router.navigate(['/signin']);
           console.log("Welcome");
           console.log(data);
         },
@@ -112,7 +114,7 @@ export class SignUpFormComponent implements OnInit {
           console.log(e);
         }
       })
-    
+
     }
     else{
       this.showerror = true

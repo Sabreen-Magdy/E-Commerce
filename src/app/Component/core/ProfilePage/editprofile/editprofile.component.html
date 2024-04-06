@@ -49,10 +49,7 @@
       id="useremail"
       [value]="EmailValue"
     />
-    <i
-      *ngIf="emailcontrol?.valid "
-      class="bi bi-check-circle-fill"
-    ></i>
+    <i *ngIf="emailcontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i
       *ngIf="emailcontrol?.errors && emailcontrol?.touched"
       class="bi bi-exclamation-circle-fill"
@@ -72,7 +69,7 @@
   <div
     class="mb-3 form-control-div"
     [ngClass]="{
-      sucess: phonecontrol?.valid ,
+      sucess: phonecontrol?.valid,
       danger: phonecontrol?.errors && phonecontrol?.touched
     }"
   >
@@ -84,10 +81,7 @@
       id="userPhone"
       [value]="PhoneValue"
     />
-    <i
-      *ngIf="phonecontrol?.valid "
-      class="bi bi-check-circle-fill"
-    ></i>
+    <i *ngIf="phonecontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i
       *ngIf="phonecontrol?.errors && phonecontrol?.touched"
       class="bi bi-exclamation-circle-fill"

@@ -59,12 +59,11 @@ ngOnInit():void{
   submitLoginForm(e:Event){
     console.log("start");
       if (this.signinform.valid){
-
           this._AuthService.signIn(this.signinform.value.email,this.signinform.value.password).subscribe({
             next : (g) => {
-              if(this._AuthService.userRole=="Customer "){
+              if(this._AuthService.userRole=="Customer"){
                 this._Router.navigate(['/home']);
-              }else if(this._AuthService.userRole=="Saller "){
+              }else if(this._AuthService.userRole=="Saller"){
                 this._Router.navigate(['/admin/dashboard']);
               }
             },
