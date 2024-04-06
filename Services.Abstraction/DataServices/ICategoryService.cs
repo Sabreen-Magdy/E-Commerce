@@ -14,7 +14,7 @@ namespace Services.Abstraction.DataServices
 
         void Update(int id, Dictionary<Properties, string> newValues);
 
-        void Delete(int id);
+        void Delete(int id, bool ignore);
         int NumProduct(int categoryId);
     }
 }

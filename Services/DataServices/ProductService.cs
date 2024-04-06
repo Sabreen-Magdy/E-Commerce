@@ -20,9 +20,9 @@ namespace Services.DataServices
             //var varients = GetVarients(product.Id);
             var coloredProducts = _repository.ProductColerdRepository.GetByProduct(product.Id);
             
-            double price = coloredProducts is null || coloredProducts.Count == 0 ? 
-                    0 : coloredProducts.SelectMany(
-                        c => c.Varients, (c, v) => v.Price / c.Varients.Count).Sum();
+            //double price = coloredProducts is null || coloredProducts.Count == 0 ? 
+            //        0 : coloredProducts.SelectMany(
+            //            c => c.Varients, (c, v) => v.Price / c.Varients.Count).Sum();
             //var coloresImages = GetColoresImages(product.Id);
 
             var image = coloredProducts is null || coloredProducts.Count == 0 ?
@@ -31,7 +31,7 @@ namespace Services.DataServices
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price = price,
+                Price = product.AvgPrice,
                 Image = image,
                 AddingDate = product.AddingDate,
                 AvgRating = product.AvgRate,
@@ -417,7 +417,7 @@ namespace Services.DataServices
                         product.ColorId = int.Parse(item.Value);
                         break;
                     case Properties.Discount:
-                        product.Discount = int.Parse(item.Value);
+                        product.Discount = double.Parse(item.Value);
                         break;
 
                     default:

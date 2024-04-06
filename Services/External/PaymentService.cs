@@ -63,6 +63,24 @@ namespace Services.External
                 };
             else
                 throw new PaymentFailedException(results.Message);
-        }      
+        }
+
+        public Payment RefundTransaction(string transactionId)
+        {
+            var getway = GetGetWay();
+            var results =  getway.Transaction.Refund(transactionId);
+
+            if (results.IsSuccess())
+                return new()
+                {
+                    TransactionId = results.Transaction.Id,
+                    Amount = results.Transaction.Amount,
+                    PaymentInstrumentSubtype = results.Transaction.PaymentInstrumentType.GetDescription(),
+                    CreatedAt = results.Transaction.CreatedAt,
+                    CurrencyIsoCode = results.Transaction.CurrencyIsoCode,
+                };
+            else
+                throw new PaymentFailedException(results.Message);
+        }
     }
 }

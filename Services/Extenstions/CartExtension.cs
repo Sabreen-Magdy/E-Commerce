@@ -22,6 +22,7 @@ namespace Services.Extenstions
                 Size = varient.Size.Name,
                 UnitPrice = varient.Price,
                 ProductVarientId = varient.Id,
+                ProductId = varient.ProductId,
                 Discount = varient.Discount
             };
         }

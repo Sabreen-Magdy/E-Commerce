@@ -100,11 +100,11 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, bool ignore)
         {
             try
             {
-                _adminService.CategoryService.Delete(id);
+                _adminService.CategoryService.Delete(id, ignore);
                 return Ok();
             }
             catch (NotFoundException ex)

@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int ProductVarientId { get; set; }
+        public int ProductId { get; set; }
         public string? Image { get; set; }
         public string Name { get; set; } = null!;
         public string Size { get; set; } = null!;

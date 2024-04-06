@@ -19,10 +19,10 @@ namespace Services.DataServices
             var varients = color.ColoredProducts.Select(pc => pc.Varients);
             if (varients.Count() == 0) return true;
 
-            return varients.SelectMany(v => v, (v, varient) => varient.Quantity).Sum() == 0;
+            return varients.SelectMany(v => v, (v, varient) => varient.Quantity).Sum() != 0;
         }
         private bool CanRemoveSize(Size size) =>
-             size.Varients.Sum(v => v.Quantity) == 0;
+             size.Varients.Sum(v => v.Quantity) != 0;
 
         public void AddColor(string name, string code)
         {

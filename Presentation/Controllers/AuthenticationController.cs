@@ -22,7 +22,8 @@ namespace Presentation.Controllers
         public IActionResult Confirm(string email)
         {
             try
-            {
+            { 
+
                 var redirectUrl = Request.Headers["RedirectUrl"];
                 if (string.IsNullOrEmpty(redirectUrl))
                     return BadRequest("Must send RedirectUrl header");
@@ -94,7 +95,7 @@ namespace Presentation.Controllers
                     Subject = "اعادة تعيين كلمة المرور"
                 }, "./wwwroot/Html/forget.html");
                 
-                return Ok(tokenOtp.Token);
+                return Ok(tokenOtp);
             }
             catch(NotFoundException ex)
             {

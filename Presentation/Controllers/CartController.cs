@@ -72,6 +72,10 @@ namespace Presentation.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch (NotAllowedException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -89,6 +93,10 @@ namespace Presentation.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch (NotAllowedException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -102,6 +110,10 @@ namespace Presentation.Controllers
             try
             {
                 _adminService.CartService.Update(costomerId, productId, newValues); return Ok();
+            }
+            catch (NotAllowedException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (NotFoundException ex)
             {
