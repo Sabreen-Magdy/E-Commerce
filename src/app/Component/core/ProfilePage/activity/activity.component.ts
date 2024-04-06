@@ -18,7 +18,7 @@ interface orderDetials {
 export class ActivityComponent {
   processedData: customerOrder[] = [];
   selectedIndex: number = 0;
-  p: number = 0;
+  p: number = 1;
   constructor(private _AuthService: AuthService) {}
   ngOnInit(): void {
     this._AuthService.userData.subscribe({
