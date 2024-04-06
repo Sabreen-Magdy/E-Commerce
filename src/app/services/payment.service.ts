@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class PaymentService {
 
   constructor(private http :HttpClient) { }
-  baseUrl : string ='http://localhost:5058/api/Payment/'
+  baseUrl : string ='http://www.srm.somee.com/api/Payment/'//http://localhost:5058/api/Payment/
   getPaymentToken():Observable<string>{
     return this.http.get(`${this.baseUrl}PaymentToken`, { responseType: 'text' })
   }
-
+//http://www.srm.somee.com/api/Payment/
   Pay(payment:Payment){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

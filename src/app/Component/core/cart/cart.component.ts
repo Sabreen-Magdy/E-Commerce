@@ -83,6 +83,7 @@ export class CartComponent implements OnInit {
     //   next: (data) => this.clientToken = data
     // })
     this.setupBraintree()
+    this.error  = false
   }
 
   cartByIDsub: Subscription | undefined;
@@ -358,7 +359,9 @@ export class CartComponent implements OnInit {
 
   payment: Payment = { amount: 0, nonce: "", currencyIsoCode: 'USD' }
   // Retrieve client token and initialize Braintree
+  error : boolean = false
   setupBraintree(): void {
+    this.error  = false
     this._PaymentService.getPaymentToken().subscribe(
       (clientToken: string) => {
         braintree.dropin.create({
@@ -385,10 +388,16 @@ export class CartComponent implements OnInit {
                 (response: any) => {
                   console.log('Payment successful:', response);
                   this.SendOrder()
-
+                  this.error  = false
+                  const submitButton = document.getElementById('submit-btn');
+                  if (submitButton) {
+                    submitButton.setAttribute('disabled', 'true');
+                  }
+                //  form?.addEventListener('submit')
                 },
                 (error: any) => {
                   console.error('Error processing payment:', error);
+                  this.error  = true
                 }
               )
               // this.SendOrder()

@@ -288,33 +288,15 @@
           </div>
         </section>
         <input type="hidden" id="nonce" [value]="nonce" />
-        <input type="submit" value="Submit Payment" class="btn btn-dark" />
-
+        <input type="submit" value="Submit Payment" id="submit-btn" class="btn btn-dark" />
+        <div *ngIf="error" class="m-4" >
+          <span class="text-danger mx-1"><i class="bi bi-ban"></i></span
+          >
+          <span class="text-danger" style="font-size: larger;" > حدث خطأ اثناء الدفع حاول مرة اخري</span>       
+        </div>
         <hr />
       </form>
       <!-- </div> -->
     </div>
   </div>
 </div>
-<!-- <script>
-  var form = document.getElementById('payment-form');
-
-  this.fetchClientTokenFromServer().then(clientToken => {
-  braintree.dropin.create({
-    authorization: client_token,
-    container: '#bt-dropin'
-  }, function (createErr, instance) {
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      instance.requestPaymentMethod(function (err, payload) {
-        if (err) {
-          return;
-        }
-
-        document.querySelector('#nonce').value = payload.nonce;
-        form.submit();
-      });
-    });
-  });})
-</script> -->
