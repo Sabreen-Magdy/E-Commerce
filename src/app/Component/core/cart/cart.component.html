@@ -230,7 +230,7 @@
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-success">
+            <!-- <button type="submit" class="btn btn-success">
               <div *ngIf="waitingSendOrder">
                 <div class="lds-ellipsis">
                   <div></div>
@@ -240,6 +240,18 @@
                 </div>
               </div>
               {{btnText}}
+            </button> -->
+
+            <button type="submit" id="paypal-button" class="w-100 d-flex justify-content-center">
+              <div *ngIf="waitingSendOrder">
+                <div class="lds-ellipsis">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <img src="assets/Images/paypal_logo.png" alt="PayPal Logo" id="paypal-logo"> Pay with PayPal
             </button>
           </form>
         </div>
