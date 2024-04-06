@@ -39,18 +39,20 @@ export class RestPasswordComponent {
     );
   }
   otp:string="";
-  token:string="";
+  token:any;
   id:number=0;
   ngOnInit(): void {
+    console.log("hiiiiiiiiiiiiiiiiii");
   this.otp=this._AuthService.otp;
   this.token=this._AuthService.tokenForget;
-  let Tok=JSON.stringify(this.token);
-  let decodeTok:any=jwtDecode(Tok);
-  this.id=decodeTok.id;
-  console.log("OTP",this.token);
-  console.log("tttttttttttttok",Tok)
+  console.log("OTP" , this.otp);
+  console.log("Token", this.token);
+  let decodeTok:any=jwtDecode(this.token);
   console.log("deeeeeeeeeeee",decodeTok)
-  console.log("idddddddddd",this.id)
+  // this.id=decodeTok.id;
+  // console.log("OTP",this.token);
+  
+  // console.log("idddddddddd",this.id)
 
   }
 

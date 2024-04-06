@@ -37,6 +37,7 @@ import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-for
 import { DeleteComponent } from './Component/core/AdminSide/delete/delete.component';
 import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
 import { RestPasswordComponent } from './Component/core/SignComp/rest-password/rest-password.component';
+import { UpdatePassComponent } from './Component/core/ProfilePage/update-pass/update-pass.component';
 
 
 const routes: Routes = [
@@ -80,7 +81,8 @@ const routes: Routes = [
     {path:"profile",canActivate:[AuthGuard],component:ProfileComponent, children:[
       {path:"profiledetails",canActivate:[AuthGuard],component:ProfiledetaileComponent, },
       {path:"editprofile",canActivate:[AuthGuard],component:EditprofileComponent, },
-      {path:"activity",canActivate:[AuthGuard],component:ActivityComponent, },
+      {path:"order",canActivate:[AuthGuard],component:ActivityComponent, },
+      {path:"updatapassword",canActivate:[AuthGuard],component:UpdatePassComponent, },
     ] },
 
   ]},

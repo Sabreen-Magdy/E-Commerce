@@ -26,7 +26,7 @@ export class AuthService {
   allProducts : IproductShow [] = [];
   userDataSubscription: Subscription|undefined;
   otp : string = "";
-  tokenForget : string = "";
+  tokenForget : any ;
   saveUserData(){
       let encodedToken=JSON.stringify(localStorage.getItem('loginToken')) ;
       let decodedToken:any=jwtDecode(encodedToken);

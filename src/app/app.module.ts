@@ -75,6 +75,7 @@ import { DeleteComponent } from './Component/core/AdminSide/delete/delete.compon
 import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { RestPasswordComponent } from './Component/core/SignComp/rest-password/rest-password.component';
+import { UpdatePassComponent } from './Component/core/ProfilePage/update-pass/update-pass.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { RestPasswordComponent } from './Component/core/SignComp/rest-password/r
     DeleteComponent,
     EmailSignFORMComponent,
     RestPasswordComponent,
+    UpdatePassComponent,
     
     
     
