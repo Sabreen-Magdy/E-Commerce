@@ -14,7 +14,7 @@ namespace Persistence.Authentication
         private readonly IExternalRepository _repository;
         private readonly IAdminService _adminService;
 
-        public AuthenticationService(IExternalRepository repository, 
+        public AuthenticationService(IExternalRepository repository,
             IAdminService adminService)
         {
             _repository = repository;
@@ -51,7 +51,7 @@ namespace Persistence.Authentication
             string otp = GenerateOtp();
             var token = await _repository.AuthenticationRepository
                         .RestPassword(email, otp);
-           return new(token, otp);
+            return new(token, otp);
         }
         public async Task DeleteCustomer(int customerId)
         {
@@ -61,7 +61,7 @@ namespace Persistence.Authentication
             try
             {
 
-               await _repository.AuthenticationRepository.Remove(customer.UserId);
+                await _repository.AuthenticationRepository.Remove(customer.UserId);
 
                 _adminService.CustomerService.Delete(customerId);
             }
@@ -70,8 +70,12 @@ namespace Persistence.Authentication
                 throw;
             }
         }
-        public Task<User> Login(LoginDto login) =>
-        _repository.AuthenticationRepository.Login(login.Email, login.Password);
+        public async Task<User> Login(LoginDto login)
+        {
+            var user = await _repository.AuthenticationRepository.Login(login.Email, login.Password);
+            user.Id = _adminService.CustomerService.GetAll().Find(c => c.Email == login.Email)!.Id;
+            return user;
+        }
         public async Task<User> Register(CustomerAddDto customer)
         {
             var customerEntity = customer.ToCustomerEntity();
