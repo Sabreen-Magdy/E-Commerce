@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
@@ -9,11 +10,11 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./rest-password.component.css']
 })
 export class RestPasswordComponent {
- 
+
   signupform : FormGroup;
   showerror : boolean = false;
- 
-  
+
+
   constructor(private _AuthService:AuthService , private _Router:Router , ){
     this.signupform = new FormGroup({
       password : new FormControl (
@@ -37,12 +38,23 @@ export class RestPasswordComponent {
     }
     );
   }
+  otp:string="";
+  token:string="";
+  id:number=0;
   ngOnInit(): void {
-  console.log("OTP",);
-  
+  this.otp=this._AuthService.otp;
+  this.token=this._AuthService.tokenForget;
+  let Tok=JSON.stringify(this.token);
+  let decodeTok:any=jwtDecode(Tok);
+  this.id=decodeTok.id;
+  console.log("OTP",this.token);
+  console.log("tttttttttttttok",Tok)
+  console.log("deeeeeeeeeeee",decodeTok)
+  console.log("idddddddddd",this.id)
+
   }
 
-  
+
   passwordMatchValidator(control: AbstractControl) {
     return control.get('password')?.value ===
     control.get('confirmpassword')?.value
@@ -62,9 +74,9 @@ export class RestPasswordComponent {
   submitRegisterForm(e : Event){
     e.preventDefault();
     if (this.signupform.valid){
-      
-      
-    
+
+
+
     }
     else{
       this.showerror = true
