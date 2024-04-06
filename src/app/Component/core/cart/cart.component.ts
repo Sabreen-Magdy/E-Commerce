@@ -13,7 +13,7 @@ import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
 import { PaymentService } from 'src/app/services/payment.service';
 // import * as braintree from 'braintree-web';
 // import * as dropin from 'braintree-web-drop-in';
-declare var braintree: any; 
+declare var braintree: any;
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -355,10 +355,8 @@ export class CartComponent implements OnInit {
       this.showerror = true;
     }
   }
-  initializeDropIn(){
 
-  }
-  payment:Payment={amount:0,nonce:"",currencyIsoCode:'USD'}
+  payment: Payment = { amount: 0, nonce: "", currencyIsoCode: 'USD' }
   // Retrieve client token and initialize Braintree
   setupBraintree(): void {
     this._PaymentService.getPaymentToken().subscribe(
@@ -381,20 +379,21 @@ export class CartComponent implements OnInit {
                 return;
               }
               this.nonce = payload.nonce;
-              this.payment = {amount:this.totalPrice/47.39,nonce:this.nonce , currencyIsoCode:"USD"}
+              this.payment = { amount: this.totalPrice / 47.39, nonce: this.nonce, currencyIsoCode: "USD" }
               console.log(this.payment)
-              this._PaymentService.Pay(this.payment)
-              this.SendOrder()
-              // You can now use this.nonce to send payment details to the server
-              // For example:
-              // this.paymentService.pay({ amount: 10, nonce: this.nonce, currencyIsoCode: 'USD' }).subscribe(
-              //   (response: any) => {
-              //     console.log('Payment successful:', response);
-              //   },
-              //   (error: any) => {
-              //     console.error('Error processing payment:', error);
-              //   }
-              // );
+              this._PaymentService.Pay(this.payment).subscribe(
+                (response: any) => {
+                  console.log('Payment successful:', response);
+                  this.SendOrder()
+
+                },
+                (error: any) => {
+                  console.error('Error processing payment:', error);
+                }
+              )
+              // this.SendOrder()
+
+             
             });
           });
         });
@@ -404,43 +403,11 @@ export class CartComponent implements OnInit {
       }
     );
   }
-  // private braintreeClient: any;
-  // private dropinInstance: any;
-  // private paymentForm: HTMLFormElement | undefined;
-  // initializeDropIn() {
-  //   console.log(this.clientToken)
-  //   braintree.client.create({
-  //     authorization: this.clientToken
-  //   }, (clientErr, clientInstance) => {
-  //     if (clientErr) {
-  //       console.error('Error initializing client:', clientErr);
-  //       return;
-  //     }
-  //     this.braintreeClient = clientInstance;
-
-  //    // Create Drop-in UI
-     
-  //     braintree.dropin.create({
-  //       container: '#bt-dropin',
-  //       authorization: this.clientToken,
-  //       paypal: {
-  //         flow: 'vault'
-  //       }
-  //     }, (dropinErr, instance) => {
-  //       if (dropinErr) {
-  //         console.error('Error creating Drop-in:', dropinErr);
-  //         return;
-  //       }
-  //       this.dropinInstance = instance;
-  //     });
-  //   });
-  // };
-
-//}
+  
 
 
 
-  }
+}
 
 
 

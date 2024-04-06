@@ -2,7 +2,7 @@ import { compileNgModule } from '@angular/compiler';
 import { CartService } from './../../../services/cart.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { AddCart, CartDto, CartItemDto, Uppdatecart } from 'src/app/models/icart';
 import { IaddFavorite } from 'src/app/models/Ifav';
@@ -34,6 +34,8 @@ export class ProductDetailsmainComponent implements OnInit {
   activeStarsCount: any;
   p: number = 1;
   prodVariantList: IproductVarDet[] = [];
+  prodVariantListOriginal: IproductVarDet[] = [];
+
   prodDet: IproductDTo = {
     "id": 0,
     "name": "waiting",
@@ -192,7 +194,9 @@ export class ProductDetailsmainComponent implements OnInit {
     })
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
-        this.prodVariantList = data.filter(p=>p.quantity>0);
+        this.prodVariantList =  [...data.filter(p=>p.quantity>0)];
+        this.prodVariantListOriginal = [...data.filter(p=>p.quantity>0)];
+        console.log("prodVariantListOriginal on init",this.prodVariantListOriginal)
         // for (let index = 0; index < this.prodVariantList.length; index++) {
         //   if(this.prodVariantList[index].quantity <1){
         //     this.outofStok.push(false)
@@ -555,8 +559,22 @@ export class ProductDetailsmainComponent implements OnInit {
       next: (data) => {
         console.log('increased quantity');
         this.cartitems =[]
+        
+        // this.getcartbyId(this.prodVariantList.map(p=>p.id));
+        const indexofvarupdated = this.prodVariantList.indexOf(this.selectedvariant)
+        // console.log("indexofvarupdated",indexofvarupdated)
+        // this.prodVariantList[indexofvarupdated].quantity-=this.quantityNumber
+        //this.prodVariantList=this.prodVariantListOriginal
+        // this.prodVariantList = [...this.prodVariantListOriginal];
+        this.prodVariantList = JSON.parse(JSON.stringify(this.prodVariantListOriginal));
+        console.log("prodVariantList",this.prodVariantList)
+        console.log("prodVariantListOriginal",this.prodVariantListOriginal)
+        this.getcartbyId(this.prodVariantList.map(p=>p.id))
+        this.selectedvariant = this.prodVariantList[indexofvarupdated]
+
+        // this.groupedByColor = this.groupByColorCode(this.prodVariantList);
         this.quantityNumber=1
-        this.getcartbyId(this.prodVariantList.map(p=>p.id));
+
       },
 
       // error: (e) => {
@@ -596,13 +614,23 @@ export class ProductDetailsmainComponent implements OnInit {
         this.buttonText = "تم إضافة المنتج"
         this.CartServi.getNumberOfitemInCart();
         this.cartitems =[]
-        this.quantityNumber=1
+        const indexofvarupdated = this.prodVariantList.indexOf(this.selectedvariant)
+        // console.log("indexofvarupdated",indexofvarupdated)
+
+        // this.prodVariantList[indexofvarupdated].quantity-=this.quantityNumber
+        // this.prodVariantList=  [...this.prodVariantListOriginal]
+        this.prodVariantList = JSON.parse(JSON.stringify(this.prodVariantListOriginal));
         this.getcartbyId(this.prodVariantList.map(p=>p.id))
+        this.selectedvariant = this.prodVariantList[indexofvarupdated]
+        // this.groupedByColor = this.groupByColorCode(this.prodVariantList);
+        this.quantityNumber=1
+
+        // this.getcartbyId(this.prodVariantList.map(p=>p.id))
       },
       error: (e) => {
         this.buttonText = "اضفت المزيد للعربة"
         this.increasecartItem(this.selectedvariant.id ,item.quantity)
-        console.log("ERROR when delete" + e);
+       // console.log("ERROR when delete" + e);
       }
     })
   }else{
