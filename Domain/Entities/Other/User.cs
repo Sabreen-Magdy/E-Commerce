@@ -15,7 +15,7 @@
     public record ChangePasswordDto(int Id, string OldPassword, string NewPassword)
     {
     }
-    public record ForgetPasswordDto(string Token, string OTP, int Id, string NewPassword)
+    public record ForgetPasswordDto(string Token, string OTP, string Email, string NewPassword)
     {
     }
 

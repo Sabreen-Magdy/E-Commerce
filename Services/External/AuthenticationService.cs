@@ -36,7 +36,7 @@ namespace Persistence.Authentication
         }
         public async Task RestPassword(ForgetPasswordDto passwordDto)
         {
-            var customer = _adminService.CustomerService.Get(passwordDto.Id);
+            var customer = _adminService.CustomerService.GetAll().Find(c => c.Email== passwordDto.Email );
             if (customer == null)
                 throw new NotFoundException("Cusromer");
             else
