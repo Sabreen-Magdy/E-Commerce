@@ -6,14 +6,15 @@
       <th>تاريخ الطلب</th>
       <th>عنوان العميل</th>
       <th>التكلفة</th>
+      <th>تفاصيل الطلب</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of processedData | paginate: {  itemsPerPage: 6, currentPage: p }; , let index = index">
       <td>
-        <button type="button" (click)="toggleModel(((p- 1) * 6) + index)" class="btn btn-link btn-sm btn-rounded">
+        
           {{ item.orderId }}
-        </button>
+        
       </td>
       <td>
         <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
@@ -27,6 +28,9 @@
         <p class="text-success fw-normal mb-1 fa-light fa-dollar-sign">
           {{ item.orderTotalCost }}
         </p>
+      </td>
+      <td>
+        <i  (click)="toggleModel(((p- 1) * 6) + index)"  class="bi bi-box-arrow-up-right"></i>
       </td>
     </tr>
   </tbody>
@@ -61,7 +65,7 @@
             <tr *ngFor="let item of processedData[selectedIndex].productsperOrders ">
               <th scope="row">{{item.productName}}</th>
               <td>
-                  <img class="img-product-order-D" [src]="'http://srmgroub.somee.com/Images/'+item.image">
+                  <img class="img-product-order-D" [src]="'http://www.srm.somee.com/Images/'+item.image">
               </td>
               <td>{{item.quantity}}</td>
               <td>{{item.totalCost}} جنيه</td>

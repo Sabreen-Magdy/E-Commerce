@@ -35,48 +35,51 @@ export class NewProductComponent implements OnInit {
           products => {
             products.sort((a,b)=>b.addingDate.localeCompare(a.addingDate))
             this.allproductList = products;
-            
+
           },
           error => {
             console.error('Error fetching products:', error);
-            
+
           }
         );
-      } 
-      
+      }
+
       else{
         this.prodServ.getAllProduct2().subscribe(
           products => {
             products.sort((a,b)=>b.addingDate.localeCompare(a.addingDate))
             this.allproductList = products;
-            
-            
+
+
           },
           error => {
             console.error('Error fetching products:', error);
-            
+
           }
         );
 
       }
     })
- 
+
   }
 
   AllProductSub : Subscription | undefined;
   addFavSub : Subscription | undefined;
 
   pushItemToFavCart( prodId : number ){
-    Swal.fire({
-      title: 'تم إضافة المنتج إلى قائمة أمنياتي',
-      confirmButtonColor: '#198754', // Change this to the color you prefer
-    });
-    const addFav : IaddFavorite = {
+    this._authService.userData.subscribe({
+      next:()=>{
+        if(this._authService.userData.getValue()!=null){
+              Swal.fire({
+                    title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+                    confirmButtonColor: '#198754', // Change this to the color you prefer
+               });
+               const addFav : IaddFavorite = {
       customerId: this.customerId,
       productId: prodId
-    }
+               }
 
-   this.addFavSub = this._favService.additemTofav(addFav).subscribe({
+               this.addFavSub = this._favService.additemTofav(addFav).subscribe({
     next : (data) => {
       console.log("item Add to Fav Succesfully" + data);
       this._favService.getNumberOfitemInFavCart();
@@ -85,8 +88,16 @@ export class NewProductComponent implements OnInit {
       console.log("may bt item in fav already");
       console.log("ERROR when add fav to item" + e);
     }
-   })
-   this._favService.getNumberOfitemInFavCart();
+              })
+             this._favService.getNumberOfitemInFavCart();
+           }else{
+            Swal.fire({
+              title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
+              confirmButtonColor: '#198754', // Change this to the color you prefer
+         });
+           }
+         }
+        });
   }
   goto(){
     if (this.thiscateg){

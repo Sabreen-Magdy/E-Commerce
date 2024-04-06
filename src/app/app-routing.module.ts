@@ -35,6 +35,9 @@ import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color
 import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
 import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
 import { DeleteComponent } from './Component/core/AdminSide/delete/delete.component';
+import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
+import { RestPasswordComponent } from './Component/core/SignComp/rest-password/rest-password.component';
+import { UpdatePassComponent } from './Component/core/ProfilePage/update-pass/update-pass.component';
 
 
 const routes: Routes = [
@@ -63,20 +66,23 @@ const routes: Routes = [
       {path:"emailValidation",component:EmailSignFORMComponent, },
       {path:"signup",component:SignUpFormComponent, },
       {path:"forgetpassword",component:ForgetPasswordComponent, },
+      {path:"OTP",component:VerifiyComponent, },
+      {path:"resetpassword",component:RestPasswordComponent, },
     ]},
-    {path:"home",canActivate:[AuthGuard],component:HomePageComponent, },
-    {path:"home/:catgoryname",canActivate:[AuthGuard],component:HomePageComponent, },
-    {path:"store",canActivate:[AuthGuard],component:StoreComponent, },
-    {path:"store/:catgoryname",canActivate:[AuthGuard],component:StoreComponent, },
-    {path:"store/products/:productname",canActivate:[AuthGuard],component:StoreComponent, },
-    {path:"store/productDetials/:id",canActivate:[AuthGuard],component:ProductDetailsmainComponent, },
+    {path:"home",component:HomePageComponent, },
+    {path:"home/:catgoryname",component:HomePageComponent, },
+    {path:"store",component:StoreComponent, },
+    {path:"store/:catgoryname",component:StoreComponent, },
+    {path:"store/products/:productname",component:StoreComponent, },
+    {path:"store/productDetials/:id",component:ProductDetailsmainComponent, },
     {path:"cart",canActivate:[AuthGuard],component:CartComponent, },
     {path:"favorite",canActivate:[AuthGuard],component:FavoriteComponent, },
     {path:"checkout",canActivate:[AuthGuard],component:CheckoutComponent, },
     {path:"profile",canActivate:[AuthGuard],component:ProfileComponent, children:[
       {path:"profiledetails",canActivate:[AuthGuard],component:ProfiledetaileComponent, },
       {path:"editprofile",canActivate:[AuthGuard],component:EditprofileComponent, },
-      {path:"activity",canActivate:[AuthGuard],component:ActivityComponent, },
+      {path:"order",canActivate:[AuthGuard],component:ActivityComponent, },
+      {path:"updatapassword",canActivate:[AuthGuard],component:UpdatePassComponent, },
     ] },
 
   ]},

@@ -7,14 +7,14 @@ import { IReview, ProductIReview, Review } from '../models/ireview';
   providedIn: 'root'
 })
 export class ProductReviewService {
-  private baseURL: string = "http://srmgroub.somee.com/api/Customer/";
+  private baseURL: string = "http://www.srm.somee.com/api/Customer/";
   constructor(private http: HttpClient) { }
 
   // http://localhost:5058/api/Product/GetProductReviews?id=31
   // /AddReview?customerId=1&productId=32&comment=%D8%AC%D8%A7%D9%85%D8%AF&rate=5
 
   getProductReviewById(id: number): Observable<ProductIReview> {
-    return this.http.get<ProductIReview>(`http://srmgroub.somee.com/api/Product/GetProductReviews?id=${id}`);
+    return this.http.get<ProductIReview>(`http://www.srm.somee.com/api/Product/GetProductReviews?id=${id}`);
   }
 
   addProductReview(customerId: number, productId: number, comment: string, rate: number) {

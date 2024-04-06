@@ -215,15 +215,18 @@ export class StoreComponent implements OnInit {
   }
 
   pushItemToFavCart(prodId: number) {
-    Swal.fire({
+    this.auth.userData.subscribe({
+      next:()=>{
+        if(this.auth.userData.getValue()!=null){
+             Swal.fire({
       title: 'تم إضافة المنتج إلى قائمة أمنياتي',
       confirmButtonColor: '#198754', // Change this to the color you prefer
-    });
-    const addFav: IaddFavorite = {
+             });
+            const addFav: IaddFavorite = {
       customerId: this.customerId,
       productId: prodId,
-    };
-    this.addFavSub = this._favService.additemTofav(addFav).subscribe({
+            };
+              this.addFavSub = this._favService.additemTofav(addFav).subscribe({
       next: (data) => {
         console.log('item Add to Fav Succesfully' + data);
       },
@@ -231,8 +234,16 @@ export class StoreComponent implements OnInit {
         console.log('may bt item in fav already');
         console.log('ERROR when add fav to item' + e);
       },
+           });
+          this._favService.getNumberOfitemInFavCart();
+           }else{
+          Swal.fire({
+         title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
+         confirmButtonColor: '#198754', // Change this to the color you prefer
     });
-    this._favService.getNumberOfitemInFavCart();
+   }
+ }
+});
   }
 
   sortProductList(e: any) {
@@ -296,9 +307,9 @@ export class StoreComponent implements OnInit {
     for (let item of this.favlist){
       if (item.productId == id){
         return true;
-        
+
       }
-      
+
     }
     return false;
   }

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AdminOrderService {
 
   constructor(private http : HttpClient) { }
-  baseUrl :string = "http://srmgroub.somee.com/api/Saller/"
+  baseUrl :string = "http://www.srm.somee.com/api/Saller/"
   getAll():Observable<AdminOrder[]>{
     return this.http.get<AdminOrder[]>(this.baseUrl+"GetAllOrders")
   }

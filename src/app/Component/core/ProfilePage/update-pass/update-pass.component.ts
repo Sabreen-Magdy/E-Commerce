@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
-  selector: 'app-editprofile',
-  templateUrl: './editprofile.component.html',
-  styleUrls: ['./editprofile.component.css']
+  selector: 'app-update-pass',
+  templateUrl: './update-pass.component.html',
+  styleUrls: ['./update-pass.component.css']
 })
-export class EditprofileComponent implements OnInit {
+export class UpdatePassComponent {
 
   editProfileForm : FormGroup=new FormGroup({});
   showerror : boolean = false;
@@ -111,5 +111,4 @@ MakeFormValidation(){
 
 
   }
-
 }

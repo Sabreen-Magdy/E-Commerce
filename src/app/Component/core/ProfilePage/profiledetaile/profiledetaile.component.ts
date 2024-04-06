@@ -10,7 +10,7 @@ export class ProfiledetaileComponent {
   name:string=""
   email:string=""
   phone:string=""
-  password:string=""
+  // password:string=""
   constructor(private _AuthService:AuthService){}
   ngOnInit(): void {
     this._AuthService.userData.subscribe({
@@ -21,7 +21,7 @@ export class ProfiledetaileComponent {
                 this.name= response.name;
                 this.email=response.email;
                 this.phone= response.phone;
-                this.password=response.password;
+                // this.password=response.password;
           }
         });
         }

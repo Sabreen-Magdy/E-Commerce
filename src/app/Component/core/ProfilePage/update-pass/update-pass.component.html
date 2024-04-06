@@ -1,0 +1,69 @@
+<form [formGroup]="editProfileForm" (ngSubmit)="editForm($event)">
+    
+    <div
+      class="mb-3 form-control-div"
+      [ngClass]="{
+        sucess: passwordcontrol?.valid,
+        danger: passwordcontrol?.errors && passwordcontrol?.touched
+      }"
+    >
+      <label for="userPassword" class="form-label">كلمة السر القديمة</label>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="userPassword"
+       
+      />
+      <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
+      <i
+        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        class="bi bi-exclamation-circle-fill"
+      ></i>
+      <div
+        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+        class="alert p-1 mt-3 alert-danger"
+      >
+        <ng-container *ngIf="passwordcontrol?.hasError('required')">
+          يجب عليك ادخال كلمة المرور
+        </ng-container>
+        <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
+          يجب علي كلمة المرور ان تكون اطول من 5 حروف
+        </ng-container>
+      </div>
+    </div> 
+    <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: passwordcontrol?.valid,
+      danger: passwordcontrol?.errors && passwordcontrol?.touched
+    }"
+  >
+    <label for="userPassword" class="form-label">كلمة السر الجديدة</label>
+    <input
+      formControlName="password"
+      type="password"
+      class="form-control"
+      id="userPassword"
+      
+    />
+    <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
+    <i
+      *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="passwordcontrol?.hasError('required')">
+        يجب عليك ادخال كلمة المرور
+      </ng-container>
+      <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
+        يجب علي كلمة المرور ان تكون اطول من 5 حروف
+      </ng-container>
+    </div>
+  </div> 
+    <button type="submit" class="btn btn-success">تعديل</button>
+  </form>
+  

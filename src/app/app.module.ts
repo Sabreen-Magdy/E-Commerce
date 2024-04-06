@@ -73,6 +73,9 @@ import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
 
 import { DeleteComponent } from './Component/core/AdminSide/delete/delete.component';
 import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { RestPasswordComponent } from './Component/core/SignComp/rest-password/rest-password.component';
+import { UpdatePassComponent } from './Component/core/ProfilePage/update-pass/update-pass.component';
 
 @NgModule({
   declarations: [
@@ -130,6 +133,8 @@ import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-for
     VerifiyComponent,
     DeleteComponent,
     EmailSignFORMComponent,
+    RestPasswordComponent,
+    UpdatePassComponent,
     
     
     
@@ -145,7 +150,8 @@ import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-for
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgxPaginationModule,
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    NgOtpInputModule
 
     // ChartsModule
     //BrowserModule,

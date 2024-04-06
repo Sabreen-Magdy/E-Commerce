@@ -13,7 +13,7 @@ import { Iproduct } from '../models/iproduct';
 })
 export class ProductDetailsService {
 
-  baseUrl : string ="http://srmgroub.somee.com/api/Product"
+  baseUrl : string ="http://www.srm.somee.com/api/Product"
   //http://localhost:5058/api/Product/GetDetailsById
   constructor(private http :HttpClient , private router:ActivatedRoute) { }
  

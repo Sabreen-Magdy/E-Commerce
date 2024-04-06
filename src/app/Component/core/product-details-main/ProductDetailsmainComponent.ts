@@ -15,6 +15,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductIReview, Review } from 'src/app/models/ireview';
 import { ProductReviewService } from 'src/app/services/reviews.service';
 import { Iproduct } from 'src/app/models/iproduct';
+import Swal from 'sweetalert2';
 // import 'swiper/swiper-bundle.min.css';
 // import Swiper from 'swiper';
 
@@ -160,12 +161,12 @@ export class ProductDetailsmainComponent implements OnInit {
             }
           }
           this.groupedByColor = this.groupByColorCode(this.prodVariantList);
-          
+
         }
 
         console.log('product var list after edit ',this.prodVariantList)
 
-        
+
         if (filterdata.length == 0) {
           this.noitem = true;
         }
@@ -208,7 +209,7 @@ export class ProductDetailsmainComponent implements OnInit {
         this.selectedvariant = this.prodVariantList[0]
         this.plusAppearance = this.prodVariantList[0].quantity > 1
         this.getcartbyId(this.prodVariantList.map(p=>p.id));
-        
+
         this.groupedByColor = this.groupByColorCode(this.prodVariantList);
         console.log(this.groupedByColor)
       }
@@ -473,6 +474,9 @@ export class ProductDetailsmainComponent implements OnInit {
   // }
 
   pushItemToFavCart(prodId: number) {
+    this.authService.userData.subscribe({
+      next:()=>{
+        if(this.authService.userData.getValue()!=null){
     this.waitingFav = true;
     const addFav: IaddFavorite = {
       customerId: this.customerId,
@@ -491,6 +495,15 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log("ERROR when add fav to item" + e);
       }
     })
+  }else{
+    Swal.fire({
+   title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
+   confirmButtonColor: '#198754', // Change this to the color you prefer
+  });
+  }
+  }
+  });
+
   }
 
   checkFavourite() {
@@ -526,7 +539,7 @@ export class ProductDetailsmainComponent implements OnInit {
     });
   }
   increasecartItem(productId: number, itemquantity: number) {
-   
+
     const updatecart: Uppdatecart = {
       state: 0,
       quantity: itemquantity + this.quantityNumber,
@@ -556,6 +569,9 @@ export class ProductDetailsmainComponent implements OnInit {
   }
 
   pushItemTocart() {
+    this.authService.userData.subscribe({
+      next:()=>{
+        if(this.authService.userData.getValue()!=null){
     console.log(this.selectedvariant.id);
     console.log(this.quantityNumber);
 
@@ -589,11 +605,22 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log("ERROR when delete" + e);
       }
     })
+  }else{
+    Swal.fire({
+   title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
+   confirmButtonColor: '#198754', // Change this to the color you prefer
+  });
   }
-  navigateToAnotherId(id: number) {
+  }
+  });
+  }
+
+
+
+    navigateToAnotherId(id: number) {
     // this.router.navigate(['/store/productDetials',id])
     location.replace('/store/productDetials/' + id)
-  }
+     }
 
   // @ViewChild('slider', { static: true }) slider!: ElementRef;
 

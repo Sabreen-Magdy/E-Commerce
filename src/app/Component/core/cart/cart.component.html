@@ -22,7 +22,7 @@
           <div class="card-body p-4" style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
-                <img [src]="'http://srmgroub.somee.com/Images/'+item.image" class="img-fluid rounded-3"
+                <img [src]="'http://www.srm.somee.com/Images/'+item.image" class="img-fluid rounded-3"
                   alt="Cotton T-shirt" />
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
@@ -62,6 +62,9 @@
 
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                 <h5 class="mb-0">{{ item.unitPrice * item.quantity }} ج.م.</h5>
+              </div>
+              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                <a [routerLink]="['/store/productDetials',item.productId]" class="text-info del"><i style="font-size: x-large;" class="bi bi-box-arrow-up-right"></i></a>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                 <a (click)="deleteByItemId(item.id)" class="text-danger del"><i style="font-size: x-large;" class="bi bi-trash3"></i></a>

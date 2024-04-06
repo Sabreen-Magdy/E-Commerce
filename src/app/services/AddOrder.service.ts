@@ -9,7 +9,7 @@ import { IorderAdd } from '../models/order';
 
 
 export class addorderService {
-  baseURL :string ="http://srmgroub.somee.com/api/Order/";
+  baseURL :string ="http://www.srm.somee.com/api/Order/";
 
   constructor( private http:HttpClient ){}
 

@@ -108,5 +108,12 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
-
+  open(){
+    var form = document.getElementById("intrForm");
+    form?.classList.add('model-show');
+  }
+  close(){
+    var form = document.getElementById("intrForm");
+    form?.classList.remove('model-show');
+  }
 }

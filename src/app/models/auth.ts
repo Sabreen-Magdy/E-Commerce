@@ -8,3 +8,10 @@ export interface IRegisteration {
     address: string
       
 }
+
+export interface Ireset{
+    token:string,
+    otp: string,
+    id: number,
+    newPassword: string
+}
