@@ -38,7 +38,7 @@ export class RestPasswordComponent {
     );
   }
   ngOnInit(): void {
-  
+  console.log("OTP",);
   
   }
 

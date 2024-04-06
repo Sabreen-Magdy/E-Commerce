@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgOtpInputConfig } from 'ng-otp-input';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-verifiy',
   templateUrl: './verifiy.component.html',
   styleUrls: ['./verifiy.component.css']
 })
-export class VerifiyComponent {
-
+export class VerifiyComponent implements OnInit {
+  
+  showerroOtp : boolean = false;
+  otp : string = "";
+  
   otpConfig: NgOtpInputConfig = {
-    allowNumbersOnly: true,
+    allowNumbersOnly: false,
     length: 6,
     isPasswordInput: false,
     disableAutoFocus: false,
@@ -27,23 +32,28 @@ export class VerifiyComponent {
 
   otpForm: FormGroup;
 
-  constructor() {
+  constructor( private authServ : AuthService , private _Router :Router ) {
     this.otpForm = new FormGroup({
       otpCode: new FormControl('', [Validators.required])
     });
   }
+  ngOnInit(): void {
+    this.otp = this.authServ.otp;
+  }
   otpCode2 : FormControl = new FormControl('',[Validators.required])
 
-  submit() {
-    console.log("hiiiiiiii");
+  submit(e:Event) {
+    e.preventDefault();
+    console.log("hiiiiiiiiiiiii");
     if (this.otpCode2.valid){
-      console.log("Vals");
-      console.log(this.otpCode2.value);
-    }
-    if (this.otpForm.valid) {
-      console.log("bto");
-      const otpCode = this.otpForm.get('otpCode')?.value;
-      console.log("OTP Code:", otpCode);
+      const otpCode = this.otpCode2.value;
+      console.log(otpCode);
+      console.log(this.otp);
+      if (otpCode == this.otp){
+        this._Router.navigate(['/resetpassword']);
+      }else {
+        this.showerroOtp = true; 
+      }
       // You can perform further actions with the OTP code here
     }
   }
