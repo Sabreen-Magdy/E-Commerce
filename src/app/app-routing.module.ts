@@ -35,6 +35,8 @@ import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color
 import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
 import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
 import { DeleteComponent } from './Component/core/AdminSide/delete/delete.component';
+import { VerifiyComponent } from './Component/core/verifiy/verifiy.component';
+import { RestPasswordComponent } from './Component/core/SignComp/rest-password/rest-password.component';
 
 
 const routes: Routes = [
@@ -63,6 +65,8 @@ const routes: Routes = [
       {path:"emailValidation",component:EmailSignFORMComponent, },
       {path:"signup",component:SignUpFormComponent, },
       {path:"forgetpassword",component:ForgetPasswordComponent, },
+      {path:"OTP",component:VerifiyComponent, },
+      {path:"resetpassword",component:RestPasswordComponent, },
     ]},
     {path:"home",canActivate:[AuthGuard],component:HomePageComponent, },
     {path:"home/:catgoryname",canActivate:[AuthGuard],component:HomePageComponent, },

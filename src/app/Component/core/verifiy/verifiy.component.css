@@ -1,26 +1,24 @@
-.card{
-    width: 350px;
-    padding: 10px;
-    border-radius : 20px;
-    background-color: rgb(214, 236, 226);
-    border: none;
-    height: 350;
-    position: relative;
+*{
+    font-family: "Cairo", sans-serif;
 }
-.container{
-    height: 100vh;
+
+.signindiv form .form-control{
+
+    height: 45px;
+    background-color: #edf2f5;
 }
-body{
-    background-image: url("https://i.pinimg.com/564x/c0/0f/88/c00f888bae8b61941fc2bcf5e5cabbd0.jpg") ;
+
+.signindiv form button{
+
+    height: 45px;
+    font-weight: bold;
 }
-.mobile-text{
-    color: rgb(18, 19, 19);
-    font-size: 12px;
+ .each_input /deep/ {
+    
+    margin: 10px;
 }
-.form-control{margin-right: 12px;}
-.form-control-focus{
-    color: rgb(69, 177, 103);
-    border-color:black ;
-    box-shadow: none;
+
+.manotp /deep/ .otp-input {
+   
+    margin: 8px;
 }
-.cursor{cursor: pointer;}
