@@ -11,6 +11,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { addorderService } from 'src/app/services/AddOrder.service';
 import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
 import { PaymentService } from 'src/app/services/payment.service';
+import { ProductFormService } from 'src/app/services/product-form.service';
+import { IproductShow } from 'src/app/models/i-product-variant';
+import { IaddFavorite } from 'src/app/models/Ifav';
+import { FavoriteService } from 'src/app/services/favorite.service';
 // import * as braintree from 'braintree-web';
 // import * as dropin from 'braintree-web-drop-in';
 declare var braintree: any;
@@ -35,9 +39,25 @@ export class CartComponent implements OnInit {
   waitUpdatNumber: boolean = false;
   isZero: boolean = false;
   lastitemChange: number = 0;
-
-
-
+  isnoProd: boolean = true;
+ ProductList: IproductShow[] = [];
+getproducts(){
+  this.prodServ.getAllProduct2().subscribe(
+    (products) => {
+      this.ProductList = products.sort((a,b)=>b.avgRating - a.avgRating).slice(0, 11);
+     // this.MainList = products;
+      if (this.ProductList.length == 0) {
+        //this.noitem = true;
+        this.isnoProd = false;
+      }
+    },
+    (error) => {
+      console.error('Error fetching products:', error);
+      this.isnoProd = false;
+      //this.noitem = true;
+    }
+  );
+}
   /**  ====   checkOut       ========= */
   registerForm: FormGroup = new FormGroup({
     Governorate: new FormControl("", [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+')]),
@@ -72,7 +92,9 @@ export class CartComponent implements OnInit {
     private authServ: AuthService,
     private orderSer: addorderService,
     private _Router: Router,
-    private _PaymentService: PaymentService
+    private _PaymentService: PaymentService,
+    private prodServ:ProductFormService,
+    private favService :FavoriteService
   ) { }
   clientToken: string = ''
   ngOnInit(): void {
@@ -82,10 +104,40 @@ export class CartComponent implements OnInit {
     // this._PaymentService.getPaymentToken().subscribe({
     //   next: (data) => this.clientToken = data
     // })
+    this.getproducts()
     this.setupBraintree()
     this.error  = false
   }
+  pushItemToFavCart(id:number){
+    this.authServ.userData.subscribe({
+      next:()=>{
+        if(this.authServ.userData.getValue()!=null){
+    //this.waitingFav = true;
+    const addFav: IaddFavorite = {
+      customerId: this.customerID,
+      productId: id
+    }
 
+    this.favService.additemTofav(addFav).subscribe({
+      next: (data) => {
+        //this.waitingFav = false;
+        console.log("item Add to Fav Succesfully" + data);
+        this.favService.getNumberOfitemInFavCart();
+      //  this.isProductInFav = true;
+      },
+      error: (e) => {
+        console.log("may bt item in fav already");
+        console.log("ERROR when add fav to item" + e);
+      }
+    })
+  }
+  }
+  });
+  }
+navigateToAnotherId(id:number){
+
+}
+p: number = 1;
   cartByIDsub: Subscription | undefined;
   delCartItemsub: Subscription | undefined;
   updateCartItemsub: Subscription | undefined;

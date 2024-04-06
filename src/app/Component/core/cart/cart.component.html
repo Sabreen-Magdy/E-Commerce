@@ -7,19 +7,23 @@
         </div>
 
         <div *ngIf="cart.items.length == 0 && !noitem" class="loader"></div>
-        <div *ngIf="cart.items.length == 0 && noitem" class=" d-flex flex-column align-items-center justify-content-center" role="alert">
-          <img class="mb-3" style="opacity: 0.3;" src="assets/Images/sad cart.png" width="150" alt="ليس لديك طلبات سابقة">
+        <div *ngIf="cart.items.length == 0 && noitem"
+          class=" d-flex flex-column align-items-center justify-content-center" role="alert">
+          <img class="mb-3" style="opacity: 0.3;" src="assets/Images/sad cart.png" width="150"
+            alt="ليس لديك طلبات سابقة">
           <h3 class="mb-3">
             <b>ليس لديك منتجات في العربه</b>
           </h3>
           <p> لدينا آلاف المنتجات المتاحة من خلال مجموعتنا الكبيرة من المنتجات. اطلب دلوقتي!</p>
           <a [routerLink]="'/store'" class="btn btn-success">تصفح اكثر</a>
-          
+
         </div>
-        <div *ngIf="cart.items.length" class="text-start m-3"><button (click)="clearAll()" class="btn btn-danger shadow">مسح الكل <i class="bi bi-x-lg me-2"></i></button></div>
-        
+        <div *ngIf="cart.items.length" class="text-start m-3"><button (click)="clearAll()"
+            class="btn btn-danger shadow">مسح الكل <i class="bi bi-x-lg me-2"></i></button></div>
+
         <div *ngFor="let item of cart.items" class="card rounded-3 mb-4 items">
-          <div class="card-body p-4" style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <div class="card-body p-4"
+            style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
                 <img [src]="'http://www.srm.somee.com/Images/'+item.image" class="img-fluid rounded-3"
@@ -64,10 +68,12 @@
                 <h5 class="mb-0">{{ item.unitPrice * item.quantity }} ج.م.</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a [routerLink]="['/store/productDetials',item.productId]" class="text-info del"><i style="font-size: x-large;" class="bi bi-box-arrow-up-right"></i></a>
+                <a [routerLink]="['/store/productDetials',item.productId]" class="text-info del"><i
+                    style="font-size: x-large;" class="bi bi-box-arrow-up-right"></i></a>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a (click)="deleteByItemId(item.id)" class="text-danger del"><i style="font-size: x-large;" class="bi bi-trash3"></i></a>
+                <a (click)="deleteByItemId(item.id)" class="text-danger del"><i style="font-size: x-large;"
+                    class="bi bi-trash3"></i></a>
               </div>
             </div>
           </div>
@@ -102,8 +108,39 @@
             </div>
           </div>
         </div>
+        <div class=" relatedProduct  py-4 ">
+          <h3 class="mb-3">الاكثر تقييما</h3>
+        
+          <div class="items row ">
+            <div *ngFor="let item of ProductList | paginate: {  itemsPerPage: 6, currentPage: p, } "
+              class="element col-lg-2 col-md-4">
+              <div class="element-img">
+        
+                <span (click)="pushItemToFavCart(item.id)" class="material-symbols-outlined fav"> favorite </span>
+                <span class="msg fav">اضف للمفضلة</span>
+                <span [routerLink]="['/store/productDetials/'+item.id]" class="material-symbols-outlined show"> visibility </span>
+                <span class="msg show">عرض المنتج</span>
+                <img [src]="'http://www.srm.somee.com/Images/' +item.image" />
+              </div>
+              <div class="element-detials">
+                <h4>{{item.name}}</h4>
+                <p>{{item.price}} <span>جنيه</span></p>
+              </div>
+            </div>
+            <div class="pagiDiv">
+              <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;"
+                (pageChange)="p = $event"></pagination-controls>
+            </div>
+        
+        
+        
+          </div>
+        
+        </div>
       </div>
+      
     </div>
+    
   </div>
 </section>
 
@@ -279,20 +316,19 @@
       <!-- <h6 class="mt-3 text-secondary">{{orders[selectedIndex].orderId}}</h6> -->
     </div>
     <div class="model-body">
-      
+
       <!-- <form id="payment-form" method="post""></form> -->
-      <form id="payment-form" method="post" class=" d-flex  justify-content-center flex-column align-items-center" >
+      <form id="payment-form" method="post" class=" d-flex  justify-content-center flex-column align-items-center">
         <section>
           <div class="bt-drop-in-wrapper">
-            <div id="bt-dropin" ></div>
+            <div id="bt-dropin"></div>
           </div>
         </section>
         <input type="hidden" id="nonce" [value]="nonce" />
         <input type="submit" value="Submit Payment" id="submit-btn" class="btn btn-dark" />
-        <div *ngIf="error" class="m-4" >
-          <span class="text-danger mx-1"><i class="bi bi-ban"></i></span
-          >
-          <span class="text-danger" style="font-size: larger;" > حدث خطأ اثناء الدفع حاول مرة اخري</span>       
+        <div *ngIf="error" class="m-4">
+          <span class="text-danger mx-1"><i class="bi bi-ban"></i></span>
+          <span class="text-danger" style="font-size: larger;"> حدث خطأ اثناء الدفع حاول مرة اخري</span>
         </div>
         <hr />
       </form>
@@ -300,3 +336,4 @@
     </div>
   </div>
 </div>
+
