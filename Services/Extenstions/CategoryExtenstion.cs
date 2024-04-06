@@ -25,7 +25,8 @@ namespace Services.Extenstions
                 throw new ArgumentNullException(nameof(category));
 
             return new(category.Id, category.Name,
-                       category.Icon, category.Description);
+                       category.Icon, category.Description, 
+                       category.ProductCategories.Count());
         }
         public static List<CategoryDto> ToCategoryDto(this List<Category> categories)
         {

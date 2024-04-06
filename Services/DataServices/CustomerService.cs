@@ -117,8 +117,12 @@ public class CustomerService : ICustomerService
             throw new NotFoundException("Customer");
         else
         {
-            _repository.CustomerRepository.Delete(customer);
-            _repository.SaveChanges();
+            if(customer.Orders.Count(o => o.State == 1 || o.State == 0) == 0)
+            {
+                _repository.CustomerRepository.Delete(customer);
+                _repository.SaveChanges();
+            }
+            throw new NotAllowedException("Customer has Orders in Progress");
         }
     }
 
