@@ -1,7 +1,6 @@
 ﻿using Contract;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Services.Abstraction.External;
 
 namespace Presentation.Controllers
@@ -13,7 +12,6 @@ namespace Presentation.Controllers
         private readonly IExrernalService _exrernalService;
         public PaymentController(IExrernalService exrernalService)  =>
             _exrernalService = exrernalService;
-
 
         [HttpGet("PaymentToken")]
         [Consumes("application/json")]
@@ -36,7 +34,8 @@ namespace Presentation.Controllers
         {
             try
             {
-               var paymentEnity = _exrernalService.PaymentService.GreateTransaction(payment);
+               var paymentEnity = _exrernalService.PaymentService
+                    .GreateTransaction(payment);
         
                 return Ok();
             }
