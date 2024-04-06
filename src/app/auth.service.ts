@@ -26,7 +26,8 @@ export class AuthService {
   allProducts : IproductShow [] = [];
   userDataSubscription: Subscription|undefined;
   otp : string = "";
-  tokenForget : any ;
+  tokenForget : string = "";
+  email:string="";
   saveUserData(){
       let encodedToken=JSON.stringify(localStorage.getItem('loginToken')) ;
       let decodedToken:any=jwtDecode(encodedToken);
@@ -121,6 +122,10 @@ confirmEmail(email : string): Observable<any> {
 forgetPassWord(email : string)  {
   return this._HttpClient.post<any>(`http://localhost:5058/api/Authentication/ForgetPassword?email=${email}`,{})
 }
+resetPassWord(userData:object):Observable<any>
+  {
+    return this._HttpClient.post('http://localhost:5058/api/Authentication/ResetPassword/',userData);
+  }
 }
 
 
