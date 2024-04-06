@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
   providedIn: 'root'
 })
 export class CartService {
-  baseURL :string ="http://srmgroub.somee.com/api/Cart";
+  baseURL :string ="http://www.srm.somee.com/api/Cart";
   numberOfitemInCart:any=new BehaviorSubject(null);
 
   constructor( private http: HttpClient,private authservice:AuthService) { }

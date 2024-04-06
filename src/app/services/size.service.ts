@@ -8,7 +8,7 @@ import { Isize } from '../models/isize';
 })
 export class SizeService {
 
-  baseURL : string = 'http://srmgroub.somee.com/api/General'
+  baseURL : string = 'http://www.srm.somee.com/api/General'
 
   // baseURL : string = 'http://localhost:5058/api/General'
   constructor(private http:HttpClient) { }

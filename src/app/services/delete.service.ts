@@ -9,7 +9,7 @@ import {  ICstDto } from '../models/deletecomment';
 })
 export class DeleteService {
 
-  baseURL : string = 'http://srmgroub.somee.com/api/Customer';
+  baseURL : string = 'http://www.srm.somee.com/api/Customer';
   
   constructor(private http: HttpClient) {}
   getCSTall(): Observable<ICstDto[]> {

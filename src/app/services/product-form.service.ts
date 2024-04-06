@@ -18,8 +18,8 @@ interface catNameWithList
 export class ProductFormService  implements OnInit{
 
   allNumber : number = 0;
-  baseURL : string ="http://srmgroub.somee.com/api/Saller/";
-  baseURL2 : string = "http://srmgroub.somee.com/api/Product/";
+  baseURL : string ="http://www.srm.somee.com/api/Saller/";
+  baseURL2 : string = "http://www.srm.somee.com/api/Product/";
 
   productsCache: IproductShow[] = [];
   listCategoryBYname : catNameWithList [] = [];

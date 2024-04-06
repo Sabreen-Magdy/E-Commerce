@@ -8,7 +8,7 @@ import { ICategory } from '../models/i-category';
 })
 export class CategoryService {
 
-  baseURL :string ="http://srmgroub.somee.com/api/Category/";
+  baseURL :string ="http://www.srm.somee.com/api/Category/";
   constructor( private http:HttpClient) { }
 
   getAllCategs() : Observable<ICategory[]>{
