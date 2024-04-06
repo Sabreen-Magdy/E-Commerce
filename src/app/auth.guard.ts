@@ -14,14 +14,14 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if(this._AuthService.userData.getValue() != null&&this._AuthService.userRole=="Customer "){
+    if(this._AuthService.userData.getValue() != null&&this._AuthService.userRole=="Customer"){
       return true;
-    }else if(this._AuthService.userRole=="Saller "){
+    }else if(this._AuthService.userRole=="Saller"){
       this._Router.navigate(['/admin/dashboard']);
       return false;
     }
     else{
-      this._Router.navigate(['/main']);
+      this._Router.navigate(['/home']);
       return false;
     }
   }

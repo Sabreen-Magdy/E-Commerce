@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-email-sign-form',
@@ -24,9 +25,9 @@ export class EmailSignFORMComponent {
           Validators.pattern(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.com$/)
         ]
       ),
-   
+
     },
-  
+
     );
   }
 
@@ -42,6 +43,10 @@ export class EmailSignFORMComponent {
       // console.log(email);
       this.confirmSub = this._AuthService.confirmEmail(email).subscribe({
         next: (e) => {
+          Swal.fire({
+            title: 'لقد قمنا بإرسال رسالة إلكترونية إلى عنوان البريد الإلكتروني الخاص بكم على جيميل.',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+       });
           console.log("Doneeeeeeeeeeeeeee");
           console.log(e);
         },
@@ -50,7 +55,7 @@ export class EmailSignFORMComponent {
           console.log("ERROR" , e);
         }
       })
-      
+
     }else{
       this.showerror=true;
     }

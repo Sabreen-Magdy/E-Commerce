@@ -21,7 +21,7 @@ export class EditprofileComponent implements OnInit {
   nameValue:string =""
   EmailValue:string =""
   PhoneValue:string =""
-  PassValue:string =""
+  // PassValue:string =""
 
   getDataOfUser(){
     this._AuthService.userData.subscribe({
@@ -32,7 +32,7 @@ export class EditprofileComponent implements OnInit {
                 this.nameValue= response.name;
                 this.EmailValue=response.email;
                 this.PhoneValue= response.phone;
-                this.PassValue=response.password;
+                // this.PassValue=response.password;
                 this.MakeFormValidation()
           }
         });
@@ -63,14 +63,14 @@ MakeFormValidation(){
         Validators.pattern(/^(010|012|015|011)[0-9]{8}$/)
       ]
     ),
-    password : new FormControl (
-      this.PassValue,
-      [
-        Validators.required,
-        Validators.minLength(5),
+    // password : new FormControl (
+    //   this.PassValue,
+    //   [
+    //     Validators.required,
+    //     Validators.minLength(5),
 
-      ]
-    ),
+    //   ]
+    // ),
   }
   );
 }
