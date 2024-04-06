@@ -2,6 +2,7 @@ import { Payment } from './../models/payment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import * as braintree from 'braintree-web';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class PaymentService {
 
   constructor(private http :HttpClient) { }
-  baseUrl : string ='http://localhost:5058/api/Payment/'
+  baseUrl : string ='http://www.srm.somee.com/api/Payment/'
   getPaymentToken():Observable<string>{
     return this.http.get(`${this.baseUrl}PaymentToken`, { responseType: 'text' })
   }

@@ -16,7 +16,134 @@
 	overflow: hidden;
 
 }
+#paypal-button {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px 24px;
+    /* border: 2px solid #FFB830;  */
+	/* Corrected syntax for border */
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px; /* Space between logo and text */
+    /* Space between logo and text */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
 
+/*Modellllll*/
+
+.model-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.24);
+    display: none;
+    z-index: 100000000000;
+  }
+  
+  .model {
+    position: relative;
+    background: #fff;
+    text-align: center;
+    width: 44%;
+    max-height: 90%;
+    border-radius: 10px;
+    margin: 1rem auto;
+    box-shadow: 0px 4px 22px -5px rgba(0, 0, 0, 0.75);
+    animation-name: animatetop;
+    animation-duration: .4s;
+    overflow-y: scroll;
+    
+  }
+  
+  @keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+  
+    to {
+        top: 0;
+        opacity: 1;
+    }
+  }
+  
+  .model-show {
+    display: block;
+  }
+  
+  .model-header {
+    background: #f8fafb;
+    padding: 2rem;
+  }
+  
+  .model-body {
+    padding: 1rem;
+    text-align:start;
+  }
+  
+  .model-header i {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 20px;
+    
+    color: rgb(40, 33, 33);
+    cursor: pointer;
+  }
+
+  .model-header i:hover {
+    
+    font-size: 21px;
+    color: rgb(205, 64, 64);
+  }
+  .detilas p {
+   font-weight: 650;
+   font-size: 16px;
+   width: 50%;
+   /* text-align: left; */
+  }
+  .detilas p span{
+    width: 100px;
+    /* text-align: right; */
+    /* padding-right: 0; */
+    display: inline-block;
+    color: gray;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .img-product-order-D{
+    max-width: 100px;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+.customerDetilas{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+  
+  #paypal-button:hover {
+	background-color: #ffffff; /* Slightly lighter yellow on hover */
+    color: #000000;
+
+  }
+  
+  #paypal-logo {
+	height: 24px; /* Example height, adjust as needed */
+	width: auto; /* Maintain aspect ratio */
+  }
+  
 .proceed-checkout ul li.subtotal {
 	font-weight: 400;
 	text-transform: capitalize;

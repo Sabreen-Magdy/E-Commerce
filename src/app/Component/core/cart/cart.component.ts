@@ -1,3 +1,4 @@
+import { Payment } from './../../../models/payment';
 import { Router } from '@angular/router';
 import { Uppdatecart } from './../../../models/icart';
 import { CartService } from './../../../services/cart.service';
@@ -9,7 +10,10 @@ import { ComponentUrl } from 'src/app/models/unit';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { addorderService } from 'src/app/services/AddOrder.service';
 import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
-
+import { PaymentService } from 'src/app/services/payment.service';
+// import * as braintree from 'braintree-web';
+// import * as dropin from 'braintree-web-drop-in';
+declare var braintree: any; 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -35,15 +39,15 @@ export class CartComponent implements OnInit {
 
 
   /**  ====   checkOut       ========= */
-  registerForm:FormGroup = new FormGroup({
-    Governorate: new FormControl("", [Validators.required,Validators.pattern('[\u0600-\u06FF ,]+')]),
-    place: new FormControl("", [Validators.required,Validators.pattern('[\u0600-\u06FF ,]+')]),
-    residential_area: new FormControl( "", [Validators.required,Validators.pattern('[\u0600-\u06FF ,]+')]),
+  registerForm: FormGroup = new FormGroup({
+    Governorate: new FormControl("", [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+')]),
+    place: new FormControl("", [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+')]),
+    residential_area: new FormControl("", [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+')]),
   });;
 
   get GovernorateAddresscontrol() {
     return this.registerForm.get('Governorate');
-  }get placeAddresscontrol() {
+  } get placeAddresscontrol() {
     return this.registerForm.get('place');
   }
   get residential_areaAddresscontrol() {
@@ -67,12 +71,18 @@ export class CartComponent implements OnInit {
     private CartService: CartService,
     private authServ: AuthService,
     private orderSer: addorderService,
-    private _Router: Router
-  ) {}
+    private _Router: Router,
+    private _PaymentService: PaymentService
+  ) { }
+  clientToken: string = ''
   ngOnInit(): void {
     this.customerID = this.authServ.id;
     this.getcartbyId();
     this.CartService.getNumberOfitemInCart();
+    // this._PaymentService.getPaymentToken().subscribe({
+    //   next: (data) => this.clientToken = data
+    // })
+    this.setupBraintree()
   }
 
   cartByIDsub: Subscription | undefined;
@@ -90,7 +100,7 @@ export class CartComponent implements OnInit {
         let totalPriceS: number = 0;
         // this.cart.items = this.cart.items.filter((item)=>item.state==0)
         for (var item of filterdata) {
-          item.unitPrice = item.unitPrice - (item.unitPrice*item.discount)
+          item.unitPrice = item.unitPrice - (item.unitPrice * item.discount)
           totalPriceS += item.unitPrice * item.quantity;
         }
         this.cart = data;
@@ -184,10 +194,10 @@ export class CartComponent implements OnInit {
     });
   }
 
-  assignToCheckoutForm(){
+  assignToCheckoutForm() {
     this.nameProductVarient = [];
     this.productVarientperOrder = [];
-    for (var item of this.cart.items){
+    for (var item of this.cart.items) {
       let PVI: IproductforOrderadd = {
         productVarientId: item.productVarientId,
         quantity: item.quantity,
@@ -231,14 +241,15 @@ export class CartComponent implements OnInit {
   //   }
 
 
-  SendOrder(e: Event) {
+  SendOrder() {
+    // this.toggletoPaymentForm()
     if (this.registerForm.valid) {
       this.waitingSendOrder = true;
       this.btnText = '';
       const order: IorderAdd = {
         customerId: this.customerID,
         orderDate: new Date().toISOString(),
-        customerAddress:`${this.registerForm.get('Governorate')?.value},${this.registerForm.get('place')?.value},${this.registerForm.get('residential_area')?.value}` ,
+        customerAddress: `${this.registerForm.get('Governorate')?.value},${this.registerForm.get('place')?.value},${this.registerForm.get('residential_area')?.value}`,
         productsperOrder: this.productVarientperOrder,
       };
       console.log(order);
@@ -250,74 +261,186 @@ export class CartComponent implements OnInit {
         error: (e) => {
           console.log('error when send order', e);
           // this.errorOrder = true;
-          
+
         },
       });
-      
+
     } else {
       this.showerror = true;
     }
   }
 
-//   deleteafterCheckout2() {
-//     console.log("we are now in delete");
-//     let length : number = this.cart.items.length;
-//     for (let i = 0; i < length;) {
-//       let item = this.cart.items[i];
-//       console.log("no gonna delete",item);
-//       this.deletecartAfCheckSub = this.CartService.deleteCartitem(
-//         item.id
-//       ).subscribe({
-//         next: () => {
-//           console.log('Delete success ');
-//           if (i == length-1)
-//           {
-//             this.doneOrder = true;
-//             this.waitingSendOrder = false;
-//             this.CartService.getNumberOfitemInCart();
-//           }
-//           else{
-//             i++
-//           }
-//         },
-//         error: (e) => {
-//           i++;
-//           console.log('ERROR when delete', e);
-//         },
-//       });
-//     }
-//   }
+  //   deleteafterCheckout2() {
+  //     console.log("we are now in delete");
+  //     let length : number = this.cart.items.length;
+  //     for (let i = 0; i < length;) {
+  //       let item = this.cart.items[i];
+  //       console.log("no gonna delete",item);
+  //       this.deletecartAfCheckSub = this.CartService.deleteCartitem(
+  //         item.id
+  //       ).subscribe({
+  //         next: () => {
+  //           console.log('Delete success ');
+  //           if (i == length-1)
+  //           {
+  //             this.doneOrder = true;
+  //             this.waitingSendOrder = false;
+  //             this.CartService.getNumberOfitemInCart();
+  //           }
+  //           else{
+  //             i++
+  //           }
+  //         },
+  //         error: (e) => {
+  //           i++;
+  //           console.log('ERROR when delete', e);
+  //         },
+  //       });
+  //     }
+  //   }
 
-deleteafterCheckout2() {
-  console.log("we are now in delete");
-  let length: number = this.cart.items.length;
-  let successfulDeletions = 0; // Track successful deletions
+  deleteafterCheckout2() {
+    console.log("we are now in delete");
+    let length: number = this.cart.items.length;
+    let successfulDeletions = 0; // Track successful deletions
 
-  for (let i = 0; i < length; i++) {
-    let item = this.cart.items[i];
-    console.log("no gonna delete", item);
-    this.deletecartAfCheckSub = this.CartService.deleteCartitem(item.id).subscribe({
-      next: () => {
-        console.log('Delete success ');
-        successfulDeletions++; // Increment successful deletion count
+    for (let i = 0; i < length; i++) {
+      let item = this.cart.items[i];
+      console.log("no gonna delete", item);
+      this.deletecartAfCheckSub = this.CartService.deleteCartitem(item.id).subscribe({
+        next: () => {
+          console.log('Delete success ');
+          successfulDeletions++; // Increment successful deletion count
 
-        // Check if all items have been successfully deleted
-        if (successfulDeletions === length) {
-          this.doneOrder = true;
-          this.waitingSendOrder = false;
-          this.getcartbyId();
-          this.CartService.getNumberOfitemInCart();
-        }
-      },
-      error: (e) => {
-        console.log('ERROR when delete', e);
-        // Handle error appropriately, e.g., display error message to the user
-      },
-    });
+          // Check if all items have been successfully deleted
+          if (successfulDeletions === length) {
+            this.doneOrder = true;
+            this.waitingSendOrder = false;
+            this.getcartbyId();
+            this.CartService.getNumberOfitemInCart();
+          }
+        },
+        error: (e) => {
+          console.log('ERROR when delete', e);
+          // Handle error appropriately, e.g., display error message to the user
+        },
+      });
+    }
   }
-}
+  closeRefuse() {
 
-clearAll(){
-  this.deleteafterCheckout2();
-}
-}
+    var model = document.getElementById("PaymentModel");
+    model?.classList.remove("model-show")
+
+  }
+
+  nonce: string = ''
+
+  clearAll() {
+    this.deleteafterCheckout2();
+  }
+
+  toggletoPaymentForm(e: Event) {
+    e.preventDefault()
+    if (this.registerForm.valid) {
+      var model = document.getElementById("PaymentModel");
+      console.log(model)
+      model?.classList.add("model-show")
+      // if (typeof braintree !== 'undefined') {
+      // //this.initializeDropIn()}
+      // else{
+      //   console.log("braintree undefined")
+      // }
+    } else {
+      this.showerror = true;
+    }
+  }
+  initializeDropIn(){
+
+  }
+  payment:Payment={amount:0,nonce:"",currencyIsoCode:'USD'}
+  // Retrieve client token and initialize Braintree
+  setupBraintree(): void {
+    this._PaymentService.getPaymentToken().subscribe(
+      (clientToken: string) => {
+        braintree.dropin.create({
+          authorization: clientToken,
+          container: '#bt-dropin'
+        }, (createErr: any, instance: any) => {
+          if (createErr) {
+            console.error('Error creating Drop-in:', createErr);
+            return;
+          }
+          // Handle the payment nonce when submitted
+          const form = document.getElementById('payment-form');
+          form!.addEventListener('submit', (event: any) => {
+            event.preventDefault();
+            instance.requestPaymentMethod((err: any, payload: any) => {
+              if (err) {
+                console.error('Error requesting payment method:', err);
+                return;
+              }
+              this.nonce = payload.nonce;
+              this.payment = {amount:this.totalPrice/47.39,nonce:this.nonce , currencyIsoCode:"USD"}
+              console.log(this.payment)
+              this._PaymentService.Pay(this.payment)
+              this.SendOrder()
+              // You can now use this.nonce to send payment details to the server
+              // For example:
+              // this.paymentService.pay({ amount: 10, nonce: this.nonce, currencyIsoCode: 'USD' }).subscribe(
+              //   (response: any) => {
+              //     console.log('Payment successful:', response);
+              //   },
+              //   (error: any) => {
+              //     console.error('Error processing payment:', error);
+              //   }
+              // );
+            });
+          });
+        });
+      },
+      (error: any) => {
+        console.error('Error getting payment token:', error);
+      }
+    );
+  }
+  // private braintreeClient: any;
+  // private dropinInstance: any;
+  // private paymentForm: HTMLFormElement | undefined;
+  // initializeDropIn() {
+  //   console.log(this.clientToken)
+  //   braintree.client.create({
+  //     authorization: this.clientToken
+  //   }, (clientErr, clientInstance) => {
+  //     if (clientErr) {
+  //       console.error('Error initializing client:', clientErr);
+  //       return;
+  //     }
+  //     this.braintreeClient = clientInstance;
+
+  //    // Create Drop-in UI
+     
+  //     braintree.dropin.create({
+  //       container: '#bt-dropin',
+  //       authorization: this.clientToken,
+  //       paypal: {
+  //         flow: 'vault'
+  //       }
+  //     }, (dropinErr, instance) => {
+  //       if (dropinErr) {
+  //         console.error('Error creating Drop-in:', dropinErr);
+  //         return;
+  //       }
+  //       this.dropinInstance = instance;
+  //     });
+  //   });
+  // };
+
+//}
+
+
+
+  }
+
+
+
