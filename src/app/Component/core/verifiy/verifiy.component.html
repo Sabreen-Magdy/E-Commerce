@@ -1,26 +1,14 @@
-<div class="d-flex jutify-content-center align-items-center container">
-    <div class="card py-5 px-3">
-        <h5 class="m-0">أدخال الكود الخاص بك</h5>
-
-        <span> ادخل الكود
-        <B>323237</B>
-        </span>
-        <div class="d d-flex flex-row mt-5">
-            <input type="text" class="form-control" autofocus="">
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
-            <input type="text" class="form-control">
+<div class="signindiv m-3">
+    <h2>ادخل الكود الخاص بك</h2>
+    <span class="text-secondary">لقد تم ارسال الكود عبر ايميلك</span>
+    <div *ngIf="showerroOtp" class="alert alert-danger col-md-8 mt-3 p-2">هذا الكود غير صحيح</div>
+    <form [formGroup]="otpForm" (ngSubmit)="submit($event)">
+        <div class="mt-3 mb-3">
+            <!-- <ng-otp-input formControlName="otpCode" [config]="otpConfig"></ng-otp-input> -->
+            <ng-otp-input class="manotp"  [formCtrl]="otpCode2"  [config]="otpConfig"></ng-otp-input>
         </div>
-        <br>
-       
-        <button class="btn btn-outline-secondary" type="button">تأكيد الرقم </button>
-        <br>
-<!-- <span class="d-block mobile-text ">لم استلم الرسالة!          <a class="font-weight-bold text-danger cursor">  عد ارسالها</a></span> -->
-<br>
-<!-- <span class="font-weight-bold text-danger cursor">اعد ارسالها</span> -->
-
-        <div>
-    </div>
+        <div class="row">
+            <button [disabled]="otpCode2.value.length<6" type="submit" class="btn btn-success col-md-8 ">تأكيد الكود</button>
+        </div>
+    </form>
 </div>
