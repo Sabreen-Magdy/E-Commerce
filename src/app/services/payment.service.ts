@@ -11,7 +11,7 @@ export class PaymentService {
   constructor(private http :HttpClient) { }
   baseUrl : string ='http://localhost:5058/api/Payment/'
   getPaymentToken():Observable<string>{
-    return this.http.get<string>(`${this.baseUrl}PaymentToken`)
+    return this.http.get(`${this.baseUrl}PaymentToken`, { responseType: 'text' })
   }
 
   Pay(payment:Payment){
