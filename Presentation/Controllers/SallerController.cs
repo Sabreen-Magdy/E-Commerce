@@ -11,7 +11,7 @@ namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Saller")]
+//[Authorize(Roles = "Saller")]
 public class SallerController : ControllerBase
 {
     private readonly IAdminService _adminService;

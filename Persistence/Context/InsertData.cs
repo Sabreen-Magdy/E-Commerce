@@ -5,6 +5,7 @@ namespace Persistence.Context
 {
     public static class InsertData
     {
+       
 
         public static List<IdentityRole> AddRole() =>
             new List<IdentityRole>()
