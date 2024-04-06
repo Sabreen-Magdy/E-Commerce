@@ -7,6 +7,7 @@ export interface CartDto {
 
 export interface CartItemDto {
   id: number;
+  productId:number;
   productVarientId: number;
   image: string;
   name: string;

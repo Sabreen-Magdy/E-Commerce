@@ -64,6 +64,9 @@
                 <h5 class="mb-0">{{ item.unitPrice * item.quantity }} ج.م.</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                <a [routerLink]="['/store/productDetials',item.productId]" class="text-info del"><i style="font-size: x-large;" class="bi bi-box-arrow-up-right"></i></a>
+              </div>
+              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                 <a (click)="deleteByItemId(item.id)" class="text-danger del"><i style="font-size: x-large;" class="bi bi-trash3"></i></a>
               </div>
             </div>

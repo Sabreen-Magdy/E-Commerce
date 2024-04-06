@@ -3,4 +3,5 @@ export interface ICategory {
     name: string,
     icon:string,
     description: string
+    numberOfProducts:number
 }
