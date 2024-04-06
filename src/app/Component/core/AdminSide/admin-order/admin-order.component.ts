@@ -10,6 +10,8 @@ import { AdminOrderService } from 'src/app/services/admin-order.service';
 })
 export class AdminOrderComponent implements OnInit {
   p:number = 1;
+  waiting : boolean = true;
+  noitem : boolean = false;
 
   constructor(private adminser: AdminOrderService) { }
   orders: AdminOrder[] = []
@@ -24,8 +26,13 @@ export class AdminOrderComponent implements OnInit {
   ngOnInit(): void {
     this.adminser.getAll().subscribe({
       next: (data) => {
+        this.waiting = false;
+        if (data.length ==0 ){
+          this.noitem = true; 
+        }
         data.sort((a,b)=>b.orderId-a.orderId);
         this.orders = data;
+        
         console.log(this.orders)
         //console.log(this.orders[0].customerName)
         for (let index = 0; index < this.orders.length; index++) {
@@ -38,6 +45,11 @@ export class AdminOrderComponent implements OnInit {
           }
 
         }
+      }, 
+      error : (e) => {
+        console.log("ERROR");
+        console.log(e);
+        this.noitem = true;
       }
     })
 

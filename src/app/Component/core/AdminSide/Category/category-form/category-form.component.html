@@ -27,11 +27,14 @@
       </ng-container>
     </div>
       </div>
-      <div class="col-md-6 form-control-div " [ngClass]="{
+      <div class="col-md-5 form-control-div " [ngClass]="{
         sucess: categoryiconcontrol?.valid,
         danger: categoryiconcontrol?.errors && (categoryiconcontrol?.touched || showerror )
       }">
         <label for="cateicon" class="form-label">الايقون</label>
+        <div class="row">
+          
+        </div>
         <input
           type="text"
           class="form-control our-is-valid"
@@ -40,6 +43,7 @@
           required
          
         />
+        
         <i *ngIf="categoryiconcontrol?.valid" class="bi bi-check-circle-fill"></i>
       <i *ngIf="categoryiconcontrol?.errors && (categoryiconcontrol?.touched || showerror)" class="bi bi-exclamation-circle-fill"></i>
       <div *ngIf="categoryiconcontrol?.errors && ( categoryiconcontrol?.touched || showerror)" class="alert p-1 mt-2 alert-danger">
@@ -49,6 +53,11 @@
       
     </div>
       </div>
+      <button (click)="open()" type="button" class="col-md-1 mt-5 btn"  style="width: 50px;"  >
+        <img width="100%" src="https://cdn-icons-png.flaticon.com/512/868/868834.png" alt="">
+      </button>
+  
+
       <div class="col-md-12 form-control-div" [ngClass]="{
         sucess: categorydescriptioncontrol?.valid,
         danger: categorydescriptioncontrol?.errors && (categorydescriptioncontrol?.touched || showerror)
@@ -70,10 +79,59 @@
       </div>
       </div>
       <div class="col-md-12 text-start">
-        <button class="btn btn-success rounded-1  px-5" type="submit">{{btnText}}</button>
+        <button class="btn btn-success rounded-1  px-5" type="submit">
+          <div *ngIf="waitingDoneSend">
+            <div  class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          {{btnText}}
+        </button>
       </div>
     </form>
     
     
     
+  </div>
+
+
+
+
+  <div id="intrForm" class="add-model model-wrapper">
+    <div class="model">
+      <div class="model-close">
+        <i (click)="close()" class="bi bi-x-square-fill cls"></i>
+      </div>
+      
+      <div class="model-header">
+        
+        <h3>تعليمات اضافة ايقون للفئة</h3>
+      </div>
+      <div class="model-body p-2 pm-4">
+      <p><span>اولا:</span> اضغط هنا<a href="https://fonts.google.com/icons" target="_blank" rel="noopener noreferrer"><i  class="bi bi-box-arrow-up-right"></i></a> </p>
+      <p><span>ثانيا:</span></p>
+      <div>
+        <img src="assets/Images/Slide1.PNG" alt="">
+      </div>
+      <p><span>ثالثا:</span></p>
+      <div>
+        <img src="assets/Images/Slide2.PNG" alt="">
+      </div>
+      <p><span>رابعا:</span></p>
+      <div>
+        <img src="assets/Images/Slide3.PNG" alt="">
+      </div>
+      <p><span>خامسا:</span></p>
+      <div>
+        <img src="assets/Images/Slide4.PNG" alt="">
+      </div>
+      <p><span>سادسا:</span></p>
+      <div>
+        <img src="assets/Images/Slide5.PNG" alt="">
+      </div>
+      </div>
+    </div>
   </div>

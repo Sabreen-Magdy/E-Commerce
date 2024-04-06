@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
 export class CategoryTableComponent implements OnInit {
   categoryList : ICategory[] =[];
   p:number = 1;
-  
+  waiting : boolean = true;
+  noitem : boolean = false;
 
   constructor(private catService : CategoryService){}
   ngOnInit(): void {
@@ -24,12 +25,17 @@ export class CategoryTableComponent implements OnInit {
   getallCategory(){
     this.allCategSubscriptipn = this.catService.getAllCategs().subscribe({
       next : (data) => {
+        if (data.length ==0 ){
+          this.noitem = true;
+        }
         console.log("HIIIIII");
         console.log(data);
         this.categoryList=data;
+        this.waiting = false;
       },
       error : (e) => {
         console.log("error when get Category:" + e);
+        this.noitem = true;
       }
     })
   }

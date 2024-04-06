@@ -3,7 +3,10 @@
     <header>
       <h3>طلبات العميل</h3>
     </header>
-    <div class="table-wrapped">
+    <div *ngIf="orders.length == 0 && waiting" class="loader2"></div>
+    <div *ngIf="orders.length == 0 && noitem" class="alert alert-danger mx-4 my-3" >  لا يوجد طلبات 
+</div>
+    <div *ngIf="orders.length > 0" class="table-wrapped">
       <table class="table-products">
         <thead>
           <tr>

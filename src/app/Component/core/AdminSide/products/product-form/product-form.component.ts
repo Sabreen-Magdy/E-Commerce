@@ -1,7 +1,7 @@
 import { ColoredProduct, coloredProduct2 } from './../../../../../models/colored-product';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { IProductAddForm, IProductVariant } from 'src/app/models/i-product-variant';
 import { Icolor } from 'src/app/models/icolor';
 import { Isize } from 'src/app/models/isize';
@@ -63,6 +63,9 @@ export class ProductFormComponent implements OnInit {
   dropdownList: option[] = [];
   selectedItems: option[] = [];
   dropdownSettings: IDropdownSettings = {};
+
+  btnText :string = "اضف";
+  waitingDoneSend : boolean = false;
 
   nowuploadImage : string = "";
   constructor(private http: HttpClient, private sanitizer: DomSanitizer, private clrServ: ColorServiceService, private sizeServ: SizeService, private categServ: CategoryService, private addproductServ: ProductFormService, private myRouter: Router, private actRoute: ActivatedRoute) { }
@@ -200,7 +203,7 @@ export class ProductFormComponent implements OnInit {
 
   picForm: FormGroup = new FormGroup({
     colorId: new FormControl('', Validators.required),
-    image: new FormControl(null, Validators.required)
+    image: new FormControl(null, [Validators.required, this.validateImageFile()])
   });
 
   get colorPicFormcontrol() {
@@ -234,7 +237,21 @@ export class ProductFormComponent implements OnInit {
 
     }
   }
-
+   validateImageFile(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const file = control.value;
+      if (file) {
+        const extension = file.name.split('.').pop().toLowerCase();
+        const validExtensions = ['png', 'jpg', 'jpeg'];
+        if (!validExtensions.includes(extension)) {
+          // If file extension is not valid, return error object
+          return { invalidFileType: true };
+        }
+      }
+      // If file is valid or no file, return null
+      return null;
+    };
+  }
   productVariantForm: FormGroup = new FormGroup({
     color: new FormControl('', [Validators.required]),
     size: new FormControl('', [Validators.required]),
@@ -379,8 +396,8 @@ export class ProductFormComponent implements OnInit {
   onsumbit() {
     if (this.productForm.valid && this.imagesColor.length > 0 && this.productVariants.length > 0) {
 
-      console.log(this.selectedItems);
-      console.log(this.selectedItems.map(item => item.item_id));
+      this.waitingDoneSend = true;
+      this.btnText = ""
       const formData = new FormData();
       const newProduct:IProductAddForm = {
         sallerId: 1,

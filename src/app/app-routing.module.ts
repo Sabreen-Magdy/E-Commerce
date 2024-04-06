@@ -34,6 +34,7 @@ import { AllProductDetialsComponent } from './Component/core/AdminSide/EditProdu
 import { ColorFormComponent } from './Component/core/AdminSide/EditProduct/color-form/color-form.component';
 import { VarientFormComponent } from './Component/core/AdminSide/EditProduct/varient-form/varient-form.component';
 import { EmailSignFORMComponent } from './Component/core/SignComp/email-sign-form/email-sign-form.component';
+import { DeleteComponent } from './Component/core/AdminSide/delete/delete.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,7 @@ const routes: Routes = [
     {path:"category/add",canActivate:[adminServiceGuard],component:CategoryFormComponent, },
     {path:"category/edit/:id",canActivate:[adminServiceGuard],component:CategoryFormComponent, },
     {path:"Settings",canActivate:[adminServiceGuard],component:TableComponent, },
+    {path:"customer",canActivate:[adminServiceGuard],component:DeleteComponent, },
   ]},
   {path:"",component:HomePageLayoutComponent, children:[
     {path:"main",component:AnonymousPageComponent, },
