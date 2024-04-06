@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstraction;
-using System.Linq;
-
 
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [AllowAnonymous]
     public class ProductController : ControllerBase
     {
         private readonly IAdminService _adminService;

@@ -136,10 +136,13 @@ public class SallerController : ControllerBase
         {
             _adminService.ProductService.Delete(id);
             return Ok();
-        }
-        catch (NotFoundException)
+        }catch(NotAllowedException ex)
         {
-            return NotFound();
+            return BadRequest(ex.Message);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
         }
         catch (Exception ex)
         {

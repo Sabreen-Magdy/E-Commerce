@@ -22,7 +22,8 @@ namespace Presentation.Controllers
         public IActionResult Confirm(string email)
         {
             try
-            {
+            { 
+
                 var redirectUrl = Request.Headers["RedirectUrl"];
                 if (string.IsNullOrEmpty(redirectUrl))
                     return BadRequest("Must send RedirectUrl header");
