@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Domain.Entities;
 using Domain.Entities.Other;
 using Domain.Exceptions;
 using Domain.External;
@@ -73,19 +74,41 @@ namespace Persistence.Authentication
         public async Task<User> Login(LoginDto login)
         {
             var user = await _repository.AuthenticationRepository.Login(login.Email, login.Password);
-            user.Id = _adminService.CustomerService.GetAll().Find(c => c.Email == login.Email)!.Id;
+            var usertype = _adminService.CustomerService.GetAll().Find(c => c.Email == login.Email);
+            if (usertype == null)
+            {
+                var seller = _adminService.SallerService.GetByEmail(login.Email);
+                if (seller == null)
+                {
+                    throw new NotFoundException();
+                }
+                else
+                {
+                    user.Id = seller.Id;
+                }
+            }
+            else
+            {
+                user.Id = usertype.Id;
+            }
+            
             return user;
         }
         public async Task<User> Register(CustomerAddDto customer)
         {
             var customerEntity = customer.ToCustomerEntity();
-           var user = await _repository.AuthenticationRepository
+
+          
+        var user = await _repository.AuthenticationRepository
             .Register(customerEntity, customer.Password);
 
             try
             {
+
                 _adminService.CustomerService.Add(customerEntity);
+
                 user.Id = customerEntity.Id;
+
                 return user;
             }
             catch(Exception ex)

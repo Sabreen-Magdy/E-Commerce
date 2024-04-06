@@ -91,7 +91,7 @@ namespace Persistence.External
                 foreach (var error in res.Errors) mess += $"{error.Description},";
                 throw new NotAllowedException(mess);
             }
-            await _userManager.AddToRoleAsync(user, UserRole.Customer.ToString());
+            await _userManager.AddToRoleAsync(user, UserRole.Customer.ToString()); /********      here   *********/
 
             customer.UserId = user.Id;
 
