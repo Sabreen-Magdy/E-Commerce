@@ -38,20 +38,17 @@ export class RestPasswordComponent {
     }
     );
   }
-  otp:string="";
   token:string="";
-  id:number=0;
+  otp:string="";
+  email:string="";
+  newPassword:string="";
   ngOnInit(): void {
   this.otp=this._AuthService.otp;
   this.token=this._AuthService.tokenForget;
-  let Tok=JSON.stringify(this.token);
-  let decodeTok:any=jwtDecode(Tok);
-  this.id=decodeTok.id;
-  console.log("OTP",this.token);
-  console.log("tttttttttttttok",Tok)
-  console.log("deeeeeeeeeeee",decodeTok)
-  console.log("idddddddddd",this.id)
-
+  this.email=this._AuthService.email;
+  console.log("OTP",this.otp);
+  console.log("token",this.token);
+  console.log("email",this.email);
   }
 
 
@@ -74,14 +71,24 @@ export class RestPasswordComponent {
   submitRegisterForm(e : Event){
     e.preventDefault();
     if (this.signupform.valid){
-
-
-
+      let dataUser={
+        token:this.token,
+        otp:this.otp,
+        email:this.email,
+        newPassword:this.signupform.get('password')?.value
+      }
+      this._AuthService.resetPassWord(dataUser).subscribe({
+        next: (data) => {
+          this._Router.navigate(['/signin']);
+        },
+        error: (e)=>{
+          console.log("ERROR");
+          console.log(e);
+        }
+      })
     }
     else{
       this.showerror = true
     }
-
-
   }
 }

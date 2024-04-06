@@ -30,6 +30,7 @@ export class ForgetPasswordComponent {
           console.log(data);
           this.authServ.otp = data.otp;
           this.authServ.tokenForget = data.token;
+          this.authServ.email=email
           this.rout.navigate(['/OTP']);
         },
         error : (e) => {
