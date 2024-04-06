@@ -7,6 +7,7 @@ import { FavoriteService } from 'src/app/services/favorite.service';
 import { ProductFormService } from 'src/app/services/product-form.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-new-product',
@@ -19,9 +20,11 @@ export class NewProductComponent implements OnInit {
   customerId:number=0;
   categoryName : string = "";
   thiscateg :boolean = false;
-  constructor( private prodServ : ProductFormService,private _authService:AuthService,private _favService:FavoriteService , private activeRoute:ActivatedRoute , private route : Router){}
+  constructor( private prodServ : ProductFormService,private _cart:CartService,private _authService:AuthService,private _favService:FavoriteService , private activeRoute:ActivatedRoute , private route : Router){}
 
   ngOnInit(): void {
+    this._cart.getNumberOfitemInCart();
+    this._favService.getNumberOfitemInFavCart();
     this.customerId=this._authService.id;
     this.prodServ.getlength();
     this.activeRoute.params.subscribe(params => {

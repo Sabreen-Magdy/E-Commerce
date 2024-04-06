@@ -36,11 +36,13 @@ export class AuthService {
       this.user=decodedToken;
       this.userData.next(this.user);
       this.userDataSubscription = this.userData.subscribe((userData: any) => {
-        // Match the Id value using a regex pattern
-        // this.id =userData.id;
-        // this.userRole=userData.role[0];
-        console.log("tstttttttttt",this.id)
-        console.log("tsttttttttttt",this.userRole)
+         let testId=localStorage.getItem('idUser')
+         this.id=testId;
+         let testRole=localStorage.getItem('roleUser')
+         this.userRole=testRole;
+         console.log("idUser",this.id)
+         console.log("userRole",this.userRole)
+
         // this.idMatch = userData.match(/Id\s*=\s*(\d+)/);
         // this.id = this.idMatch ? this.idMatch[1] : null;
         // userData.split('=')[2].trim().slice(0, -1);
@@ -64,6 +66,8 @@ export class AuthService {
         console.log(response)
         if(response.token) {
              localStorage.setItem('loginToken',response.token);
+             localStorage.setItem('idUser',response.id);
+             localStorage.setItem('roleUser',response.role[0]);
              this.id=response.id;
              this.userRole=response.role[0];
              this.saveUserData();

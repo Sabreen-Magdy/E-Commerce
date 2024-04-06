@@ -21,6 +21,7 @@ export class Navbar2Component {
     this._AuthService.userData.subscribe({
       next:()=>{
         if(this._AuthService.userData.getValue()!=null){
+          console.log("ROOOOoooOOOll",this._AuthService.userRole);
           this.isCustomer=true;
         }else{
           this.isCustomer=false;
@@ -34,9 +35,12 @@ export class Navbar2Component {
     });
     this.cartService.numberOfitemInCart.subscribe({
       next:()=>{
+        console.log("Ya Mo3eeeeeeeeeeeeeeeeeeeeeeeen Carrrrrrrrrrrrt")
+        console.log(this.cartService.numberOfitemInCart.getValue())
          this.numOfItemInCart=this.cartService.numberOfitemInCart.getValue();
       }
     });
+    console.log("Ya Mo3eeeeeeeeeeeeeeeeeeeeeeeen")
   }
 
   toggleMenu(): void {

@@ -36,9 +36,10 @@ export class CartService {
     return this.http.delete(`${this.baseURL}/DeleteItemById?id=${id}`);
   }
   getNumberOfitemInCart(){
+    console.log("Ya Allahhhhhhhhh",this.authservice.id);
     this.getCartBycstId(this.authservice.id).subscribe({
     next: (data) => {
-      // console.log(data.totalQuantity);
+      console.log(data);
       let filterdata = data.items.filter((item)=>item.state==0);
       this.numberOfitemInCart.next(filterdata.length);
       console.log(this.numberOfitemInCart.getValue());
