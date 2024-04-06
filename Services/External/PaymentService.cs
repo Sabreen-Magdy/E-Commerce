@@ -52,13 +52,12 @@ namespace Services.External
             if (results.IsSuccess())
                 return new()
                 {
-                    TransactionId = results.Transaction.Id,
-                    Amount = results.Transaction.Amount,
-                    PaymentInstrumentSubtype = results.Transaction.PaymentInstrumentType.GetDescription(),
-                    CreatedAt = results.Transaction.CreatedAt,
-                    CurrencyIsoCode = results.Transaction.CurrencyIsoCode,
+                    TransactionId = results.Target.Id,
+                    Amount = results.Target.Amount,
+                    PaymentInstrumentSubtype = results.Target.PaymentInstrumentType.GetDescription(),
+                    CreatedAt = results.Target.CreatedAt,
+                    CurrencyIsoCode = results.Target.CurrencyIsoCode,
                     Nonce = payment.Nonce,
-
 
                 };
             else
