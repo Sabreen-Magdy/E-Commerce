@@ -16,6 +16,7 @@ namespace Presentation.Controllers
 
 
         [HttpGet("PaymentToken")]
+        [Consumes("application/json")]
         public IActionResult Get()
         {
             try
