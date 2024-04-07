@@ -116,6 +116,7 @@
           }">
             <label for="colorname" class="form-label">اسم اللون</label>
             <input
+
               formControlName="name"
               type="text"
               class="form-control"
@@ -144,6 +145,7 @@
               type="color"
               class="form-control form-control-color"
               id="colorDegree"
+              (change)="setColorName()"
               required
             />
             <i *ngIf="colorcodecontrol.valid" class="bi bi-check-circle-fill"></i>

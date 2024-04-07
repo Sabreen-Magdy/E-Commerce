@@ -6,6 +6,7 @@ import { Isize } from 'src/app/models/isize';
 import { ColorServiceService } from 'src/app/services/color-service.service';
 import { SizeService } from 'src/app/services/size.service';
 import Swal from 'sweetalert2';
+import * as namer from 'color-namer';
 
 @Component({
   selector: 'app-table',
@@ -94,7 +95,12 @@ export class TableComponent implements OnInit{
     this.setColorFormValues(Color);
     this.toggleColorForm();
   }
-
+  setColorName() {
+    let hexColor = this.colorForm.get('code')?.value;
+    let names = namer(hexColor);
+    let colorName = names.pantone[0].name; // or any other list like 'ntc', 'html', etc., based on your requirement
+    this.colorForm.get('name')?.setValue(colorName);
+  }
   subColor(e:Event) {
     e.preventDefault();
     if (this.colorForm.valid){
