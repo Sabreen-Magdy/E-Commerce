@@ -118,7 +118,8 @@ namespace Persistence.External
             if (user == null)
                 throw new NotFoundException("User");
 
-            await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+           var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (!result.Succeeded) throw new UnauthorizedAccessException("Something Happened");
         }
 
         public async Task RestPassword(string otp, string token, string userId, string newPassword)

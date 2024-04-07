@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Other;
 using Domain.Enums;
 
 namespace Domain.Repositories
@@ -11,5 +12,8 @@ namespace Domain.Repositories
         List<KeyValuePair<int, double>> GetProfitByYear(OrderStates state);
         List<KeyValuePair<int, double>> GetProfitByWeek(OrderStates state);
         List<KeyValuePair<DayOfWeek, double>> GetProfitByWeekDay(OrderStates state);
+
+        void AddPayment( Payment payment);
+        void UpdatePayment(Payment payment);
     }
 }

@@ -17,6 +17,7 @@ namespace Contract.Order
         //public double OrderTotalCost { get; set; }
         public string CustomerAddress { get; set; }
         public List<ProductsToOrderDtoNew> productsperOrder { get; set; }
+
     }
     public record ProductsToOrderDtoNew
     {
@@ -25,4 +26,7 @@ namespace Contract.Order
        // public ProductVariantDto? products { get; set; }
         public double TotalCost { get; set; }
     }
+
+
+    public record OrderPaymentDto(OrderDtoNew Order, PaymentDto Payment);
  }

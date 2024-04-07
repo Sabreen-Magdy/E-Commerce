@@ -13,8 +13,7 @@ namespace Domain.Entities
         public string Comment { get; set; } = null!;
 
         #region Relationship Mapping
-
-        public int PaymentId { get; set; }
+        
         public Payment Payment { get; set; } = null!;
 
         public int CustomerId { get; set; }

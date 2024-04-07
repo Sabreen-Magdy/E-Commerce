@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Domain.Entities.Other;
 namespace Persistence.Context;
 
 public class ApplicationDbContext: IdentityDbContext<ApplicationIdentityUser>
@@ -22,6 +23,7 @@ public class ApplicationDbContext: IdentityDbContext<ApplicationIdentityUser>
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Payment> Payments { get; set; }
     public DbSet<ProductVarientBelongToOrder> ProductVarientBelongToOrder { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +33,6 @@ public class ApplicationDbContext: IdentityDbContext<ApplicationIdentityUser>
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(ApplicationDbContext).Assembly);
 
-        modelBuilder.Entity<IdentityRole>().HasData(InsertData.AddRole());
+        // modelBuilder.Entity<IdentityRole>().HasData(InsertData.AddRole());
     }
 }

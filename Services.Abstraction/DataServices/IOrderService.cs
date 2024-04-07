@@ -5,12 +5,12 @@ using Domain.Enums;
 
 namespace Services.Abstraction.DataServices
 {
-    public interface IOrderService 
+    public interface IOrderService
     {
         public List<OrderDto> GetAll();
         public OrderDto Get(int id);
         public List<OrderDto> Get(string Name);
-        public void Add(OrderDtoNew DTO);
+        public int Add(OrderDtoNew DTO);
         public void Update(OrderDto DTO);
         public void Delete(int id);
         public void UpdateState(int id, OrderStates status, string comment);
@@ -24,6 +24,7 @@ namespace Services.Abstraction.DataServices
         OrderStates GetOrderStates(int orderId);
 
         Payment GetPayment(int orderId);
+        void AddPayment(int orderId, Payment payment);
         void UpdatePayment(Payment payment);
     }
 }

@@ -37,7 +37,7 @@ namespace Services.DataServices
             order.Comment = comment;
         }
         
-        public void Add(OrderDtoNew orderDtonewFromCustomer) // for customer
+        public int Add(OrderDtoNew orderDtonewFromCustomer) // for customer
         {
             Order OrderEntity = new Order
             {
@@ -83,6 +83,8 @@ namespace Services.DataServices
                 }
             }
             _repository.SaveChanges();
+
+            return OrderEntity.Id;
         }
         public void Delete(int id)
         {
@@ -204,11 +206,16 @@ namespace Services.DataServices
 
         public void UpdatePayment(Payment payment)
         {
-            var order = _repository.OrderReposatory.Get(payment.OrderId);
+            _repository.OrderReposatory.UpdatePayment(payment);
+            _repository.SaveChanges();
+        }
 
+        public void AddPayment(int orderId, Payment payment)
+        {
+            var order = _repository.OrderReposatory.Get(orderId);
             if (order == null) throw new NotFoundException("Order");
-
-            order.Payment = payment;
+            payment.OrderId = orderId;
+            _repository.OrderReposatory.AddPayment(payment);
             _repository.SaveChanges();
         }
 
