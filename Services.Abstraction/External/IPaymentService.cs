@@ -1,5 +1,6 @@
 ﻿using Braintree;
 using Contract;
+using Domain.Entities;
 using Domain.Entities.Other;
 
 namespace Services.Abstraction.External
@@ -8,7 +9,7 @@ namespace Services.Abstraction.External
     {
         IBraintreeGateway CreateGetWay();
         IBraintreeGateway GetGetWay();
-        Payment GreateTransaction(PaymentDto payment);
-        Payment RefundTransaction(string transactionId);
+        Payment CreateTransaction(PaymentDto payment);
+        string RefundTransaction(string transactionId);
     }
 }

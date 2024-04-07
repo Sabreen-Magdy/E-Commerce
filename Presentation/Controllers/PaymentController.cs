@@ -35,7 +35,7 @@ namespace Presentation.Controllers
             try
             {
                var paymentEnity = _exrernalService.PaymentService
-                    .GreateTransaction(payment);
+                    .CreateTransaction(payment);
         
                 return Ok();
             }
@@ -48,5 +48,25 @@ namespace Presentation.Controllers
                 return StatusCode(505, ex.Message);
             }
         }
+
+        //[HttpPost("RefundPayment")]
+        //public IActionResult Refund(int orderId)
+        //{
+        //    try
+        //    {
+        //        var paymentEnity = _exrernalService.PaymentService
+        //             .CreateTransaction(payment);
+
+        //        return Ok();
+        //    }
+        //    catch (PaymentFailedException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(505, ex.Message);
+        //    }
+        //}
     }
 }

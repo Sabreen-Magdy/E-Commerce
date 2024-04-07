@@ -39,20 +39,24 @@ public class CustomerRepository : ICustomerRepository
 
     public void Updatecust(int id, Customer customer)
     {
-            var existingCustomer = _context.Customers.Find(id);
+        var existingCustomer = _context.Customers.Find(id);
 
-            if (existingCustomer != null)
-            {
-                existingCustomer.Name = customer.Name; 
-                existingCustomer.Email = customer.Email;
-                existingCustomer.Phone = customer.Phone;
-                //existingCustomer.Password = customer.Password;
-            }
-            else
-            {
-                throw new Exception("Customer not found");
-            }
-        
+        if (existingCustomer != null)
+        {
+            existingCustomer.Name = customer.Name;
+            existingCustomer.Email = customer.Email;
+            existingCustomer.Phone = customer.Phone;
+            //existingCustomer.Password = customer.Password;
+        }
+        else
+        {
+            throw new Exception("Customer not found");
+        }
+
 
     }
+
+    public Customer? GetByEmail(string email) =>
+        _context.Customers.SingleOrDefault(c => c.Email == email);
+
 }

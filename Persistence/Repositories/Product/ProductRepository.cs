@@ -1,4 +1,6 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
+using Domain.Exceptions;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -12,6 +14,17 @@ namespace Persistence.Repositories
         public ProductRepository(ApplicationDbContext dbContext) =>
            _dbContext = dbContext;
 
+        private bool CanRemove(Product product)
+        {
+            var varients = product.ColoredProducts.SelectMany(cp => cp.Varients, (cp, v) => v.ProductBelongToOrders);
+            var count = varients.Select(v => v.Count(v =>
+                v.Order.State == OrderStates.Pending
+                || v.Order.State == OrderStates.Confirmed));
+
+            return count.Sum() == 0;
+        }
+
+
         public void Add(Product entity) =>
             _dbContext.Products.Add(entity);
 
@@ -24,9 +37,13 @@ namespace Persistence.Repositories
             product!.AvgRate = (oldRate + rate) / product!.NumberReviews;
 
         }
-        public void Delete(Product entity) =>
-            _dbContext.Products.Remove(entity);
-
+        public void Delete(Product entity)
+        {
+            if (CanRemove(entity))
+                _dbContext.Products.Remove(entity);
+            else
+                throw new NotAllowedException("This Product has Orders in Progress");
+        }
         public void DeleteReview(int productId, int rate)
         {
             var product = Get(productId);

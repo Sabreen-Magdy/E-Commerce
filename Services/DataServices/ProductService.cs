@@ -51,7 +51,7 @@ namespace Services.DataServices
                     DeleteImage(imgPath);
             
         }
-
+      
         public void Add(ProductNewDto product)
         {
             // Save the Main Product Data
@@ -117,6 +117,7 @@ namespace Services.DataServices
             Product? product = _repository.ProductRepository.Get(id);
             if (product is null)
                 throw new NotFoundException("Product");
+
             var imgs = product.ColoredProducts.Select(cp => cp.Image).ToList();
 
             _repository.ProductRepository.Delete(product);

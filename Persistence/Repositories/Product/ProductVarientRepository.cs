@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +13,28 @@ namespace Persistence.Repositories
 
         public ProductVarientRepository(ApplicationDbContext dbContext) =>
            _dbContext = dbContext;
-        
+
+        private bool CanRemove(ProductVarient product)
+        {
+            return product.ProductBelongToOrders.Count(v =>
+                v.Order.State == OrderStates.Pending
+                || v.Order.State == OrderStates.Confirmed) == 0;
+        }
+
+
         public void Add(ProductVarient entity) =>
             _dbContext.ProductVarients.Add(entity);
 
         public void AddRange(List<ProductVarient> productVarients) =>
             _dbContext.ProductVarients.AddRange(productVarients);
 
-        public void Delete(ProductVarient entity) =>
-            _dbContext.ProductVarients.Remove(entity);
-        
+        public void Delete(ProductVarient entity)
+        {
+            if(CanRemove(entity))
+                _dbContext.ProductVarients.Remove(entity);
+            else
+                throw new NotAllowedException("This Product Varient has Orders in Progress");
+        }
         public void DeleteRange(List<ProductVarient> productVarients) =>
             _dbContext.ProductVarients.RemoveRange(productVarients);
 

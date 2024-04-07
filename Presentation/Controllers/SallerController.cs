@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Domain.Exceptions;
 using Services.Abstraction;
 using Services.Abstraction.External;
+using Services;
 
 
 namespace Presentation.Controllers;
@@ -58,7 +59,7 @@ public class SallerController : ControllerBase
     {
         try
         {
-            var result = _adminService.OrderService.GetNumberOrders(state);
+            var result = _adminService.OrderService.GetNumberOrders((OrderStates)state);
 
             return Ok(result);
         }
@@ -73,7 +74,7 @@ public class SallerController : ControllerBase
     {
         try
         {
-            var result = _adminService.OrderService.GetProfit(state);
+            var result = _adminService.OrderService.GetProfit((OrderStates)state);
 
             return Ok(result);
         }
@@ -88,7 +89,7 @@ public class SallerController : ControllerBase
     {
         try
         {
-            var result = _adminService.OrderService.GetProfitByYear(state);
+            var result = _adminService.OrderService.GetProfitByYear((OrderStates)state);
 
             return Ok(result);
         }
@@ -102,7 +103,7 @@ public class SallerController : ControllerBase
     {
         try
         {
-            var result = _adminService.OrderService.GetProfitByWeek(state);
+            var result = _adminService.OrderService.GetProfitByWeek((OrderStates)state);
 
             return Ok(result);
         }
@@ -117,7 +118,7 @@ public class SallerController : ControllerBase
     {
         try
         {
-            var result = _adminService.OrderService.GetProfitByWeekDay(state);
+            var result = _adminService.OrderService.GetProfitByWeekDay((OrderStates)state);
 
             return Ok(result);
         }
@@ -376,8 +377,6 @@ public class SallerController : ControllerBase
         return Ok(customers);
     }
 
-
-
     [HttpGet("GetOrders")]
     public IActionResult GetOrders(int id)
     {
@@ -386,8 +385,6 @@ public class SallerController : ControllerBase
         if (orders == null) NotFound("Empty Orders");
         return Ok(orders);
     }
-
-
 
     [HttpDelete("DeleteCustomers")]
     public IActionResult DeleteCustomer(int id)
@@ -447,10 +444,40 @@ public class SallerController : ControllerBase
     [HttpPut("UpdateOrderStatus")]
     public IActionResult UpdateOrderStatus(int id, int status, string comment)
     {
-        _adminService.OrderService.UpdateState(id, status, comment);
-        //if(status == 2)
-            //_externalService.PaymentService.RefundTransaction
-        return Ok();
+        OrderStates oldState = OrderStates.Pending;
+        try
+        {
+             oldState = _adminService.OrderService.GetOrderStates(id);
+            _adminService.OrderService.UpdateState(id, (OrderStates)status, comment);
+
+            if (status == (int)OrderStates.Rejected)
+            {
+                var payment = _adminService.OrderService.GetPayment(id);
+                string refundedTransactionId = _externalService.PaymentService
+                     .RefundTransaction(payment.PayedTransactionId);
+
+                payment.RefundTransactionId = refundedTransactionId;
+                _adminService.OrderService.UpdatePayment(payment);
+            }
+            return Ok(status);
+        }
+        catch(PaymentFailedException ex)
+        {
+            _adminService.OrderService.UpdateState(id, oldState, comment);
+            return BadRequest(ex.Message);
+        }
+        catch (NotAllowedException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch(Exception ex)
+        {
+            return StatusCode(505, ex.Message);
+        }
     }
 
     #endregion

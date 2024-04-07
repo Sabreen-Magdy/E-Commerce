@@ -7,4 +7,5 @@ public interface ICustomerRepository :
 {
     void Updatecust(int id , Customer customer);
     int GetNumberCustomers();
+    Customer? GetByEmail(string email);
 }

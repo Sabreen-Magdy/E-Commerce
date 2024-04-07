@@ -1,6 +1,7 @@
 ﻿using Contract;
 using Contract.Order;
 using Domain.Entities;
+using Domain.Enums;
 using System.Xml.Linq;
 
 namespace Services.Extenstions
@@ -54,7 +55,7 @@ namespace Services.Extenstions
                 ConfirmDate = order.ConfirmDate,
                 OrderedDate = order.OrderDate,
                 CustomerAddress = order.CustomerAddress,
-                State = order.State,
+                State = (OrderStates)order.State,
                 TotalCost = order.OrderTotalCost,
                 CustomerId = order.CustomerId,
             };
@@ -98,7 +99,7 @@ namespace Services.Extenstions
                 ConfirmDate = order.ConfirmDate,
                 OrderDate = order.OrderedDate,
                 CustomerAddress = order.CustomerAddress,
-                State = order.State,
+                State = (int)order.State,
                 OrderTotalCost = order.TotalCost,
                 CustomerId = order.CustomerId,
                 CustomerName = order.Customer.Name,

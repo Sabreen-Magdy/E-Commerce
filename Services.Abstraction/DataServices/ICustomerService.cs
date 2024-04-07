@@ -27,4 +27,5 @@ public interface ICustomerService
     void UpdateReview(int customerId, int productId, string comment, int rate); 
     void DeleteReview(int id);
     void DeleteReview(int customerId, int productId);
+    Customer? GetByEmail(string email);
 }

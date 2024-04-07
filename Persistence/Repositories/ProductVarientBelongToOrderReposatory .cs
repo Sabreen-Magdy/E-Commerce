@@ -11,6 +11,7 @@ namespace Persistence.Repositories
         public ProductVarientBelongToOrderReposatory(
             ApplicationDbContext context) => _context = context;
  
+
         public void Add(ProductVarientBelongToOrder entity)
         {
            _context.ProductVarientBelongToOrder.Add(entity);

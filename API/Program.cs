@@ -78,7 +78,7 @@ builder.Services.AddIdentity<ApplicationIdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders(); ;
 
-var connection = builder.Configuration.GetConnectionString("soomcon");
+var connection = builder.Configuration.GetConnectionString("onlinerof");
 builder.Services
     .AddDbContext<ApplicationDbContext>(options =>
     options/*.UseLazyLoadingProxies()*/.UseSqlServer(

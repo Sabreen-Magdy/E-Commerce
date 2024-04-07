@@ -151,5 +151,8 @@ namespace Persistence.External
 
             return token;    
         }
+
+        public async Task<bool> CanRegister(string email) =>
+            await _userManager.FindByEmailAsync(email) == null;
     }
 }

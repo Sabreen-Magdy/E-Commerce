@@ -11,5 +11,6 @@ namespace Services.Abstraction.External
         Task ChangePassword(ChangePasswordDto passwordDto);
         Task RestPassword(ForgetPasswordDto passwordDto);
         Task<OtpToken> RestPassword(string email);
+        Task<bool> CanRegister(string email);
     }
 }

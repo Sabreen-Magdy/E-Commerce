@@ -1,6 +1,7 @@
 ﻿using Contract;
 using Domain.Entities;
 using Domain.Entities.Other;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.External;
 using Services.Abstraction;
@@ -61,7 +62,6 @@ namespace Persistence.Authentication
                 throw new NotFoundException("Customer");
             try
             {
-
                 await _repository.AuthenticationRepository.Remove(customer.UserId);
 
                 _adminService.CustomerService.Delete(customerId);
@@ -74,24 +74,11 @@ namespace Persistence.Authentication
         public async Task<User> Login(LoginDto login)
         {
             var user = await _repository.AuthenticationRepository.Login(login.Email, login.Password);
-            var usertype = _adminService.CustomerService.GetAll().Find(c => c.Email == login.Email);
-            if (usertype == null)
-            {
-                var seller = _adminService.SallerService.GetByEmail(login.Email);
-                if (seller == null)
-                {
-                    throw new NotFoundException();
-                }
-                else
-                {
-                    user.Id = seller.Id;
-                }
-            }
+            if (user.Role.Contains(UserRole.Saller.ToString()))
+                user.Id = _adminService.SallerService.GetByEmail(login.Email)!.Id;
             else
-            {
-                user.Id = usertype.Id;
-            }
-            
+
+                user.Id = _adminService.CustomerService.GetByEmail(login.Email)!.Id;
             return user;
         }
         public async Task<User> Register(CustomerAddDto customer)
@@ -118,5 +105,8 @@ namespace Persistence.Authentication
             }
 
         }
+
+        public async Task<bool> CanRegister(string email) =>
+            await _repository.AuthenticationRepository.CanRegister(email);
     }
 }

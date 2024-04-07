@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -13,11 +14,11 @@ namespace Persistence.Repositories
         public OrderRepository(ApplicationDbContext context) =>
             _context = context;
         
-        public double GetProfit(int state) =>
+        public double GetProfit(OrderStates state) =>
              _context.Orders.Where(o=> o.State == state)
                 .Sum(o => o.TotalCost);
        
-        public int GetNumberOrders(int state) => 
+        public int GetNumberOrders(OrderStates state) => 
             _context.Orders.Count(o => o.State == state);
         public void Add(Order entity)
         {
@@ -42,6 +43,7 @@ namespace Persistence.Repositories
         public List<Order> GetAll()
         {
             return  _context.Orders
+                .Include(o=> o.Payment)
                 .Include(o => o.Customer)   
                 .Include(o => o.ProductBelongToOrders)
                     .ThenInclude(o => o.ProductVarient)
@@ -68,7 +70,7 @@ namespace Persistence.Repositories
         }
 
         
-        private IEnumerable<Order> FilterByMonth(int state) =>
+        private IEnumerable<Order> FilterByMonth(OrderStates state) =>
             _context.Orders
             .Where(o => o.State == state
                      && o.ConfirmDate != null && o.ConfirmDate.Value.Year == DateTime.Now.Year
@@ -76,17 +78,17 @@ namespace Persistence.Repositories
                      && o.ConfirmDate.Value.Day <= DateTime.Now.Day
                      && o.ConfirmDate.Value.Day > DateTime.Now.Day - 7);
 
-        public List<KeyValuePair<int, double>> GetProfitByYear(int state) => _context.Orders
+        public List<KeyValuePair<int, double>> GetProfitByYear(OrderStates state) => _context.Orders
             .Where(o => o.State == state && 
                         o.ConfirmDate != null && o.ConfirmDate.Value.Year == DateTime.Now.Year)
             .GroupBy(ks => ks.ConfirmDate!.Value.Month)
             .Select(mo => new  KeyValuePair<int, double>(mo.Key,  mo.Sum(o=> o.TotalCost))).ToList();
             
-        public List<KeyValuePair<int, double>> GetProfitByWeek(int state) =>
+        public List<KeyValuePair<int, double>> GetProfitByWeek(OrderStates state) =>
             FilterByMonth(state).GroupBy(ks => ks.ConfirmDate!.Value.Day)
             .Select(mo => new KeyValuePair<int, double>(mo.Key, mo.Sum(o => o.TotalCost))).ToList();
 
-        public List<KeyValuePair<DayOfWeek, double>> GetProfitByWeekDay(int state) =>
+        public List<KeyValuePair<DayOfWeek, double>> GetProfitByWeekDay(OrderStates state) =>
            FilterByMonth(state).GroupBy(ks => ks.ConfirmDate!.Value.DayOfWeek)
            .Select(mo => new KeyValuePair<DayOfWeek, double>(mo.Key, mo.Sum(o => o.TotalCost))).ToList();
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240406232917_PaymentwithOrder")]
+    partial class PaymentwithOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,9 +227,6 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GetDate()");
-
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -568,15 +568,15 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "58638d21-23ab-45be-a10a-93e584a4ce8f",
-                            ConcurrencyStamp = "2869b331-7441-4ba9-b032-4121149bf66f",
+                            Id = "3929e358-4c15-4d0a-83be-7aba971ea16a",
+                            ConcurrencyStamp = "cc5aca2b-11f4-4853-977e-c206b59e68b1",
                             Name = "Saller",
                             NormalizedName = "SALLER"
                         },
                         new
                         {
-                            Id = "f5854f24-2acb-46a4-aae4-be39cb5c8233",
-                            ConcurrencyStamp = "d9d882f6-7e2d-4b8f-b3a5-ca1d2b79029c",
+                            Id = "5e551cb5-bc7d-4ed5-94a0-721bf2246149",
+                            ConcurrencyStamp = "fc2a6563-672d-4f5c-b9a7-f813cd295c4a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

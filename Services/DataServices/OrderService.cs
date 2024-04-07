@@ -1,6 +1,8 @@
 ﻿using Contract;
 using Contract.Order;
 using Domain.Entities;
+using Domain.Entities.Other;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Repositories;
 using Services.Abstraction.DataServices;
@@ -29,7 +31,7 @@ namespace Services.DataServices
             _repository.SaveChanges();
         }
 
-        private void UpdateState(Order order, int state, string comment)
+        private void UpdateState(Order order, OrderStates state, string comment)
         {
             order.State = state;
             order.Comment = comment;
@@ -43,7 +45,7 @@ namespace Services.DataServices
                 ConfirmDate = null,
                 CustomerAddress = orderDtonewFromCustomer.CustomerAddress,
                 CustomerId = orderDtonewFromCustomer.CustomerId,
-                State = 0,
+                State = OrderStates.Pending,
 
                 TotalCost = orderDtonewFromCustomer.productsperOrder.Sum(p => p.TotalCost)
             };
@@ -129,14 +131,14 @@ namespace Services.DataServices
             _repository.SaveChanges();
         }
         
-        public void UpdateState(int id , int state, string comment)
+        public void UpdateState(int id , OrderStates state, string comment)
         {
             var order = _repository.OrderReposatory.Get(id);
             if (order == null)
                 throw new NotFoundException("Order");
-            if (order.State == 0)
+            if (order.State == OrderStates.Pending)
             {
-                if (state == 1)
+                if (state == OrderStates.Confirmed)
                 {
                     UpdateState(order, state, comment);
 
@@ -145,7 +147,7 @@ namespace Services.DataServices
                     _repository.SaveChanges();
                 }
               
-                if (state == 2)
+                if (state == OrderStates.Rejected)
                 {
                     if (order.ProductBelongToOrders != null)
                     {
@@ -164,9 +166,9 @@ namespace Services.DataServices
                     _repository.SaveChanges();
                 }
             }
-            else if(order.State == 1) 
+            else if(order.State == OrderStates.Confirmed) 
             {
-                if(state == 3)
+                if(state == OrderStates.Delivered)
                 {
                     UpdateState(order, state, comment);
 
@@ -176,19 +178,47 @@ namespace Services.DataServices
             }
         }
 
-        public int GetNumberOrders(int state) =>
+        public int GetNumberOrders(OrderStates state) =>
             _repository.OrderReposatory.GetNumberOrders(state);
 
-        public double GetProfit(int state) =>
+        public double GetProfit(OrderStates state) =>
             _repository.OrderReposatory.GetProfit(state);
 
-        public List<ProfitDto> GetProfitByYear(int state) =>
+        public List<ProfitDto> GetProfitByYear(OrderStates state) =>
             _repository.OrderReposatory.GetProfitByYear(state).ToProfitDto();
 
-        public List<ProfitDto> GetProfitByWeek(int state) =>
+        public List<ProfitDto> GetProfitByWeek(OrderStates state) =>
             _repository.OrderReposatory.GetProfitByWeek(state).ToProfitDto();
 
-        public List<ProfitWeekDto> GetProfitByWeekDay(int state) =>
+        public List<ProfitWeekDto> GetProfitByWeekDay(OrderStates state) =>
             _repository.OrderReposatory.GetProfitByWeekDay(state).ToProfitWeekDto();
+
+        public Payment GetPayment(int orderId)
+        {
+            var order = _repository.OrderReposatory.Get(orderId);
+
+            if (order == null) throw new NotFoundException("Order");
+
+            return order.Payment;
+        }
+
+        public void UpdatePayment(Payment payment)
+        {
+            var order = _repository.OrderReposatory.Get(payment.OrderId);
+
+            if (order == null) throw new NotFoundException("Order");
+
+            order.Payment = payment;
+            _repository.SaveChanges();
+        }
+
+        public OrderStates GetOrderStates(int orderId)
+        {
+            var order = _repository.OrderReposatory.Get(orderId);
+
+            if (order == null) throw new NotFoundException("Order");
+
+            return order.State;
+        }
     }
 }

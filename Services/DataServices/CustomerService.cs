@@ -117,7 +117,7 @@ public class CustomerService : ICustomerService
             throw new NotFoundException("Customer");
         else
         {
-            if(customer.Orders.Count(o => o.State == 1 || o.State == 0) == 0)
+            if(customer.Orders.Count(o => o.State == OrderStates.Confirmed|| o.State == OrderStates.Pending) == 0)
             {
                 _repository.CustomerRepository.Delete(customer);
                 _repository.SaveChanges();
@@ -228,4 +228,6 @@ public class CustomerService : ICustomerService
         DeleteRiview(_repository.ReviewRepository
             .GetByCustomerProduct(customerId, productId));
 
+    public Customer? GetByEmail(string email) =>
+        _repository.CustomerRepository.GetByEmail(email);
 }

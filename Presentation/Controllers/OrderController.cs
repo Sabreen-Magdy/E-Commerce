@@ -104,22 +104,22 @@ public class OrderController : ControllerBase
     }
 
 
-    [HttpPut("UpdateOrderStatus")]
-    public IActionResult Update(int id, int status, string comment)
-    {
-        try
-        {
-            _adminService.OrderService.UpdateState(id, status, comment);
+    //[HttpPut("UpdateOrderStatus")]
+    //public IActionResult Update(int id, int status, string comment)
+    //{
+    //    try
+    //    {
+    //        _adminService.OrderService.UpdateState(id, (Or)status, comment);
 
-            return Ok();
-        }
-        catch (NotFoundException ex)
-        {
-            return StatusCode(404, ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
+    //        return Ok();
+    //    }
+    //    catch (NotFoundException ex)
+    //    {
+    //        return StatusCode(404, ex.Message);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, ex.Message);
+    //    }
+    //}
 }

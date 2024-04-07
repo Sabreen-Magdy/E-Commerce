@@ -1,8 +1,10 @@
 ﻿using Braintree;
 using Contract;
+using Domain.Entities;
 using Domain.Entities.Other;
 using Domain.Exceptions;
 using Domain.External;
+using Services.Abstraction;
 using Services.Abstraction.External;
 
 namespace Services.External
@@ -21,7 +23,8 @@ namespace Services.External
         public IBraintreeGateway CreateGetWay() =>
                 new BraintreeGateway()
                 {
-                    Environment = Braintree.Environment.ParseEnvironment(_confogurations["Environment"]),
+                    Environment = Braintree.Environment
+                    .ParseEnvironment(_confogurations["Environment"]),
                     MerchantId = _confogurations["MerchantId"],
                     PublicKey = _confogurations["PublicKey"],
                     PrivateKey = _confogurations["PrivateKey"],            
@@ -34,7 +37,7 @@ namespace Services.External
             return BraintreeGateway;
         }
 
-        public Payment GreateTransaction(PaymentDto payment)
+        public Payment CreateTransaction(PaymentDto payment)
         {
             var getway = GetGetWay();
             var transaction = new TransactionRequest
@@ -52,10 +55,9 @@ namespace Services.External
             if (results.IsSuccess())
                 return new()
                 {
-                    TransactionId = results.Target.Id,
-                    Amount = results.Target.Amount,
-                    PaymentInstrumentSubtype = results.Target.PaymentInstrumentType.GetDescription(),
-                    CreatedAt = results.Target.CreatedAt,
+                    PayedTransactionId = results.Target.Id,
+                    PayedAmount = results.Target.Amount,
+                    TransactionDate = results.Target.CreatedAt,
                     CurrencyIsoCode = results.Target.CurrencyIsoCode,
                     Nonce = payment.Nonce,
 
@@ -64,20 +66,14 @@ namespace Services.External
                 throw new PaymentFailedException(results.Message);
         }
 
-        public Payment RefundTransaction(string transactionId)
+        public string RefundTransaction(string transactionId)
         {
             var getway = GetGetWay();
-            var results =  getway.Transaction.Refund(transactionId);
+            var results = getway.Transaction.Refund(transactionId);
 
             if (results.IsSuccess())
-                return new()
-                {
-                    TransactionId = results.Transaction.Id,
-                    Amount = results.Transaction.Amount,
-                    PaymentInstrumentSubtype = results.Transaction.PaymentInstrumentType.GetDescription(),
-                    CreatedAt = results.Transaction.CreatedAt,
-                    CurrencyIsoCode = results.Transaction.CurrencyIsoCode,
-                };
+
+                return results.Target.Id;
             else
                 throw new PaymentFailedException(results.Message);
         }

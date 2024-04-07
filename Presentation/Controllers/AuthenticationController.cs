@@ -19,10 +19,12 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("ConfirmEmail")]
-        public IActionResult Confirm(string email)
+        public async Task<IActionResult> Confirm(string email)
         {
             try
             { 
+                if( await _service.AuthenticationService.CanRegister(email))
+                    return BadRequest("This email Already Registered");
 
                 var redirectUrl = Request.Headers["RedirectUrl"];
                 if (string.IsNullOrEmpty(redirectUrl))
