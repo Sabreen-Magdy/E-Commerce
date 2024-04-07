@@ -4,18 +4,34 @@
   <div class="items row">
     <div *ngIf="allproductList.length == 0" class="loader"></div>
     <div
-        
+    (mouseenter)="hoverfun(x.id)"
+    (mouseleave)="unhoverfun(x.id)"
       *ngFor="let x of allproductList.slice(0, 8)"
       class="element col-lg-3 col-md-6"
     >
       <div class="element-img">
         <span
+        *ngIf="!isFav"
           (click)="pushItemToFavCart(x.id)"
           class="material-symbols-outlined fav"
         >
-          favorite
+        
+        <i  class="bi bi-heart"></i>
+          <!-- favorite -->
         </span>
-        <span class="msg fav">اضف للمفضلة</span>
+        <span
+        *ngIf="isFav"
+        
+        (click)="deleteFav(x.id)"
+        class="material-symbols-outlined fav"
+      >
+      <i  class="bi bi-heart-fill"></i>
+     
+        <!-- favorite -->
+      </span>
+        <span *ngIf="!isFav" class="msg fav">اضف للمفضلة</span>
+        <span *ngIf="isFav" class="msg fav">ازل من المفضلة</span>
+      
         <span
           [routerLink]="['/store/productDetials', x.id]"
           class="material-symbols-outlined show"

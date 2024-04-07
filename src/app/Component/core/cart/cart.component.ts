@@ -15,6 +15,7 @@ import { ProductFormService } from 'src/app/services/product-form.service';
 import { IproductShow } from 'src/app/models/i-product-variant';
 import { IaddFavorite } from 'src/app/models/Ifav';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import Swal from 'sweetalert2';
 // import * as braintree from 'braintree-web';
 // import * as dropin from 'braintree-web-drop-in';
 declare var braintree: any;
@@ -173,6 +174,14 @@ p: number = 1;
   }
 
   deleteByItemId(id: number) {
+    Swal.fire({
+      title: 'هل أنت متأكد من أنك تريد حذفها من السلة؟!',
+      confirmButtonColor: '#198754', // لون زر التأكيد
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+      showCancelButton: true,
+      cancelButtonColor: '#dc3545' // لون زر الإلغاء
+    }).then((result) => {if (result.isConfirmed) {
     this.delCartItemsub = this.CartService.deleteCartitem(id).subscribe({
       next: (data) => {
         console.log('delete succesful' + data);
@@ -184,6 +193,7 @@ p: number = 1;
         console.log('ERROR when delete cartItem ' + e);
       },
     });
+  }})
   }
 
   decreasecartItem(productId: number, quantity: number) {
@@ -390,7 +400,16 @@ p: number = 1;
   nonce: string = ''
 
   clearAll() {
+    Swal.fire({
+      title: 'هل أنت متأكد من أنك تريد حذف الجميع من السلة؟!',
+      confirmButtonColor: '#198754', // لون زر التأكيد
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+      showCancelButton: true,
+      cancelButtonColor: '#dc3545' // لون زر الإلغاء
+    }).then((result) => {if (result.isConfirmed) {
     this.deleteafterCheckout2();
+    }})
   }
 
   toggletoPaymentForm(e: Event) {

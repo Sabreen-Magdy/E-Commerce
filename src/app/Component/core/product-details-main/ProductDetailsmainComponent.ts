@@ -33,6 +33,7 @@ export class ProductDetailsmainComponent implements OnInit {
   waitingDoneSendReview : boolean = false;
   activeStarsCount: any;
   p: number = 1;
+  pp:number = 1;
   prodVariantList: IproductVarDet[] = [];
   prodVariantListOriginal: IproductVarDet[] = [];
 
@@ -667,5 +668,10 @@ export class ProductDetailsmainComponent implements OnInit {
   //   this.slider.nativeElement.scrollLeft -= 100;
   //    // Adjust the number based on your requirement
   // }
+
+  clg(){
+    console.log(this.prodDetrev.length);
+    console.log(this.pp);
+  }
 
 }
