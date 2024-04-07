@@ -25,7 +25,8 @@ export class StoreComponent implements OnInit {
   inputText: string = '';
   maxPrice: number = 0;
   minPrice: number = 0;
-  favlist : IaddFavorite[] = [];
+  favlist: IaddFavorite[] = [];
+  isFav: boolean = false;
   toggle() {
     var blur = document.getElementById('blur');
     blur?.classList.toggle('active');
@@ -69,7 +70,7 @@ export class StoreComponent implements OnInit {
     private cateServ: CategoryService,
     private activeRoute: ActivatedRoute,
     private auth: AuthService,
-    private _favService: FavoriteService,
+    private _favService: FavoriteService
   ) {}
 
   ngOnInit(): void {
@@ -120,7 +121,9 @@ export class StoreComponent implements OnInit {
         );
       }
     });
-
+    if (this.customerId !=0){
+      this.getAllfav();
+    }
     // this.getAllProduct();
     // console.log("init")
     // console.log(this.auth.allProducts);
@@ -156,8 +159,8 @@ export class StoreComponent implements OnInit {
   prodByNameSub: Subscription | undefined;
   allCategorySub: Subscription | undefined;
   addFavSub: Subscription | undefined;
-  getALLfav : Subscription | undefined;
-  delFavSub :Subscription | undefined;
+  getALLfavsub: Subscription | undefined;
+  delFavSub: Subscription | undefined;
 
   getAllCategory() {
     this.allCategorySub = this.cateServ.getAllCategs().subscribe({
@@ -216,34 +219,37 @@ export class StoreComponent implements OnInit {
 
   pushItemToFavCart(prodId: number) {
     this.auth.userData.subscribe({
-      next:()=>{
-        if(this.auth.userData.getValue()!=null){
-             Swal.fire({
-      title: 'تم إضافة المنتج إلى قائمة أمنياتي',
-      confirmButtonColor: '#198754', // Change this to the color you prefer
-             });
-            const addFav: IaddFavorite = {
-      customerId: this.customerId,
-      productId: prodId,
-            };
-              this.addFavSub = this._favService.additemTofav(addFav).subscribe({
-      next: (data) => {
-        console.log('item Add to Fav Succesfully' + data);
-      },
-      error: (e) => {
-        console.log('may bt item in fav already');
-        console.log('ERROR when add fav to item' + e);
-      },
-           });
-          this._favService.getNumberOfitemInFavCart();
-           }else{
+      next: () => {
+        if (this.auth.userData.getValue() != null) {
+          
+          const addFav: IaddFavorite = {
+            customerId: this.customerId,
+            productId: prodId,
+          };
+          this.addFavSub = this._favService.additemTofav(addFav).subscribe({
+            next: (data) => {
+              Swal.fire({
+                title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+                confirmButtonColor: '#198754', // Change this to the color you prefer
+              });
+              console.log('item Add to Fav Succesfully' + data);
+              this.getAllfav();
+              this._favService.getNumberOfitemInFavCart();
+            },
+            error: (e) => {
+              console.log('may bt item in fav already');
+              console.log('ERROR when add fav to item' + e);
+            },
+          });
+          
+        } else {
           Swal.fire({
-         title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
-         confirmButtonColor: '#198754', // Change this to the color you prefer
+            title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+          });
+        }
+      },
     });
-   }
- }
-});
   }
 
   sortProductList(e: any) {
@@ -303,36 +309,58 @@ export class StoreComponent implements OnInit {
     this.ProductList = this.MainList;
   }
 
-  checkFav(id : number){
-    for (let item of this.favlist){
-      if (item.productId == id){
+  checkFav(id: number) {
+    for (let item of this.favlist) {
+      if (item.productId == id) {
         return true;
-
       }
-
     }
     return false;
   }
 
-getAllfav(){
-this.getALLfav = this._favService.getallFavbycustomr(this.customerId).subscribe({
-  next : (data)=>{
-    this.favlist = data;
-  },
-  error : (e)=>{
-    console.log(e);
+  getAllfav() {
+    this.getALLfavsub = this._favService
+      .getallFavbycustomr(this.customerId)
+      .subscribe({
+        next: (data) => {
+          this.favlist = data;
+        },
+        error: (e) => {
+          console.log(e);
+        },
+      });
   }
-})
-}
-removeItemfromFav(id : number){
-this.delFavSub = this._favService.deletefavitem(this.customerId,id).subscribe({
-  next : (d)=>{
-    console.log("doooooooooooooone Delete");
-    console.log(d);
-  },
-  error : (e)=>{
-    console.log("ERROE", e);
+  hoverfun(id: number) {
+    console.log('hiiiiiii', id);
+    console.log(this.favlist);
+    for (let iten of this.favlist) {
+      if (iten.productId == id) {
+        this.isFav = true;
+        console.log(true);
+      }
+    }
   }
-})
-}
+  unhoverfun(id: number) {
+    console.log('bye', id);
+    this.isFav = false;
+  }
+  removeItemfromFav(id: number) {
+    this.delFavSub = this._favService
+      .deletefavitem(this.customerId, id)
+      .subscribe({
+        next: (d) => {
+          Swal.fire({
+            title: 'تم ازالة المنتج من قائمة أمنياتك',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+          });
+          console.log('doooooooooooooone Delete');
+          this.getAllfav();
+          console.log(d);
+          this._favService.getNumberOfitemInFavCart();
+        },
+        error: (e) => {
+          console.log('ERROE', e);
+        },
+      });
+  }
 }

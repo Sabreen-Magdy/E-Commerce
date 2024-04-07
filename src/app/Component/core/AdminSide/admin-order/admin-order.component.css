@@ -360,3 +360,37 @@ Change the background color of the pagination controls
 .custom-pagination /deep/ .ngx-pagination {
   text-align: center;
 }
+
+
+/*Filter part*/
+
+
+.filterpart{
+  margin:20px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ .filter{
+  padding: 6px;
+  border-radius: 6px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter:hover{
+  cursor: pointer;
+  background-color: rgba(0, 196, 0, 0.04);  
+}
+
+ .filterpart .sortselect{
+  border: 0px;
+  width: 240px;
+}
+
+.filterpart .sortselect:focus{
+  border: 1px dotted gray;
+}

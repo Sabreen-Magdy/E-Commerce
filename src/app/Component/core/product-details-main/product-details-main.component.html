@@ -282,7 +282,7 @@
       <h5>جميع التقييمات</h5>
       <div class="line3"><div></div></div>
       <div
-        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }"
+        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: pp, }"
         class="coment row"
       >
         <div class="user col-md-3">
@@ -306,7 +306,7 @@
           class="custom-pagination"
           nextLabel="&rsaquo;"
           previousLabel="&lsaquo;"
-          (pageChange)="p = $event"
+          (pageChange)="pp = $event"
         ></pagination-controls>
       </div>
     </div>

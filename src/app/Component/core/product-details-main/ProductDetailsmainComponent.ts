@@ -33,6 +33,7 @@ export class ProductDetailsmainComponent implements OnInit {
   waitingDoneSendReview : boolean = false;
   activeStarsCount: any;
   p: number = 1;
+  pp:number = 1;
   prodVariantList: IproductVarDet[] = [];
   prodVariantListOriginal: IproductVarDet[] = [];
 
