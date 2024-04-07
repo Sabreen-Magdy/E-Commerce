@@ -49,6 +49,10 @@ deletecSt(Id:number){
       console.log("dn delete")
     },
     error:(e)=>{
+        Swal.fire({
+            title: 'لا يمكنك حذف هذا المستخدم لديه طلبات تحت التنفيذ!',
+            confirmButtonColor: '#198754', // Change this to the color you prefer
+          });
       console.log('errrrrrrrrrrrrrrrrrrrror delete',e)
     }
   })

@@ -3,6 +3,21 @@
     <header>
       <h3>طلبات العميل</h3>
     </header>
+    <div class="filterpart">
+      <div class="filter" >
+        
+      </div>
+      <div>
+        <select class="sortselect" (change)="sortOrderList($event)">
+          <option selected="">اختيار حسب :</option>
+          <option value="-1">الكل</option>
+          <option value="0">الطلبات قيد الانتظار </option>
+          <option value="1">الطلبات المقبولة </option>
+          <option value="2">الطلبات المرفوضة</option>
+          <option value="3"> الطلبات تم تسليمها</option>
+        </select>
+      </div>
+    </div>
     <div *ngIf="orders.length == 0 && waiting" class="loader2"></div>
     <div *ngIf="orders.length == 0 && noitem" class="alert alert-danger mx-4 my-3" >  لا يوجد طلبات 
 </div>

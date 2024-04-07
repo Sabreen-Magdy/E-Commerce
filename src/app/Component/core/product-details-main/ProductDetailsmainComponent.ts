@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, map } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { AddCart, CartDto, CartItemDto, Uppdatecart } from 'src/app/models/icart';
-import { IaddFavorite } from 'src/app/models/Ifav';
+import { favitem, IaddFavorite } from 'src/app/models/Ifav';
 import { IproductDTo } from 'src/app/models/iproduct-dto';
 import { IproductReviws } from 'src/app/models/iproduct-reviws';
 import { IproductByGategory, IproductVarDet } from 'src/app/models/iproduct-var-det';
@@ -33,8 +33,11 @@ export class ProductDetailsmainComponent implements OnInit {
   waitingDoneSendReview : boolean = false;
   activeStarsCount: any;
   p: number = 1;
+  pp:number = 1;
   prodVariantList: IproductVarDet[] = [];
   prodVariantListOriginal: IproductVarDet[] = [];
+  FavList : favitem[]=[];
+  isFiv : boolean = false;
 
   prodDet: IproductDTo = {
     "id": 0,
@@ -266,8 +269,9 @@ export class ProductDetailsmainComponent implements OnInit {
 
 
   showerror: boolean = false;
+  numOfStar:boolean=true;
   confirmComment(e: Event) {
-    if (this.commentForm.valid) {
+    if (this.commentForm.valid &&this.activeStarsCount>0) {
       this.waitingDoneSendReview = true;
       this.subText = "";
       let productId = this.prodDet.id;
@@ -277,20 +281,26 @@ export class ProductDetailsmainComponent implements OnInit {
       console.log(rate, content);
       this.revService.addProductReview(customerId, productId, content, rate).subscribe({
         next: (data) => {
-          this.commentForm.get('comment')?.setValue("");
+          // this.clearForm()
+          // this.commentForm.get('comment')?.setValue("");
           this.getProductDetails()
           this.prodDetApi.getProdReviews(this.id).subscribe({
             next: (data) => {
               this.prodDetrev = data;
               this.waitingDoneSendReview = false;
+              this.subText="أضف تعليقًا أخر"
+              // location.reload()
               console.log(this.prodDetrev);
             }
           });
         }
       });;
+    }else if(this.activeStarsCount<1){
+      this.numOfStar=false;
     }
     else {
       this.showerror = true;
+      console.log("ادخل تقييم النجوم")
     }
   }
   // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
@@ -432,33 +442,12 @@ export class ProductDetailsmainComponent implements OnInit {
     console.log(this.open);
 
   }
-  getPaginatedList(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.list.slice(startIndex, endIndex);
-  }
-
-  goToPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.getTotalPages()) {
-      this.currentPage++;
-    }
-  }
+  
   getStarArray(count: number): any[] {
     return Array(count).fill(0);
   }
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
+ 
 
-  getTotalPages(): number {
-    return Math.ceil(this.list.length / this.itemsPerPage);
-  }
 
 
   getUniqueColors(): string[] {
@@ -510,9 +499,45 @@ export class ProductDetailsmainComponent implements OnInit {
 
   }
 
+  pushItemToFavCart2(prodId: number) {
+    this.authService.userData.subscribe({
+      next:()=>{
+        if(this.authService.userData.getValue()!=null){
+  
+    const addFav: IaddFavorite = {
+      customerId: this.customerId,
+      productId: prodId
+    }
+
+    this.addFavSub = this.favService.additemTofav(addFav).subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+          confirmButtonColor: '#198754', // Change this to the color you prefer
+        });
+        console.log("item Add to Fav Succesfully" + data);
+        this.favService.getNumberOfitemInFavCart();
+        this.checkFavourite();
+      },
+      error: (e) => {
+        console.log("may bt item in fav already");
+        console.log("ERROR when add fav to item" + e);
+      }
+    })
+  }else{
+    Swal.fire({
+   title: 'سجل دخول حتى تتمكن من رحلة التسوق معنا!',
+   confirmButtonColor: '#198754', // Change this to the color you prefer
+  });
+  }
+  }
+  });
+
+  }
   checkFavourite() {
     this.getFavSub = this.favService.getallFavbycustomr(this.customerId).subscribe({
       next: (data) => {
+        this.FavList = data;
         console.log("Product id  " + this.id);
         console.log("customrt id  " + this.customerId);
         console.log(data);
@@ -528,14 +553,33 @@ export class ProductDetailsmainComponent implements OnInit {
     })
   }
 
-  deleteFavitem() {
+  deleteFavitem(id : number) {
     this.waitingFav = true;
-    this.deleteFavsub = this.favService.deletefavitem(this.customerId, this.id).subscribe({
+    this.deleteFavsub = this.favService.deletefavitem(this.customerId, id).subscribe({
       next: (data) => {
         this.waitingFav = false;
         console.log("succesful delete: " + data);
         this.favService.getNumberOfitemInFavCart();
         this.isProductInFav = false;
+      },
+      error: (e) => {
+        console.log("ERROR when delete fav item" + e);
+      }
+    });
+  }
+
+  deleteFavitem2(id : number) {
+  
+    this.deleteFavsub = this.favService.deletefavitem(this.customerId, id).subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: 'تم ازالة المنتج من قائمة أمنياتك',
+          confirmButtonColor: '#198754', // Change this to the color you prefer
+        });
+        console.log("succesful delete: " + data);
+        this.checkFavourite();
+        this.favService.getNumberOfitemInFavCart();
+        
       },
       error: (e) => {
         console.log("ERROR when delete fav item" + e);
@@ -559,7 +603,7 @@ export class ProductDetailsmainComponent implements OnInit {
       next: (data) => {
         console.log('increased quantity');
         this.cartitems =[]
-        
+
         // this.getcartbyId(this.prodVariantList.map(p=>p.id));
         const indexofvarupdated = this.prodVariantList.indexOf(this.selectedvariant)
         // console.log("indexofvarupdated",indexofvarupdated)
@@ -660,5 +704,20 @@ export class ProductDetailsmainComponent implements OnInit {
   //   this.slider.nativeElement.scrollLeft -= 100;
   //    // Adjust the number based on your requirement
   // }
+
+  hoverfun(id: number) {
+    console.log('hiiiiiii', id);
+    console.log(this.FavList);
+    for (let iten of this.FavList) {
+      if (iten.productId == id) {
+        this.isFiv = true;
+        console.log(true);
+      }
+    }
+  }
+  unhoverfun(id: number) {
+    console.log('bye', id);
+    this.isFiv = false;
+  }
 
 }

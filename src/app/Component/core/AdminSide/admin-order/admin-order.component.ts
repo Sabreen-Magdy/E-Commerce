@@ -14,7 +14,8 @@ export class AdminOrderComponent implements OnInit {
   noitem : boolean = false;
 
   constructor(private adminser: AdminOrderService) { }
-  orders: AdminOrder[] = []
+  orders: AdminOrder[] = [];
+  basicOrder : AdminOrder [] = [];
   RefuseForm: FormGroup = new FormGroup({
     ReasonOrder: new FormControl('', [Validators.required, Validators.pattern('[\u0600-\u06FF ,]+'), Validators.minLength(5)]),
   })
@@ -33,7 +34,7 @@ export class AdminOrderComponent implements OnInit {
         }
         data.sort((a,b)=>b.orderId-a.orderId);
         this.orders = data;
-        
+        this.basicOrder = data;
         console.log(this.orders)
         //console.log(this.orders[0].customerName)
         for (let index = 0; index < this.orders.length; index++) {
@@ -50,6 +51,7 @@ export class AdminOrderComponent implements OnInit {
       error : (e) => {
         console.log("ERROR");
         console.log(e);
+        this.waiting = false;
         this.noitem = true;
       }
     })
@@ -145,4 +147,29 @@ export class AdminOrderComponent implements OnInit {
     }
     return i + 1 + pageCorrection;
   }
+
+
+  sortOrderList(e:Event){
+    this.p=1;
+    let option = (e.target as HTMLInputElement).value;
+    switch (option) {
+      case '-1':
+        this.orders = this.basicOrder;
+        this.orderStateAOrR = this.orders.map(order => order.state == 3 ? 1 : order.state);
+        break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+        this.orders = this.basicOrder.filter(a => a.state == parseInt(option));
+        // Update orderStateAOrR array to reflect the changes
+        this.orderStateAOrR = this.orders.map(order => order.state == 3 ? 1 : order.state);
+        break;
+      default:
+        this.orders = this.basicOrder;
+        this.orderStateAOrR = this.orders.map(order => order.state == 3 ? 1 : order.state);
+        break;
+    }
+  }
+  
 }

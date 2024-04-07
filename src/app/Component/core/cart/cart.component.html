@@ -108,37 +108,59 @@
             </div>
           </div>
         </div>
-        <div class=" relatedProduct  py-4 ">
-          <h3 class="mb-3">الاكثر تقييما</h3>
-        
-          <div class="items row ">
-            <div *ngFor="let item of ProductList | paginate: {  itemsPerPage: 6, currentPage: p, } "
-              class="element col-lg-2 col-md-4">
-              <div class="element-img">
-        
-                <span (click)="pushItemToFavCart(item.id)" class="material-symbols-outlined fav"> favorite </span>
-                <span class="msg fav">اضف للمفضلة</span>
-                <span [routerLink]="['/store/productDetials/'+item.id]" class="material-symbols-outlined show"> visibility </span>
-                <span class="msg show">عرض المنتج</span>
-                <img [src]="'http://www.srm.somee.com/Images/' +item.image" />
-              </div>
-              <div class="element-detials">
-                <h4>{{item.name}}</h4>
-                <p>{{item.price}} <span>جنيه</span></p>
-              </div>
-            </div>
-            <div class="pagiDiv">
-              <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;"
-                (pageChange)="p = $event"></pagination-controls>
-            </div>
-        
-        
-        
-          </div>
-        
-        </div>
+       
       </div>
+      <div *ngIf="cart.items.length > 0" class=" relatedProduct mt-5 pt-5 py-4 ">
+        <h3 class="mb-3">الاكثر تقييما</h3>
       
+        <div class="items row pt-4 px-0">
+          <div
+          (mouseenter)="hoverfun(item.id)"
+          (mouseleave)="unhoverfun(item.id)"
+           *ngFor="let item of ProductList | paginate: {  itemsPerPage: 6, currentPage: p, } "
+            class="element col-lg-2 col-md-4">
+            <div class="element-img">
+      
+              <span
+              *ngIf="!isFav"
+                (click)="pushItemToFavCart(item.id)"
+                class="material-symbols-outlined fav"
+              >
+              
+              <i  class="bi bi-heart"></i>
+                <!-- favorite -->
+              </span>
+              <span
+              *ngIf="isFav"
+              
+              (click)="removeItemfromFav(item.id)"
+              class="material-symbols-outlined fav"
+            >
+            <i  class="bi bi-heart-fill"></i>
+           
+              <!-- favorite -->
+            </span>
+              <span *ngIf="!isFav" class="msg fav">اضف للمفضلة</span>
+              <span *ngIf="isFav" class="msg fav">ازل من المفضلة</span>
+              <span [routerLink]="['/store/productDetials/'+item.id]" class="material-symbols-outlined show"> visibility </span>
+              <span class="msg show">عرض المنتج</span>
+              <img [src]="'http://www.srm.somee.com/Images/' +item.image" />
+            </div>
+            <div class="element-detials">
+              <h4>{{item.name}}</h4>
+              <p>{{item.price}} <span>جنيه</span></p>
+            </div>
+          </div>
+          <div class="pagiDiv">
+            <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;"
+              (pageChange)="p = $event"></pagination-controls>
+          </div>
+      
+      
+      
+        </div>
+      
+      </div>
     </div>
     
   </div>

@@ -1,112 +1,115 @@
 <div class="wrapper mt-5">
-    <h3>أضف تقييم</h3>
-    <form [formGroup]="commentForm" (submit)="confirmComment($event)">
-      <div class="rating">
-        <input type="number" name="rating" hidden />
-        <i class="bx bx-star star" style="--i: 0"></i>
-        <i class="bx bx-star star" style="--i: 1"></i>
-        <i class="bx bx-star star" style="--i: 2"></i>
-        <i class="bx bx-star star" style="--i: 3"></i>
-        <i class="bx bx-star star" style="--i: 4"></i>
-      </div>
+  <h3>أضف تقييم</h3>
+  <form [formGroup]="commentForm" (submit)="confirmComment($event)">
+    <div class="rating">
+      <input type="number" name="rating" hidden />
+      <i class="bx bx-star star" style="--i: 0"></i>
+      <i class="bx bx-star star" style="--i: 1"></i>
+      <i class="bx bx-star star" style="--i: 2"></i>
+      <i class="bx bx-star star" style="--i: 3"></i>
+      <i class="bx bx-star star" style="--i: 4"></i>
+    </div>
+    <div
+      class="col-12 form-control-div"
+      [ngClass]="{
+        sucess: commentForm!.valid,
+        danger:
+          commentcontrol?.errors &&
+          (commentcontrol?.touched || showerror) &&
+          !customerHasReview
+      }"
+    >
+      <textarea
+        formControlName="comment"
+        class="textForReview"
+        name="opinion"
+        cols="10"
+        rows="2"
+        placeholder="رأيك يهمنا...."
+        [readonly]="customerHasReview"
+      ></textarea>
+      <i *ngIf="commentcontrol?.valid" class="bi bi-check-circle-fill"></i>
+      <i
+        *ngIf="
+          commentcontrol?.errors &&
+          (commentcontrol?.touched || showerror) &&
+          !customerHasReview
+        "
+        class="bi bi-exclamation-circle-fill"
+      ></i>
       <div
-        class="col-12 form-control-div"
-        [ngClass]="{
-          sucess: commentForm!.valid,
-          danger:
-            commentcontrol?.errors &&
-            (commentcontrol?.touched || showerror) &&
-            !customerHasReview
-        }"
+        *ngIf="
+          commentcontrol?.errors &&
+          (commentcontrol?.touched || showerror) &&
+          customerHasReview
+        "
+        class="alert p-1 mt-3 alert-danger"
       >
-        <textarea
-          formControlName="comment"
-          class="textForReview"
-          name="opinion"
-          cols="10"
-          rows="2"
-          placeholder="رأيك يهمنا...."
-          [readonly]="customerHasReview"
-        ></textarea>
-        <i *ngIf="commentcontrol?.valid" class="bi bi-check-circle-fill"></i>
-        <i
-          *ngIf="
-            commentcontrol?.errors &&
-            (commentcontrol?.touched || showerror) &&
-            !customerHasReview
-          "
-          class="bi bi-exclamation-circle-fill"
-        ></i>
-        <div
-          *ngIf="
-            commentcontrol?.errors &&
-            (commentcontrol?.touched || showerror) &&
-            customerHasReview
-          "
-          class="alert p-1 mt-3 alert-danger"
+        <ng-container
+          *ngIf="commentcontrol?.hasError('required') && !customerHasReview"
         >
-          <ng-container
-            *ngIf="commentcontrol?.hasError('required') && !customerHasReview"
-          >
-            يجب عليك كتابة تعليق
-          </ng-container>
-          <ng-container
-            *ngIf="commentcontrol?.hasError('pattern') && !customerHasReview"
-          >
-            ادخل تعليقك باللغة العربية
-          </ng-container>
-        </div>
+          يجب عليك كتابة تعليق
+        </ng-container>
+        <ng-container
+          *ngIf="commentcontrol?.hasError('pattern') && !customerHasReview"
+        >
+          ادخل تعليقك باللغة العربية
+        </ng-container>
       </div>
-      <div class="btn-group">
-        <button type="submit" class="btn submit">{{ subText }}</button>
-        <button (click)="clearForm()" class="btn cancel">حذف</button>
-      </div>
-    </form>
-    <!-- <img
-      class="image-content"
-      src="assets\Images\WhatsApp Image 2024-03-30 at 03.19.41_c1bdd7bc.jpg"
-      alt=""
-    /> -->
-  </div>
-  <!-- التقيييييييييييييييييييييم -->
+    </div>
+    <div class="btn-group">
+      <button type="submit" class="btn submit">{{ subText }}</button>
+      <button (click)="clearForm()" class="btn cancel">حذف</button>
+    </div>
+  </form>
+</div>
+<!-- التقيييييييييييييييييييييم -->
 
-  <div class="row review">
-    <h4>مراجعات العملاء</h4>
-    <div class="averageRate">
-      <h6>متوسط التقييم</h6>
-      <div class="rowe">
-        <span class="num">{{ prodDet.avgRating }}</span>
-        <span class="star" *ngFor="let _ of getStarArray(prodDet.avgRating)">
-          <span class="material-symbols-outlined"> star </span>
-          <!-- <span class="material-symbols-outlined"> star </span>
+<div class="row review">
+  <h4>مراجعات العملاء</h4>
+  <div class="averageRate">
+    <h6>متوسط التقييم</h6>
+    <div class="rowe">
+      <span class="num">{{ prodDet.avgRating }}</span>
+      <span class="star" *ngFor="let _ of getStarArray(prodDet.avgRating)">
+        <span class="material-symbols-outlined"> star </span>
+        <!-- <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span>
           <span class="material-symbols-outlined"> star </span> -->
-        </span>
-      </div>
-    </div>
-    <div class="Comments">
-      <h5>جميع التقييمات</h5>
-      <div class="line3"><div></div></div>
-      <div *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }" class="coment row">
-        <div class="user col-md-3">
-          <p class="name">{{ x.customerName }}</p>
-          <div class="space"></div>
-          <p class="date">{{ x.date.split("T") }}</p>
-        </div>
-        <div class="text col-md-9">
-          <span class="stars" *ngFor="let _ of getStarArray(x.rate)">
-            <i class="bi bi-star-fill"></i>
-          </span>
-          <p>
-            {{ x.review }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Pagination controls -->
-      <div *ngIf="prodDetrev.length>0" class="pagiDiv">
-        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
-      </div>
+      </span>
     </div>
   </div>
+  <div class="Comments">
+    <h5>جميع التقييمات</h5>
+    <div class="line3"><div></div></div>
+    <div
+      *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }"
+      class="coment row"
+    >
+      <div class="user col-md-3">
+        <p class="name">{{ x.customerName }}</p>
+        <div class="space"></div>
+        <p class="date">{{ x.date.split("T") }}</p>
+      </div>
+      <div class="text col-md-9">
+        <span class="stars" *ngFor="let _ of getStarArray(x.rate)">
+          <i class="bi bi-star-fill"></i>
+        </span>
+        <p>
+          {{ x.review }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Pagination controls -->
+    <div *ngIf="prodDetrev.length > 0" class="pagiDiv">
+      <pagination-controls
+        class="custom-pagination"
+        nextLabel="&rsaquo;"
+        previousLabel="&lsaquo;"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

@@ -54,4 +54,23 @@ export class CategoryTableComponent implements OnInit {
     })
   }
 
+  deleteCategoryAll (id :number){
+    Swal.fire({
+      title: 'هل أنت متأكد من أنك تريد حذف الفئة بكل منتجاتها؟!',
+      confirmButtonColor: '#198754', // لون زر التأكيد
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+      showCancelButton: true,
+      cancelButtonColor: '#dc3545', // لون زر الإلغاء
+    }).then((result) => {
+    this.catService.deleteCategoryAll(id).subscribe({
+      next: () => {this.getallCategory();},
+        error: (error) => {
+          console.error('Error deleteing category:', error);
+        }
+    })
+  }
+)}
+  
+
 }

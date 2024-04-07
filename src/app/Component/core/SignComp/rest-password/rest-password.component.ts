@@ -60,9 +60,6 @@ export class RestPasswordComponent {
     : { mismatch : true };
    }
 
-
-
-
   get passwordcontrol(){
     return this.signupform.get('password')
   }

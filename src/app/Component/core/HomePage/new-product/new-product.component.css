@@ -42,7 +42,7 @@
 .element-img span.material-symbols-outlined{
     position:absolute;
     visibility: hidden;
-    color: gray;
+    color: black;
     top: 10px;
     right: 20px;
     padding: 7px;

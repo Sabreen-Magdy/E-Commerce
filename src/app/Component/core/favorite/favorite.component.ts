@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { favitem } from 'src/app/models/Ifav';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-favorite',
@@ -58,6 +59,14 @@ export class FavoriteComponent {
  }
 
  deleteFavitem(prodid : number){
+  Swal.fire({
+    title: 'هل أنت متأكد من أنك تريد حذفها؟!',
+    confirmButtonColor: '#198754', // لون زر التأكيد
+    confirmButtonText: 'تأكيد',
+    cancelButtonText: 'إلغاء',
+    showCancelButton: true,
+    cancelButtonColor: '#dc3545' // لون زر الإلغاء
+  }).then((result) => {if (result.isConfirmed) {
   this.deleteFav = this._FavService.deletefavitem(this.customerId,prodid).subscribe({
     next : (data) => {
       console.log("succesful delete: " + data);
@@ -68,10 +77,18 @@ export class FavoriteComponent {
       console.log("ERROR when delete fav item" + e);
     }
   });
+}})
  }
 
  clearAll(){
-  
+  Swal.fire({
+    title: 'هل أنت متأكد من أنك تريد حذفها الكل؟!',
+    confirmButtonColor: '#198754', // لون زر التأكيد
+    confirmButtonText: 'تأكيد',
+    cancelButtonText: 'إلغاء',
+    showCancelButton: true,
+    cancelButtonColor: '#dc3545' // لون زر الإلغاء
+  }).then((result) => {if (result.isConfirmed) {
   this.deleteAllFlag = true;
   console.log("we are now in delete");
   let length: number = this.FavList.length;
@@ -97,7 +114,7 @@ export class FavoriteComponent {
       },
     });
   }
-
+}})
  }
 
 }

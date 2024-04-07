@@ -1,4 +1,3 @@
-
 <div class="container my-5">
   <div class="Mtitle">
     <span>
@@ -24,9 +23,7 @@
           *ngFor="let x of groupedByColor | keyvalue; let index = index"
         >
           <img
-            [src]="
-              'http://www.srm.somee.com/Images/' + x.value[0].coloredimage
-            "
+            [src]="'http://www.srm.somee.com/Images/' + x.value[0].coloredimage"
             alt=""
           />
         </div>
@@ -74,9 +71,7 @@
             <div class="precent">خصم {{ selectedvariant.discount * 100 }}%</div>
           </div>
         </div>
-        <div *ngIf="selectedvariant.discount > 0" class="comment">
-            خصم
-        </div>
+        <div *ngIf="selectedvariant.discount > 0" class="comment">خصم</div>
       </div>
       <div class="line"></div>
       <div class="design">
@@ -123,9 +118,9 @@
         </div>
       </div>
       <div class="btns">
-        <div class="rowe"*ngIf="selectedvariant.quantity>0">
+        <div class="rowe" *ngIf="selectedvariant.quantity > 0">
           <div class="title">العدد:</div>
-          <div class="quanityInp" >
+          <div class="quanityInp">
             <span
               class="minus"
               [class.selected]="quantityNumber == 1"
@@ -134,17 +129,17 @@
             >
             <span class="num">{{ quantityNumber }}</span>
             <span *ngIf="plusAppearance" class="plus" (click)="plus()">+</span>
-            <span *ngIf="!plusAppearance" ><i class="bi bi-ban"></i></span>
+            <span *ngIf="!plusAppearance"><i class="bi bi-ban"></i></span>
           </div>
-          
         </div>
-        <div class="rowe" *ngIf="selectedvariant.quantity==0">
-        <div class="" >
-          <span class="text-danger mx-1"><i class="bi bi-ban"></i></span
-          >
-          <span class="text-danger"> لقد استهلكت الكميه المتاحه من هذا المنتج</span>       
+        <div class="rowe" *ngIf="selectedvariant.quantity == 0">
+          <div class="">
+            <span class="text-danger mx-1"><i class="bi bi-ban"></i></span>
+            <span class="text-danger">
+              لقد استهلكت الكميه المتاحه من هذا المنتج</span
+            >
+          </div>
         </div>
-      </div>
         <div class="rowe">
           <button (click)="pushItemTocart()" class="btn btn-dark cartbtn">
             {{ buttonText }}
@@ -162,7 +157,7 @@
             <!-- <i class="bi bi-heart-fill"></i> -->
           </button>
           <button
-            (click)="deleteFavitem()"
+            (click)="deleteFavitem(prodDet.id)"
             [ngClass]="{
               'bi-heart-fill': !waitingFav,
               'bi-hourglass-split': waitingFav
@@ -186,9 +181,9 @@
           </span>
         </div>
         <div>
-          <p class="content" id="descptionProductString">{{
-            prodDet.description
-          }}</p>
+          <p class="content" id="descptionProductString">
+            {{ prodDet.description }}
+          </p>
         </div>
       </div>
     </div>
@@ -238,11 +233,17 @@
             ادخل تعليقك باللغة العربية
           </ng-container>
         </div>
+        <div
+          *ngIf="!commentcontrol?.errors && showerror"
+          class="alert p-1 mt-3 alert-danger"
+        >
+          <ng-container> يجب عليك النقر على عدد من النجوم </ng-container>
+        </div>
       </div>
       <div class="btn-group">
         <button type="submit" class="btn submit">
           <div *ngIf="waitingDoneSendReview">
-            <div  class="lds-ellipsis">
+            <div class="lds-ellipsis">
               <div></div>
               <div></div>
               <div></div>
@@ -281,7 +282,7 @@
       <h5>جميع التقييمات</h5>
       <div class="line3"><div></div></div>
       <div
-        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: p, }"
+        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: pp, id:'PaginationReview'}"
         class="coment row"
       >
         <div class="user col-md-3">
@@ -300,40 +301,76 @@
       </div>
 
       <!-- Pagination controls -->
-      <div *ngIf="prodDetrev.length>0" class="pagiDiv">
-        <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
+      <div   class="pagiDiv">
+        <pagination-controls
+          class="custom-pagination"
+          id="PaginationReview"
+          nextLabel="&rsaquo;"
+          previousLabel="&lsaquo;"
+          (pageChange)="pp= $event"
+        ></pagination-controls>
       </div>
     </div>
   </div>
 
-  <div class=" relatedProduct">
-    <h3 class="mb-3">قد يهمك ايضا </h3>
+  <div class="relatedProduct">
+    <h3 class="mb-3">قد يهمك ايضا</h3>
 
-    <div class="items row ">
-          <div *ngFor="let item of productsByCat | paginate: {  itemsPerPage: 6, currentPage: p, } " class="element col-lg-2 col-md-4">
-            <div class="element-img">
-              
-              <span (click)="pushItemToFavCart(item.id)" class="material-symbols-outlined fav"> favorite </span>
-              <span class="msg fav">اضف للمفضلة</span>
-              <span (click)="navigateToAnotherId(item.id)" class="material-symbols-outlined show" > visibility </span>
-              <span class="msg show">عرض المنتج</span>
-              <img
-                [src]="'http://www.srm.somee.com/Images/' +item.image"
-              />
-            </div>
-            <div class="element-detials">
-              <h4>{{item.name}}</h4>
-              <p>{{item.price}} <span>جنيه</span></p>
-            </div>
-          </div>
-          <div  class="pagiDiv">
-            <pagination-controls class="custom-pagination" nextLabel="&rsaquo;" previousLabel="&lsaquo;" (pageChange)="p = $event"></pagination-controls>
-          </div>
+    <div class="items row">
+      <div
+      (mouseenter)="hoverfun(item.id)"
+      (mouseleave)="unhoverfun(item.id)"
+        *ngFor="let item of productsByCat | paginate: {  itemsPerPage: 6, currentPage: p, id:'paginatoProd' } "
+        class="element col-lg-2 col-md-4"
+      >
+        <div class="element-img">
+          <span
+          *ngIf="!isFiv"
+            (click)="pushItemToFavCart2(item.id)"
+            class="material-symbols-outlined fav"
+          >
           
+          <i  class="bi bi-heart"></i>
+            <!-- favorite -->
+          </span>
+          <span
+          *ngIf="isFiv"
+          
+          (click)="deleteFavitem2(item.id)"
+          class="material-symbols-outlined fav"
+        >
+        <i  class="bi bi-heart-fill"></i>
+       
+          <!-- favorite -->
+        </span>
+          <span *ngIf="!isFiv" class="msg fav">اضف للمفضلة</span>
+          <span *ngIf="isFiv"  class="msg fav">ازال من المفضلة</span>
 
 
+          <span
+            (click)="navigateToAnotherId(item.id)"
+            class="material-symbols-outlined show"
+          >
+            visibility
+          </span>
+          <span class="msg show">عرض المنتج</span>
+          <img [src]="'http://www.srm.somee.com/Images/' + item.image" />
+        </div>
+        <div class="element-detials">
+          <h4>{{ item.name }}</h4>
+          <p>{{ item.price }} <span>جنيه</span></p>
+        </div>
+      </div>
+      <div class="pagiDiv">
+        <pagination-controls
+        id="paginatoProd"
+          class="custom-pagination"
+          nextLabel="&rsaquo;"
+          previousLabel="&lsaquo;"
+          (pageChange)="p = $event"
+        ></pagination-controls>
+      </div>
     </div>
-
   </div>
 
   <!-- <div class="relatedProduct">
@@ -343,7 +380,7 @@
     <div class="slider-container">
         Left Arrow
         <span class="material-symbols-outlined arrow left" (click)="slideLeft()">chevron_left</span>
-        
+
         Slider Items
         <div class="items slider row">
             <div *ngFor="let item of productsByCat" class="element col-lg-2 col-md-4 items slider row">
@@ -365,5 +402,4 @@
         <span class="material-symbols-outlined arrow right" (click)="slideRight()">chevron_right</span>
     </div>
 </div> -->
-
 </div>

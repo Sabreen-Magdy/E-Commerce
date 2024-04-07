@@ -74,9 +74,6 @@ export class AuthService {
         }
 
         console.log(this.userRole)
-        // if(this.userRole=="Customer"){
-        //   console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggg")
-        // }
       }
     });
 
@@ -129,6 +126,12 @@ forgetPassWord(email : string)  {
 resetPassWord(userData:object):Observable<any>
   {
     return this._HttpClient.post('http://www.srm.somee.com/api/Authentication/ResetPassword/',userData);
+  }
+  updatePassWord(userData:object):Observable<any>
+  {
+    return this._HttpClient.post('http://www.srm.somee.com/api/Authentication/UpdatePassword/',userData,
+    { headers: { 'token': `${this.user}` } }
+    );
   }
 }
 
