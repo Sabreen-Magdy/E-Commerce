@@ -669,4 +669,9 @@ export class ProductDetailsmainComponent implements OnInit {
   //    // Adjust the number based on your requirement
   // }
 
+  clg(){
+    console.log(this.prodDetrev.length);
+    console.log(this.pp);
+  }
+
 }

@@ -282,7 +282,7 @@
       <h5>جميع التقييمات</h5>
       <div class="line3"><div></div></div>
       <div
-        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: pp, }"
+        *ngFor="let x of prodDetrev | paginate: {  itemsPerPage: 3, currentPage: pp, id:'PaginationReview'}"
         class="coment row"
       >
         <div class="user col-md-3">
@@ -301,12 +301,13 @@
       </div>
 
       <!-- Pagination controls -->
-      <div *ngIf="prodDetrev.length > 0" class="pagiDiv">
+      <div (mouseover)="clg()"  class="pagiDiv">
         <pagination-controls
           class="custom-pagination"
+          id="PaginationReview"
           nextLabel="&rsaquo;"
           previousLabel="&lsaquo;"
-          (pageChange)="pp = $event"
+          (pageChange)="pp= $event"
         ></pagination-controls>
       </div>
     </div>
@@ -317,7 +318,7 @@
 
     <div class="items row">
       <div
-        *ngFor="let item of productsByCat | paginate: {  itemsPerPage: 6, currentPage: p, } "
+        *ngFor="let item of productsByCat | paginate: {  itemsPerPage: 6, currentPage: p, id:'paginatoProd' } "
         class="element col-lg-2 col-md-4"
       >
         <div class="element-img">
@@ -344,6 +345,7 @@
       </div>
       <div class="pagiDiv">
         <pagination-controls
+        id="paginatoProd"
           class="custom-pagination"
           nextLabel="&rsaquo;"
           previousLabel="&lsaquo;"
