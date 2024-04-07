@@ -449,10 +449,10 @@ public class SallerController : ControllerBase
         try
         {
              oldState = _adminService.OrderService.GetOrderStates(id);
-            _adminService.OrderService.UpdateState(id, (OrderStates)status, comment);
 
             if (status == (int)OrderStates.Rejected)
             {
+
                 var payment = _adminService.OrderService.GetPayment(id);
                 string refundedTransactionId = _externalService.PaymentService
                      .RefundTransaction(payment.PayedTransactionId);
@@ -460,11 +460,11 @@ public class SallerController : ControllerBase
                 payment.RefundTransactionId = refundedTransactionId;
                 _adminService.OrderService.UpdatePayment(payment);
             }
+            _adminService.OrderService.UpdateState(id, (OrderStates)status, comment);
             return Ok(status);
         }
         catch(PaymentFailedException ex)
         {
-            _adminService.OrderService.UpdateState(id, oldState, comment);
             return BadRequest(ex.Message);
         }
         catch (NotAllowedException ex)
