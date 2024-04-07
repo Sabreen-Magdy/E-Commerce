@@ -70,8 +70,8 @@ MakeFormValidation(){
     if (this.editProfileForm.valid){
       let newData={
           id: this.idValue,
-          oldPassword: this.editProfileForm.get('oldpassword')?.value,
-          newPassword: this.editProfileForm.get('newpassword')?.value
+          oldPassword: this.editProfileForm.get('newpassword')?.value,
+          newPassword: this.editProfileForm.get('oldpassword')?.value
       }
       console.log(newData);
 
