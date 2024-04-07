@@ -157,7 +157,7 @@
             <!-- <i class="bi bi-heart-fill"></i> -->
           </button>
           <button
-            (click)="deleteFavitem()"
+            (click)="deleteFavitem(prodDet.id)"
             [ngClass]="{
               'bi-heart-fill': !waitingFav,
               'bi-hourglass-split': waitingFav
@@ -301,7 +301,7 @@
       </div>
 
       <!-- Pagination controls -->
-      <div (mouseover)="clg()"  class="pagiDiv">
+      <div   class="pagiDiv">
         <pagination-controls
           class="custom-pagination"
           id="PaginationReview"
@@ -318,17 +318,35 @@
 
     <div class="items row">
       <div
+      (mouseenter)="hoverfun(item.id)"
+      (mouseleave)="unhoverfun(item.id)"
         *ngFor="let item of productsByCat | paginate: {  itemsPerPage: 6, currentPage: p, id:'paginatoProd' } "
         class="element col-lg-2 col-md-4"
       >
         <div class="element-img">
           <span
-            (click)="pushItemToFavCart(item.id)"
+          *ngIf="!isFiv"
+            (click)="pushItemToFavCart2(item.id)"
             class="material-symbols-outlined fav"
           >
-            favorite
+          
+          <i  class="bi bi-heart"></i>
+            <!-- favorite -->
           </span>
-          <span class="msg fav">اضف للمفضلة</span>
+          <span
+          *ngIf="isFiv"
+          
+          (click)="deleteFavitem2(item.id)"
+          class="material-symbols-outlined fav"
+        >
+        <i  class="bi bi-heart-fill"></i>
+       
+          <!-- favorite -->
+        </span>
+          <span *ngIf="!isFiv" class="msg fav">اضف للمفضلة</span>
+          <span *ngIf="isFiv"  class="msg fav">ازال من المفضلة</span>
+
+
           <span
             (click)="navigateToAnotherId(item.id)"
             class="material-symbols-outlined show"

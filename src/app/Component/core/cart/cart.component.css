@@ -306,17 +306,14 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.662);
 }
 
-.element-img span.material-symbols-outlined.cart{
-    top: 10px;
-    right: 10px;
-}
+
 .element-img span.material-symbols-outlined.fav{
-    top: 55px;
+    top: 10px;
     right: 10px;
 }
 
 .element-img span.material-symbols-outlined.show{
-    top: 100px;
+    top: 55px;
     right: 10px;
 }
 
@@ -331,25 +328,19 @@
     padding: 5px;
 }
 
-.element-img span.material-symbols-outlined.cart:hover ~span.msg.cart{
-    visibility: visible;
-}
-span.msg.cart {
-    top:10px;
-}
 
 .element-img span.material-symbols-outlined.fav:hover ~span.msg.fav{
     visibility: visible;
 }
 span.msg.fav {
-    top:55px;
+    top:10px;
 }
 
 .element-img span.material-symbols-outlined.show:hover ~span.msg.show{
     visibility: visible;
 }
 span.msg.show {
-    top:100px;
+    top:55px;
 }
 
 .element-detials{
@@ -373,36 +364,39 @@ span.msg.show {
  
 }
 
-.custom-pagination /deep/ .ngx-pagination li {
-  margin: 0;
-  display: inline-block;
-  font-size: 14px;
-}
+  /* Style the individual page numbers */
+  /* .custom-pagination /deep/ .ngx-pagination li {
+    margin: 0;
+    display: inline-block;
+    font-size: 14px;
+  } */
+  
+  /* Style the active page number */
+  .custom-pagination /deep/ .ngx-pagination .current {
+    background-color: #198754;
+    color: #fff;
+    border-radius: 50%;
+    /* padding: 7px 10px; */
+  }
+  
+  /* Style the "Next" and "Previous" buttons */
+  .custom-pagination /deep/ .ngx-pagination a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Hover effect for buttons */
+  .custom-pagination /deep/ .ngx-pagination a:hover {
+    color: #198754;
+  }
+  
+  /* Optional: Center the pagination controls */
+  .custom-pagination /deep/ .ngx-pagination {
+    text-align: center;
+  }
+  
 
-/* Style the active page number */
-.custom-pagination /deep/ .ngx-pagination .current {
-  background-color: #198754;
-  color: #fff;
-  border-radius: 50%;
-  /* padding: 7px 10px; */
-}
-
-/* Style the "Next" and "Previous" buttons */
-.custom-pagination /deep/ .ngx-pagination a {
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* Hover effect for buttons */
-.custom-pagination /deep/ .ngx-pagination a:hover {
-  color: #198754;
-}
-
-/* Optional: Center the pagination controls */
-.custom-pagination /deep/ .ngx-pagination {
-  text-align: center;
-}
 .lds-ellipsis {
 	display: inline-block;
 	position: relative;
