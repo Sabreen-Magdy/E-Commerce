@@ -50,6 +50,7 @@ export class AdminOrderComponent implements OnInit {
       error : (e) => {
         console.log("ERROR");
         console.log(e);
+        this.waiting = false;
         this.noitem = true;
       }
     })

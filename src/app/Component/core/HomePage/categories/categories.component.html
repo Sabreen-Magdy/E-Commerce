@@ -2,7 +2,7 @@
   <h3>جميع الفئات</h3>
   <div class="line"></div>
   <div class="items">
-    <div [ngClass]="{active : x.name == categoryName}" [routerLink]="['/home',x.name]" class="element" *ngFor="let x of categoryList">
+    <div ngIf="x.numberOfProducts > 0" [ngClass]="{active : x.name == categoryName}" [routerLink]="['/home',x.name]" class="element" *ngFor="let x of categoryList">
 
       <span class="material-symbols-outlined"> {{x.icon}} </span>
       <h6>{{x.name}}</h6>

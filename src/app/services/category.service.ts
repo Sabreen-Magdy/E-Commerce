@@ -29,6 +29,11 @@ export class CategoryService {
     return this.http.put(`${this.baseURL}Update?id=${id}`,editValue)
   }
   deleteCategory (id : number) {
-    return this.http.delete(`${this.baseURL}Delete?id=${id}`)
+    return this.http.delete(`${this.baseURL}Delete?id=${id}&ignore=false`)
+  }
+  
+
+  deleteCategoryAll (id : number) {
+    return this.http.delete(`${this.baseURL}Delete?id=${id}&ignore=true`)
   }
 }
