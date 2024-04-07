@@ -18,9 +18,10 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.HasOne(o => o.Customer)
             .WithMany(c => c.Orders)
             .HasForeignKey(o => o.CustomerId);
-        builder.HasOne(o => o.Payment)
-    .WithOne(p => p.Order)
-    .HasForeignKey<Order>(o => o.PaymentId);
+     
+    //    builder.HasOne(o => o.Payment)
+    //.WithOne(p => p.Order)
+    //.HasForeignKey<Order>(o => o.PaymentId);
 
         builder.ToTable(b => b.HasCheckConstraint("StateValidation",
             "[State] >= 0 and [State] <= 3"));

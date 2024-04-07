@@ -19,9 +19,10 @@ public class SallerController : ControllerBase
     private readonly IExrernalService _externalService;
 
 
-    public SallerController(IAdminService adminService)
+    public SallerController(IAdminService adminService, IExrernalService externalService)
     {
         _adminService = adminService;
+        _externalService = externalService;
     }
 
     [HttpGet("GetNumberProducts")]

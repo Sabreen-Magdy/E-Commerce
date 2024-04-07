@@ -2,6 +2,8 @@
 using Contract.Order;
 using Domain.Exceptions;
 using Services.Abstraction;
+using Services.Abstraction.External;
+using Services.External;
 
 
 namespace Presentation.Controllers;
@@ -11,10 +13,12 @@ namespace Presentation.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IAdminService _adminService;
+    private readonly IExrernalService _exrernalService;
 
-    public OrderController(IAdminService adminService)
+    public OrderController(IAdminService adminService, IExrernalService exrernalService)
     {
         _adminService = adminService;
+        _exrernalService = exrernalService;
     }
 
 
@@ -66,13 +70,22 @@ public class OrderController : ControllerBase
     }
   
     [HttpPost("AddOrder")]
-    public IActionResult Add(OrderDtoNew order)
+    public IActionResult Add(OrderPaymentDto order)
     {
         try
         {
-            _adminService.OrderService.Add(order);
+            int orderId = _adminService.OrderService.Add(order.Order);
+
+            var paymentEnity = _exrernalService.PaymentService
+                     .CreateTransaction(order.Payment);
+
+            _adminService.OrderService.AddPayment(orderId, paymentEnity);
 
             return Ok();
+        }
+        catch (PaymentFailedException ex)
+        {
+            return BadRequest(ex.Message);
         }
         catch (NotAllowedException ex)
         {
