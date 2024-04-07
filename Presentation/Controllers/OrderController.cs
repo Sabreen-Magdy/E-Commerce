@@ -98,22 +98,22 @@ public class OrderController : ControllerBase
     }
 
 
-    [HttpDelete("DeleteOrder")]
-    public IActionResult Delete(int id)
-    {
-        try { 
-        _adminService.OrderService.Delete(id);
+    //[HttpDelete("DeleteOrder")]
+    //public IActionResult Delete(int id)
+    //{
+    //    try { 
+    //    _adminService.OrderService.Delete(id);
 
-        return Ok();
-        }
-        catch (NotFoundException ex)
-        {
-            return StatusCode(404, ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
+    //    return Ok();
+    //    }
+    //    catch (NotFoundException ex)
+    //    {
+    //        return StatusCode(404, ex.Message);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, ex.Message);
+    //    }
     }
 
 
