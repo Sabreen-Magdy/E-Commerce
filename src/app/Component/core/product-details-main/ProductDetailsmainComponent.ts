@@ -266,8 +266,9 @@ export class ProductDetailsmainComponent implements OnInit {
 
 
   showerror: boolean = false;
+  numOfStar:boolean=true;
   confirmComment(e: Event) {
-    if (this.commentForm.valid) {
+    if (this.commentForm.valid &&this.activeStarsCount>0) {
       this.waitingDoneSendReview = true;
       this.subText = "";
       let productId = this.prodDet.id;
@@ -277,20 +278,26 @@ export class ProductDetailsmainComponent implements OnInit {
       console.log(rate, content);
       this.revService.addProductReview(customerId, productId, content, rate).subscribe({
         next: (data) => {
-          this.commentForm.get('comment')?.setValue("");
+          // this.clearForm()
+          // this.commentForm.get('comment')?.setValue("");
           this.getProductDetails()
           this.prodDetApi.getProdReviews(this.id).subscribe({
             next: (data) => {
               this.prodDetrev = data;
               this.waitingDoneSendReview = false;
+              this.subText="أضف تعليقًا أخر"
+              // location.reload()
               console.log(this.prodDetrev);
             }
           });
         }
       });;
+    }else if(this.activeStarsCount<1){
+      this.numOfStar=false;
     }
     else {
       this.showerror = true;
+      console.log("ادخل تقييم النجوم")
     }
   }
   // reviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
@@ -559,7 +566,7 @@ export class ProductDetailsmainComponent implements OnInit {
       next: (data) => {
         console.log('increased quantity');
         this.cartitems =[]
-        
+
         // this.getcartbyId(this.prodVariantList.map(p=>p.id));
         const indexofvarupdated = this.prodVariantList.indexOf(this.selectedvariant)
         // console.log("indexofvarupdated",indexofvarupdated)

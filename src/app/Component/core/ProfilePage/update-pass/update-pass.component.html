@@ -1,69 +1,68 @@
 <form [formGroup]="editProfileForm" (ngSubmit)="editForm($event)">
-    
-    <div
-      class="mb-3 form-control-div"
-      [ngClass]="{
-        sucess: passwordcontrol?.valid,
-        danger: passwordcontrol?.errors && passwordcontrol?.touched
-      }"
-    >
-      <label for="userPassword" class="form-label">كلمة السر القديمة</label>
-      <input
-        formControlName="password"
-        type="password"
-        class="form-control"
-        id="userPassword"
-       
-      />
-      <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
-      <i
-        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
-        class="bi bi-exclamation-circle-fill"
-      ></i>
-      <div
-        *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
-        class="alert p-1 mt-3 alert-danger"
-      >
-        <ng-container *ngIf="passwordcontrol?.hasError('required')">
-          يجب عليك ادخال كلمة المرور
-        </ng-container>
-        <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
-          يجب علي كلمة المرور ان تكون اطول من 5 حروف
-        </ng-container>
-      </div>
-    </div> 
-    <div
+  <div
     class="mb-3 form-control-div"
     [ngClass]="{
-      sucess: passwordcontrol?.valid,
-      danger: passwordcontrol?.errors && passwordcontrol?.touched
+      sucess: oldPasscontrol?.valid,
+      danger: oldPasscontrol?.errors && oldPasscontrol?.touched
     }"
   >
-    <label for="userPassword" class="form-label">كلمة السر الجديدة</label>
+    <label for="userPassword" class="form-label">كلمة المرور القديمة</label>
     <input
-      formControlName="password"
+      formControlName="oldpassword"
       type="password"
       class="form-control"
       id="userPassword"
-      
     />
-    <i *ngIf="passwordcontrol?.valid" class="bi bi-check-circle-fill"></i>
+    <i *ngIf="oldPasscontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i
-      *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+      *ngIf="oldPasscontrol?.errors && oldPasscontrol?.touched"
       class="bi bi-exclamation-circle-fill"
     ></i>
     <div
-      *ngIf="passwordcontrol?.errors && passwordcontrol?.touched"
+      *ngIf="oldPasscontrol?.errors && oldPasscontrol?.touched"
       class="alert p-1 mt-3 alert-danger"
     >
-      <ng-container *ngIf="passwordcontrol?.hasError('required')">
+      <ng-container *ngIf="oldPasscontrol?.hasError('required')">
         يجب عليك ادخال كلمة المرور
       </ng-container>
-      <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
+      <ng-container *ngIf="oldPasscontrol?.hasError('minlength')">
         يجب علي كلمة المرور ان تكون اطول من 5 حروف
       </ng-container>
     </div>
-  </div> 
-    <button type="submit" class="btn btn-success">تعديل</button>
-  </form>
-  
+  </div>
+  <div
+    class="mb-3 form-control-div"
+    [ngClass]="{
+      sucess: newPasscontrol?.valid,
+      danger: newPasscontrol?.errors && newPasscontrol?.touched
+    }"
+  >
+    <label for="userPassword" class="form-label">كلمة المرور الجديدة</label>
+    <input
+      formControlName="newpassword"
+      type="password"
+      class="form-control"
+      id="userPassword"
+    />
+    <i *ngIf="newPasscontrol?.valid" class="bi bi-check-circle-fill"></i>
+    <i
+      *ngIf="newPasscontrol?.errors && newPasscontrol?.touched"
+      class="bi bi-exclamation-circle-fill"
+    ></i>
+    <div
+      *ngIf="newPasscontrol?.errors && newPasscontrol?.touched"
+      class="alert p-1 mt-3 alert-danger"
+    >
+      <ng-container *ngIf="newPasscontrol?.hasError('required')">
+        يجب عليك ادخال كلمة المرور
+      </ng-container>
+      <ng-container *ngIf="newPasscontrol?.hasError('minlength')">
+        يجب علي كلمة المرور ان تكون اطول من 5 حروف
+      </ng-container>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">تعديل</button>
+  <button [routerLink]="'/forgetpassword'" class="btn btn-outline-success me-3">
+    لقد نسيت كلمة المرور
+  </button>
+</form>

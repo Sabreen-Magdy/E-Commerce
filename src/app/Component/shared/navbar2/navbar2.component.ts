@@ -21,7 +21,6 @@ export class Navbar2Component {
     this._AuthService.userData.subscribe({
       next:()=>{
         if(this._AuthService.userData.getValue()!=null){
-          console.log("ROOOOoooOOOll",this._AuthService.userRole);
           this.isCustomer=true;
         }else{
           this.isCustomer=false;

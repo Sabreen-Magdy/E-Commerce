@@ -18,21 +18,16 @@ export class UpdatePassComponent {
   ngOnInit(): void {
     this.getDataOfUser()
   }
-  nameValue:string =""
-  EmailValue:string =""
-  PhoneValue:string =""
-  // PassValue:string =""
-
+  idValue:number =0
+  oldPassValue:string =""
+  newPassValue:string =""
   getDataOfUser(){
     this._AuthService.userData.subscribe({
       next:()=>{
         if(this._AuthService.userData.getValue()!=null){
           this._AuthService.getDataOfUser().subscribe(
             { next:(response)=>{
-                this.nameValue= response.name;
-                this.EmailValue=response.email;
-                this.PhoneValue= response.phone;
-                // this.PassValue=response.password;
+                this.idValue= response.id;
                 this.MakeFormValidation()
           }
         });
@@ -42,35 +37,20 @@ export class UpdatePassComponent {
   }
 MakeFormValidation(){
   this.editProfileForm = new FormGroup({
-    name: new FormControl(
-      this.nameValue,
+    oldpassword : new FormControl (
+      this.oldPassValue,
       [
         Validators.required,
-        Validators.minLength(2),
-        Validators.pattern('[\u0600-\u06FF ,]+')
+        Validators.minLength(5),
       ]
     ),
-    email: new FormControl(
-      this.EmailValue,
+    newpassword : new FormControl (
+      this.newPassValue,
       [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}$/)
+        Validators.minLength(5),
       ]
     ),
-    phone : new FormControl(
-      this.PhoneValue,
-      [
-        Validators.pattern(/^(010|012|015|011)[0-9]{8}$/)
-      ]
-    ),
-    // password : new FormControl (
-    //   this.PassValue,
-    //   [
-    //     Validators.required,
-    //     Validators.minLength(5),
-
-    //   ]
-    // ),
   }
   );
 }
@@ -79,26 +59,26 @@ MakeFormValidation(){
    }
 
 
-  get namecontrol(){
-    return this.editProfileForm.get('name')
+  get oldPasscontrol(){
+    return this.editProfileForm.get('oldpassword')
   }
-  get emailcontrol(){
-    return this.editProfileForm.get('email')
-  }
-  get phonecontrol(){
-    return this.editProfileForm.get('phone')
-  }
-  get passwordcontrol(){
-    return this.editProfileForm.get('password')
+  get newPasscontrol(){
+    return this.editProfileForm.get('newpassword')
   }
   editForm(e : Event){
     e.preventDefault();
     if (this.editProfileForm.valid){
-      console.log(this.editProfileForm.value);
-      this._AuthService.updateUser(this.editProfileForm.value).subscribe({
+      let newData={
+          id: this.idValue,
+          oldPassword: this.editProfileForm.get('oldpassword')?.value,
+          newPassword: this.editProfileForm.get('newpassword')?.value
+      }
+      console.log(newData);
+
+      this._AuthService.updatePassWord(newData).subscribe({
         next:(response)=>{
-          this._Router.navigate(['/profile/profiledetails']);
-          // location.reload();
+          this._AuthService.signOut();
+          this._Router.navigate(['/signin']);
         },
         error : (e) => {
           console.log(e);
