@@ -44,7 +44,7 @@ namespace Persistence.Repositories
         {
             return  _context.Orders
                 .Include(o=> o.Payment)
-                .Include(o => o.Customer)   
+                .Include(o => o.Customer).Include(o=>o.Payment)   
                 .Include(o => o.ProductBelongToOrders)
                     .ThenInclude(o => o.ProductVarient)
                         .ThenInclude(pv => pv.ColoredProduct)
