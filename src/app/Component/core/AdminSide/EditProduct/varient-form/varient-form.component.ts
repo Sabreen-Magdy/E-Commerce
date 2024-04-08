@@ -40,6 +40,13 @@ export class VarientFormComponent {
     private _router: Router
   ) {}
   ngOnInit() {
+    this.productVariantForm = new FormGroup({
+      color: new FormControl('', [Validators.required]),
+      size: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required, Validators.min(70)]),
+      quantiy: new FormControl('', Validators.required),
+      disceount: new FormControl('', [Validators.max(25), Validators.min(0)]),
+    });
     this.actRoute.params.subscribe((params) => {
       this.prodId = params['id'];
       this.variantid = params['variantId'];
@@ -50,6 +57,7 @@ export class VarientFormComponent {
         this.formTitle = "تعديل تفاصيل المنتج"
         this.btnTitle="تعديل"
         this.isedit = true;
+        this.getQuantityValidators();
         this.getAllVarientProduct();
       } else {
         console.log('add');
@@ -57,6 +65,9 @@ export class VarientFormComponent {
         this.getAllVarientProduct();
         this.getALLsize();
       }
+       // Subscribe to changes in isedit and update validators accordingly
+    this.productVariantForm.get('quantiy')?.setValidators(this.getQuantityValidators());
+    this.productVariantForm.get('quantiy')?.updateValueAndValidity();
     });
   }
 
@@ -64,10 +75,17 @@ export class VarientFormComponent {
     color: new FormControl('', [Validators.required]),
     size: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required, Validators.min(70)]),
-    quantiy: new FormControl('', [Validators.required, Validators.min(5)]),
+    quantiy: new FormControl('', this.getQuantityValidators()),
     disceount: new FormControl('', [Validators.max(25), Validators.min(0)]),
   });
 
+  getQuantityValidators() {
+    if (this.isedit) {
+      return [Validators.required];
+    } else {
+      return [Validators.required, Validators.min(5)];
+    }
+  }
   get colorvariantcontrol() {
     return this.productVariantForm.get('color');
   }

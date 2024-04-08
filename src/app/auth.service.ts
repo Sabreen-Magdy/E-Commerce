@@ -129,7 +129,7 @@ resetPassWord(userData:object):Observable<any>
   }
   updatePassWord(userData:object):Observable<any>
   {
-    return this._HttpClient.post('http://www.srm.somee.com/api/Authentication/UpdatePassword/',userData,
+    return this._HttpClient.post('http://localhost:5058/api/Authentication/UpdatePassword/',userData,
     { headers: { 'token': `${this.user}` } }
     );
   }

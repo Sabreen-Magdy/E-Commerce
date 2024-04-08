@@ -7,7 +7,7 @@ import { ICategory } from '../models/i-category';
   providedIn: 'root'
 })
 export class CategoryService {
-
+  
   baseURL :string ="http://www.srm.somee.com/api/Category/";
   constructor( private http:HttpClient) { }
 

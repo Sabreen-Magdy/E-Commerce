@@ -39,14 +39,16 @@ export class EditProductService {
   /*---------------  delete ----------------------*/ 
 
   deleteVariant (id :number ) {
-    return this.http.delete(`${this.BaseUrl}DeleteVarient?id=${id}`)
+    return this.http.delete(`${this.BaseUrl}Saller/DeleteVarient?id=${id}`)
   }
   
   
+
   deleteProductImages (id : number)  {
       return this.http.delete(`${this.BaseUrl}Saller/DeleteColor?id=${id}`)
   }
-
+  
+ 
   deleteCatgoryofProduct (idProd:number , CatgId:number ) {
     return this.http.delete(`${this.BaseUrl}Saller/DeleteCategoryByProductColor?productId=${idProd}&categoryId=${CatgId}`)
   }

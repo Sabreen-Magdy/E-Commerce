@@ -12,6 +12,11 @@ export class UpdatePassComponent {
 
   editProfileForm : FormGroup=new FormGroup({});
   showerror : boolean = false;
+  badOlderror : boolean = false;
+  doneUpdate : boolean = false;
+  waitResponse : boolean = false;
+  btnText : string = "تعديل"
+  // btnText : string ="";
   constructor(private _AuthService:AuthService,private _Router:Router){
     this.MakeFormValidation()
   }
@@ -41,14 +46,15 @@ MakeFormValidation(){
       this.oldPassValue,
       [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(6),
       ]
     ),
     newpassword : new FormControl (
       this.newPassValue,
       [
         Validators.required,
-        Validators.minLength(5),
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).+$/),
+        Validators.minLength(6),
       ]
     ),
   }
@@ -66,8 +72,11 @@ MakeFormValidation(){
     return this.editProfileForm.get('newpassword')
   }
   editForm(e : Event){
+    
     e.preventDefault();
     if (this.editProfileForm.valid){
+      this.waitResponse = true;
+      this.btnText ="";
       let newData={
           id: this.idValue,
           oldPassword: this.editProfileForm.get('newpassword')?.value,
@@ -77,11 +86,21 @@ MakeFormValidation(){
 
       this._AuthService.updatePassWord(newData).subscribe({
         next:(response)=>{
-          
-          this._AuthService.signOut();
-          this._Router.navigate(['/signin']);
+          console.log("we are in next");
+          console.log(response);
+          this.doneUpdate = true;
+          this.badOlderror = false;
+          this.waitResponse = false;
+          this.btnText = "تعديل"
+          // this._AuthService.signOut();
+          // this._Router.navigate(['/signin']);
         },
         error : (e) => {
+          this.waitResponse = false;
+          console.log("errro");
+          this.doneUpdate = false;
+          this.badOlderror = true;
+          this.btnText = "تعديل"
           console.log(e);
         }
       })

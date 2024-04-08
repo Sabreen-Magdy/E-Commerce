@@ -1,9 +1,11 @@
-<form [formGroup]="editProfileForm" (ngSubmit)="editForm($event)">
+<div *ngIf="badOlderror" class="alert alert-danger mt-4 p-2">كلمة المرور القديمة غير صحيحة</div>
+<div *ngIf="doneUpdate" class="alert alert-success mt-4 p-2">تم تحديث كلمة المرور بنجاح</div>
+<form class="mt-3" [formGroup]="editProfileForm" (ngSubmit)="editForm($event)">
   <div
     class="mb-3 form-control-div"
     [ngClass]="{
       sucess: oldPasscontrol?.valid,
-      danger: oldPasscontrol?.errors && oldPasscontrol?.touched
+      danger: oldPasscontrol?.errors && (oldPasscontrol?.touched || showerror) 
     }"
   >
     <label for="userPassword" class="form-label">كلمة المرور القديمة</label>
@@ -15,11 +17,11 @@
     />
     <i *ngIf="oldPasscontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i
-      *ngIf="oldPasscontrol?.errors && oldPasscontrol?.touched"
+      *ngIf="oldPasscontrol?.errors && ( oldPasscontrol?.touched || showerror) "
       class="bi bi-exclamation-circle-fill"
     ></i>
     <div
-      *ngIf="oldPasscontrol?.errors && oldPasscontrol?.touched"
+      *ngIf="oldPasscontrol?.errors && (oldPasscontrol?.touched || showerror) "
       class="alert p-1 mt-3 alert-danger"
     >
       <ng-container *ngIf="oldPasscontrol?.hasError('required')">
@@ -34,7 +36,7 @@
     class="mb-3 form-control-div"
     [ngClass]="{
       sucess: newPasscontrol?.valid,
-      danger: newPasscontrol?.errors && newPasscontrol?.touched
+      danger: newPasscontrol?.errors && (newPasscontrol?.touched || showerror) 
     }"
   >
     <label for="userPassword" class="form-label">كلمة المرور الجديدة</label>
@@ -46,11 +48,11 @@
     />
     <i *ngIf="newPasscontrol?.valid" class="bi bi-check-circle-fill"></i>
     <i
-      *ngIf="newPasscontrol?.errors && newPasscontrol?.touched"
+      *ngIf="newPasscontrol?.errors && (newPasscontrol?.touched || showerror) "
       class="bi bi-exclamation-circle-fill"
     ></i>
     <div
-      *ngIf="newPasscontrol?.errors && newPasscontrol?.touched"
+      *ngIf="newPasscontrol?.errors && (newPasscontrol?.touched || showerror) "
       class="alert p-1 mt-3 alert-danger"
     >
       <ng-container *ngIf="newPasscontrol?.hasError('required')">
@@ -58,11 +60,25 @@
       </ng-container>
       <ng-container *ngIf="newPasscontrol?.hasError('minlength')">
         يجب علي كلمة المرور ان تكون اطول من 5 حروف
+        <hr>
+      </ng-container>
+      <ng-container *ngIf="newPasscontrol?.hasError('pattern')">
+        يجب علي  كلمة المرور أن تحتوي على حرف كابتل [A-Z]  . واحد علي الاقل  ورمز واحد علي الأقل  
       </ng-container>
     </div>
   </div>
-  <button type="submit" class="btn btn-success">تعديل</button>
-  <button [routerLink]="'/forgetpassword'" class="btn btn-outline-success me-3">
+  <button type="submit" class="btn btn-success">
+    <div *ngIf="waitResponse">
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    {{btnText}}
+  </button>
+  <button *ngIf="!waitResponse" [routerLink]="'/forgetpassword'" class="btn btn-outline-success me-3">
     لقد نسيت كلمة المرور
   </button>
 </form>

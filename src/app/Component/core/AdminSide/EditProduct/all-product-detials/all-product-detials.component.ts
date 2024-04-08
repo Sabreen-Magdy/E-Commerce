@@ -198,24 +198,42 @@ export class AllProductDetialsComponent implements OnInit {
       });}})
   }
 
-  deleteVariantProd(id: number) {
-
+  deleteVariantProd(id: number, index : number) {
+    let condition : boolean = this.variantProduct[index].quantity > 0;
+    if (true){
+      Swal.fire({
+        
+        title: condition? 'المنتج بيه كميات متوفرة \n\nهل أنت متأكد من أنك تريد حذفه؟!' : 'المنتج لا يوجد بيه كميات  \n\nلكن هل انت متأكد من انك تريد حذفه',
+        confirmButtonColor: '#198754', // لون زر التأكيد
+        confirmButtonText: 'تأكيد',
+        cancelButtonText: 'إلغاء',
+        showCancelButton: true,
+        cancelButtonColor: '#dc3545' // لون زر الإلغاء
+      }).then((result) => {if (result.isConfirmed) {
+        this.deleteVarient(id);
+      }})
+    }else{
+      Swal.fire({
+        title:'هذا المنتج لا يوجد بيه كميات متوفرة سيتم حذفه الان',
+        timer:2000
+      });
+      this.deleteVarient(id);
+    }
+   
+  }
+  deleteVarient(id : number){
     this.deleteVariantSub = this.editServ.deleteVariant(id).subscribe({
       next: (d) => {
         console.log(d);
         this.getAllVariant();
       },
       error: (e) => {
-        Swal.fire({
-          title: 'لديك منتجات  لايمنكك أن تمسح!',
-          confirmButtonColor: '#198754', // Change this to the color you prefer
-        });
+        
         console.log('ERROR when delete product variant');
         console.log(e);
       },
     });
   }
-
   CategoryForm : FormGroup = new FormGroup({
     category: new FormControl ("", [Validators.required])
   })
