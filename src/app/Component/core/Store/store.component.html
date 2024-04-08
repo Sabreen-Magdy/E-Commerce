@@ -111,7 +111,7 @@
     <h5 class="mb-3">الفئات</h5>
     <ul class="catList">
       <li *ngFor="let x of categoryList" class="catItem">
-        <a [routerLink]="['/store',x.name]">{{x.name}}</a>
+        <a [routerLink]="['/store',x.name]">{{x.name}}  ({{x.numberOfProducts}})</a>
       </li>
       
     </ul>

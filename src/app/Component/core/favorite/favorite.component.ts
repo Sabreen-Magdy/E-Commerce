@@ -82,7 +82,7 @@ export class FavoriteComponent {
 
  clearAll(){
   Swal.fire({
-    title: 'هل أنت متأكد من أنك تريد حذفها الكل؟!',
+    title: 'هل أنت متأكد من أنك تريد حذف الكل؟!',
     confirmButtonColor: '#198754', // لون زر التأكيد
     confirmButtonText: 'تأكيد',
     cancelButtonText: 'إلغاء',

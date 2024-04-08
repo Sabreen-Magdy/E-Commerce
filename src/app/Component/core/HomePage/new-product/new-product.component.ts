@@ -84,9 +84,19 @@ export class NewProductComponent implements OnInit {
 
           this.addFavSub = this._favService.additemTofav(addFav).subscribe({
             next: (data) => {
+              // Swal.fire({
+              //   title: 'تم إضافة المنتج إلى قائمة أمنياتك',
+              //   confirmButtonColor: '#198754', // Change this to the color you prefer
+              // });
               Swal.fire({
-                title: 'تم إضافة المنتج إلى قائمة أمنياتك',
-                confirmButtonColor: '#198754', // Change this to the color you prefer
+                position : 'top-right',
+                // icon : 'success',
+                showCancelButton : false,
+                showConfirmButton : false,
+                timer:700,
+                titleText:'تم إضافة المنتج إلى قائمة أمنياتك',
+                color:'green',
+                
               });
               console.log('item Add to Fav Succesfully' + data);
               this._favService.getNumberOfitemInFavCart();
@@ -122,9 +132,19 @@ export class NewProductComponent implements OnInit {
     this.delFavSub = this._favService.deletefavitem(this.customerId,prodId).subscribe({
       next : (d)=>{
         console.log("Delete Successfully");
+        // Swal.fire({
+        //   title: 'تم ازالة المنتج من قائمة أمنياتك',
+        //   confirmButtonColor: '#198754', // Change this to the color you prefer
+        // });
         Swal.fire({
-          title: 'تم ازالة المنتج من قائمة أمنياتك',
-          confirmButtonColor: '#198754', // Change this to the color you prefer
+          position : 'top-right',
+          // icon : 'success',
+          showCancelButton : false,
+          showConfirmButton : false,
+          timer:700,
+          titleText:'تم ازالة المنتج من قائمة أمنياتك' ,
+          color:'red',
+          
         });
         this.getALLfav();
         this._favService.getNumberOfitemInFavCart();

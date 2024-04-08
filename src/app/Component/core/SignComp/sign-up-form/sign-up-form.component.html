@@ -73,7 +73,7 @@
           يجب عليك ادخال رقم التليفون
         </ng-container>
         <ng-container *ngIf="phonecontrol?.hasError('pattern')">
-          يجب علي الرقم ان يكون 11 رقم، ويبدا ب 010 |012|015
+          يجب علي الرقم ان يكون 11 رقم، ويبدا ب 010 |012|011|015
         </ng-container>
       </div>
     </div>
@@ -141,9 +141,10 @@
         </ng-container>
         <ng-container *ngIf="passwordcontrol?.hasError('minlength')">
           يجب علي كلمة المرور ان تكون اطول من 5 حروف
+          <hr>
         </ng-container>
         <ng-container *ngIf="passwordcontrol?.hasError('pattern')">
-          يجب علي كلمة المرور ان تحتوي علي حرف ابجدي علي الاقل واحد [A-Z]
+          يجب علي  كلمة المرور أن تحتوي على حرف كابتل [A-Z]  . واحد علي الاقل  ورمز واحد علي الأقل  
         </ng-container>
       </div>
     </div>
@@ -194,11 +195,19 @@
         </ng-container>
       </div>
     </div>
-    <div class="d-flex gap-2">
-      <button class="btn btn-success col-md-7">انشاء الحساب</button>
-      <a class="btn btn-outline-success col border-2" [routerLink]="'/signin'"
-        >تسجيل الدخول</a
-      >
+    <div class="row me-1">
+      <button class="btn btn-success ">
+        <div *ngIf="waitSend">
+          <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        {{btnText}}
+      </button>
+      
     </div>
     <!-- <div class="alert alert-danger">{{ errorMessage }}</div> -->
   </form>

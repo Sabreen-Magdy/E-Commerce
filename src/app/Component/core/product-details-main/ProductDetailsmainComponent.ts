@@ -296,6 +296,9 @@ export class ProductDetailsmainComponent implements OnInit {
           // this.clearForm()
           // this.commentForm.get('comment')?.setValue("");
           this.getProductDetails()
+          this.numOfStar = false;
+          this.showerror = false;
+          this.commentForm.get('comment')?.setValue("");
           this.prodDetApi.getProdReviews(this.id).subscribe({
             next: (data) => {
               this.prodDetrev = data;
@@ -721,8 +724,6 @@ export class ProductDetailsmainComponent implements OnInit {
   }
   });
   }
-
-
 
     navigateToAnotherId(id: number) {
     // this.router.navigate(['/store/productDetials',id])

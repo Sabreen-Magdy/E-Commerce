@@ -10,7 +10,8 @@ import {  ICstDto } from '../models/deletecomment';
 export class DeleteService {
 
   baseURL : string = 'http://www.srm.somee.com/api/Customer';
-  
+  baseURL2 : string = 'http://www.srm.somee.com/api/Saller';
+
   constructor(private http: HttpClient) {}
   getCSTall(): Observable<ICstDto[]> {
     return this.http.get<ICstDto[]>(`${this.baseURL}/GetAllCustomers`);
@@ -19,3 +20,4 @@ export class DeleteService {
     return this.http.delete(`${this.baseURL}/DeleteCustomers?id=${id}`);
   }
 }
+
