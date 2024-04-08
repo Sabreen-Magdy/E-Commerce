@@ -13,5 +13,6 @@
         public double Discount { get; set; }
         public int State { get; set; }
         public int Quantity { get; set; }
+        public int OriginalQuantity { get; set; }
     }
 }

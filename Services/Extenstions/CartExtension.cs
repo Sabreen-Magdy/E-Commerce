@@ -1,5 +1,4 @@
 ﻿using Contract;
-using Contract.OrderItem;
 using Domain.Entities;
 
 namespace Services.Extenstions
@@ -12,6 +11,8 @@ namespace Services.Extenstions
                 throw new ArgumentNullException(nameof(cartItem));
 
             var varient = cartItem.ProductVarient;
+
+
             return new()
             {
                 Id = cartItem.Id,
@@ -23,7 +24,8 @@ namespace Services.Extenstions
                 UnitPrice = varient.Price,
                 ProductVarientId = varient.Id,
                 ProductId = varient.ProductId,
-                Discount = varient.Discount
+                Discount = varient.Discount,
+                OriginalQuantity = varient.Quantity
             };
         }
         public static List<CartItemDto> ToCartItemDto(this List<CartItem> cartItems)
