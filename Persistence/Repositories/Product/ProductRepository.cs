@@ -23,9 +23,10 @@ namespace Persistence.Repositories
 
                 if (varientsOrders != null)
                 {
-                    var count = varientsOrders.Select(v => v.Count(v => v != null && v.Order != null &&
+                    var count = varientsOrders.Select(v => v != null? v.Count(v =>  v.Order != null &&
                                                      (v.Order.State == OrderStates.Pending
-                                                     || v.Order.State == OrderStates.Confirmed)));
+                                                     || v.Order.State == OrderStates.Confirmed)):0
+                    );
 
                     return count.Sum() == 0;
                 }
