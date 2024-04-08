@@ -147,7 +147,7 @@ export class ProductDetailsmainComponent implements OnInit {
         this.cart = data;
         this.cart.items = filterdata;
         this.cart.totalPrice = totalPriceS;
-
+        this.cartitems = []
         for (let index = 0; index < this.cart.items.length; index++) {
           for (let index2 = 0; index2 < productvar.length; index2++) {
             if(this.cart.items[index].productVarientId == productvar[index2]){
@@ -165,15 +165,20 @@ export class ProductDetailsmainComponent implements OnInit {
               break;
             }
           }
-          this.groupedByColor = this.groupByColorCode(this.prodVariantList);
-
+         
         }
-
+        this.groupedByColor = this.groupByColorCode(this.prodVariantList);
+        // this.plusAppearance = this.prodVariantList[0].quantity > 1
         console.log('product var list after edit ',this.prodVariantList)
 
 
         if (filterdata.length == 0) {
           this.noitem = true;
+        }
+        if(this.selectedvariant.quantity == 0){
+          document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+        }else{
+          document.getElementById('addtocart')?.removeAttribute('disabled')
         }
        // this.waitUpdatNumber = false;
       },
@@ -197,8 +202,8 @@ export class ProductDetailsmainComponent implements OnInit {
     })
     this.prodDetApi.getAll(this.id).subscribe({
       next: (data) => {
-        this.prodVariantList =  [...data.filter(p=>p.quantity>0)];
-        this.prodVariantListOriginal = [...data.filter(p=>p.quantity>0)];
+        this.prodVariantList = JSON.parse(JSON.stringify(data.filter(p=>p.quantity>0)));
+        this.prodVariantListOriginal = JSON.parse(JSON.stringify(data.filter(p=>p.quantity>0)));
         console.log("prodVariantListOriginal on init",this.prodVariantListOriginal)
         // for (let index = 0; index < this.prodVariantList.length; index++) {
         //   if(this.prodVariantList[index].quantity <1){
@@ -213,12 +218,19 @@ export class ProductDetailsmainComponent implements OnInit {
         this.selectedColor = this.prodVariantList[0].colorName;
         this.selectedColorCode = this.prodVariantList[0].code;
         this.selectedSize = this.prodVariantList[0].size;
-        this.selectedvariant = this.prodVariantList[0]
         this.plusAppearance = this.prodVariantList[0].quantity > 1
         this.getcartbyId(this.prodVariantList.map(p=>p.id));
-
+        this.selectedvariant = this.prodVariantList[0]
+       
         this.groupedByColor = this.groupByColorCode(this.prodVariantList);
         console.log(this.groupedByColor)
+        console.log("selected variant to disable quantity" , this.selectedvariant.quantity)
+
+        if(this.selectedvariant.quantity == 0){
+          document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+        }else{
+          document.getElementById('addtocart')?.removeAttribute('disabled')
+        }
       }
     });
     this.checkFavourite();
@@ -384,7 +396,11 @@ export class ProductDetailsmainComponent implements OnInit {
     this.quantityNumber = 1; // Reset quantity to 1
     this.plusAppearance = true
     this.buttonText = " اضف للعربة"
-
+    if(this.selectedvariant.quantity == 0){
+      document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+    }else{
+      document.getElementById('addtocart')?.removeAttribute('disabled')
+    }
   }
 
   selectColor(variant: IproductVarDet, index: number): void {
@@ -398,7 +414,11 @@ export class ProductDetailsmainComponent implements OnInit {
     this.quantityNumber = 1; // Reset quantity to 1
     this.plusAppearance = true
     this.buttonText = " اضف للعربة"
-
+    if(this.selectedvariant.quantity == 0){
+      document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+    }else{
+      document.getElementById('addtocart')?.removeAttribute('disabled')
+    }
   }
   selectSize(sizename: string, variant: IproductVarDet): void {
 
@@ -412,7 +432,11 @@ export class ProductDetailsmainComponent implements OnInit {
     this.plusAppearance = true
 
     this.buttonText = " اضف للعربة"
-
+    if(this.selectedvariant.quantity == 0){
+      document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+    }else{
+      document.getElementById('addtocart')?.removeAttribute('disabled')
+    }
   }
   plus() {
     if (this.quantityNumber < this.selectedvariant!.quantity) {
@@ -482,6 +506,7 @@ export class ProductDetailsmainComponent implements OnInit {
         console.log("item Add to Fav Succesfully" + data);
         this.favService.getNumberOfitemInFavCart();
         this.isProductInFav = true;
+        
       },
       error: (e) => {
         console.log("may bt item in fav already");
@@ -668,13 +693,23 @@ export class ProductDetailsmainComponent implements OnInit {
         this.selectedvariant = this.prodVariantList[indexofvarupdated]
         // this.groupedByColor = this.groupByColorCode(this.prodVariantList);
         this.quantityNumber=1
-
+        if(this.selectedvariant.quantity == 0){
+          document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+        }else{
+          document.getElementById('addtocart')?.removeAttribute('disabled')
+        }
         // this.getcartbyId(this.prodVariantList.map(p=>p.id))
       },
       error: (e) => {
         this.buttonText = "اضفت المزيد للعربة"
         this.increasecartItem(this.selectedvariant.id ,item.quantity)
        // console.log("ERROR when delete" + e);
+
+       if(this.selectedvariant.quantity == 0){
+        document.getElementById('addtocart')?.setAttribute('disabled', 'true')
+      }else{
+        document.getElementById('addtocart')?.removeAttribute('disabled')
+      }
       }
     })
   }else{
