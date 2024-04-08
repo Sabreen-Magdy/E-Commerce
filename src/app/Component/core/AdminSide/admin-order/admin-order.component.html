@@ -170,6 +170,11 @@
             </div>
           </div>
           <button class="btn btn-danger m-3" type="submit">تأكيد الرفض</button>
+          <div *ngIf="errorinrefund" class="" >
+            <span class="text-danger mx-1"><i class="bi bi-ban"></i></span
+            >
+            <span class="text-danger"> نأسف لإبلاغك أن عملية الدفع غير مستقرة حاول مرة اخري في وقت لاحق</span>       
+          </div>
         </form>
       </div>
     </div>

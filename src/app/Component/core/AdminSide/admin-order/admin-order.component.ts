@@ -25,6 +25,7 @@ export class AdminOrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.errorinrefund = false
     this.adminser.getAll().subscribe({
       next: (data) => {
         this.waiting = false;
@@ -78,6 +79,7 @@ export class AdminOrderComponent implements OnInit {
     model?.classList.remove("model-show")
 
   }
+  errorinrefund : boolean=false
   accepted: boolean = false
   rejected: boolean = false
   AcceptOrder(order: AdminOrder, index: number) {
@@ -87,9 +89,11 @@ export class AdminOrderComponent implements OnInit {
         order.comment='تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله'
         //order.accepted = false;
         this.orderStateAOrR[index] = 1
+        
       },
       error: (error) => {
         console.error('Error rejecting order:', error);
+       
       }
     })
     this.accepted = true
@@ -107,12 +111,16 @@ export class AdminOrderComponent implements OnInit {
         this.orders[this.selectedIndex].state = 2;
         //order.accepted = false;
         this.orderStateAOrR[this.selectedIndex] = 2
+        this.errorinrefund = false
+        this.closeRefuse()
       },
       error: (error) => {
         console.error('Error rejecting order:', error);
+        this.errorinrefund = true
+
       }
     })
-    this.closeRefuse()
+    
 
 
     //this.rejected = true
