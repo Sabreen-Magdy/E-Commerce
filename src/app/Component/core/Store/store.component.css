@@ -318,13 +318,16 @@ span.msg.show {
 
 .categSearch{
     margin-top: 50px;
+    
 }
 
 .categSearch .catList{
+    height: 280px;
     list-style-type: none;
     padding: 0;
     color: gray;
     font-size: 18px;
+    overflow-y: scroll;
 }
 .categSearch .catList .catItem {
     
