@@ -229,8 +229,14 @@ export class StoreComponent implements OnInit {
           this.addFavSub = this._favService.additemTofav(addFav).subscribe({
             next: (data) => {
               Swal.fire({
-                title: 'تم إضافة المنتج إلى قائمة أمنياتك',
-                confirmButtonColor: '#198754', // Change this to the color you prefer
+                position : 'top-right',
+                // icon : 'success',
+                showCancelButton : false,
+                showConfirmButton : false,
+                timer:700,
+                titleText:'تم إضافة المنتج إلى قائمة أمنياتك',
+                color:'green',
+                
               });
               console.log('item Add to Fav Succesfully' + data);
               this.getAllfav();
@@ -350,8 +356,14 @@ export class StoreComponent implements OnInit {
       .subscribe({
         next: (d) => {
           Swal.fire({
-            title: 'تم ازالة المنتج من قائمة أمنياتك',
-            confirmButtonColor: '#198754', // Change this to the color you prefer
+            position : 'top-right',
+            // icon : 'success',
+            showCancelButton : false,
+            showConfirmButton : false,
+            timer:700,
+            titleText:'تم ازالة المنتج من قائمة أمنياتك' ,
+            color:'red',
+            
           });
           console.log('doooooooooooooone Delete');
           this.getAllfav();
