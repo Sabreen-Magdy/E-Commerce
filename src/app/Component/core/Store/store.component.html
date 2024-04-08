@@ -60,8 +60,10 @@
       
         <!-- <span *ngIf="checkFav(x.id)" (click)="removeItemfromFav(x.id)" > <i class="bi bi-heart-fill"></i> </span>
         <span class="msg fav">اضف للمفضلة</span> -->
-        <span [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
-        <span class="msg show">عرض المنتج</span>
+        <span *ngIf="x.quantity>0" [routerLink]="['/store/productDetials',x.id]" class="material-symbols-outlined show"> visibility </span>
+        <span *ngIf="x.quantity>0" class="msg show">عرض المنتج</span>
+        <span *ngIf="x.quantity==0"  class="material-symbols-outlined show"> visibility </span>
+        <span *ngIf="x.quantity==0" class="msg show"> غير متوفر</span>
         <img
 
           [src]="'http://www.srm.somee.com/Images/'+x.image"
@@ -69,7 +71,8 @@
       </div>
       <div class="element-detials">
         <h4>{{x.name}}</h4>
-        <p>{{x.price}} <span>جنيه</span></p>
+        <div><p>{{x.price}} <span class="egp">جنيه</span></p> <p *ngIf="x.quantity == 0" class="out"> هذا المنتج غير متوفر</p>  </div>
+        
       </div>
     </div>
     <div  class="pagiDiv">

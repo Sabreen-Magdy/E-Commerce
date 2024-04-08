@@ -161,7 +161,18 @@ span.msg.show {
     font-size: 16px;
 }
 
-.element-detials p span{
+.element-detials div{
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    font-size: 12px;
+}
+
+.element-detials div .out{
+    color: #ffc107;    ;
+    font-weight: 600;
+}
+.element-detials p span.egp{
     color: black;
     font-size: 12px;
 }
@@ -406,4 +417,6 @@ Change the background color of the pagination controls
   }
   
 
-  
+  .end{
+    text-align: end;
+  }

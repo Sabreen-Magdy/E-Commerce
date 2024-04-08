@@ -347,18 +347,16 @@
           <span *ngIf="isFiv"  class="msg fav">ازال من المفضلة</span>
 
 
-          <span
-            (click)="navigateToAnotherId(item.id)"
-            class="material-symbols-outlined show"
-          >
-            visibility
-          </span>
-          <span class="msg show">عرض المنتج</span>
+          <span *ngIf="item.quantity>0" [routerLink]="['/store/productDetials',item.id]" class="material-symbols-outlined show"> visibility </span>
+          <span *ngIf="item.quantity>0" class="msg show">عرض المنتج</span>
+          <span *ngIf="item.quantity==0"  class="material-symbols-outlined show"> visibility </span>
+          <span *ngIf="item.quantity==0" class="msg show"> غير متوفر</span>
           <img [src]="'http://www.srm.somee.com/Images/' + item.image" />
         </div>
         <div class="element-detials">
           <h4>{{ item.name }}</h4>
-          <p>{{ item.price }} <span>جنيه</span></p>
+          <div><p>{{item.price}} <span class="egp">جنيه</span></p> <p *ngIf="item.quantity == 0" class="out"> هذا المنتج غير متوفر</p>  </div>
+
         </div>
       </div>
       <div class="pagiDiv">

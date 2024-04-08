@@ -28,6 +28,7 @@ export interface IproductShow {
     image: string,
     addingDate:string,
     avgRating:number,
+    quantity:number,
 
   
 }
