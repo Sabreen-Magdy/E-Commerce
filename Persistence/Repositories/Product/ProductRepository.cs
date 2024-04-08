@@ -17,9 +17,9 @@ namespace Persistence.Repositories
         private bool CanRemove(Product product)
         {
             var varients = product.ColoredProducts.SelectMany(cp => cp.Varients, (cp, v) => v.ProductBelongToOrders);
-            var count = varients.Select(v => v.Count(v =>
-                v.Order.State == OrderStates.Pending
-                || v.Order.State == OrderStates.Confirmed));
+            var count = varients.Select(v => v.Count(v => v !=null && v.Order !=null &&
+                (v.Order.State == OrderStates.Pending
+                || v.Order.State == OrderStates.Confirmed)));
 
             return count.Sum() == 0;
         }

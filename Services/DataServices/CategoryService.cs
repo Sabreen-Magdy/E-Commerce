@@ -51,22 +51,29 @@ namespace Services.DataServices
                 throw new NotFoundException("Category");
 
             var products = category.ProductCategories.Select(c => c.Product);
-
-            if (CanRemove(category))
-            {
-                _repositoryAdmin.CategoryRepository
-                    .Delete(category);
-
-                _repositoryAdmin.SaveChanges();
-            }
             if (ignore)
             {
+                _repositoryAdmin.CategoryRepository
+                   .Delete(category);
+
+                _repositoryAdmin.SaveChanges();
                 foreach (var item in products)
                     if (item.ProductCategories.Count() == 0)
                         _repositoryAdmin.ProductRepository.Delete(item);
                 _repositoryAdmin.SaveChanges();
             }
+            else if (CanRemove(category))
+            {
+                _repositoryAdmin.CategoryRepository
+                    .Delete(category);
+
+                _repositoryAdmin.SaveChanges();
+                
+            }
             else throw new NotAllowedException("This Category has one or more Products in Store");
+            
+
+            
 
         }
 
