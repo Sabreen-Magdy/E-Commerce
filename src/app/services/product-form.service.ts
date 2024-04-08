@@ -20,7 +20,7 @@ export class ProductFormService  implements OnInit{
   allNumber : number = 0;
   baseURL : string ="http://www.srm.somee.com/api/Saller/";
   baseURL2 : string = "http://www.srm.somee.com/api/Product/";
-  baseURL3 : string = "http://localhost:5058/api/Product/";
+  baseURL3 : string = "http://www.srm.somee.com/api/Product/";
 
   productsCache: IproductShow[] = [];
   listCategoryBYname : catNameWithList [] = [];
