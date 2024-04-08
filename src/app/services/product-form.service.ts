@@ -20,6 +20,7 @@ export class ProductFormService  implements OnInit{
   allNumber : number = 0;
   baseURL : string ="http://www.srm.somee.com/api/Saller/";
   baseURL2 : string = "http://www.srm.somee.com/api/Product/";
+  baseURL3 : string = "http://localhost:5058/api/Product/";
 
   productsCache: IproductShow[] = [];
   listCategoryBYname : catNameWithList [] = [];
@@ -52,7 +53,7 @@ export class ProductFormService  implements OnInit{
     console.log("fetch");
     console.log(this.allNumber);
     if (this.productsCache.length == 0 || this.productsCache.length != this.allNumber) {
-      console.log("fetch form service");
+      console.log("fetch form service");          /**here to 2 */
       return this.http.get<IproductShow[]>(`${this.baseURL2}GetAll`).pipe(
         tap(products => this.productsCache = products) // Cache the products
       );
@@ -85,7 +86,7 @@ export class ProductFormService  implements OnInit{
     console.log(res);
     if (res ) {
       console.log("fetch form service for cate");
-      console.log(this.isCurrentCategoryInList());
+      console.log(this.isCurrentCategoryInList()); /** mannnnnnnnnn   */
       return this.http.get<IproductShow[]>(`${this.baseURL2}GetByGetegory?gategory=${this.cuurentCategName}`).pipe(
         tap( catProduct => {
             console.log(catProduct);

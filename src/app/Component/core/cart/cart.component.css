@@ -350,15 +350,28 @@ span.msg.show {
 }
 
 .element-detials p{
-    color: gray;
-    font-weight: bold;
-    font-size: 16px;
+  color: gray;
+  font-weight: bold;
+  font-size: 16px;
 }
 
-.element-detials p span{
-    color: black;
-    font-size: 12px;
+.element-detials div{
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  font-size: 12px;
 }
+
+.element-detials div .out{
+  color: #ffc107;    ;
+  font-weight: 600;
+}
+.element-detials p span.egp{
+  color: black;
+  font-size: 12px;
+}
+
+
 .pagiDiv{
   margin: 20px auto;
  

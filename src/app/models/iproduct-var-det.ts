@@ -24,3 +24,11 @@ export interface IproductByGategory {
     addingDate:string;
    
 }
+ 
+
+ 
+
+
+
+
+
