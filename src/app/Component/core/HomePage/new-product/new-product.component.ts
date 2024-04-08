@@ -85,7 +85,7 @@ export class NewProductComponent implements OnInit {
           this.addFavSub = this._favService.additemTofav(addFav).subscribe({
             next: (data) => {
               Swal.fire({
-                title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+                title: 'تم إضافة المنتج إلى قائمة أمنياتك',
                 confirmButtonColor: '#198754', // Change this to the color you prefer
               });
               console.log('item Add to Fav Succesfully' + data);
@@ -123,10 +123,11 @@ export class NewProductComponent implements OnInit {
       next : (d)=>{
         console.log("Delete Successfully");
         Swal.fire({
-          title: 'تم ازالة المنتج من قائمة أمنياتي',
+          title: 'تم ازالة المنتج من قائمة أمنياتك',
           confirmButtonColor: '#198754', // Change this to the color you prefer
         });
         this.getALLfav();
+        this._favService.getNumberOfitemInFavCart();
       },
       error : (e)=>{
         console.log(e);

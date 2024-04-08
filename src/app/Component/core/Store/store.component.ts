@@ -229,7 +229,7 @@ export class StoreComponent implements OnInit {
           this.addFavSub = this._favService.additemTofav(addFav).subscribe({
             next: (data) => {
               Swal.fire({
-                title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+                title: 'تم إضافة المنتج إلى قائمة أمنياتك',
                 confirmButtonColor: '#198754', // Change this to the color you prefer
               });
               console.log('item Add to Fav Succesfully' + data);
