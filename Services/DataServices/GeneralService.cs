@@ -17,7 +17,7 @@ namespace Services.DataServices
         private bool CanRemoveColor(Color color)
         {
             var varients = color.ColoredProducts.Select(pc => pc.Varients);
-            if (varients.Count() == 0) return true;
+            if (varients.Count() != 0) return true;
 
             return varients.SelectMany(v => v, (v, varient) => varient.Quantity).Sum() != 0;
         }
