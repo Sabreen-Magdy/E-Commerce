@@ -88,7 +88,12 @@ export class AuthService {
    return this._HttpClient.get<any>(`http://www.srm.somee.com/api/Customer/GetCustomerById?id=${this.id}`);
   }
   updateUser(data:object):Observable<any>{
-    return this._HttpClient.put<any>(`http://www.srm.somee.com/api/Customer/UpdateCustomers?id=${this.id}`,data);
+    let updateobj ={
+      ...data,
+      image: "string.png",
+      password: "332002SRM@s"
+    }
+    return this._HttpClient.put<any>(`http://www.srm.somee.com/api/Customer/UpdateCustomers?id=${this.id}`,updateobj);
    }
 
  getOrderOfUser():Observable<customerOrder[]>{
