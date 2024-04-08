@@ -17,7 +17,11 @@ export interface CartItemDto {
   unitPrice: number;
   state: number;
   quantity: number;
+  originalQuantity: number
 }
+
+
+
 
 export interface AddCart{
   productVarientId:number,

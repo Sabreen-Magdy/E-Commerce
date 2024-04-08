@@ -28,6 +28,7 @@ export class CartComponent implements OnInit {
   ComponentUrl = ComponentUrl;
   buttonText: string = 'تأكيد الطلب';
   customerID: number = 0;
+  errorQuantity : boolean =false ;
   cart: CartDto = {
     totalPrice: 0,
     totalQuantity: 0,
@@ -141,6 +142,9 @@ export class CartComponent implements OnInit {
         let totalPriceS: number = 0;
         // this.cart.items = this.cart.items.filter((item)=>item.state==0)
         for (var item of filterdata) {
+          if (item.originalQuantity< item.quantity){
+            this.errorQuantity = true;
+          }
           item.unitPrice = item.unitPrice - item.unitPrice * item.discount;
           totalPriceS += item.unitPrice * item.quantity;
         }

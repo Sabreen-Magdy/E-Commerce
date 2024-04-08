@@ -20,7 +20,9 @@
         </div>
         <div *ngIf="cart.items.length" class="text-start m-3"><button (click)="clearAll()"
             class="btn btn-danger shadow">مسح الكل <i class="bi bi-x-lg me-2"></i></button></div>
-
+          <div *ngIf="errorQuantity" class="alert alert-danger mx-4">
+              من فضلك قم بتعديل الكمية لاستكمال عملية الطلب
+          </div>
         <div *ngFor="let item of cart.items" class="card rounded-3 mb-4 items">
           <div class="card-body p-4"
             style="background-color: #e3e5e348; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -39,13 +41,17 @@
                   <span class="text-muted">السعر: </span>{{ item.unitPrice }}
                 </p>
               </div>
-              <div class="col-md-4 col-lg-4 col-xl-2">
+              <div class="col-md-5 col-lg-4 col-xl-2">
                 <div *ngIf="waitUpdatNumber && lastitemChange == item.productVarientId" class="iconWaithNumb"><i
                     class="bi bi-hourglass-split"></i></div>
                 <div *ngIf="isMaxThanAvailable && lastitemChange == item.productVarientId"
                   class="mx-2 p-1 alert alert-danger">هذة فقط الكمية المتوفرة</div>
                 <div *ngIf="isZero && lastitemChange == item.productVarientId" class="mx-2 p-1 alert alert-danger">الحد
                   الأدنى للكمية هو 1. </div>
+                <div *ngIf="item.originalQuantity < item.quantity"  class="text-danger" style="font-size: smaller;">
+                    اكثر من الكمية المتاحة<br>
+                   الكمية المتاحة : {{item.originalQuantity}}
+                </div>
                 <div class=" d-flex">
                   <button class="btn btn-link px-2" (click)="
                       decreasecartItem(item.productVarientId, item.quantity)
@@ -90,8 +96,8 @@
                       <span class="total">{{ cart.totalPrice }} ج.م.</span>
                     </li>
                   </ul>
-                  <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal2"
-                    (click)="assignToCheckoutForm()" class="proceed-btn">
+                  <button [disabled]="errorQuantity" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                    (click)="assignToCheckoutForm()" class="btn proceed-btn">
                     <div *ngIf="wiating">
                       <div class="lds-ellipsis">
                         <div></div>
@@ -102,7 +108,7 @@
                     </div>
                     {{buttonText}}
 
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
