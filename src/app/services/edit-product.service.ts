@@ -11,7 +11,7 @@ export class EditProductService {
 
   constructor( private http: HttpClient) { }
 
-  BaseUrl : string ="http://www.srm.somee.com/api/";
+  BaseUrl : string ="http://localhost:5058/api/";
   
 
   /** ------------------   get         ------------------- */

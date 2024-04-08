@@ -120,7 +120,7 @@ confirmEmail(email : string): Observable<any> {
 
   const encodedEmail = encodeURIComponent(email);
   return this._HttpClient.get<any>(
-    `http://www.srm.somee.com/api/Authentication/ConfirmEmail?email=${encodedEmail}`,
+    `http://localhost:5058/api/Authentication/ConfirmEmail?email=${encodedEmail}`,
     { headers: { 'RedirectUrl': 'http://localhost:4200/signup?' } }
   );
 }

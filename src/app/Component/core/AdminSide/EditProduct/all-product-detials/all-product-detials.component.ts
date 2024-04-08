@@ -156,13 +156,14 @@ export class AllProductDetialsComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
-    if (this.coloredProduct.length > 1) {
+    if (this.CategoryProduct.length > 1) {
       this.deleteCategorySub = this.editServ
         .deleteCatgoryofProduct(this.productId, id)
         .subscribe({
           next: (d) => {
             console.log(d);
             // this.getAllColoredProd();
+            this.getAllCategoryProduct()
           },
           error: (e) => {
             console.log('ERROR when delete product Category');
