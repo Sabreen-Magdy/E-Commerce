@@ -8,7 +8,17 @@
             <ng-otp-input class="manotp"  [formCtrl]="otpCode2"  [config]="otpConfig"></ng-otp-input>
         </div>
         <div class="row">
-            <button [disabled]="otpCode2.value.length<6" type="submit" class="btn btn-success col-md-8 ">تأكيد الكود</button>
+            <button [disabled]="otpCode2.value.length<6" type="submit" class="btn btn-success col-md-8 ">
+                <div *ngIf="waitSend">
+                    <div class="lds-ellipsis">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  {{btntext}}
+            </button>
         </div>
     </form>
 </div>

@@ -13,6 +13,8 @@ export class VerifiyComponent implements OnInit {
   
   showerroOtp : boolean = false;
   otp : string = "";
+  waitSend : boolean = false;
+  btntext : string = "تأكيد الكود";
   
   otpConfig: NgOtpInputConfig = {
     allowNumbersOnly: false,
@@ -44,15 +46,18 @@ export class VerifiyComponent implements OnInit {
 
   submit(e:Event) {
     e.preventDefault();
-    console.log("hiiiiiiiiiiiii");
     if (this.otpCode2.valid){
+      this.btntext ="";
+      this.waitSend = true;
       const otpCode = this.otpCode2.value;
-      console.log(otpCode);
-      console.log(this.otp);
+     
       if (otpCode == this.otp){
+        
         this._Router.navigate(['/resetpassword']);
       }else {
         this.showerroOtp = true; 
+        this.waitSend = false;
+        this.btntext = "تأكيد الكود";
       }
       // You can perform further actions with the OTP code here
     }

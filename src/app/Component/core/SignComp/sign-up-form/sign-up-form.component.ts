@@ -13,6 +13,9 @@ export class SignUpFormComponent implements OnInit {
   signupform : FormGroup;
   showerror : boolean = false;
   emailUser : string = "";
+  waitSend : boolean = false;
+  btnText : string =  "انشاء الحساب" ;
+
 
   constructor(private _AuthService:AuthService , private _Router:Router , private actRoute : ActivatedRoute){
     this.signupform = new FormGroup({
@@ -93,6 +96,8 @@ export class SignUpFormComponent implements OnInit {
   submitRegisterForm(e : Event){
     e.preventDefault();
     if (this.signupform.valid){
+      this.waitSend = true;
+      this.btnText = "";
       let dataUser : IRegisteration = {
         name: this.signupform.get('name')?.value,
         image: 'image.png',
@@ -105,11 +110,14 @@ export class SignUpFormComponent implements OnInit {
       console.log(dataUser);
       this._AuthService.Registeration(dataUser).subscribe({
         next: (data) => {
+          this.waitSend = false;
           this._Router.navigate(['/signin']);
           console.log("Welcome");
           console.log(data);
         },
         error: (e)=>{
+          this.waitSend = false;
+
           console.log("ERROR");
           console.log(e);
         }

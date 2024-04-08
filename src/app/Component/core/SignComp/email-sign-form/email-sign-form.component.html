@@ -26,7 +26,17 @@
         </div>
 
         <div class="d-flex gap-2">
-            <button class="btn btn-success col-md-7">انشاء الحساب</button>
+            <button class="btn btn-success col-md-7">
+                <div *ngIf="waitresponse">
+                    <div class="lds-ellipsis">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  {{btnText}}
+            </button>
             <a class="btn btn-outline-success col border-2" [routerLink]="'/signin'">تسجيل الدخول</a>
         </div>
         <!-- <div class="alert alert-danger">{{ errorMessage }}</div> -->

@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rest-password',
@@ -13,6 +14,8 @@ export class RestPasswordComponent {
 
   signupform : FormGroup;
   showerror : boolean = false;
+  waitsend : boolean = false;
+  btntext : string = "إعادة تعيين كلمة السر";
 
 
   constructor(private _AuthService:AuthService , private _Router:Router , ){
@@ -69,6 +72,8 @@ export class RestPasswordComponent {
   submitRegisterForm(e : Event){
     e.preventDefault();
     if (this.signupform.valid){
+      this.waitsend = true;
+      this.btntext = "";
       let dataUser={
         token:this.token,
         otp:this.otp,
@@ -77,9 +82,23 @@ export class RestPasswordComponent {
       }
       this._AuthService.resetPassWord(dataUser).subscribe({
         next: (data) => {
+          Swal.fire({
+            icon : 'success',
+            text : "تم تحديث كلمة مرورك بنجاح",
+            confirmButtonColor : '#198754'
+          }).then(
+            (r)=>{
+              if (r.isConfirmed){
           this._Router.navigate(['/signin']);
+        }})
         },
         error: (e)=>{
+          this.waitsend=false;
+          this.btntext = "خطأ"
+          Swal.fire({
+            icon :'error',
+            text : 'حدث خطأ ما حاول مرة اخري'
+          })
           console.log("ERROR");
           console.log(e);
         }
