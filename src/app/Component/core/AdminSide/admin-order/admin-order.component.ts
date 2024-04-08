@@ -89,11 +89,11 @@ export class AdminOrderComponent implements OnInit {
         order.comment='تم قبول طلبك من قبل الادمن سيصلك المنتج خلال ايام قليله'
         //order.accepted = false;
         this.orderStateAOrR[index] = 1
-        this.errorinrefund = false
+        
       },
       error: (error) => {
         console.error('Error rejecting order:', error);
-        this.errorinrefund = true
+       
       }
     })
     this.accepted = true
@@ -111,13 +111,16 @@ export class AdminOrderComponent implements OnInit {
         this.orders[this.selectedIndex].state = 2;
         //order.accepted = false;
         this.orderStateAOrR[this.selectedIndex] = 2
+        this.errorinrefund = false
+        this.closeRefuse()
       },
       error: (error) => {
         console.error('Error rejecting order:', error);
+        this.errorinrefund = true
 
       }
     })
-    this.closeRefuse()
+    
 
 
     //this.rejected = true

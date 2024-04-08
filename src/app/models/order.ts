@@ -1,3 +1,4 @@
+import { Payment } from './payment';
 export interface IorderAdd 
 {
     customerId: number,
@@ -13,4 +14,8 @@ export interface IproductforOrderadd
     quantity: number,
     totalCost: number
 }
-
+export interface AddPaymentOrder
+{
+    order :IorderAdd
+    payment : Payment
+}

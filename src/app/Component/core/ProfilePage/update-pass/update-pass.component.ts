@@ -77,6 +77,7 @@ MakeFormValidation(){
 
       this._AuthService.updatePassWord(newData).subscribe({
         next:(response)=>{
+          
           this._AuthService.signOut();
           this._Router.navigate(['/signin']);
         },

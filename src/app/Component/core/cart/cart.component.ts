@@ -9,7 +9,7 @@ import { CartDto, CartItemDto } from 'src/app/models/icart';
 import { ComponentUrl } from 'src/app/models/unit';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { addorderService } from 'src/app/services/AddOrder.service';
-import { IorderAdd, IproductforOrderadd } from 'src/app/models/order';
+import { AddPaymentOrder, IorderAdd, IproductforOrderadd } from 'src/app/models/order';
 import { PaymentService } from 'src/app/services/payment.service';
 import { ProductFormService } from 'src/app/services/product-form.service';
 import { IproductShow } from 'src/app/models/i-product-variant';
@@ -292,7 +292,7 @@ export class CartComponent implements OnInit {
   //     }
   //   }
 
-  SendOrder() {
+  SendOrder(Payment : Payment) {
     // this.toggletoPaymentForm()
     if (this.registerForm.valid) {
       this.waitingSendOrder = true;
@@ -305,11 +305,17 @@ export class CartComponent implements OnInit {
         },${this.registerForm.get('residential_area')?.value}`,
         productsperOrder: this.productVarientperOrder,
       };
+      
       console.log(order);
-      this.orderSer.addorder(order).subscribe({
+      const Paymentorder: AddPaymentOrder = {
+        order:order,
+        payment:Payment
+      }
+      this.orderSer.addorder(Paymentorder).subscribe({
         next: (data) => {
           console.log('done' + data);
           this.deleteafterCheckout2();
+          this.closeRefuse()
         },
         error: (e) => {
           console.log('error when send order', e);
@@ -451,22 +457,23 @@ export class CartComponent implements OnInit {
                   currencyIsoCode: 'USD',
                 };
                 console.log(this.payment);
-                this._PaymentService.Pay(this.payment).subscribe(
-                  (response: any) => {
-                    console.log('Payment successful:', response);
-                    this.SendOrder();
-                    this.error = false;
-                    const submitButton = document.getElementById('submit-btn');
-                    if (submitButton) {
-                      submitButton.setAttribute('disabled', 'true');
-                    }
-                    //  form?.addEventListener('submit')
-                  },
-                  (error: any) => {
-                    console.error('Error processing payment:', error);
-                    this.error = true;
-                  }
-                );
+                this.SendOrder(this.payment);
+                // this._PaymentService.Pay(this.payment).subscribe(
+                //   (response: any) => {
+                //     console.log('Payment successful:', response);
+                //     this.SendOrder();
+                //     this.error = false;
+                //     const submitButton = document.getElementById('submit-btn');
+                //     if (submitButton) {
+                //       submitButton.setAttribute('disabled', 'true');
+                //     }
+                //     //  form?.addEventListener('submit')
+                //   },
+                //   (error: any) => {
+                //     console.error('Error processing payment:', error);
+                //     this.error = true;
+                //   }
+                // );
                 // this.SendOrder()
               });
             });
