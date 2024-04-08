@@ -395,7 +395,7 @@ export class CartComponent implements OnInit {
 
   clearAll() {
     Swal.fire({
-      title: 'هل أنت متأكد من أنك تريد حذف الجميع من السلة؟!',
+      title: 'هل أنت متأكد من رغبتك في مسح جميع المنتجات من سلة التسوق؟!',
       confirmButtonColor: '#198754', // لون زر التأكيد
       confirmButtonText: 'تأكيد',
       cancelButtonText: 'إلغاء',
@@ -543,7 +543,7 @@ export class CartComponent implements OnInit {
     this.addFavSub = this.favService.additemTofav(addFav).subscribe({
       next: (data) => {
         Swal.fire({
-          title: 'تم إضافة المنتج إلى قائمة أمنياتي',
+          title: 'تم إضافة المنتج إلى قائمة أمنياتك',
           confirmButtonColor: '#198754', // Change this to the color you prefer
         });
         console.log('item Add to Fav Succesfully' + data);
