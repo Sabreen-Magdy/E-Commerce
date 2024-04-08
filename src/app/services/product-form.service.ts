@@ -54,7 +54,7 @@ export class ProductFormService  implements OnInit{
     console.log(this.allNumber);
     if (this.productsCache.length == 0 || this.productsCache.length != this.allNumber) {
       console.log("fetch form service");          /**here to 2 */
-      return this.http.get<IproductShow[]>(`${this.baseURL3}GetAll`).pipe(
+      return this.http.get<IproductShow[]>(`${this.baseURL2}GetAll`).pipe(
         tap(products => this.productsCache = products) // Cache the products
       );
     }
@@ -87,7 +87,7 @@ export class ProductFormService  implements OnInit{
     if (res ) {
       console.log("fetch form service for cate");
       console.log(this.isCurrentCategoryInList()); /** mannnnnnnnnn   */
-      return this.http.get<IproductShow[]>(`${this.baseURL3}GetByGetegory?gategory=${this.cuurentCategName}`).pipe(
+      return this.http.get<IproductShow[]>(`${this.baseURL2}GetByGetegory?gategory=${this.cuurentCategName}`).pipe(
         tap( catProduct => {
             console.log(catProduct);
               let newCategory : catNameWithList = {
