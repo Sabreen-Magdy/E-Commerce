@@ -60,16 +60,10 @@ namespace Persistence.Authentication
             var customer = _adminService.CustomerService.Get(customerId);
             if (customer == null)
                 throw new NotFoundException("Customer");
-            try
-            {
-                await _repository.AuthenticationRepository.Remove(customer.UserId);
+                 await _repository.AuthenticationRepository.Remove(customer.UserId);
 
-                _adminService.CustomerService.Delete(customerId);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            _adminService.CustomerService.Delete(customerId);
+          
         }
         public async Task<User> Login(LoginDto login)
         {

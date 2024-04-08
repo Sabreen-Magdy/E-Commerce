@@ -19,11 +19,13 @@ namespace Services.DataServices
         {
             //var varients = GetVarients(product.Id);
             var coloredProducts = _repository.ProductColerdRepository.GetByProduct(product.Id);
-            
+
             //double price = coloredProducts is null || coloredProducts.Count == 0 ? 
             //        0 : coloredProducts.SelectMany(
             //            c => c.Varients, (c, v) => v.Price / c.Varients.Count).Sum();
             //var coloresImages = GetColoresImages(product.Id);
+
+            int quantity = coloredProducts.SelectMany(cp => cp.Varients, (cp, v)=> v.Quantity).Sum();
 
             var image = coloredProducts is null || coloredProducts.Count == 0 ?
                     null : coloredProducts[0].Image;
@@ -35,6 +37,7 @@ namespace Services.DataServices
                 Image = image,
                 AddingDate = product.AddingDate,
                 AvgRating = product.AvgRate,
+                Quantity = quantity
             };
         }
         private List<ProductDto> Map(List<Product> products) =>

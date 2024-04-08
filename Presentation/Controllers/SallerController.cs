@@ -353,46 +353,103 @@ public class SallerController : ControllerBase
     [HttpGet("GetAllCustomers")]
     public IActionResult GetAll()
     {
-        var customer = _adminService.CustomerService.GetAll();
+        try
+        {
+            var customer = _adminService.CustomerService.GetAll();
 
-        if (customer == null) NotFound("No Sallers in System");
-        return Ok(customer);
+            if (customer == null) NotFound("No Sallers in System");
+            return Ok(customer);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 
     [HttpGet("GetCustomerById")]
     public IActionResult GetCustomer(int id)
     {
-        var customer = _adminService.CustomerService.Get(id);
+        try
+        {
+            var customer = _adminService.CustomerService.Get(id);
 
-        if (customer == null) NotFound("this Customer Not Found");
-        return Ok(customer);
+            if (customer == null) NotFound("this Customer Not Found");
+            return Ok(customer);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetCustomerByName")]
     public IActionResult GetCustomer(string name)
     {
-        var customers = _adminService.CustomerService.Get(name);
+        try { var customers = _adminService.CustomerService.Get(name);
 
-        if (customers == null) NotFound($"No Cudtomers with {name} Name Found");
-        return Ok(customers);
+            if (customers == null) NotFound($"No Cudtomers with {name} Name Found");
+            return Ok(customers);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("GetOrders")]
     public IActionResult GetOrders(int id)
     {
-        var orders = _adminService.CustomerService.GetOrders(id);
+        try
+        {
+            var orders = _adminService.CustomerService.GetOrders(id);
 
-        if (orders == null) NotFound("Empty Orders");
-        return Ok(orders);
+            if (orders == null) NotFound("Empty Orders");
+            return Ok(orders);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpDelete("DeleteCustomers")]
     public IActionResult DeleteCustomer(int id)
     {
-        _adminService.CustomerService.Delete(id);
+        try
+        {
+            _externalService.AuthenticationService.DeleteCustomer(id);
+            return Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
 
-        return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 

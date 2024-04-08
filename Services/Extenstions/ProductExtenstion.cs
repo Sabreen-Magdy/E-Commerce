@@ -37,6 +37,8 @@ public static class ProductExtenstion
 
         var coloredProducts = product.ColoredProducts;
         var coloredProduct = coloredProducts is null? null : coloredProducts.First();
+        int quantity = coloredProducts is null ? 0 :
+            coloredProducts.SelectMany(cp => cp.Varients, (cp, v) => v.Quantity).Sum();
 
         return new()
         {
@@ -46,6 +48,7 @@ public static class ProductExtenstion
             Price = product.AvgPrice,
             AddingDate = product.AddingDate,
             AvgRating = product.AvgRate,
+            Quantity = quantity,
         };
     }
     public static ProductDetailsDto ToProductDetailsDto(this Product product)

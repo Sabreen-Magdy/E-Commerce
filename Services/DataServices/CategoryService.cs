@@ -49,15 +49,25 @@ namespace Services.DataServices
             var category = GetCategory(id);
             if (category == null)
                 throw new NotFoundException("Category");
-            
-            if (ignore || CanRemove(category))
+
+            var products = category.ProductCategories.Select(c => c.Product);
+
+            if (CanRemove(category))
             {
                 _repositoryAdmin.CategoryRepository
                     .Delete(category);
 
                 _repositoryAdmin.SaveChanges();
             }
-            throw new NotAllowedException("This Category has one or more Products in Store");
+            if (ignore)
+            {
+                foreach (var item in products)
+                    if (item.ProductCategories.Count() == 0)
+                        _repositoryAdmin.ProductRepository.Delete(item);
+                _repositoryAdmin.SaveChanges();
+            }
+            else throw new NotAllowedException("This Category has one or more Products in Store");
+
         }
 
         public CategoryDto? Get(int id) => 
