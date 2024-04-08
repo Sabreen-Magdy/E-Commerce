@@ -150,13 +150,13 @@ namespace Services.DataServices
            
             if (prodCat is null)
                 throw new NotFoundException("ProductCategory");
-            var imgs = prodCat.Product.ColoredProducts.Select(cp => cp.Image).ToList();
+            //var imgs = prodCat.Product.ColoredProducts.Select(cp => cp.Image).ToList();
 
             _repository.ProductCategoryRepository.Delete(prodCat);
             _repository.SaveChanges();
 
 
-            DeleteImage(imgs);
+            //DeleteImage(imgs);
         }
 
         public void DeleteColor(int id)
