@@ -420,3 +420,34 @@ Change the background color of the pagination controls
   .end{
     text-align: end;
   }
+  @media (max-width: 767px) {
+    /* .conta, .conta * {
+        margin: 0;
+        padding: 0;
+    }
+    .conta .items .element {
+        margin: 0;
+        padding: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 30px;
+    }*/
+    .element-img img {
+        height: 200px;
+       
+    } 
+    h1 {
+        font-size: 20px;  /* Smaller font size for mobile views */
+        margin: 10px 0;  /* Smaller margin for a more compact layout */
+    }
+    /* .row, .row > [class^="col-"] {
+        margin-right: 0;
+        margin-left: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .container, .container-fluid {
+        padding-right: 0;
+        padding-left: 0;
+    } */
+}
