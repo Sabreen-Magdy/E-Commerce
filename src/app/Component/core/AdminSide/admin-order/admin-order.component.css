@@ -257,6 +257,39 @@
     flex-wrap: wrap;
 }
 
+/*Filter part*/
+
+
+.filterpart{
+  margin:20px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ .filter{
+  padding: 6px;
+  border-radius: 6px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter:hover{
+  cursor: pointer;
+  background-color: rgba(0, 196, 0, 0.04);  
+}
+
+ .filterpart .sortselect{
+  border: 0px;
+  width: 180px;
+}
+
+.filterpart .sortselect:focus{
+  border: 1px dotted gray;
+}
+
 @media screen and (max-width: 768px) {
 
     .model {
@@ -269,7 +302,13 @@
   @media screen and (max-width: 1200px) {
   
   
-  
+    .contai{
+      width: 100%;
+    }
+
+    .filterpart{
+      margin: 20px 6px;
+    }
     .table-products thead {
       display: none;
     }
@@ -362,35 +401,3 @@ Change the background color of the pagination controls
 }
 
 
-/*Filter part*/
-
-
-.filterpart{
-  margin:20px 30px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
- .filter{
-  padding: 6px;
-  border-radius: 6px;
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.filter:hover{
-  cursor: pointer;
-  background-color: rgba(0, 196, 0, 0.04);  
-}
-
- .filterpart .sortselect{
-  border: 0px;
-  width: 240px;
-}
-
-.filterpart .sortselect:focus{
-  border: 1px dotted gray;
-}

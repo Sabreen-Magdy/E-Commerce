@@ -21,20 +21,29 @@
   
   }
   
-  .search-Sect{
-
-    margin: 0px 20px;
-
+ 
+  .form-control-x{
+    height: 40px;
+    border-radius: 5px;
+    padding: 5px;
+    align-items: center;
+    border: 1px solid #cfcece;
   }
   .addbtn{
     width: 100%;
-    text-align: left;
     margin-top: 10px;
-    padding-left: 25px;
-    display: flex;
-  justify-content: space-between;
+    padding: 10px;
+    /* display: flex;
+    flex-wrap: wrap;
+   justify-content: space-between; */
     /* align-content: space-between; */
 
+  }
+
+  .addbtn .add-btn{
+    margin: 10px;
+    width: 120px;
+    text-align: end;
   }
   
   /*table start design*/
@@ -145,7 +154,9 @@
 
   @media screen and (max-width: 1200px) {
   
-  
+    .contai{
+      width: 100%;
+    }
   
     .table-products thead {
       display: none;
@@ -205,6 +216,10 @@
   }
    */
   /* Style the individual page numbers */
+  .custom-pagination /deep/ .ngx-pagination  {
+    padding: 0px;
+    
+  }
   .custom-pagination /deep/ .ngx-pagination li {
     margin: 0;
     display: inline-block;
@@ -217,6 +232,10 @@
     color: #fff;
     border-radius: 50%;
     /* padding: 7px 10px; */
+  }
+  .custom-pagination /deep/ .ngx-pagination .small-screen {
+    padding: 0px;
+    display: none;
   }
   
   /* Style the "Next" and "Previous" buttons */

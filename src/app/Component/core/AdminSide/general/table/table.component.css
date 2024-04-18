@@ -6,7 +6,7 @@
 .contai {
     width: 550px;
     background-color: white;
-    margin: 2rem;
+    margin: 2rem auto;
     padding-bottom: 2rem;
     border-radius: 10px;
     box-shadow: 0px 4px 22px -5px rgba(0, 0, 0, 0.75);
@@ -146,6 +146,11 @@
 
   @media screen and (max-width: 600px) {
   
+    .container{
+      padding: 0px;
+
+    }
+   
     .codebox{
       margin-right: 100px;
     }

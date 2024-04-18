@@ -162,7 +162,9 @@
   @media screen and (max-width: 1200px) {
   
   
-  
+  .contai{
+    width: 100%;
+  }
     .table-products thead {
       display: none;
     }
