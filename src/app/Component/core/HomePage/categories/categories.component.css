@@ -55,3 +55,30 @@ span.material-symbols-outlined{
 }
 
   
+@media (max-width: 767px) {
+    .conta, .conta * {
+        margin: 0;
+        padding: 0;
+    }
+    .conta .items .element {
+        margin: 0;
+        padding: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 30px;
+    }
+    .element-img img {
+        height: 200px;
+        /* max-height: 200px; */
+    }
+    .row, .row > [class^="col-"] {
+        margin-right: 0;
+        margin-left: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .container, .container-fluid {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}

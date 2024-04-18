@@ -70,7 +70,7 @@
   }
   
   #footer .footer-top .footer-contact h3 {
-    font-size: 28px;
+    font-size: 22px;
     margin: 0 0 10px 0;
     padding: 2px 0 2px 0;
     line-height: 1;
@@ -78,6 +78,7 @@
     font-weight: 600;
     color: #009860;
   }
+  
   
   #footer .footer-top .footer-contact p {
     font-size: 14px;
@@ -178,6 +179,9 @@
     #footer .footer-bottom {
       padding-top: 20px;
       padding-bottom: 20px;
+    }
+    h3{
+      font-size: 18px;
     }
   
     #footer .copyright,

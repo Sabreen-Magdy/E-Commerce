@@ -1,52 +1,88 @@
-.banner-promate{
+/* Remove fixed padding from .bg-success-subtle */
+.bg-success-subtle {
+    background-color: #eef2fe;
+  }
+  
+  /* Adjust styles as needed */
+  .banner-promate {
     background-color: rgba(233,238,244,255);
     padding: 6px;
-}
-#new{
+  }
+  
+  #new {
     background-color: #009860;
-    /* background-color: #675548; */
-    /* background-color:#f4623a;; */
     padding-inline-start: 10px;
     padding-inline-end: 10px;
     padding-top: 1px;
     padding-bottom: 1px;
-
-   
-}
-.custom-font {
-    font-size: 13px; /* Adjust the value as needed */
+  }
+  
+  .custom-font {
+    font-size: 13px;
     font-weight: 600;
-}
-.paragraph-font{
-    /* color: #535986; */
-    color: #675548
-    ;
-      font-size: 23px;
-}
-
- /* Custom styles here */
- .btn-custom-color-signin {
-    background-color: #f4623a; /* Base color */
-    border-color: #f4623a; /* Border color */
-}
-.btn-custom-color-signin:hover,
-.btn-custom-color-signin:focus {
-    background-color: white; /* Darker shade for hover */
-    /* border-color: #c3512f;  */
-    /* Darker border color for hover */
-    color: #f4623a; /* Text color */
-}
-.btn-custom-color-signup {
-    background-color: white; /* Base color */
+  }
+  
+  .paragraph-font {
+    color: #675548;
+    font-size: 18px;
+  }
+  
+  /* Adjust button styles as needed */
+  .btn-custom-color-signin {
+    background-color: #f4623a;
     border-color: #f4623a;
-     /* Border color */
-     color:#f4623a ;
+  }
+  
+  .btn-custom-color-signin:hover,
+  .btn-custom-color-signin:focus {
+    background-color: white;
+    color: #f4623a;
+  }
+  
+  .btn-custom-color-signup {
+    background-color: white;
+    border-color: #f4623a;
+    color: #f4623a;
+  }
+  
+  .btn-custom-color-signup:hover,
+  .btn-custom-color-signup:focus {
+    background-color: #f4623a;
+    color: white;
+  }
+  /* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .custom-font {
+      font-size: 11px; /* Smaller text on medium devices */
     }
-.btn-custom-color-signup:hover,
-.btn-custom-color-signup:focus {
-    background-color: #f4623a; /* Darker shade for hover */
-    /* border-color: #c3512f;  */
-    /* Darker border color for hover */
-    color: white; 
-    /*Text color */
-}
+  
+    .paragraph-font {
+      font-size: 16px; /* Smaller text on medium devices */
+    }
+  
+    .banner-title h1 {
+      font-size: 22px; /* Smaller headline on medium devices */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .custom-font {
+      font-size: 8px; /* Even smaller text on small devices */
+    }
+  
+    .paragraph-font {
+      font-size: 11px; /* Even smaller text on small devices */
+    }
+  
+    .banner-title h1 {
+      font-size: 15px; /* Even smaller headline on small devices */
+      padding: 0;        /* Remove any padding */
+      margin-bottom: 5px; /* Reduce margin below the title */
+    }
+  
+    .banner-desc {
+      margin-top: 5px; /* Reduce space above the paragraph */
+    }
+
+  }
+  

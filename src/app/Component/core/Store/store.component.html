@@ -34,8 +34,8 @@
     <div
     (mouseenter)="hoverfun(x.id)"
     (mouseleave)="unhoverfun(x.id)"
-     *ngFor="let x of ProductList | paginate: {  itemsPerPage: 6, currentPage: p, }" class="element col-lg-4 col-md-6">
-      <div class="element-img">
+     *ngFor="let x of ProductList | paginate: {  itemsPerPage: 6, currentPage: p, }" class="element col-lg-4 col-md-6 col-6">
+      <div class="element-img ">
         <span
         *ngIf="!isFav"
           (click)="pushItemToFavCart(x.id)"
