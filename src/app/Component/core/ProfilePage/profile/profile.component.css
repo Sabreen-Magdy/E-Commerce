@@ -69,8 +69,21 @@
   margin: 0 0 20px;
 }
 
-
-
+/* @media screen and(max-width:500) {
+  .profile-info{
+    display: none;
+  }
+} */
+.panel{
+  background-color: #009860;
+}
+@media (max-width: 575px) {
+ 
+.bio-graph-heading{
+/* font-size: 15px; */
+display: none;
+}
+}
 
 
 

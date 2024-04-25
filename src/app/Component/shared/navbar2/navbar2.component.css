@@ -20,3 +20,79 @@
     color: #178640;
     background-color: gainsboro;
 }
+@media (max-width: 767px) {
+    .navbar-nav .nav-link {
+      font-size: 14px; /* Adjust font size for smaller viewports */
+    }
+  }
+  
+  /* @media (max-width: 576px) {
+    .navbar-nav .nav-link .nav-item {
+      font-size: 11px;
+
+    }
+    .custom-flex{
+        width: 70%;
+    }
+  } */
+  
+  @media (max-width: 575px) {
+    .navbar-nav .nav-link {
+      font-size: 11px;
+    }
+  }
+  
+/* Override Bootstrap's default responsive behavior */
+.navbar-expand-md .navbar-nav .nav-item {
+    float: left;
+  }
+  
+  /* Ensure the nav items are displayed inline */
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  /* Make sure the dropdown menu is always displayed as a list */
+  .navbar-expand-md .navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+  }
+  
+  /* Style adjustments for the navbar brand/logo */
+  .navbar-brand {
+    float: left;
+    padding: 0;
+    margin-right: 15px; /* Adjust as needed */
+  }
+  
+  /* Additional styling to ensure proper alignment and spacing */
+  .nav-item {
+    margin-right: 10px; /* Adjust the spacing between nav items */
+  }
+  
+  /* Ensure the container is full width */
+  .container {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+  }
+/* Default styles for md screens and above */
+.custom-flex {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  /* Styles for xs screens */
+  @media (max-width: 347px) {
+    .custom-flex {
+      flex-direction: column;
+    }
+  }
+  /* @media (max-width: 576) {
+    .nav-item{
+        font-size: 1px;
+    }
+  } */
+    
+ 
