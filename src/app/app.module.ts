@@ -13,7 +13,7 @@ import { SignUpFormComponent } from './Component/core/SignComp/sign-up-form/sign
 import { SignImgComponent } from './Component/core/SignComp/sign-img/sign-img.component';
 import { ForgetPasswordComponent } from './Component/core/SignComp/forget-password/forget-password.component';
 import { MainPageComponent } from './Component/core/anonymous-page/main-page/main-page.component';
-import { SliderHomeComponent } from './Component/core/HomePage/slider-home/slider-home.component';
+// import { SliderHomeComponent } from './Component/core/HomePage/slider-home/slider-home.component';
 import { CategoriesComponent } from './Component/core/HomePage/categories/categories.component';
 import { NewProductComponent } from './Component/core/HomePage/new-product/new-product.component';
 
@@ -90,7 +90,7 @@ import { UpdatePassComponent } from './Component/core/ProfilePage/update-pass/up
     SignImgComponent,
     ForgetPasswordComponent,
     MainPageComponent,
-    SliderHomeComponent,
+    // SliderHomeComponent
     CategoriesComponent,
     NewProductComponent,
     AdminComponent,
