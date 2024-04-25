@@ -275,18 +275,15 @@
   
   width: calc(100% - 250px);
 }
-.home-section .text{
-  display: inline-block;
-  color: #11101d;
-  font-size: 25px;
-  font-weight: 500;
-  margin: 18px
-}
+
 @media (max-width: 420px) {
   .sidebar li .tooltip{
     display: none;
   }
-  
+  .home-section{
+    /* background-color: #268a26; */
+    padding: 12px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -294,6 +291,7 @@
     .sidebar.open ~ .home-section{
         right: 78px;
         width: calc(100% - 78px);
+        
       }
     
 }
