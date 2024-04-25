@@ -39,18 +39,29 @@
 /*Modellllll*/
 
 .model-wrapper {
-    position: fixed;
+    /* position: fixed;
     width: 100%;
     height: 100%;
     left: 0;
     top: 0;
     background: rgba(0, 0, 0, 0.24);
     display: none;
-    z-index: 100000000000;
+    z-index: 100000000000; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10000; /* Ensure it is on top of other content */
+    display: none; /* Use flex to center the modal */
+    justify-content: center;
+    align-items: center; /* This centers the modal vertically */
   }
   
   .model {
-    position: relative;
+    /* position: relative;
     background: #fff;
     text-align: center;
     width: 44%;
@@ -60,8 +71,21 @@
     box-shadow: 0px 4px 22px -5px rgba(0, 0, 0, 0.75);
     animation-name: animatetop;
     animation-duration: .4s;
-    overflow-y: scroll;
-    
+    overflow-y: scroll; */
+    position: relative;
+    background-color: #fff;
+    width: calc(100% - 40px); /* Subtracting total horizontal padding */
+    height: auto; /* Adjust based on content */
+    overflow-y: auto;
+    max-width: 500px; /* Maximum width of the modal */
+    margin:0 auto; /* Helps in centering */
+    padding: 20px;
+    box-sizing: border-box; /* Includes padding and border in the element's width and height */
+    overflow-y: auto; /* Makes modal scrollable */
+    border-radius: 10px; /* Optional: for rounded corners */
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.75); /* Shadow for better visibility */
+    animation-name: animatetop;
+    animation-duration: 0.4s;
   }
   
   @keyframes animatetop {
@@ -75,6 +99,47 @@
         opacity: 1;
     }
   }
+  /* Responsive adjustments */
+@media (max-width: 768px) {
+  .model {
+      width: 80%; /* Increase width on smaller devices for better use of space */
+  }
+}
+
+@media (max-width: 480px) {
+  .model {
+      width: 95%; /* Even wider on very small screens */
+      padding: 0;
+  }
+  .model-header, .model-body {
+      padding: 10px; /* Reduce padding on very small screens */
+  }
+}
+@media (max-width: 391px) {
+  .model {
+      width: 100%; /* Use full width for very small screens */
+      padding: 5px; /* Reduce padding */
+  }
+
+  .model-header, .model-body {
+      padding: 5px; /* Further reduce padding for header and body */
+  }
+
+  .proceed-checkout .proceed-btn, .proceed-checkout ul li {
+      font-size: 12px; /* Reduce font size to fit smaller screens */
+  }
+
+  .proceed-checkout ul {
+      padding-left: 10px;
+      padding-right: 10px; /* Reduce padding to give more space for content */
+  }
+}
+
+/* General adjustments for smaller screen readability */
+.model, .proceed-checkout ul li, #paypal-button {
+    font-size: 12px; /* Adjust base font size */
+}
+
   
   .model-show {
     display: block;
@@ -175,7 +240,7 @@
 	font-weight: 700;
 	color: #ffffff;
 	background: #59c08a;
-	width: 335px;
+	width: 80%;
 	padding: 15px 0px;
 	display: block;
 	text-align: center;

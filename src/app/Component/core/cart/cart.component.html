@@ -99,7 +99,7 @@
                   <button [disabled]="errorQuantity" data-bs-toggle="modal" data-bs-target="#exampleModal2"
                     (click)="assignToCheckoutForm()" class="btn proceed-btn">
                     <div *ngIf="wiating">
-                      <div class="lds-ellipsis">
+                      <div class="">
                         <div></div>
                         <div></div>
                         <div></div>
@@ -339,16 +339,16 @@
 <!-- paypal paaaaaaaayyyyyy -->
 
 
-<div id="PaymentModel" class="add-model model-wrapper">
+<!-- <div id="PaymentModel" class="add-model model-wrapper">
   <div class="model">
     <div class="model-header">
       <i (click)="closeRefuse()" class="bi bi-x-square-fill"></i>
       <h3>Purchase</h3>
-      <!-- <h6 class="mt-3 text-secondary">{{orders[selectedIndex].orderId}}</h6> -->
+      
     </div>
     <div class="model-body">
 
-      <!-- <form id="payment-form" method="post""></form> -->
+    
       <form id="payment-form" method="post" class=" d-flex  justify-content-center flex-column align-items-center">
         <section>
           <div class="bt-drop-in-wrapper">
@@ -363,8 +363,33 @@
         </div>
         <hr />
       </form>
-      <!-- </div> -->
+      
+    </div>
+  </div>
+</div> -->
+
+<div id="PaymentModel" class="add-model model-wrapper">
+  <div class="model p-0 p-sm-3"> 
+    <div class="model-header">
+      <i (click)="closeRefuse()" class="bi bi-x-square-fill"></i>
+      <h3>Purchase</h3>
+    </div>
+    <div class="model-body">
+
+      <form id="payment-form" method="post" class="d-flex justify-content-center flex-column align-items-center px-2 px-sm-5">
+        <section class="w-100"> 
+          <div class="bt-drop-in-wrapper">
+            <div id="bt-dropin"></div>
+          </div>
+        </section>
+        <input type="hidden" id="nonce" [value]="nonce" />
+        <input type="submit" value="Submit Payment" id="submit-btn" class="btn btn-dark w-100" />
+        <div *ngIf="error" class="m-4">
+          <span class="text-danger mx-1"><i class="bi bi-ban"></i></span>
+          <span class="text-danger" style="font-size: larger;"> حدث خطأ اثناء الدفع حاول مرة اخري</span>
+        </div>
+        <hr />
+      </form>
     </div>
   </div>
 </div>
-
