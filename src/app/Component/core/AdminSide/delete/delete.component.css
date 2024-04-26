@@ -14,7 +14,11 @@
       background-color: #000000;
       padding: 1rem ;
       border-radius: 10px 10px 0px 0px;
-    }
+      -webkit-border-radius: 10px 10px 0px 0px;
+      -moz-border-radius: 10px 10px 0px 0px;
+      -ms-border-radius: 10px 10px 0px 0px;
+      -o-border-radius: 10px 10px 0px 0px;
+}
     
     .contai header h3 {
       color: #fff;
@@ -191,7 +195,58 @@
     
   
     }
-    
+
+    @media(max-width: 719px) {
+      .table-products {
+          width: 100%;  /* Ensure table width is not more than container */
+          margin: 0;    /* Remove margin to maximize space */
+          table-layout: fixed; /* This ensures the table respects the given width */
+      }
+  
+      .table-products tbody td {
+          padding: 0.3rem; /* Reduce padding to save space */
+          word-break: break-word; /* Ensure long words do not cause overflow */
+      }
+  
+      .table-products td::before {
+          font-size: 14px; /* Optionally reduce font size to save space */
+      }
+  
+     
+  
+      /* Adjusting pagination controls for small screens */
+      .custom-pagination /deep/ .ngx-pagination li {
+          padding: 0 5px; /* Reduce padding around pagination items */
+      }
+  }
+    @media(max-width: 344px) {
+      .table-products {
+          width: 100%;  /* Ensure table width is not more than container */
+          margin: 0;    /* Remove margin to maximize space */
+          table-layout: fixed; /* This ensures the table respects the given width */
+      }
+  
+      .table-products tbody td {
+          padding: 0.3rem; /* Reduce padding to save space */
+          word-break: break-word; /* Ensure long words do not cause overflow */
+      }
+  
+      .table-products td::before {
+          font-size: 14px; /* Optionally reduce font size to save space */
+      }
+  
+      .btn2 {
+          width: 80%; /* Full width buttons for better mobile interaction */
+          padding: 0.25rem; /* Adjust padding to fit small screens */
+          margin-top: 0.2rem;
+          margin-bottom: 0.2rem;
+      }
+  
+      /* Adjusting pagination controls for small screens */
+      .custom-pagination /deep/ .ngx-pagination li {
+          padding: 0 5px; /* Reduce padding around pagination items */
+      }
+  }
   
     /*Form*/
   

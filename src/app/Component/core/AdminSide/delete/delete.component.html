@@ -1,11 +1,10 @@
 <div class="">
-    <div class="contai">
+    <div class="contai" >
         <header>
             <h3>المستخدمين</h3>
         </header>
         <div *ngIf="cstList.length == 0 && waiting" class="loader2"></div>
-        <div *ngIf="cstList.length == 0 && noitem" class="alert alert-danger mx-4 my-3" >لا يوجد مستخدمين حتي الان  
-    </div>
+        <div *ngIf="cstList.length == 0 && noitem" class="alert alert-danger mx-4 my-3" >لا يوجد مستخدمين حتي الان </div>
         <div *ngIf="cstList.length > 0" class="table-wrapped">
             
             <table class="table-products">

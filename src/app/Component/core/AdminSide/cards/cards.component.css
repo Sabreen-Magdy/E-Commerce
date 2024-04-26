@@ -6,7 +6,61 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     /* Horizontal offset, vertical offset, blur radius, spread radius, color */
 }
+@media (max-width: 1030px) {
+    .card-body {
+        font-size: 14px;
+        /* Adjust the font size as needed */
+    }
+    /* .card-title{
+        font-size: 1px;
+    } */
+}
+@media (max-width: 634px) {
+    .card-body {
+        font-size: 12px;
+        /* Adjust the font size as needed */
+    }
+    
+}
+@media (max-width: 621px) {
+    .card-body {
+        font-size: 12px;
+        /* Adjust the font size as needed */
+    }
+    /* .card-title{
+        font-size: 1px;
+    } */
+}
+@media (max-width: 582px) {
+    .card-body {
+        font-size: 11px;
+        /* Adjust the font size as needed */
+    }
+    /* .card-title{
+        font-size: 1px;
+    } */
+}
+@media (max-width: 425px) {
+    .card-body {
+        font-size: 10px;
+        /* Adjust the font size as needed */
+    }
+}
 
+
+
+@media (max-width: 351px) {
+    .card-body {
+        font-size: 8px;
+        /* Adjust the font size as needed */
+    }
+    .all{
+        padding: 0%;
+        margin: 0%;
+    }
+
+    
+}
 
 /* hr {
     margin: 50px 50px;
@@ -53,22 +107,30 @@ hr {
 .material-symbols-outlined {
     font-family: 'Material Symbols Outlined';
     font-weight: 500;
-    font-size: 35px; /* Example size */
-    color: #83f343; /* Example color */
-  }
+    font-size: 35px;
+    /* Example size */
+    color: #83f343;
+    /* Example color */
+}
 
- .order{
+.order {
     font-family: 'Material Symbols Outlined';
     font-weight: 500;
-    font-size: 35px; /* Example size */
-    color: #fa7203; /* Example color */
- } 
- .users{
+    font-size: 35px;
+    /* Example size */
+    color: #fa7203;
+    /* Example color */
+}
+
+.users {
     font-family: 'Material Symbols Outlined';
     font-weight: 500;
-    font-size: 35px; /* Example size */
-    color: #fa03e9; /* Example color */
- }
+    font-size: 35px;
+    /* Example size */
+    color: #fa03e9;
+    /* Example color */
+}
+
 .card-stats {
     .card-body {
         padding: 15px 15px 0px;
@@ -112,7 +174,7 @@ hr {
     }
 
 
-} 
+}
 
 /* .icon-big {
     font-size: 3em;

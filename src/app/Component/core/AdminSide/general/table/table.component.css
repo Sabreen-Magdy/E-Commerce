@@ -152,8 +152,12 @@
     }
    
     .codebox{
-      margin-right: 100px;
+      margin-right: 90%;
+      width: 10%;
     }
+     .buttons{
+      margin-right: 15px;
+    } 
   
     .table-products thead {
       display: none;
