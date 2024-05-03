@@ -1,24 +1,18 @@
-using Presentation;
-using Microsoft.EntityFrameworkCore;
-using Persistence.Context;
-using Persistence.Repositories;
-using Domain.Repositories;
-using Services;
-using Persistence.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Services.Abstraction;
-using Services.Authentication;
-using Persistence.OtherConfiguration;
 using Domain.External;
-using Persistence.ExternalConfiguration;
+using Domain.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Persistence.Context;
 using Persistence.External;
+using Persistence.Repositories;
+using Services;
+using Services.Abstraction;
 using Services.Abstraction.External;
 using Services.External;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Braintree;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,9 +35,9 @@ builder.Services.AddCors(options =>
                       });
 });
 
-// Add Controllers 
-builder.Services.AddControllers().AddApplicationPart(
-     typeof(AssemblyReferneces).Assembly);
+//// Add Controllers 
+//builder.Services.AddControllers().AddApplicationPart(
+//     typeof(AssemblyReferneces).Assembly);
 
 // Add Services Scope
 builder.Services.AddScoped<IAdminService, AdminService>();
